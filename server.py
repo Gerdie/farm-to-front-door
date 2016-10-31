@@ -2,7 +2,7 @@ from flask import (Flask, render_template, redirect, request, flash,
                    session)
 app = Flask(__name__)
 
-#Required to use Flask sessions
+#Required to use Flask sessions, Debug toolbar
 app.secret_key = "I<3Food!"
 
 
@@ -29,7 +29,7 @@ def process_login():
 
     session[email] = password  # if i am using user's email as a user id...
 
-    flash("Email: {} | Password: {}".format(email, password))
+    flash("Email: {} | Password: {}".format(email, password))  # for debugging
 
     return redirect("/products")
 
@@ -55,11 +55,11 @@ def show_products():
     return render_template("products.html")
 
 
-@app.route('/products/<int:product_id>')
+@app.route('/products/<int:product_id>')  # takes product_id as an INTEGER
 def show_product_page(product_id):
     """Query database for product info and display results"""
 
-    return render_template("product_page.html")
+    return render_template("product_page.html", product_id=product_id)
 
 
 @app.route('/cart')
@@ -74,6 +74,13 @@ def process_order():
     """Process order and update database"""
 
     pass
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """Custom 404 page"""
+
+    return render_template('404.html'), 404
 
 
 if __name__ == "__main__":
