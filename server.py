@@ -27,9 +27,20 @@ def process_login():
     email = request.form.get('email')
     password = request.form.get('password')  # use encrypted hash later
 
-    session[email] = password  # if i am using user's email as a user id...
+    session['email'] = email  # if i am using user's email as a user id...
 
     flash("Email: {} | Password: {}".format(email, password))  # for debugging
+
+    return redirect("/products")
+
+
+@app.route('/logout')
+def process_logout():
+    """Log user out, redirect to /products"""
+
+    del session['email']
+
+    flash("You have been logged out.")
 
     return redirect("/products")
 

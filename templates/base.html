@@ -38,7 +38,11 @@
           </form>
           -->
           <ul class="nav navbar-nav navbar-right">
+            {% if 'email' in session %}
+            <li><a href="/logout">Log Out</a></li>
+            {% else %}
             <li><a href="/login" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+            {% endif %}
             <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"><span class="sr-only">Shopping Cart</span></span></a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
