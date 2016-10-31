@@ -6,9 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Farm to Front Door</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    {% block head %} Optional added link(s) go here! {% endblock %}
+    <!-- {% block head %} Optional added link(s) go here! {% endblock %} -->
 </head>
 <body>
+
+    <!--Navigation code adapted from Bootstrap example-->
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -36,11 +38,42 @@
           </form>
           -->
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="/login">Login</a></li>
+            <li><a href="/login" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+            <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"><span class="sr-only">Shopping Cart</span></span></a></li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
+
+    <!--Login Modal -->
+    <!--Modal code adapted from Bootstrap example-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="LoginModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Log In</h4>
+          </div>
+          <div class="modal-body">
+            <form id="login" action="/login" method="POST">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+                <label for="password">Password</label>
+                <input type="text" name="password" id="password" required>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button submit" form="login" class="btn btn-primary">Enter</button>
+            </form>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <!-- Flashed messages show up here -->
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
 
     {% block body %} 
         Body content goes here! 
