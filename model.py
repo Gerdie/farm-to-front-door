@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy_utils import ArrowType
+import arrow
 
 db = SQLAlchemy()
 
@@ -65,7 +67,7 @@ class Pickup(db.Model):
     name = db.Column(db.String(100), nullable=True)
     street_address = db.Column(db.String(100), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
-    state = db.Column(db.String(2), nullable=False)  # set CA default?
+    state = db.Column(db.String(2), nullable=False, default="CA")
 
     def __repr__(self):
 
@@ -101,7 +103,7 @@ class Product(db.Model):
     description = db.Column(db.String(500), nullable=True)
     weight = db.Column(db.Integer, nullable=True)
     unit = db.Column(db.String(50), nullable=True)
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Numeric, nullable=False)
     icon_id = db.Column(db.Integer, db.ForeignKey('icons.icon_id'), nullable=True)
     aisle = db.Column(db.String(50), nullable=True)
     category = db.Column(db.String(50), nullable=True)
@@ -154,7 +156,7 @@ class Recipe(db.Model):
     recipe_id = db.Column(db.Integer, autoincrement=True, nullable=False)
     url = db.Column(db.String(300), nullable=False)
     name = db.Column(db.String(100), nullable=False)
-    ingredients = db.Column(db.String(500), nullable=False)
+    ingredients = db.Column(db.JSON, nullable=False)
     img = db.Column(db.String(300), nullable=True)
 
     def __repr__(self):
@@ -185,7 +187,7 @@ class Delivery(db.Model):
 
     delivery_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     vendor = db.Column(db.String(500), nullable=True)
-    received_at = db.Column(db.DateTime, nullable=False)
+    received_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
 
     def __repr__(self):
 
@@ -219,10 +221,10 @@ class Order(db.Model):
 
     order_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.user_id"), nullable=False)
-    placed_at = db.Column(db.DateTime, nullable=False)
-    total = db.Column(db.Float, nullable=False)
+    placed_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
+    total = db.Column(db.Numeric, nullable=False)
     pickup_id = db.Column(db.Integer, db.ForeignKey("pickups.pickup_id"), nullable=False)
-    received_at = db.Column(db.DateTime, nullable=False)
+    received_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
 
     def __repr__(self):
 
@@ -240,7 +242,7 @@ class Order_Quantity(db.Model):
 
     order_qty_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.product_id"), nullable=False)
-    product_qty = db.Column(db.Integer, nullable=False)
+    product_qty = db.Column(db.Integer, nullable=False, default=1)
     order_id = db.Column(db.Integer, db.ForeignKey("orders.order_id"), nullable=False)
 
     def __repr__(self):
