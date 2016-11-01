@@ -42,6 +42,12 @@ for link in goodeggs:
         for index, tag in enumerate(tags_list):
             tags[index] = tag.get_text()
 
+        """Note to self:
+        1) Add tags to tags (if not already in tags)
+        2) Add product to products
+        3) FOR EACH TAG: Add tag_id and product_id to product_tags
+        """
+
         full_data = "{} | {} | {} | {} | {}".format(name.encode('utf-8'), price, weight, category_lg, image)
         result_file.write(full_data)
         # try:
