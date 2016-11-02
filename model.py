@@ -34,6 +34,16 @@ class Customer(db.Model):
     state = db.Column(db.String(2), nullable=True)
     phone = db.Column(db.String(30), nullable=True)
 
+    orders = db.relationship("Order", backref="customer")
+
+    diets = db.relationship("Dietary_Restriction",
+                            secondary="customer_restrictions",
+                            backref="customers")
+
+    recipes = db.relationship("Recipe",
+                              secondary="customer_recipes",
+                              backref="customers")
+
     def __repr__(self):
 
         return "<Customer id={}, first_name={}, last_name={}, email={}>".format(self.user_id,
@@ -109,6 +119,16 @@ class Product(db.Model):
     img = db.Column(db.String(500), nullable=True)
     icon_id = db.Column(db.Integer, db.ForeignKey('icons.icon_id'), nullable=True)
     color = db.Column(db.String(10), nullable=True)
+
+    icon = db.relationship("Icon", backref="products")
+
+    tags = db.relationship("Tag",
+                           secondary="product_tags",
+                           backref="products")
+
+    delivery_qty = db.relationship("Delivery_Quantity", backref="product")
+
+    order_qty = db.relationship("Order_Quantity", backref="product")
 
     def __repr__(self):
 
@@ -189,6 +209,8 @@ class Delivery(db.Model):
     vendor = db.Column(db.String(500), nullable=True)
     received_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
 
+    quantities = db.relationship("Delivery_Quantity", backref="delivery")
+
     def __repr__(self):
 
         return "<Delivery delivery_id={} vendor={} received_at={}>".format(self.delivery_id,
@@ -225,6 +247,10 @@ class Order(db.Model):
     total = db.Column(db.Numeric, nullable=False)
     pickup_id = db.Column(db.Integer, db.ForeignKey("pickups.pickup_id"), nullable=False)
     received_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
+
+    pickup = db.relationship("Pickup", backref="orders")
+
+    quantities = db.relationship("Order_Quantity", backref="order")
 
     def __repr__(self):
 
