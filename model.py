@@ -48,14 +48,14 @@ class Customer_Restriction(db.Model):
     __tablename__ = "customer_restrictions"
 
     cust_restr_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    cust_id = db.Column(db.Integer, db.ForeignKey('customers.user_id'), nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.user_id'), nullable=False)
     diet_id = db.Column(db.Integer, db.ForeignKey('dietary_restrictions.diet_id'), nullable=False)
 
     def __repr__(self):
 
-        return "<Customer_Restriction cust_restr_id={}, cust_id={}, diet_id={}>".format(self.cust_restr_id,
-                                                                                        self.cust_id,
-                                                                                        self.diet_id)
+        return "<Customer_Restriction cust_restr_id={}, customer_id={}, diet_id={}>".format(self.cust_restr_id,
+                                                                                            self.customer_id,
+                                                                                            self.diet_id)
 
 
 class Pickup(db.Model):
@@ -258,6 +258,7 @@ def connect_to_db(app):
 
     # Configure to use PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///shop'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
 

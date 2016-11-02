@@ -6,12 +6,18 @@ from server import app
 # result_file = open('data.txt', 'a')
 
 
-goodeggs = ['https://www.goodeggs.com/sfbay/produce'
-            # 'https://www.goodeggs.com/sfbay/dairy',
-            # 'https://www.goodeggs.com/sfbay/meat',
-            # 'https://www.goodeggs.com/sfbay/fish'
-            # 'https://www.goodeggs.com/sfbay/deli#deli-pickles-pickles-new': 'Pickles'
+goodeggs = ['https://www.goodeggs.com/sfbay/produce',
+            'https://www.goodeggs.com/sfbay/dairy',
+            'https://www.goodeggs.com/sfbay/meat',
+            'https://www.goodeggs.com/sfbay/fish'
             ]
+
+
+def add_all(link_list):
+    """Add list of links to scrape"""
+
+    for link in link_list:
+        add_products(link)
 
 
 def add_products(link):
@@ -24,10 +30,19 @@ def add_products(link):
     site_url = "https://www.goodeggs.com"
 
     for product in produce:
-        name = product.find("h5", class_="product-tile__product-name").get_text()
+        # if not product.get("data-popular"):
+        #     continue
+        # prod_id = int(product["data-popular"])
+        # if Product.query.get(prod_id):
+        #     continue
+        name = product.find("h5", class_="product-tile__product-name").get_text().encode('utf-8')
         price = float(product.find("span", class_="dollars").get_text() + "." + product.find("span", class_="cents").get_text())
+
+        if Product.query.filter(Product.name == name, Product.price == price).first() or not name or not price:
+            continue
+
         image = product.a["data-src"][2:]
-        weight_and_unit = product.find("div", class_="product-tile__purchase-unit").get_text().split()
+        weight_and_unit = product.find("div", class_="product-tile__purchase-unit").get_text().encode('utf-8').split()
         weight = weight_and_unit[0]
         unit = (" ").join(weight_and_unit[1:])
         a = site_url + product.find("a", class_="js-product-link")["href"]
@@ -35,18 +50,23 @@ def add_products(link):
         # navigating to product detail page for more data
         prod_page = urllib.urlopen(a).read()
         html2 = BeautifulSoup(prod_page, "html.parser")
+        description = html2.find("div", class_="description-body").get_text().encode('utf-8')
         categories = []
         crumbs = html2.select('div.breadcrumbs.gutter a')
+
         for crumb in crumbs:
             categories.append(crumb.get_text())
-        description = html2.find("div", class_="description-body").get_text()
 
+        print name, price, weight, unit
         #Create Product instance
+
         new_prod = Product(name=name, price=price, description=description,
                            aisle=categories[-2], category=categories[-1],
                            weight=weight, unit=unit, img=image)
+
         db.session.add(new_prod)
         db.session.commit()
+        print "***Added Product***"
         new_prod = Product.query.filter((Product.name == name), (Product.price == price)).one()
 
         # tags = []
@@ -58,11 +78,13 @@ def add_products(link):
                 new_tag = Tag(name=tag.get_text())
                 db.session.add(new_tag)
                 db.session.commit()
+                print "***Added Tag***"
 
             new_tag = Tag.query.filter(Tag.name == tag.get_text()).one()
             new_prod_tag = Product_Tag(tag_id=new_tag.tag_id, product_id=new_prod.product_id)
             db.session.add(new_prod_tag)
             db.session.commit()
+            print "***Added Product_Tag***"
 
         db.session.commit()
 
@@ -89,4 +111,4 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-    add_products('https://www.goodeggs.com/sfbay/produce')
+    add_all(goodeggs)
