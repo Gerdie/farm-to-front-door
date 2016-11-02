@@ -8,10 +8,10 @@ db = SQLAlchemy()
 class Dietary_Restriction(db.Model):
     """Dietary Restriction. i.e. Vegan, Gluten-Free, Organic"""
 
-    __tablename___ = "dietary_restrictions"
+    __tablename__ = "dietary_restrictions"
 
     diet_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False, unique=True)
 
     def __repr__(self):
 
@@ -22,7 +22,7 @@ class Dietary_Restriction(db.Model):
 class Customer(db.Model):
     """Customer of Farm to Front Door"""
 
-    __tablename___ = "customers"
+    __tablename__ = "customers"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(100), nullable=True)
@@ -61,7 +61,7 @@ class Customer_Restriction(db.Model):
 class Pickup(db.Model):
     """Pickup locations"""
 
-    __tablename___ = "pickups"
+    __tablename__ = "pickups"
 
     pickup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(100), nullable=True)
@@ -100,14 +100,14 @@ class Product(db.Model):
 
     product_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    description = db.Column(db.String(500), nullable=True)
-    weight = db.Column(db.Integer, nullable=True)
+    description = db.Column(db.Text, nullable=True)
+    weight = db.Column(db.Numeric, nullable=True)
     unit = db.Column(db.String(50), nullable=True)
     price = db.Column(db.Numeric, nullable=False)
-    icon_id = db.Column(db.Integer, db.ForeignKey('icons.icon_id'), nullable=True)
     aisle = db.Column(db.String(50), nullable=True)
     category = db.Column(db.String(50), nullable=True)
     img = db.Column(db.String(500), nullable=True)
+    icon_id = db.Column(db.Integer, db.ForeignKey('icons.icon_id'), nullable=True)
     color = db.Column(db.String(10), nullable=True)
 
     def __repr__(self):
@@ -125,7 +125,7 @@ class Tag(db.Model):
     __tablename__ = "tags"
 
     tag_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), nullable=False, unique=True)
 
     def __repr__(self):
 
@@ -151,9 +151,9 @@ class Product_Tag(db.Model):
 class Recipe(db.Model):
     """Recipe pulled from Edamam API"""
 
-    ___tablename___ = "recipes"
+    __tablename__ = "recipes"
 
-    recipe_id = db.Column(db.Integer, autoincrement=True, nullable=False)
+    recipe_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     url = db.Column(db.String(300), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     ingredients = db.Column(db.JSON, nullable=False)
@@ -217,7 +217,7 @@ class Delivery_Quantity(db.Model):
 class Order(db.Model):
     """An order placed by a customer, composed of Order-Quantities"""
 
-    __tablename__ = "order"
+    __tablename__ = "orders"
 
     order_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     customer_id = db.Column(db.Integer, db.ForeignKey("customers.user_id"), nullable=False)
@@ -251,3 +251,21 @@ class Order_Quantity(db.Model):
                                                                                                   self.product_id,
                                                                                                   self.product_qty,
                                                                                                   self.order_id)
+
+
+def connect_to_db(app):
+    """Connect the database to Flask app."""
+
+    # Configure to use PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///shop'
+    db.app = app
+    db.init_app(app)
+
+
+if __name__ == "__main__":
+    # As a convenience, if we run this module interactively, it will leave
+    # you in a state of being able to work with the database directly.
+
+    from server import app
+    connect_to_db(app)
+    print "Connected to DB."

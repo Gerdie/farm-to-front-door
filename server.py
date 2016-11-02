@@ -1,5 +1,10 @@
 from flask import (Flask, render_template, redirect, request, flash,
                    session)
+from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Customer,
+                   Customer_Recipe, Pickup, Delivery, Dietary_Restriction,
+                   Customer_Restriction, Order, Icon, Delivery_Quantity,
+                   Order_Quantity)
+
 app = Flask(__name__)
 
 #Required to use Flask sessions, Debug toolbar
@@ -97,6 +102,7 @@ def page_not_found(e):
 if __name__ == "__main__":
     # Change app.debug to False before launch
     app.debug = True
+    connect_to_db(app)
 
     # Use the DebugToolbar
     # DebugToolbarExtension(app)
