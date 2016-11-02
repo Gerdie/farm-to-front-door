@@ -28,6 +28,7 @@ def add_products(link):
     produce = html.find_all("div", class_="product-tile")
 
     site_url = "https://www.goodeggs.com"
+    img_url = "http://"
 
     for product in produce:
         # if not product.get("data-popular"):
@@ -41,7 +42,7 @@ def add_products(link):
         if Product.query.filter(Product.name == name, Product.price == price).first() or not name or not price:
             continue
 
-        image = product.a["data-src"][2:]
+        image = img_url + product.a["data-src"][2:]
         weight_and_unit = product.find("div", class_="product-tile__purchase-unit").get_text().encode('utf-8').split()
         weight = weight_and_unit[0]
         unit = (" ").join(weight_and_unit[1:])

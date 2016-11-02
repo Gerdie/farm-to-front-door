@@ -1,5 +1,7 @@
 from flask import (Flask, render_template, redirect, request, flash,
                    session)
+from jinja2 import StrictUndefined
+from flask_debugtoolbar import DebugToolbarExtension
 from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Customer,
                    Customer_Recipe, Pickup, Delivery, Dietary_Restriction,
                    Customer_Restriction, Order, Icon, Delivery_Quantity,
@@ -8,7 +10,11 @@ from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Custome
 app = Flask(__name__)
 
 #Required to use Flask sessions, Debug toolbar
-app.secret_key = "I<3Food!"
+app.secret_key = "daksfhausdfskgbxpuseswlduc"
+
+#For debugging - see Jinja fails
+app.jinja_env.undefined = StrictUndefined
+app.jinja_env.auto_reload = True
 
 
 @app.route('/')
@@ -68,14 +74,18 @@ def process_registration():
 def show_products():
     """Query database for product list & display results"""
 
-    return render_template("products.html")
+    products = db.session.query(Product).all()
+
+    return render_template("products.html", products=products)
 
 
 @app.route('/products/<int:product_id>')  # takes product_id as an INTEGER
 def show_product_page(product_id):
     """Query database for product info and display results"""
 
-    return render_template("product_page.html", product_id=product_id)
+    product = Product.query.get(product_id)
+
+    return render_template("product_page.html", product=product)
 
 
 @app.route('/cart')
@@ -105,6 +115,6 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     # Use the DebugToolbar
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
 
     app.run(host="0.0.0.0")

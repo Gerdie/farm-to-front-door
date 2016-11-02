@@ -2,7 +2,21 @@
 
 {% block body %}
 
-<h1>Product Page: {{ product_id }}</h1>
-<p>Product details about a single product</p>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-md-offset-2">
+        <img src="{{product.img}}">
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-5">
+        <h1>{{ product.name }}</h1>
+        <p>Price: {{ product.price }}</p>
+        <p>{{ product.weight }} {{ product.unit }}</p>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1">
+        <p>{{product.description}}</p>
+    </div>
+</div>
 
 {% endblock %}
