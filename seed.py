@@ -3,8 +3,6 @@ import urllib
 from model import (Product, Tag, Product_Tag, connect_to_db, db)
 from server import app
 
-# result_file = open('data.txt', 'a')
-
 
 goodeggs = ['https://www.goodeggs.com/sfbay/produce',
             'https://www.goodeggs.com/sfbay/dairy',
@@ -31,11 +29,7 @@ def add_products(link):
     img_url = "http://"
 
     for product in produce:
-        # if not product.get("data-popular"):
-        #     continue
-        # prod_id = int(product["data-popular"])
-        # if Product.query.get(prod_id):
-        #     continue
+
         name = product.find("h5", class_="product-tile__product-name").get_text().encode('utf-8')
         price = float(product.find("span", class_="dollars").get_text() + "." + product.find("span", class_="cents").get_text())
 
@@ -59,8 +53,8 @@ def add_products(link):
             categories.append(crumb.get_text())
 
         print name, price, weight, unit
-        #Create Product instance
 
+        #Create Product instance
         new_prod = Product(name=name, price=price, description=description,
                            aisle=categories[-2], category=categories[-1],
                            weight=weight, unit=unit, img=image)
@@ -70,7 +64,6 @@ def add_products(link):
         print "***Added Product***"
         new_prod = Product.query.filter((Product.name == name), (Product.price == price)).one()
 
-        # tags = []
         tag_elements = html2.select('div.filters a')
 
         for tag in tag_elements:
@@ -89,24 +82,6 @@ def add_products(link):
 
         db.session.commit()
 
-        """Note to self:
-        1) Add tags to tags (if not already in tags)
-        2) Add product to products
-        3) FOR EACH TAG: Add tag_id and product_id to product_tags
-        """
-
-        # full_data = "{} | {} | {} | {} | {}".format(name.encode('utf-8'), price, weight, category_lg, image)
-        # result_file.write(full_data)
-        # try:
-        #     result_file.write(name)
-        #     result_file.write(str(price))
-        #     result_file.write(image)
-        #     result_file.write(weight)
-        #     result_file.write("\n")
-        # except UnicodeEncodeError:
-        #     pass
-
-# result_file.close()
 
 if __name__ == "__main__":
     connect_to_db(app)

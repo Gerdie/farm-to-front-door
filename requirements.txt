@@ -27,6 +27,7 @@ mistune==0.7.3
 nbconvert==4.2.0
 nbformat==4.1.0
 notebook==4.2.2
+passlib==1.6.5
 pathlib2==2.1.0
 pexpect==4.2.1
 pickleshare==0.7.4

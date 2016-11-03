@@ -6,6 +6,7 @@ from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Custome
                    Customer_Recipe, Pickup, Delivery, Dietary_Restriction,
                    Customer_Restriction, Order, Icon, Delivery_Quantity,
                    Order_Quantity)
+from passlib.hash import pbkdf2_sha256
 
 app = Flask(__name__)
 
@@ -37,12 +38,19 @@ def process_login():
 
     email = request.form.get('email')
     password = request.form.get('password')  # use encrypted hash later
+    # password = pbkdf2_sha256.encrypt(request.form.get('password'), rounds=20000, salt_size=16)
 
-    session['email'] = email  # if i am using user's email as a user id...
+    if db.session.query(Customer).filter(Customer.email == email, Customer.password_hash == password).one():
 
-    flash("Email: {} | Password: {}".format(email, password))  # for debugging
+        session['email'] = email  # if i am using user's email as a user id...
 
-    return redirect("/products")
+        flash("Email: {} | Password: {}".format(email, password))  # for debugging
+
+        return redirect("/products")
+
+    else:
+
+        flash("Incorrect email or password.")
 
 
 @app.route('/logout')
@@ -71,6 +79,7 @@ def process_registration():
     last_name = request.form.get("last_name")
     email = request.form.get("email")
     password = request.form.get("password")
+    # password = pbkdf2_sha256.encrypt(request.form.get("password"), rounds=20000, salt_size=16)
     street_address = request.form.get("address")
     zipcode = request.form.get("zipcode")
     state = request.form.get("state")

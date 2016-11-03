@@ -27,7 +27,7 @@ class Customer(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     first_name = db.Column(db.String(100), nullable=True)
     last_name = db.Column(db.String(100), nullable=True)
-    email = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
     password_hash = db.Column(db.String(500), nullable=False)
     street_address = db.Column(db.String(100), nullable=True)
     zipcode = db.Column(db.String(15), nullable=True)
