@@ -1,0 +1,16 @@
+/* Individual Project Page */
+
+.product_tags {
+    list-style: none;
+}
+
+/* Register Page */
+.register_img {
+    max-width:500px;
+    display:block;
+    padding:4px;
+}
+
+#register_form label {
+    width:80px;
+}

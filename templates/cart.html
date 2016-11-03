@@ -4,4 +4,8 @@
 
 <h1>Shopping Cart!</h1>
 
+{% if 'email' not in session %}
+<p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>
+{% endif %}
+
 {% endblock %}

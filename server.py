@@ -60,14 +60,31 @@ def process_logout():
 def show_register():
     """Show registration form"""
 
-    pass
+    return render_template("register.html")
 
 
 @app.route('/register', methods=['POST'])
 def process_registration():
     """Process user registration"""
 
-    pass
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    email = request.form.get("email")
+    password = request.form.get("password")
+    street_address = request.form.get("address")
+    zipcode = request.form.get("zipcode")
+    state = request.form.get("state")
+    phone = request.form.get("phone")
+
+    user = Customer(first_name=first_name, last_name=last_name, email=email,
+                    password_hash=password, street_address=street_address,
+                    zipcode=zipcode, state=state, phone=phone)
+
+    db.session.add(user)
+    db.session.commit()
+    flash("Registration successful! Welcome to Farm to Front Door.")
+
+    return redirect("/products")
 
 
 @app.route('/products')
