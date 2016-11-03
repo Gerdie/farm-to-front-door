@@ -37,14 +37,15 @@ def process_login():
     """Process login data. Add user_id to session"""
 
     email = request.form.get('email')
-    password = request.form.get('password')  # use encrypted hash later
-    # password = pbkdf2_sha256.encrypt(request.form.get('password'), rounds=20000, salt_size=16)
+    password = request.form.get('password')
 
-    if db.session.query(Customer).filter(Customer.email == email, Customer.password_hash == password).one():
+    user = db.session.query(Customer).filter(Customer.email == email).first()
 
-        session['email'] = email  # if i am using user's email as a user id...
+    if user and pbkdf2_sha256.verify(password, user.password_hash):
 
-        flash("Email: {} | Password: {}".format(email, password))  # for debugging
+        session['email'] = email
+
+        flash("Login successful!")
 
         return redirect("/products")
 
@@ -79,7 +80,7 @@ def process_registration():
     last_name = request.form.get("last_name")
     email = request.form.get("email")
     password = request.form.get("password")
-    # password = pbkdf2_sha256.encrypt(request.form.get("password"), rounds=20000, salt_size=16)
+    password = pbkdf2_sha256.encrypt(password, rounds=20000, salt_size=16)
     street_address = request.form.get("address")
     zipcode = request.form.get("zipcode")
     state = request.form.get("state")
@@ -92,6 +93,7 @@ def process_registration():
     db.session.add(user)
     db.session.commit()
     flash("Registration successful! Welcome to Farm to Front Door.")
+    session['email'] = email
 
     return redirect("/products")
 
