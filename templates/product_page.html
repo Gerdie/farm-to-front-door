@@ -20,6 +20,7 @@
                 {% endfor %}
             </ul>
         {% endif %}
+        <button class="add_to_cart" id="{{ product.product_id }}">Add to Cart</button>
     </div>
 </div>
 <hr>
@@ -28,5 +29,7 @@
         <p>{{ product.description }}</p>
     </div>
 </div>
+
+<script type="text/javascript" src="/static/js/cart.js"></script>
 
 {% endblock %}
