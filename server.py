@@ -107,6 +107,20 @@ def show_products():
     return render_template("products.html", products=products)
 
 
+@app.route('/products', methods=["POST"])
+def add_products_to_cart():
+    """Add product to cart from button click"""
+
+    product_id = int(request.form.get("productId"))
+    session["cart"] = session.get("cart", {})
+    session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
+
+    cart = session["cart"]
+    print cart
+
+    return redirect("/products")
+
+
 @app.route('/products/<int:product_id>')  # takes product_id as an INTEGER
 def show_product_page(product_id):
     """Query database for product info and display results"""
