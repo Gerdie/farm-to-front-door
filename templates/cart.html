@@ -2,7 +2,34 @@
 
 {% block body %}
 
-<h1>Shopping Cart!</h1>
+<h1>Shopping Cart</h1>
+
+{% if 'cart' in session %}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Quantity</th>
+            <th>Product</th>
+        </tr>
+    </thead>
+    <tbody>
+
+{% for item in cart %}
+
+        <tr>
+            <td>{{ session['cart'][item.product_id] }}</td>
+            <td>{{ item.name }} @ {{ item.price }} each</td>
+        </tr>
+
+{% endfor %}
+    </tbody>
+
+</table>
+
+<p><strong>Total: {{ session['cart_total'] }}</strong></p>
+
+{% endif %}
 
 {% if 'email' not in session %}
 <p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>

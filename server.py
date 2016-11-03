@@ -112,7 +112,9 @@ def add_products_to_cart():
     """Add product to cart from button click"""
 
     product_id = int(request.form.get("productId"))
+    product = Product.query.get(product_id)
     session["cart"] = session.get("cart", {})
+    session["cart_total"] = session.get("cart_total", 0) + product.price
     session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
 
     cart = session["cart"]
@@ -134,21 +136,30 @@ def show_product_page(product_id):
 def add_product_to_cart(product_id):
     """Add product to cart from button click on prod page"""
 
-    product_id = request.form.get("productId")
+    product_id = int(request.form.get("productId"))
+    product = Product.query.get(product_id)
     session["cart"] = session.get("cart", {})
-    session["cart"][int(product_id)] = session["cart"].get(product_id, 0) + 1
+    session["cart_total"] = session.get("cart_total", 0) + product.price
+    session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
 
     cart = session["cart"]
     print cart
 
-    return redirect('/products/' + product_id)
+    return redirect('/products/' + str(product_id))
 
 
 @app.route('/cart')
 def show_cart():
     """Query session for cart contents and display results"""
 
-    return render_template("cart.html")
+    if 'cart' in session:
+        cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+        print cart
+        print session['cart']
+    else:
+        cart = []
+
+    return render_template("cart.html", cart=cart)
 
 
 @app.route('/cart', methods=['POST'])
