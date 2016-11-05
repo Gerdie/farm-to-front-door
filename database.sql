@@ -27,6 +27,4661 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: customer_recipes; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE customer_recipes (
+    cust_rec_id integer NOT NULL,
+    customer_id integer NOT NULL,
+    recipe_id integer NOT NULL
+);
+
+
+ALTER TABLE customer_recipes OWNER TO vagrant;
+
+--
+-- Name: customer_recipes_cust_rec_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE customer_recipes_cust_rec_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE customer_recipes_cust_rec_id_seq OWNER TO vagrant;
+
+--
+-- Name: customer_recipes_cust_rec_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE customer_recipes_cust_rec_id_seq OWNED BY customer_recipes.cust_rec_id;
+
+
+--
+-- Name: customer_restrictions; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE customer_restrictions (
+    cust_restr_id integer NOT NULL,
+    customer_id integer NOT NULL,
+    diet_id integer NOT NULL
+);
+
+
+ALTER TABLE customer_restrictions OWNER TO vagrant;
+
+--
+-- Name: customer_restrictions_cust_restr_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE customer_restrictions_cust_restr_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE customer_restrictions_cust_restr_id_seq OWNER TO vagrant;
+
+--
+-- Name: customer_restrictions_cust_restr_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE customer_restrictions_cust_restr_id_seq OWNED BY customer_restrictions.cust_restr_id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE customers (
+    user_id integer NOT NULL,
+    first_name character varying(100),
+    last_name character varying(100),
+    email character varying(100) NOT NULL,
+    password_hash character varying(500) NOT NULL,
+    street_address character varying(100),
+    zipcode character varying(15),
+    state character varying(2),
+    phone character varying(30)
+);
+
+
+ALTER TABLE customers OWNER TO vagrant;
+
+--
+-- Name: customers_user_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE customers_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE customers_user_id_seq OWNER TO vagrant;
+
+--
+-- Name: customers_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE customers_user_id_seq OWNED BY customers.user_id;
+
+
+--
+-- Name: deliveries; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE deliveries (
+    delivery_id integer NOT NULL,
+    vendor character varying(500),
+    received_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE deliveries OWNER TO vagrant;
+
+--
+-- Name: deliveries_delivery_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE deliveries_delivery_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE deliveries_delivery_id_seq OWNER TO vagrant;
+
+--
+-- Name: deliveries_delivery_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE deliveries_delivery_id_seq OWNED BY deliveries.delivery_id;
+
+
+--
+-- Name: delivery_quantities; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE delivery_quantities (
+    deliv_qty_id integer NOT NULL,
+    product_id integer NOT NULL,
+    product_qty integer NOT NULL,
+    delivery_id integer NOT NULL
+);
+
+
+ALTER TABLE delivery_quantities OWNER TO vagrant;
+
+--
+-- Name: delivery_quantities_deliv_qty_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE delivery_quantities_deliv_qty_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE delivery_quantities_deliv_qty_id_seq OWNER TO vagrant;
+
+--
+-- Name: delivery_quantities_deliv_qty_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE delivery_quantities_deliv_qty_id_seq OWNED BY delivery_quantities.deliv_qty_id;
+
+
+--
+-- Name: dietary_restrictions; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE dietary_restrictions (
+    diet_id integer NOT NULL,
+    name character varying(100) NOT NULL
+);
+
+
+ALTER TABLE dietary_restrictions OWNER TO vagrant;
+
+--
+-- Name: dietary_restrictions_diet_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE dietary_restrictions_diet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE dietary_restrictions_diet_id_seq OWNER TO vagrant;
+
+--
+-- Name: dietary_restrictions_diet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE dietary_restrictions_diet_id_seq OWNED BY dietary_restrictions.diet_id;
+
+
+--
+-- Name: icons; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE icons (
+    icon_id integer NOT NULL,
+    url character varying(500) NOT NULL,
+    credit character varying(100) NOT NULL
+);
+
+
+ALTER TABLE icons OWNER TO vagrant;
+
+--
+-- Name: icons_icon_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE icons_icon_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE icons_icon_id_seq OWNER TO vagrant;
+
+--
+-- Name: icons_icon_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE icons_icon_id_seq OWNED BY icons.icon_id;
+
+
+--
+-- Name: order_quantities; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE order_quantities (
+    order_qty_id integer NOT NULL,
+    product_id integer NOT NULL,
+    product_qty integer NOT NULL,
+    order_id integer NOT NULL
+);
+
+
+ALTER TABLE order_quantities OWNER TO vagrant;
+
+--
+-- Name: order_quantities_order_qty_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE order_quantities_order_qty_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE order_quantities_order_qty_id_seq OWNER TO vagrant;
+
+--
+-- Name: order_quantities_order_qty_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE order_quantities_order_qty_id_seq OWNED BY order_quantities.order_qty_id;
+
+
+--
+-- Name: orders; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE orders (
+    order_id integer NOT NULL,
+    customer_id integer NOT NULL,
+    placed_at timestamp without time zone NOT NULL,
+    total numeric NOT NULL,
+    pickup_id integer NOT NULL,
+    received_at timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE orders OWNER TO vagrant;
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE orders_order_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE orders_order_id_seq OWNER TO vagrant;
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE orders_order_id_seq OWNED BY orders.order_id;
+
+
+--
+-- Name: pickups; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE pickups (
+    pickup_id integer NOT NULL,
+    name character varying(100),
+    street_address character varying(100) NOT NULL,
+    zipcode character varying(15) NOT NULL,
+    state character varying(2) NOT NULL
+);
+
+
+ALTER TABLE pickups OWNER TO vagrant;
+
+--
+-- Name: pickups_pickup_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE pickups_pickup_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE pickups_pickup_id_seq OWNER TO vagrant;
+
+--
+-- Name: pickups_pickup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE pickups_pickup_id_seq OWNED BY pickups.pickup_id;
+
+
+--
+-- Name: product_tags; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE product_tags (
+    prod_tag_id integer NOT NULL,
+    product_id integer NOT NULL,
+    tag_id integer NOT NULL
+);
+
+
+ALTER TABLE product_tags OWNER TO vagrant;
+
+--
+-- Name: product_tags_prod_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE product_tags_prod_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE product_tags_prod_tag_id_seq OWNER TO vagrant;
+
+--
+-- Name: product_tags_prod_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE product_tags_prod_tag_id_seq OWNED BY product_tags.prod_tag_id;
+
+
+--
+-- Name: products; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE products (
+    product_id integer NOT NULL,
+    name character varying(200) NOT NULL,
+    description text,
+    weight numeric,
+    unit character varying(50),
+    price numeric NOT NULL,
+    price_per numeric,
+    per_unit character varying(50),
+    aisle character varying(50),
+    category character varying(50),
+    img character varying(500),
+    icon_id integer,
+    color character varying(10)
+);
+
+
+ALTER TABLE products OWNER TO vagrant;
+
+--
+-- Name: products_product_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE products_product_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE products_product_id_seq OWNER TO vagrant;
+
+--
+-- Name: products_product_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE products_product_id_seq OWNED BY products.product_id;
+
+
+--
+-- Name: recipes; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE recipes (
+    recipe_id integer NOT NULL,
+    url character varying(300) NOT NULL,
+    name character varying(100) NOT NULL,
+    ingredients json NOT NULL,
+    img character varying(300)
+);
+
+
+ALTER TABLE recipes OWNER TO vagrant;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE recipes_recipe_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE recipes_recipe_id_seq OWNER TO vagrant;
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE recipes_recipe_id_seq OWNED BY recipes.recipe_id;
+
+
+--
+-- Name: tags; Type: TABLE; Schema: public; Owner: vagrant
+--
+
+CREATE TABLE tags (
+    tag_id integer NOT NULL,
+    name character varying(100) NOT NULL
+);
+
+
+ALTER TABLE tags OWNER TO vagrant;
+
+--
+-- Name: tags_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: vagrant
+--
+
+CREATE SEQUENCE tags_tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE tags_tag_id_seq OWNER TO vagrant;
+
+--
+-- Name: tags_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: vagrant
+--
+
+ALTER SEQUENCE tags_tag_id_seq OWNED BY tags.tag_id;
+
+
+--
+-- Name: cust_rec_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_recipes ALTER COLUMN cust_rec_id SET DEFAULT nextval('customer_recipes_cust_rec_id_seq'::regclass);
+
+
+--
+-- Name: cust_restr_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_restrictions ALTER COLUMN cust_restr_id SET DEFAULT nextval('customer_restrictions_cust_restr_id_seq'::regclass);
+
+
+--
+-- Name: user_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customers ALTER COLUMN user_id SET DEFAULT nextval('customers_user_id_seq'::regclass);
+
+
+--
+-- Name: delivery_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY deliveries ALTER COLUMN delivery_id SET DEFAULT nextval('deliveries_delivery_id_seq'::regclass);
+
+
+--
+-- Name: deliv_qty_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY delivery_quantities ALTER COLUMN deliv_qty_id SET DEFAULT nextval('delivery_quantities_deliv_qty_id_seq'::regclass);
+
+
+--
+-- Name: diet_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY dietary_restrictions ALTER COLUMN diet_id SET DEFAULT nextval('dietary_restrictions_diet_id_seq'::regclass);
+
+
+--
+-- Name: icon_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY icons ALTER COLUMN icon_id SET DEFAULT nextval('icons_icon_id_seq'::regclass);
+
+
+--
+-- Name: order_qty_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY order_quantities ALTER COLUMN order_qty_id SET DEFAULT nextval('order_quantities_order_qty_id_seq'::regclass);
+
+
+--
+-- Name: order_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY orders ALTER COLUMN order_id SET DEFAULT nextval('orders_order_id_seq'::regclass);
+
+
+--
+-- Name: pickup_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY pickups ALTER COLUMN pickup_id SET DEFAULT nextval('pickups_pickup_id_seq'::regclass);
+
+
+--
+-- Name: prod_tag_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY product_tags ALTER COLUMN prod_tag_id SET DEFAULT nextval('product_tags_prod_tag_id_seq'::regclass);
+
+
+--
+-- Name: product_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY products ALTER COLUMN product_id SET DEFAULT nextval('products_product_id_seq'::regclass);
+
+
+--
+-- Name: recipe_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY recipes ALTER COLUMN recipe_id SET DEFAULT nextval('recipes_recipe_id_seq'::regclass);
+
+
+--
+-- Name: tag_id; Type: DEFAULT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY tags ALTER COLUMN tag_id SET DEFAULT nextval('tags_tag_id_seq'::regclass);
+
+
+--
+-- Data for Name: customer_recipes; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY customer_recipes (cust_rec_id, customer_id, recipe_id) FROM stdin;
+\.
+
+
+--
+-- Name: customer_recipes_cust_rec_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('customer_recipes_cust_rec_id_seq', 1, false);
+
+
+--
+-- Data for Name: customer_restrictions; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY customer_restrictions (cust_restr_id, customer_id, diet_id) FROM stdin;
+\.
+
+
+--
+-- Name: customer_restrictions_cust_restr_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('customer_restrictions_cust_restr_id_seq', 1, false);
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY customers (user_id, first_name, last_name, email, password_hash, street_address, zipcode, state, phone) FROM stdin;
+\.
+
+
+--
+-- Name: customers_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('customers_user_id_seq', 1, false);
+
+
+--
+-- Data for Name: deliveries; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY deliveries (delivery_id, vendor, received_at) FROM stdin;
+\.
+
+
+--
+-- Name: deliveries_delivery_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('deliveries_delivery_id_seq', 1, false);
+
+
+--
+-- Data for Name: delivery_quantities; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY delivery_quantities (deliv_qty_id, product_id, product_qty, delivery_id) FROM stdin;
+\.
+
+
+--
+-- Name: delivery_quantities_deliv_qty_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('delivery_quantities_deliv_qty_id_seq', 1, false);
+
+
+--
+-- Data for Name: dietary_restrictions; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY dietary_restrictions (diet_id, name) FROM stdin;
+\.
+
+
+--
+-- Name: dietary_restrictions_diet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('dietary_restrictions_diet_id_seq', 1, false);
+
+
+--
+-- Data for Name: icons; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY icons (icon_id, url, credit) FROM stdin;
+\.
+
+
+--
+-- Name: icons_icon_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('icons_icon_id_seq', 1, false);
+
+
+--
+-- Data for Name: order_quantities; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY order_quantities (order_qty_id, product_id, product_qty, order_id) FROM stdin;
+\.
+
+
+--
+-- Name: order_quantities_order_qty_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('order_quantities_order_qty_id_seq', 1, false);
+
+
+--
+-- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY orders (order_id, customer_id, placed_at, total, pickup_id, received_at) FROM stdin;
+\.
+
+
+--
+-- Name: orders_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('orders_order_id_seq', 1, false);
+
+
+--
+-- Data for Name: pickups; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY pickups (pickup_id, name, street_address, zipcode, state) FROM stdin;
+\.
+
+
+--
+-- Name: pickups_pickup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('pickups_pickup_id_seq', 1, false);
+
+
+--
+-- Data for Name: product_tags; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY product_tags (prod_tag_id, product_id, tag_id) FROM stdin;
+1	1	1
+2	1	2
+3	2	2
+4	2	3
+5	3	2
+6	3	3
+7	4	1
+8	4	2
+9	5	2
+10	5	3
+11	7	1
+12	7	2
+13	8	2
+14	8	3
+15	9	2
+16	9	3
+17	9	4
+18	10	1
+19	10	2
+20	11	1
+21	11	2
+22	13	3
+23	14	1
+24	14	2
+25	15	1
+26	15	2
+27	15	5
+28	16	6
+29	16	7
+30	17	2
+31	18	1
+32	19	1
+33	20	1
+34	20	8
+35	21	1
+36	21	2
+37	22	1
+38	23	1
+39	24	1
+40	24	2
+41	25	1
+42	26	1
+43	27	3
+44	28	1
+45	29	3
+46	30	1
+47	30	2
+48	31	1
+49	32	1
+50	32	2
+51	33	2
+52	33	3
+53	34	1
+54	34	2
+55	35	1
+56	36	1
+57	36	2
+58	37	2
+59	38	1
+60	38	2
+61	39	1
+62	39	2
+63	40	1
+64	40	2
+65	41	1
+66	42	1
+67	43	1
+68	43	2
+69	44	1
+70	44	2
+71	45	1
+72	45	2
+73	45	3
+74	46	1
+75	46	2
+76	47	1
+77	47	2
+78	48	1
+79	48	2
+80	49	1
+81	49	2
+82	50	1
+83	50	2
+84	51	1
+85	51	2
+86	52	1
+87	53	1
+88	53	2
+89	54	1
+90	54	2
+91	55	1
+92	55	2
+93	56	3
+94	57	1
+95	58	1
+96	59	3
+97	60	3
+98	61	1
+99	61	2
+100	62	3
+101	63	1
+102	63	2
+103	65	1
+104	66	2
+105	67	1
+106	67	2
+107	68	2
+108	68	3
+109	69	1
+110	69	2
+111	70	1
+112	70	2
+113	71	1
+114	71	2
+115	72	1
+116	73	1
+117	73	2
+118	74	1
+119	74	2
+120	75	1
+121	75	2
+122	76	1
+123	76	2
+124	77	1
+125	78	1
+126	78	2
+127	79	1
+128	79	2
+129	80	1
+130	80	2
+131	81	1
+132	82	1
+133	82	2
+134	83	1
+135	83	2
+136	84	1
+137	84	2
+138	85	1
+139	85	2
+140	86	1
+141	86	2
+142	87	1
+143	88	1
+144	88	2
+145	89	1
+146	90	1
+147	90	2
+148	91	2
+149	92	1
+150	92	2
+151	93	2
+152	93	3
+153	94	1
+154	94	2
+155	95	2
+156	95	3
+157	96	1
+158	96	2
+159	97	1
+160	97	2
+161	98	1
+162	98	2
+163	99	1
+164	99	2
+165	100	1
+166	100	2
+167	101	1
+168	101	2
+169	102	1
+170	102	2
+171	103	2
+172	103	3
+173	104	1
+174	104	2
+175	105	1
+176	105	2
+177	106	2
+178	106	3
+179	107	1
+180	107	2
+181	108	1
+182	109	1
+183	109	2
+184	110	1
+185	110	2
+186	111	2
+187	111	3
+188	112	1
+189	112	2
+190	113	1
+191	114	1
+192	114	2
+193	114	3
+194	115	1
+195	115	2
+196	116	1
+197	116	2
+198	117	1
+199	117	2
+200	118	1
+201	118	2
+202	119	1
+203	119	2
+204	120	1
+205	120	2
+206	121	3
+207	122	1
+208	122	2
+209	123	1
+210	123	2
+211	124	1
+212	124	2
+213	125	1
+214	125	2
+215	126	1
+216	126	2
+217	127	1
+218	127	2
+219	128	1
+220	128	2
+221	129	1
+222	129	2
+223	130	1
+224	130	2
+225	131	1
+226	131	7
+227	132	1
+228	132	2
+229	133	1
+230	133	2
+231	134	1
+232	134	2
+233	135	1
+234	135	2
+235	136	1
+236	136	2
+237	137	1
+238	137	2
+239	138	1
+240	138	2
+241	139	1
+242	139	2
+243	140	1
+244	140	2
+245	141	1
+246	141	2
+247	142	1
+248	142	2
+249	143	1
+250	143	2
+251	144	2
+252	144	3
+253	145	1
+254	145	2
+255	147	1
+256	147	2
+257	148	1
+258	148	2
+259	149	1
+260	149	2
+261	150	1
+262	150	2
+263	151	1
+264	151	2
+265	152	1
+266	152	2
+267	153	1
+268	153	2
+269	154	1
+270	154	2
+271	155	1
+272	155	2
+273	156	1
+274	156	2
+275	157	1
+276	157	2
+277	158	1
+278	158	2
+279	159	1
+280	159	2
+281	160	1
+282	160	2
+283	161	1
+284	161	2
+285	162	2
+286	162	3
+287	163	1
+288	163	2
+289	164	2
+290	164	3
+291	164	4
+292	165	1
+293	165	2
+294	166	1
+295	166	2
+296	167	2
+297	167	3
+298	167	4
+299	168	1
+300	168	2
+301	169	1
+302	169	2
+303	170	2
+304	170	3
+305	170	4
+306	171	1
+307	171	2
+308	172	1
+309	172	2
+310	173	1
+311	173	2
+312	174	4
+313	174	2
+314	175	2
+315	175	3
+316	175	4
+317	176	4
+318	176	2
+319	176	3
+320	177	4
+321	177	2
+322	178	1
+323	178	2
+324	179	1
+325	180	1
+326	180	2
+327	181	1
+328	181	2
+329	182	1
+330	182	2
+331	183	2
+332	183	3
+333	184	1
+334	184	2
+335	185	1
+336	185	2
+337	186	1
+338	186	2
+339	187	1
+340	187	2
+341	188	1
+342	188	2
+343	189	1
+344	189	2
+345	190	1
+346	190	2
+347	191	1
+348	191	2
+349	192	2
+350	192	3
+351	193	1
+352	193	2
+353	194	2
+354	194	3
+355	195	1
+356	195	2
+357	196	2
+358	196	3
+359	197	2
+360	197	3
+361	198	1
+362	198	2
+363	199	1
+364	199	2
+365	200	1
+366	200	2
+367	201	1
+368	201	2
+369	202	1
+370	202	2
+371	203	1
+372	203	2
+373	204	1
+374	204	2
+375	204	9
+376	204	3
+377	205	2
+378	205	3
+379	206	1
+380	206	2
+381	207	1
+382	207	2
+383	207	9
+384	207	3
+385	208	1
+386	208	2
+387	209	1
+388	209	2
+389	210	1
+390	210	2
+391	211	1
+392	211	2
+393	211	9
+394	211	3
+395	212	1
+396	212	2
+397	214	1
+398	214	2
+399	217	1
+400	217	2
+401	219	7
+402	220	7
+403	221	7
+404	222	7
+405	224	1
+406	225	1
+407	225	2
+408	226	1
+409	226	2
+410	227	1
+411	228	1
+412	228	2
+413	229	1
+414	229	2
+415	230	1
+416	230	2
+417	231	1
+418	231	2
+419	232	1
+420	233	1
+421	233	2
+422	234	1
+423	234	2
+424	235	1
+425	235	2
+426	236	1
+427	237	1
+428	237	2
+429	238	1
+430	238	2
+431	239	1
+432	239	2
+433	240	1
+434	240	2
+435	241	1
+436	241	2
+437	242	1
+438	242	2
+439	243	2
+440	243	9
+441	243	3
+442	244	1
+443	244	2
+444	245	1
+445	245	2
+446	246	1
+447	246	2
+448	247	1
+449	247	2
+450	248	1
+451	248	2
+452	248	3
+453	249	1
+454	249	2
+455	250	1
+456	250	2
+457	251	1
+458	251	2
+459	252	1
+460	252	2
+461	253	1
+462	253	2
+463	254	2
+464	254	3
+465	255	1
+466	255	2
+467	256	2
+468	256	3
+469	257	1
+470	257	2
+471	258	2
+472	259	1
+473	259	2
+474	260	2
+475	260	3
+476	261	1
+477	261	2
+478	262	1
+479	262	2
+480	263	1
+481	263	2
+482	264	1
+483	264	2
+484	265	8
+485	266	2
+486	266	3
+487	267	1
+488	267	2
+489	268	1
+490	268	2
+491	269	2
+492	269	3
+493	270	1
+494	270	2
+495	271	1
+496	271	2
+497	272	2
+498	272	3
+499	273	1
+500	273	2
+501	274	2
+502	274	3
+503	275	2
+504	275	3
+505	276	10
+506	277	1
+507	277	2
+508	279	11
+509	279	10
+510	279	3
+511	280	10
+512	281	11
+513	282	11
+514	282	10
+515	282	3
+516	283	11
+517	283	10
+518	283	3
+519	285	11
+520	285	10
+521	285	3
+522	287	11
+523	287	10
+524	287	9
+525	287	3
+526	288	12
+527	288	13
+528	288	14
+529	288	15
+530	289	11
+531	289	10
+532	289	3
+533	290	11
+534	290	10
+535	290	3
+536	291	11
+537	291	10
+538	291	9
+539	291	3
+540	292	1
+541	292	16
+542	292	9
+543	293	2
+544	294	2
+545	294	3
+546	295	2
+547	296	1
+548	296	16
+549	296	9
+550	297	2
+551	297	3
+552	298	2
+553	298	7
+554	298	9
+555	298	6
+556	298	17
+557	298	3
+558	298	14
+559	298	18
+560	299	2
+561	299	7
+562	299	9
+563	299	6
+564	299	17
+565	299	3
+566	299	14
+567	299	18
+568	300	1
+569	300	19
+570	301	2
+571	301	3
+572	302	2
+573	302	3
+574	303	6
+575	303	2
+576	303	7
+577	303	14
+578	303	18
+579	303	9
+580	303	17
+581	303	3
+582	304	2
+583	305	2
+584	305	9
+585	305	6
+586	305	17
+587	305	3
+588	305	14
+589	305	18
+590	306	2
+591	306	7
+592	306	9
+593	306	6
+594	306	17
+595	306	3
+596	306	14
+597	306	18
+598	307	1
+599	307	19
+600	307	9
+601	307	18
+602	308	14
+603	308	9
+604	309	6
+605	309	2
+606	309	7
+607	309	9
+608	309	3
+609	310	2
+610	310	14
+611	311	1
+612	311	14
+613	311	9
+614	311	13
+615	312	2
+616	312	7
+617	312	9
+618	312	6
+619	312	17
+620	312	3
+621	312	14
+622	312	18
+623	314	6
+624	314	2
+625	314	7
+626	314	9
+627	314	17
+628	314	3
+629	315	6
+630	315	2
+631	315	7
+632	315	9
+633	315	3
+634	316	6
+635	316	2
+636	316	7
+637	316	9
+638	316	17
+639	316	3
+640	317	1
+641	317	16
+642	317	9
+643	317	19
+644	318	1
+645	318	9
+646	319	14
+647	319	9
+648	320	1
+649	321	19
+650	322	6
+651	322	2
+652	322	7
+653	322	14
+654	322	18
+655	322	9
+656	322	3
+657	323	6
+658	323	2
+659	323	7
+660	323	14
+661	323	18
+662	323	9
+663	323	17
+664	323	3
+665	324	6
+666	324	2
+667	324	7
+668	324	14
+669	324	18
+670	324	9
+671	324	17
+672	324	3
+673	325	6
+674	325	2
+675	325	7
+676	325	14
+677	325	18
+678	325	9
+679	325	17
+680	325	3
+681	326	6
+682	326	2
+683	326	7
+684	326	14
+685	326	18
+686	326	9
+687	326	17
+688	326	3
+689	327	6
+690	327	2
+691	327	7
+692	327	14
+693	327	18
+694	327	9
+695	327	17
+696	327	3
+697	328	2
+698	328	7
+699	328	14
+700	328	18
+701	328	9
+702	328	3
+703	329	1
+704	329	3
+705	329	20
+706	329	21
+707	330	1
+708	330	7
+709	331	1
+710	331	9
+711	332	1
+712	332	6
+713	332	12
+714	332	14
+715	332	18
+716	332	9
+717	333	9
+718	333	22
+719	334	1
+720	334	12
+721	334	9
+722	334	19
+723	335	1
+724	335	7
+725	335	22
+726	335	8
+727	336	22
+728	336	1
+729	336	19
+730	336	20
+731	337	1
+732	337	7
+733	337	22
+734	337	8
+735	338	22
+736	338	1
+737	338	19
+738	338	20
+739	339	22
+740	339	1
+741	339	19
+742	339	20
+743	340	16
+744	340	22
+745	341	22
+746	341	7
+747	342	1
+748	342	13
+749	342	21
+750	343	1
+751	343	13
+752	343	21
+753	344	1
+754	344	13
+755	344	21
+756	345	1
+757	346	1
+758	346	7
+759	346	22
+760	346	8
+761	347	1
+762	347	7
+763	347	22
+764	347	8
+765	348	22
+766	348	1
+767	348	19
+768	348	20
+769	349	16
+770	349	22
+771	349	8
+772	350	1
+773	350	7
+774	350	22
+775	351	1
+776	351	7
+777	351	22
+778	352	16
+779	352	22
+780	353	22
+781	353	1
+782	353	19
+783	353	20
+784	354	16
+785	354	22
+786	355	1
+787	355	20
+788	355	22
+789	355	19
+790	356	1
+791	356	20
+792	356	22
+793	356	19
+794	356	8
+795	358	1
+796	358	20
+797	358	22
+798	358	19
+799	359	1
+800	359	22
+801	359	8
+802	360	22
+803	360	1
+804	361	1
+805	361	22
+806	362	22
+807	362	1
+808	362	19
+809	362	20
+810	363	22
+811	363	7
+812	364	16
+813	364	22
+814	365	22
+815	365	1
+816	365	19
+817	365	20
+818	366	1
+819	366	13
+820	366	21
+821	367	1
+822	367	2
+823	367	3
+824	367	20
+825	368	1
+826	368	23
+827	369	20
+828	369	21
+829	370	1
+830	370	2
+831	370	23
+832	370	20
+833	371	1
+834	371	24
+835	371	21
+836	372	1
+837	372	23
+838	373	20
+839	373	21
+840	374	24
+841	374	9
+842	374	21
+843	375	20
+844	375	21
+845	376	1
+846	376	21
+847	376	24
+848	377	20
+849	378	2
+850	378	21
+851	379	2
+852	379	23
+853	380	2
+854	380	21
+855	381	2
+856	381	23
+857	383	1
+858	383	20
+859	383	22
+860	383	19
+861	383	8
+862	384	1
+863	385	1
+864	385	20
+865	385	22
+866	385	19
+867	387	1
+868	388	1
+869	389	1
+870	389	8
+871	390	1
+872	391	1
+873	391	8
+874	392	1
+875	392	8
+876	393	1
+877	393	8
+878	394	1
+879	394	8
+880	395	1
+881	396	1
+882	397	1
+883	398	1
+884	399	1
+885	399	20
+886	399	22
+887	399	19
+888	399	8
+889	400	1
+890	400	7
+891	401	1
+892	401	20
+893	401	22
+894	401	19
+895	401	8
+896	402	1
+897	403	1
+898	405	1
+899	405	13
+900	405	21
+901	406	1
+902	406	7
+903	406	19
+904	407	23
+905	407	22
+906	409	23
+907	409	22
+908	410	1
+909	410	7
+910	411	1
+911	411	7
+912	412	1
+913	412	8
+914	413	1
+915	414	1
+916	415	1
+917	415	8
+918	416	1
+919	417	1
+920	418	1
+921	418	7
+922	419	1
+923	419	7
+924	420	1
+925	420	7
+926	421	1
+927	421	7
+928	422	1
+929	422	7
+930	423	1
+931	423	9
+932	423	22
+933	424	1
+934	424	9
+935	424	22
+936	425	22
+937	425	1
+938	425	9
+939	426	22
+940	426	1
+941	426	9
+942	427	1
+943	427	9
+944	427	22
+945	428	22
+946	428	1
+947	428	9
+948	429	22
+949	429	1
+950	429	9
+951	430	22
+952	430	1
+953	430	9
+954	431	1
+955	431	9
+956	431	22
+957	432	7
+958	432	6
+959	432	24
+960	432	14
+961	432	18
+962	433	6
+963	433	14
+964	433	18
+965	433	24
+966	434	6
+967	434	12
+968	434	7
+969	434	14
+970	434	24
+971	434	9
+972	435	12
+973	435	7
+974	435	9
+975	435	6
+976	436	12
+977	436	7
+978	436	9
+979	436	6
+980	437	6
+981	437	12
+982	437	14
+983	437	18
+984	438	1
+985	438	7
+986	438	22
+987	438	19
+988	439	1
+989	439	7
+990	439	22
+991	439	19
+992	440	1
+993	440	7
+994	440	22
+995	440	19
+996	441	14
+997	442	6
+998	442	24
+999	442	14
+1000	442	18
+1001	443	22
+1002	443	1
+1003	444	25
+1004	444	19
+1005	445	22
+1006	445	1
+1007	445	19
+1008	445	20
+1009	446	1
+1010	446	7
+1011	446	17
+1012	446	25
+1013	446	21
+1014	447	1
+1015	447	23
+1016	447	22
+1017	448	1
+1018	448	7
+1019	448	17
+1020	448	25
+1021	448	21
+1022	449	22
+1023	449	9
+1024	450	1
+1025	450	7
+1026	450	17
+1027	450	25
+1028	450	21
+1029	451	25
+1030	451	19
+1031	452	1
+1032	452	22
+1033	452	8
+1034	453	22
+1035	453	9
+1036	454	1
+1037	454	23
+1038	454	22
+1039	455	22
+1040	455	1
+1041	455	19
+1042	455	20
+1043	456	9
+1044	456	22
+1045	457	22
+1046	457	9
+1047	458	26
+1048	458	7
+1049	458	23
+1050	458	20
+1051	460	6
+1052	460	12
+1053	460	14
+1054	460	18
+1055	460	24
+1056	460	13
+1057	460	27
+1058	461	6
+1059	461	12
+1060	461	24
+1061	462	6
+1062	462	12
+1063	462	24
+1064	463	6
+1065	463	12
+1066	463	14
+1067	463	18
+1068	463	24
+1069	463	13
+1070	463	27
+1071	464	6
+1072	464	12
+1073	464	14
+1074	464	18
+1075	464	24
+1076	464	13
+1077	464	27
+1078	465	12
+1079	465	14
+1080	465	24
+1081	465	13
+1082	466	6
+1083	466	12
+1084	466	14
+1085	466	18
+1086	466	24
+1087	466	13
+1088	466	27
+1089	467	12
+1090	467	6
+1091	467	24
+1092	468	1
+1093	468	24
+1094	469	12
+1095	469	13
+1096	469	24
+1097	469	14
+1098	470	12
+1099	470	14
+1100	470	24
+1101	471	12
+1102	471	24
+1103	471	14
+1104	472	1
+1105	472	12
+1106	472	19
+1107	472	9
+1108	472	24
+1109	472	15
+1110	473	1
+1111	473	12
+1112	473	19
+1113	473	9
+1114	473	24
+1115	473	15
+1116	475	1
+1117	475	12
+1118	475	9
+1119	475	24
+1120	475	14
+1121	475	15
+1122	476	1
+1123	476	24
+1124	476	8
+1125	478	1
+1126	479	1
+1127	479	12
+1128	479	19
+1129	479	9
+1130	479	15
+1131	480	1
+1132	480	24
+1133	481	1
+1134	482	1
+1135	482	12
+1136	482	14
+1137	482	18
+1138	482	9
+1139	482	6
+1140	483	1
+1141	483	12
+1142	483	15
+1143	483	9
+1144	483	19
+1145	484	1
+1146	485	6
+1147	485	7
+1148	485	15
+1149	486	7
+1150	486	6
+1151	486	15
+1152	487	1
+1153	487	7
+1154	488	9
+1155	488	22
+1156	489	6
+1157	489	7
+1158	489	15
+1159	491	6
+1160	494	9
+1161	494	22
+1162	495	9
+1163	495	22
+1164	496	6
+1165	497	1
+1166	498	7
+1167	498	6
+1168	498	15
+1169	502	1
+1170	502	7
+1171	503	7
+1172	503	6
+1173	503	15
+1174	505	1
+1175	505	7
+1176	507	6
+1177	507	7
+1178	507	15
+1179	514	1
+1180	514	7
+1181	515	1
+1182	516	7
+1183	516	6
+1184	516	15
+1185	526	1
+1186	526	7
+1187	526	18
+1188	526	9
+1189	527	1
+1190	527	7
+1191	527	9
+1192	527	18
+1193	528	1
+1194	528	7
+1195	528	9
+1196	528	18
+1197	529	1
+1198	529	7
+1199	529	9
+1200	529	18
+1201	530	1
+1202	530	7
+1203	530	9
+1204	530	18
+1205	531	1
+1206	531	7
+1207	531	9
+1208	531	18
+1209	532	1
+1210	532	7
+1211	532	9
+1212	532	18
+1213	533	6
+1214	533	12
+1215	533	14
+1216	533	24
+1217	533	28
+1218	533	17
+1219	534	6
+1220	534	12
+1221	534	14
+1222	534	24
+1223	534	28
+1224	534	17
+1225	536	6
+1226	536	12
+1227	536	14
+1228	536	24
+1229	536	28
+1230	536	17
+1231	537	6
+1232	537	12
+1233	537	14
+1234	537	24
+1235	537	28
+1236	537	17
+1237	538	12
+1238	538	24
+1239	538	14
+1240	538	18
+1241	539	6
+1242	539	12
+1243	539	14
+1244	539	24
+1245	539	28
+1246	539	17
+1247	540	12
+1248	540	24
+1249	540	14
+1250	540	18
+1251	541	12
+1252	541	6
+1253	541	24
+1254	541	14
+1255	541	18
+1256	542	12
+1257	542	24
+1258	542	14
+1259	542	18
+1260	543	12
+1261	543	6
+1262	543	24
+1263	543	14
+1264	543	18
+1265	544	12
+1266	544	14
+1267	544	18
+1268	545	12
+1269	545	24
+1270	545	14
+1271	545	18
+1272	546	12
+1273	546	6
+1274	546	24
+1275	546	14
+1276	546	18
+1277	547	1
+1278	547	12
+1279	547	7
+1280	547	9
+1281	547	14
+1282	547	18
+1283	548	7
+1284	549	7
+1285	550	7
+1286	552	7
+1287	553	23
+1288	553	22
+1289	554	19
+1290	554	7
+1291	554	29
+1292	555	23
+1293	555	22
+1294	557	22
+1295	558	22
+1296	558	18
+1297	559	1
+1298	559	7
+1299	561	1
+1300	561	7
+1301	562	1
+1302	562	7
+1303	563	22
+1304	563	18
+1305	565	18
+1306	566	18
+1307	568	18
+1308	569	1
+1309	569	7
+1310	570	22
+1311	570	18
+1312	571	1
+1313	571	7
+1314	572	18
+1315	573	1
+1316	574	1
+1317	574	7
+1318	574	25
+1319	574	22
+1320	577	1
+1321	577	7
+1322	577	19
+1323	578	8
+1324	579	8
+1325	581	22
+1326	582	27
+1327	584	22
+1328	584	8
+1329	585	22
+1330	585	2
+1331	586	22
+1332	586	8
+1333	587	1
+1334	587	7
+1335	588	1
+1336	588	25
+1337	588	27
+1338	589	18
+1339	591	22
+1340	592	22
+1341	593	18
+1342	594	18
+1343	595	22
+1344	595	2
+1345	596	22
+1346	596	2
+1347	597	22
+1348	597	1
+1349	597	7
+1350	597	23
+1351	598	1
+1352	598	21
+1353	598	13
+1354	599	1
+1355	599	25
+1356	599	27
+1357	600	7
+1358	602	7
+1359	602	29
+1360	603	7
+1361	603	29
+1362	604	22
+1363	604	1
+1364	604	23
+1365	605	22
+1366	605	1
+1367	605	23
+1368	606	7
+1369	608	22
+1370	608	1
+1371	608	7
+1372	609	22
+1373	609	1
+1374	609	19
+1375	609	20
+1376	610	22
+1377	610	1
+1378	610	7
+1379	611	7
+1380	612	22
+1381	612	25
+1382	612	23
+1383	613	25
+1384	613	23
+1385	613	22
+1386	614	25
+1387	614	23
+1388	614	22
+1389	615	22
+1390	615	1
+1391	615	7
+1392	617	29
+1393	618	20
+1394	618	23
+1395	618	22
+1396	618	27
+1397	619	25
+1398	619	23
+1399	619	22
+1400	620	16
+1401	620	29
+1402	621	16
+1403	621	29
+1404	622	16
+1405	622	29
+1406	623	1
+1407	623	19
+1408	623	7
+1409	623	9
+1410	624	22
+1411	624	23
+1412	625	22
+1413	626	1
+1414	626	7
+1415	626	29
+1416	627	22
+1417	628	22
+1418	628	25
+1419	628	23
+1420	629	25
+1421	629	23
+1422	629	22
+1423	630	7
+1424	630	29
+1425	631	22
+1426	631	25
+1427	631	23
+1428	632	22
+1429	632	2
+1430	633	2
+1431	633	22
+1432	634	22
+1433	634	2
+1434	636	22
+1435	636	2
+1436	637	25
+1437	637	23
+1438	637	22
+1439	638	22
+1440	638	2
+1441	639	22
+1442	639	2
+1443	639	29
+1444	640	2
+1445	640	22
+1446	641	22
+1447	641	25
+1448	641	23
+1449	642	22
+1450	642	2
+1451	642	29
+1452	643	22
+1453	643	23
+1454	643	20
+1455	644	7
+1456	644	29
+1457	645	25
+1458	645	23
+1459	645	22
+1460	646	1
+1461	646	7
+1462	646	29
+1463	646	8
+1464	648	7
+1465	649	22
+1466	649	7
+1467	654	16
+1468	654	22
+1469	654	27
+1470	655	22
+1471	655	7
+1472	657	1
+1473	657	9
+1474	658	22
+1475	658	2
+1476	658	29
+1477	661	27
+1478	663	19
+1479	663	7
+1480	663	29
+1481	664	27
+1482	666	22
+1483	667	27
+1484	669	27
+1485	672	22
+1486	672	27
+1487	673	16
+1488	673	22
+1489	674	25
+1490	674	27
+1491	675	7
+1492	676	25
+1493	676	27
+1494	677	25
+1495	677	27
+1496	678	25
+1497	678	27
+1498	679	12
+1499	679	14
+1500	679	24
+1501	679	9
+1502	680	9
+1503	680	24
+1504	680	14
+1505	681	12
+1506	681	16
+1507	681	14
+1508	681	24
+1509	681	9
+1510	682	9
+1511	682	24
+1512	682	14
+1513	683	14
+1514	683	24
+1515	683	9
+1516	685	1
+1517	685	12
+1518	685	14
+1519	685	18
+1520	685	9
+1521	686	1
+1522	686	12
+1523	686	14
+1524	686	18
+1525	686	9
+1526	686	6
+1527	687	1
+1528	687	6
+1529	687	12
+1530	687	14
+1531	687	18
+1532	687	9
+1533	688	16
+1534	688	14
+1535	688	9
+1536	688	19
+1537	689	16
+1538	689	14
+1539	689	9
+1540	689	19
+1541	690	1
+1542	691	14
+1543	691	9
+1544	691	19
+1545	692	11
+1546	692	9
+1547	692	13
+1548	692	27
+1549	692	14
+1550	692	15
+1551	693	1
+1552	693	12
+1553	693	9
+1554	693	6
+1555	693	14
+1556	693	18
+1557	694	1
+1558	694	6
+1559	694	12
+1560	694	14
+1561	694	18
+1562	694	9
+1563	695	12
+1564	695	14
+1565	695	9
+1566	696	12
+1567	696	14
+1568	696	9
+1569	697	12
+1570	697	14
+1571	697	9
+1572	698	12
+1573	698	14
+1574	698	9
+1575	699	1
+1576	699	12
+1577	699	9
+1578	699	6
+1579	699	14
+1580	699	18
+1581	700	1
+1582	700	12
+1583	700	9
+1584	700	6
+1585	700	14
+1586	700	18
+1587	701	1
+1588	701	6
+1589	701	12
+1590	701	14
+1591	701	18
+1592	701	9
+1593	702	11
+1594	703	2
+1595	703	11
+1596	703	23
+1597	704	11
+1598	704	25
+1599	704	30
+1600	704	23
+1601	705	26
+1602	705	20
+1603	706	2
+1604	706	11
+1605	706	20
+1606	706	23
+1607	707	2
+1608	707	11
+1609	707	20
+1610	707	23
+1611	708	1
+1612	708	20
+1613	708	26
+1614	709	1
+1615	709	11
+1616	709	20
+1617	710	11
+1618	710	1
+1619	710	20
+1620	711	1
+1621	711	11
+1622	711	20
+1623	712	1
+1624	712	26
+1625	712	20
+1626	713	1
+1627	713	20
+1628	713	26
+1629	714	11
+1630	714	9
+1631	714	23
+1632	715	11
+1633	715	9
+1634	715	23
+1635	716	1
+1636	716	20
+1637	716	26
+1638	717	1
+1639	717	20
+1640	717	26
+1641	718	1
+1642	718	26
+1643	718	20
+1644	719	1
+1645	719	20
+1646	719	26
+1647	720	1
+1648	720	20
+1649	720	26
+1650	721	11
+1651	721	1
+1652	721	20
+1653	722	1
+1654	722	26
+1655	722	20
+1656	723	1
+1657	723	20
+1658	723	26
+1659	724	11
+1660	724	9
+1661	724	23
+1662	725	1
+1663	725	11
+1664	725	20
+1665	726	1
+1666	726	26
+1667	726	20
+1668	727	1
+1669	727	20
+1670	727	26
+1671	728	2
+1672	728	11
+1673	728	23
+1674	729	9
+1675	729	23
+1676	730	2
+1677	730	11
+1678	730	23
+1679	731	2
+1680	731	11
+1681	731	23
+1682	732	9
+1683	732	23
+1684	733	9
+1685	733	23
+1686	734	11
+1687	734	1
+1688	734	2
+1689	734	20
+1690	735	11
+1691	735	1
+1692	735	2
+1693	735	20
+1694	736	11
+1695	736	1
+1696	736	2
+1697	736	20
+1698	737	2
+1699	737	23
+1700	737	20
+1701	738	2
+1702	738	11
+1703	738	20
+1704	738	23
+1705	739	2
+1706	739	23
+1707	739	20
+1708	740	11
+1709	740	9
+1710	741	23
+1711	741	31
+1712	742	23
+1713	742	31
+1714	743	23
+1715	743	31
+1716	744	23
+1717	744	31
+1718	745	11
+1719	745	20
+1720	746	11
+1721	746	20
+1722	747	11
+1723	747	20
+1724	748	11
+1725	748	20
+1726	748	23
+1727	749	2
+1728	749	11
+1729	749	17
+1730	749	20
+1731	749	23
+1732	749	31
+1733	749	32
+1734	750	20
+1735	751	2
+1736	751	11
+1737	751	17
+1738	752	11
+1739	753	2
+1740	753	11
+1741	754	2
+1742	754	11
+1743	754	20
+1744	754	23
+1745	755	11
+1746	755	25
+1747	755	2
+1748	755	23
+1749	755	20
+1750	756	11
+1751	756	25
+1752	756	20
+1753	757	2
+1754	757	11
+1755	757	17
+1756	757	25
+1757	757	23
+1758	758	26
+1759	758	25
+1760	758	30
+1761	758	23
+1762	759	11
+1763	759	17
+1764	759	25
+1765	759	20
+1766	760	11
+1767	760	17
+1768	760	25
+1769	760	20
+1770	761	11
+1771	761	25
+1772	761	20
+1773	761	30
+1774	762	11
+1775	762	17
+1776	762	25
+1777	762	20
+1778	763	2
+1779	763	11
+1780	763	25
+1781	763	30
+1782	764	11
+1783	764	17
+1784	764	25
+1785	764	20
+1786	764	23
+1787	765	26
+1788	765	30
+1789	765	25
+1790	765	23
+1791	766	11
+1792	766	25
+1793	766	30
+1794	766	23
+1795	767	11
+1796	767	25
+1797	767	30
+1798	767	23
+1799	768	11
+1800	768	30
+1801	768	25
+1802	768	23
+1803	769	26
+1804	769	25
+1805	769	30
+1806	769	23
+1807	770	26
+1808	770	25
+1809	770	30
+1810	770	23
+1811	771	26
+1812	771	25
+1813	771	30
+1814	771	23
+1815	772	11
+1816	772	25
+1817	772	30
+1818	772	23
+1819	773	11
+1820	773	25
+1821	773	30
+1822	773	23
+1823	774	11
+1824	774	25
+1825	774	30
+1826	774	23
+1827	775	2
+1828	775	11
+1829	775	17
+1830	775	25
+1831	775	23
+1832	776	2
+1833	776	11
+1834	776	17
+1835	776	25
+1836	776	23
+1837	778	11
+1838	778	17
+1839	778	25
+1840	778	20
+1841	778	23
+1842	779	11
+1843	779	25
+1844	779	30
+1845	779	23
+1846	780	26
+1847	780	25
+1848	780	30
+1849	780	23
+1850	781	11
+1851	781	17
+1852	781	25
+1853	781	20
+1854	781	30
+1855	782	11
+1856	782	30
+1857	782	25
+1858	782	23
+1859	783	11
+1860	783	25
+1861	783	30
+1862	783	23
+1863	784	26
+1864	784	25
+1865	784	30
+1866	784	23
+1867	785	26
+1868	785	30
+1869	785	25
+1870	785	23
+1871	786	11
+1872	786	30
+1873	786	25
+1874	786	23
+1875	787	2
+1876	787	26
+1877	787	20
+1878	787	23
+1879	788	11
+1880	788	23
+1881	789	11
+1882	789	2
+1883	790	11
+1884	790	20
+1885	791	11
+1886	791	20
+1887	792	11
+1888	792	2
+1889	792	23
+1890	793	26
+1891	793	2
+1892	793	23
+1893	793	20
+1894	794	26
+1895	794	11
+1896	794	9
+1897	794	20
+1898	795	11
+1899	795	9
+1900	795	23
+1901	795	20
+1902	796	11
+1903	796	20
+1904	796	23
+1905	797	11
+1906	797	2
+1907	798	11
+1908	798	9
+1909	798	23
+1910	798	20
+1911	799	11
+1912	799	20
+1913	800	26
+1914	800	2
+1915	800	23
+1916	800	20
+1917	801	26
+1918	801	2
+1919	801	23
+1920	801	20
+1921	802	2
+1922	802	26
+1923	802	20
+1924	802	23
+1925	803	11
+1926	803	20
+1927	803	23
+1928	804	11
+1929	804	2
+1930	805	26
+1931	805	2
+1932	805	23
+1933	805	20
+1934	806	11
+1935	806	9
+1936	806	20
+1937	807	11
+1938	807	9
+1939	807	20
+1940	807	23
+1941	808	26
+1942	808	2
+1943	808	23
+1944	808	20
+1945	809	26
+1946	809	2
+1947	809	23
+1948	809	20
+1949	810	26
+1950	810	2
+1951	810	23
+1952	810	20
+1953	811	11
+1954	811	23
+1955	811	20
+1956	812	11
+1957	812	2
+1958	812	23
+1959	813	2
+1960	813	11
+1961	813	20
+1962	813	23
+1963	814	2
+1964	814	11
+1965	814	20
+1966	814	23
+1967	815	11
+1968	815	9
+1969	815	23
+1970	815	20
+1971	816	2
+1972	816	26
+1973	816	20
+1974	816	23
+1975	817	11
+1976	817	23
+1977	817	20
+1978	818	26
+1979	818	2
+1980	818	23
+1981	818	20
+1982	819	26
+1983	819	2
+1984	819	23
+1985	819	20
+1986	820	11
+1987	820	9
+1988	820	20
+1989	821	11
+1990	821	9
+1991	821	20
+1992	822	11
+1993	822	9
+1994	822	20
+1995	823	26
+1996	823	9
+1997	823	20
+1998	824	2
+1999	824	26
+2000	824	20
+2001	824	23
+2002	825	11
+2003	825	2
+2004	826	26
+2005	826	2
+2006	826	23
+2007	826	20
+2008	827	26
+2009	827	2
+2010	827	23
+2011	827	20
+2012	828	2
+2013	828	26
+2014	828	20
+2015	828	23
+2016	829	2
+2017	829	26
+2018	829	20
+2019	829	23
+2020	830	11
+2021	830	20
+2022	830	32
+2023	831	23
+2024	831	21
+2025	832	20
+2026	832	8
+2027	833	21
+2028	834	2
+2029	834	11
+2030	834	20
+2031	834	23
+2032	835	21
+2033	836	21
+2034	837	11
+2035	837	20
+2036	837	23
+2037	837	32
+2038	838	11
+2039	838	25
+2040	838	23
+2041	839	26
+2042	839	2
+2043	839	17
+2044	839	23
+2045	839	20
+2046	840	2
+2047	840	26
+2048	840	17
+2049	840	20
+2050	840	23
+2051	841	2
+2052	841	26
+2053	841	17
+2054	841	20
+2055	841	23
+2056	842	2
+2057	842	26
+2058	842	17
+2059	842	20
+2060	842	23
+2061	843	2
+2062	843	26
+2063	843	17
+2064	843	20
+2065	843	23
+2066	844	26
+2067	844	2
+2068	844	17
+2069	844	23
+2070	844	20
+2071	845	2
+2072	845	26
+2073	845	17
+2074	845	20
+2075	845	23
+2076	846	2
+2077	846	26
+2078	846	17
+2079	846	20
+2080	846	23
+2081	847	2
+2082	847	26
+2083	847	17
+2084	847	20
+2085	847	23
+2086	848	2
+2087	848	11
+2088	848	17
+2089	848	20
+2090	848	23
+2091	849	2
+2092	849	26
+2093	849	17
+2094	849	20
+2095	849	23
+2096	850	2
+2097	850	26
+2098	850	17
+2099	850	20
+2100	850	23
+2101	851	2
+2102	851	26
+2103	851	17
+2104	851	20
+2105	851	23
+2106	852	2
+2107	852	26
+2108	852	17
+2109	852	20
+2110	852	23
+2111	853	2
+2112	853	26
+2113	853	17
+2114	853	20
+2115	853	23
+2116	854	2
+2117	855	6
+2118	856	11
+2119	856	20
+2120	856	23
+2121	857	11
+2122	858	1
+2123	858	12
+2124	858	16
+2125	858	24
+2126	858	28
+2127	858	9
+2128	859	11
+2129	860	11
+2130	861	1
+2131	861	12
+2132	861	16
+2133	861	24
+2134	861	28
+2135	861	9
+2136	862	11
+2137	863	11
+2138	864	26
+2139	864	9
+2140	864	20
+2141	865	11
+2142	865	2
+2143	865	23
+2144	865	20
+2145	866	11
+2146	866	2
+2147	866	23
+2148	866	20
+2149	867	11
+2150	867	20
+2151	868	22
+2152	869	11
+2153	869	2
+2154	869	23
+2155	869	20
+2156	870	11
+2157	870	25
+2158	870	2
+2159	870	23
+2160	870	20
+2161	871	22
+2162	872	11
+2163	872	2
+2164	872	23
+2165	872	20
+2166	873	11
+2167	873	20
+2168	874	11
+2169	874	2
+2170	874	23
+2171	874	20
+2172	875	22
+2173	876	22
+2174	877	11
+2175	877	20
+2176	878	16
+2177	878	2
+2178	878	11
+2179	878	20
+2180	879	11
+2181	880	22
+2182	882	11
+2183	882	2
+2184	882	23
+2185	882	20
+2186	883	11
+2187	883	9
+2188	883	20
+2189	884	2
+2190	884	11
+2191	884	25
+2192	884	20
+2193	884	23
+2194	885	2
+2195	885	11
+2196	885	25
+2197	885	23
+2198	886	2
+2199	886	11
+2200	886	25
+2201	886	30
+2202	886	23
+2203	887	2
+2204	887	11
+2205	887	25
+2206	887	30
+2207	887	23
+2208	888	11
+2209	888	25
+2210	889	11
+2211	889	25
+2212	889	20
+2213	889	23
+2214	890	26
+2215	890	25
+2216	890	2
+2217	890	23
+2218	890	20
+2219	891	2
+2220	891	11
+2221	891	25
+2222	891	30
+2223	891	23
+2224	892	2
+2225	892	11
+2226	892	25
+2227	892	23
+2228	893	2
+2229	893	11
+2230	893	25
+2231	893	20
+2232	893	23
+2233	894	12
+2234	894	16
+2235	894	24
+2236	894	28
+2237	894	9
+2238	895	12
+2239	895	16
+2240	895	24
+2241	895	28
+2242	895	9
+2243	897	1
+2244	897	26
+2245	897	9
+2246	897	20
+2247	898	1
+2248	898	26
+2249	898	9
+2250	898	20
+2251	899	1
+2252	899	26
+2253	899	9
+2254	899	20
+2255	900	1
+2256	900	12
+2257	900	16
+2258	900	24
+2259	900	28
+2260	900	9
+2261	900	20
+2262	900	22
+2263	901	23
+2264	901	31
+2265	902	26
+2266	902	9
+2267	902	20
+2268	903	26
+2269	903	9
+2270	903	20
+2271	905	2
+2272	905	11
+2273	905	25
+2274	905	20
+2275	905	23
+2276	906	2
+2277	906	11
+2278	906	25
+2279	906	20
+2280	906	23
+2281	907	2
+2282	907	11
+2283	907	25
+2284	907	23
+2285	908	2
+2286	908	11
+2287	908	25
+2288	908	23
+2289	909	32
+2290	909	15
+2291	910	25
+2292	910	20
+2293	911	25
+2294	911	20
+2295	912	22
+2296	913	15
+2297	913	32
+2298	914	32
+2299	914	15
+2300	915	22
+2301	916	22
+2302	917	32
+2303	917	15
+2304	918	32
+2305	918	15
+2306	919	26
+2307	919	25
+2308	919	23
+2309	920	25
+2310	920	20
+2311	921	25
+2312	921	20
+2313	922	22
+2314	923	26
+2315	923	12
+2316	923	2
+2317	923	7
+2318	923	9
+2319	923	6
+2320	923	17
+2321	923	23
+2322	923	24
+2323	923	15
+2324	924	22
+2325	926	7
+2326	927	22
+2327	928	22
+2328	929	11
+2329	929	25
+2330	929	2
+2331	929	17
+2332	929	23
+2333	929	20
+2334	930	23
+2335	930	31
+2336	932	21
+2337	934	22
+2338	934	8
+2339	935	22
+2340	935	8
+2341	936	22
+2342	937	22
+2343	938	22
+2344	939	22
+2345	940	22
+2346	941	22
+2347	942	6
+2348	942	7
+2349	943	12
+2350	943	14
+2351	943	18
+2352	943	15
+2353	944	6
+2354	944	14
+2355	944	18
+2356	944	9
+2357	945	14
+2358	945	18
+2359	945	11
+2360	946	6
+2361	946	7
+2362	947	11
+2363	948	6
+2364	948	9
+2365	949	6
+2366	949	14
+2367	949	18
+2368	949	9
+2369	950	12
+2370	950	14
+2371	950	18
+2372	950	15
+2373	952	12
+2374	952	14
+2375	952	15
+2376	953	11
+2377	953	30
+2378	953	25
+2379	953	23
+2380	954	11
+2381	954	2
+2382	954	23
+2383	954	20
+2384	955	11
+2385	955	2
+2386	955	23
+2387	955	20
+2388	956	2
+2389	956	11
+2390	956	17
+2391	956	25
+2392	956	20
+2393	957	2
+2394	957	11
+2395	957	17
+2396	957	25
+2397	957	20
+2398	959	2
+2399	959	11
+2400	959	17
+2401	959	25
+2402	959	20
+2403	960	2
+2404	960	11
+2405	960	17
+2406	960	25
+2407	960	20
+2408	962	26
+2409	962	2
+2410	962	17
+2411	962	23
+2412	962	20
+2413	963	26
+2414	963	2
+2415	963	17
+2416	963	23
+2417	963	20
+2418	964	11
+2419	964	2
+2420	964	23
+2421	964	20
+2422	965	2
+2423	965	11
+2424	965	20
+2425	966	2
+2426	966	26
+2427	966	20
+2428	966	23
+2429	967	11
+2430	967	25
+2431	967	30
+2432	967	23
+2433	968	11
+2434	968	2
+2435	968	23
+2436	968	20
+2437	969	11
+2438	969	2
+2439	969	23
+2440	969	20
+2441	970	11
+2442	970	2
+2443	970	23
+2444	970	20
+2445	971	11
+2446	971	2
+2447	971	23
+2448	971	20
+2449	972	2
+2450	972	11
+2451	972	17
+2452	972	25
+2453	972	20
+2454	973	2
+2455	973	11
+2456	973	17
+2457	973	25
+2458	973	20
+2459	974	11
+2460	974	2
+2461	974	23
+2462	974	20
+2463	975	16
+2464	975	9
+2465	975	19
+2466	976	26
+2467	976	17
+2468	976	33
+2469	977	11
+2470	977	34
+2471	977	33
+2472	978	16
+2473	978	9
+2474	979	11
+2475	979	33
+2476	980	2
+2477	980	26
+2478	980	17
+2479	981	2
+2480	981	11
+2481	981	33
+2482	982	2
+2483	982	26
+2484	982	17
+2485	985	11
+2486	985	33
+2487	986	11
+2488	986	33
+2489	987	2
+2490	987	26
+2491	987	17
+2492	988	11
+2493	988	33
+2494	989	26
+2495	989	33
+2496	990	26
+2497	990	17
+2498	990	33
+2499	991	17
+2500	992	26
+2501	992	33
+2502	993	11
+2503	993	33
+2504	995	26
+2505	995	17
+2506	995	33
+2507	996	11
+2508	996	33
+2509	997	11
+2510	997	33
+2511	998	11
+2512	998	33
+2513	999	26
+2514	999	33
+2515	1000	26
+2516	1000	33
+2517	1001	11
+2518	1001	33
+2519	1002	11
+2520	1002	33
+2521	1004	33
+2522	1010	26
+2523	1010	17
+2524	1012	34
+2525	1012	33
+2526	1013	9
+2527	1013	34
+2528	1013	33
+2529	1013	19
+2530	1016	16
+2531	1016	9
+2532	1016	19
+2533	1017	16
+2534	1017	9
+2535	1018	9
+2536	1018	34
+2537	1018	33
+2538	1018	19
+2539	1019	34
+2540	1019	33
+2541	1020	34
+2542	1020	33
+2543	1021	34
+2544	1021	33
+2545	1022	34
+2546	1022	33
+\.
+
+
+--
+-- Name: product_tags_prod_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('product_tags_prod_tag_id_seq', 2546, true);
+
+
+--
+-- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY products (product_id, name, description, weight, unit, price, price_per, per_unit, aisle, category, img, icon_id, color) FROM stdin;
+1	Organic Princess Seedless Grapes	Organic Princess Seedless Grapes! These large, luscious, light green berries are a perfect blend of sweet and tart. Gobble them by the handful while you enjoy their satisfying crunch and slight floral character. Kids especially love frozen grapes as a refreshing treat on those warm summer days.	2	lb	6.99	3.5	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/Hw7KQ4eSQmGC5I6ld3pA_xLKNUloLvGi2c0DPg-zPwQowoJFqmX5R0peONf8gqAI.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+2	Fuyu Persimmons	Jeremy Murdock's Fuyu Persimmons are some of the most delicious we've ever had. Grown in Winters, CA, just 70 miles from our San Francisco Food Hub, these Fuyus are harvested ripe and ready to eat. Though not certified organic, Jeremy--a former CCOF inspector--knows how to grow these Persimmons to perfection without the use of any pesticides or fertilizers whatsoever. The squat, tomato-shaped Fuyu variety--unlike the acorn-shaped Hachiya variety--can be eaten firm like an apple for a mildly sweet crunchy treat, or can be left to soften to a gel-like stage for an intensely sweet experience.	3	lb	9.99	3.33	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/PvSgXM9kRjGef0d9c6vy_20161012-FuyuPersimmon3pd_MG_3507%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+3	Red Little Gem Lettuces	Martin's Red Little Gems are always crunchy and always sweet. Use as the base of your next salad, coarsely chopped or torn.	1	lb	5.99	5.99	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/3WS3Dw1DRDe2k1mytnFg_lettuce.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+4	Organic Lunch-Box Peppers	Our Organic Lunch-Box Peppers are the perfect sweet pepper for any purpose.Use them as their namesake in your lunch as a fresh, crunchy snack, or sauté them. Blend them into a tomato - pepper soup or reduce that down to an unforgettable pasta sauce.If you really want to get creative, bake and stuff them with your choice selection of rice, egg, meat and seasoning for a fantastic international dish you'll remember.	1	lb	5.99	5.99	lb	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/iQvSgdWRIWQH8MgupyjS_20160803-Eatwell_LunchboxPeppers_MG_7090.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+5	Sweet Walla Walla Yellow Onions	Walla Wallas are a super sweet Yellow Onion variety. Enjoy as onion rings or caramelized into a sweet sauce.	2	lb	4.99	2.5	lb	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/f0ocZSYCSmCptp6q4gf0_20161003-MartinB_WallaWallaOnion_MG_2572.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+6	Fresh Wild Chanterelle Mushrooms	Wild Golden Chanterelles from the Pacific North West are considered some of the finest mushrooms in the world.  With hints of apricots and pepper, Chanterelles are a wonderful highlight to any dish.  We recommend sautéing them with eggs and keeping it simple!	6	oz	8.99	23.97	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/FXmXdvxlRymsg4fPcg8M_FK1A2151.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+7	Organic Karinata Kale	Karinata Kale from Full Belly Farm is a very special and unique green. It is a cross between Mustard Greens and Red Russian Kale and has a mildly spicy flavor with the texture and characteristics of a kale. Its leaves have a beautiful deep purple and green color. Get this special treat while it lasts. Only 3 farms that we know of anywhere grow this beautiful kale variety: Full Belly Farm, Good Humus Produce and the UC Davis student farm, so come get your kale bragging rights right here!	1	bunch	1.99	3.98	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/2zyXMi5QSlmm6ZY231dt_kale_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+8	Baby Spigariello Kale	These baby leaves of the Spigariello plant--an heirloom Italian Broccoli variety--have the Brassica sweetness of Broccoli with the tenderness of a Baby Kale.  It's great in hearty white bean soups or quickly sautéed with some olive oil, garlic and shallots, then hit with a bit of lemon juice at the end to bring out the sweetness. For a hearty salad, massage the Spigariello Greens with some buttery olive oil and let it soak in, covered in the fridge, for an hour or two.  Top with a pungent goat cheese, some slivered or toasted almonds, raw or pickled shallots, and a hit of lemon juice.	0.5	lb	3.99	7.98	lb	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/Wy7NQ9B9R1yEZoKswAJH_MartinB_Spigariello_Greens_Half_Pound.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+9	Aquaponic Red Living Butter Lettuce	Butter lettuce is named for its smooth buttery texture and delicate flavors.  Excellent as a stand alone salad or mixed with other types to create a variety of textures, flavors and colors.  Our lettuce comes with the roots still attached for maximum freshness and flavor!By buying our Red Butterhead Lettuce, you just saved 7+ gallons of water compared to similar lettuce grown in soil.	1	head	2.99	8.54	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/imN9lTSvqizVYMvSupg8_20161013-Ourborous_RedButterhead_MG_3649.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+10	Organic Dried Flower Wreath	So many of Full Belly's summer and fall blooms, dried and arranged into a gorgeous, long-lasting wreath. When most markets turn towards Southern California or South America for their winter flowers, we love continuing to support Full Belly Farm's floral program through the winter months. Having a steady off-season revenue stream allows Full Belly to provide as many year-round employment opportunities as possible, a relative rarity in the agriculture world.Please note: because these wreaths are arranged by Full Belly's amazing 8-woman flower crew, each one will have its own individual style, any my differ slightly from the ones pictured. We promise they'll all be equally beautiful!	1	count	49.99	\N	\N	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/Ho2eeGaSRat18vsPHIbT_20161103-FullBelly_HolidayWreaths_MG_6017.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+11	Organic Seasonal Bouquet	We can guarantee that each and every one of Thomas Farm's unique seasonal bouquets will be beautiful, but please note that due to their seasonal nature, the bouquet might not look exactly the same as the one pictured.	1	bunch	11.99	\N	\N	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/e8wj2Ul7T2W2AShXgzJM_salebouq.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+12	Giant Pink Banana Squash	Autumn's huge winter squash harvest at RobinSong produced some amazing looking and amazing tasting squashes, and we'd love to share the abundance with you. This Pink Banana Squash, despite its enormous size, is mostly flesh, with a fairly small seed cavity. Its flesh is fragrant and rich, and it can be used in soups, stews, or roasted alone. It pairs well with rich flavors like butter, cream and truffles. It'll store for months, so feel free to use it as a dining room table centerpiece until you're ready to use it!Please note: this is a very big squash. It weighs 12.5-17.5 lb and is approx. 20-30" long.	1	count	19.99	1.6	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/jVM5Mz2jTsKTOXkyWCcS_20161103-RobinsonSong_PinkBananaSquash_MG_5985.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+13	Giant Jarrahdale Squash	Autumn's huge winter squash harvest at RobinSong produced some amazing looking and amazing tasting squashes, and we'd love to share the abundance with you. Jarrahdales have a deliciously nutty flavor, with very firm and non-stringy flesh. It'll store for months, so feel free to use it as a dining room table centerpiece until you're ready to use it!Please note: this is a very big squash. It weighs 12.5-17.5 lb and is approx. 15-20" in diameter.	1	count	19.99	1.6	lb	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/nNKvqtCRQ2E1bLAvIiof_20161102-ThomasFarm_JarrahdaleSquash_MG_5956.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+14	Organic Sweet Wickson Crab Apples	The Wickson Crab Apple is small, like other crab apples, but different in every other way. They're sweet, with a tangy acidity. They're amazing for cider and perfect for a bite-sized snack.	3	lb	11.99	4.0	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/cbiEb4A7Q5Cy4aGEO5zg_20161102-Filigreen_WicksonApples_3pd_MG_save3.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+15	Stan Devoto's Organic Apples of the Week	Stan Devoto and his crew up in Sebastopol are in full-swing apple season right now! With so many delicious, heirloom varieties, sometimes you want to choose them all! Well now you can!We'll send you 3 lb of Devoto Garden's best varieties, which'll vary as the season marches on. (Due to the short harvest window for Stan's apples, and the fact that he's selling them as fresh apples instead of storage apples, the selection may change day to day, and may sometimes include fewer than three varieties. But don't worry, at the end of the day, you'll always end up with 3 lb of delicious, Organic Sebastopol-grown Apples!)	3	lb	8.99	3.0	lb	Produce	New & Peak Season	http://goodeggs2.imgix.net/product_photos/7QjBfElaQ6uE6WUSWEIw_Apple_Party_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+16	Organic Ugly Seasonal Juicing Box	The Good Eggs Juice Box is a weekly selection of fresh, juice-able (yet still totally snack-worthy) produce from the Good Eggs Farmers you have come to know and love. Each week we will feature a new selection of organic fruits and veggies in bulk for you to blend, press, or simply munch on for the week.	1	count	14.99	1.87	lb	Produce	New & Peak Season	http://goodeggs1.imgix.net/product_photos/74TTOpnDSsKPwx6HAnov_2016-04-14.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+17	Organic Blueberries	Grown organically in the picturesque Santa Ynez Valley, these antioxidant rich blueberries are bursting with flavor. Bake them in a pie, sprinkle them on yogurt, or eat them as nature intended.When most retailers begin sourcing their blueberries from South America -- where the low prices can often come along with less freshness and lower quality -- we're proud to still be sourcing California-grown fruit from a wonderful producer like Forbidden Fruits.	4.4	oz	7.99	1.82	oz	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/XrvzTZe9T4eAvyL79XOp_blueberries_small.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+18	Organic Flavor Fall Pluot	Large, with a crisp sweetness, these last-on-the-tree Flavor Fall Pluots are a refreshing treat.	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/OSfzy5gATHWmyHsBjs07_THPn7hYxSJui6C9Do16e_FuNy1mkHSS2CtK6hJzaP_1U9gajcT53TeRWaISUBrpXZhmdNbjYqHWoztqsK2r3o.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+19	Organic Green Holiday Plum	These large end-of-season Green Plums are best eaten on the firmer side. They've got a naturally firm and meaty flesh, with a honey-like sweetness and a touch of tart.	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/o5CSJKHPSOm4aBq1f6iZ_pluots_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+20	Six Organic Bananas	We've heard from hundreds of you that you'd love for us to offer Bananas, and we're proud to now offer a very different kind of banana than what you'll generally find at the supermarket.These Organic and Fairtrade Bananas are grown by the San Miguel de Brasil Cooperative in El Oro, Ecuador are many things: they're a perfectly healthy on-the-go snack, they're a naturally sweet base to your morning smoothie, and if all else fails, they're the frozen inspiration behind your next batch of banana bread. For all the things these bananas can be, we decided early on in our search for an ethically-grown banana that one thing they will never be is a product of the prevailing global banana industry that has both historically and even recently wreaked ecological, social and political havoc in regions of the world in which bananas grow.The 134 small growers of the Cooperative work together to pack, market and ship their bananas directly to international buyers, which allows them to receive a higher price for their fruit and have more control over the process than going through one of the larger banana labels. These bananas are Certified Organic, Global GAP Certified and Fairtrade Certified by Fairtrade International.	6	count	3.99	1.6	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/NjWf2hI8TPlY4wk93SBy_FK1A8104.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+21	Organic Hayward Kiwis	Also known as Chinese Gooseberries, these Hayward Kiwis are fuzzy and bland on the outside, yet bright as a gem on the inside. Once the fuzzy skin is shaved off, the fruit that remains is a perfect balance of sweet-tart deliciousness. The California Kiwi season is short, so get em while you can!As we're currently near the beginning of the California Harvest, so the Kiwis may be on the firmer side and may need up to a week to fully ripen.	1	lb	3.99	3.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/4YJe7mLcRAa05v3hantp_kiwis_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+22	Organic Banana	We've heard from hundreds of you that you'd love for us to offer Bananas, and we're proud to now offer a very different kind of banana than what you'll generally find at the supermarket.These Organic and Fairtrade Bananas are grown by the San Miguel de Brasil Cooperative in El Oro, Ecuador are many things: they're a perfectly healthy on-the-go snack, they're a naturally sweet base to your morning smoothie, and if all else fails, they're the frozen inspiration behind your next batch of banana bread. For all the things these bananas can be, we decided early on in our search for an ethically-grown banana that one thing they will never be is a product of the prevailing global banana industry that has both historically and even recently wreaked ecological, social and political havoc in regions of the world in which bananas grow.The 134 small growers of the Cooperative work together to pack, market and ship their bananas directly to international buyers, which allows them to receive a higher price for their fruit and have more control over the process than going through one of the larger banana labels. These bananas are Certified Organic, Global GAP Certified and Fairtrade Certified by Fairtrade International.	1	count	0.69	1.97	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/ZvQsVECTTdu9bUWhEdKe_FK1A8096.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+91	Red Beets	With their blood red color, these beets are richly sweet. Boiled or roasted, these beets are great simply topped with butter or chopped into a fresh salad.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/ASlZxFUsTyyS9b0tnEfw_beets_loose_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+23	Organic Baby Dragonfruit	With a refreshingly mild, tropical flavor (think Kiwi mixed with Banana mixed with Honeydew), this unique fruit -- rarely grown in California -- has a striking exterior and an even more striking flesh. Juiced or blended, the Dragonfruit can serve as an amazing color addition and mild sweetener.These dragonfruit is grown by Devine Growers in Fallbrook, CA, and brought to us by our trusted distributor partner, Veritable Vegetiable.	1	count	4.99	14.26	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/33x6oRhXQnafI9oWgs7R_20161102-DevineGrowers_BabyDragonfruit_MG_5892.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+24	Organic Pineapple Guava (Feijoa)	The Pineapple Guava (aka Feijoa or Guavasteen) is the fruit of an evergreen, perennial shrub in the myrtle family. Though not a true Guava, its tropical flavor has notes of mango, pineapple and banana. They're harvested green, but will ripen up to have a yellow-ish skin and a bit of give to the flesh. Their aroma will be very strong when ripe. Slice in half and scoop out the cream-white inner flesh.These Organic Pineapple Guavas were grown by Preston Farms in Healdsburg, CA, and brought to us by the good folks at FEED Sonoma.	1	lb	5.99	5.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/Xs0H0GX5QGaHwg6c3MPg_Feijoa_Pineapple_Guava_Half_Pound_Swift_Subtropicals.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+25	Organic White Sapote	The word Sapote comes from the Aztec Nahuatl language, where tzapotl is used to talk about many soft, sweet fruits. This White Sapote, also known as casimiroa or Mexican Apple, has a custard-like texture when ripe and a mildy sweet, tropical flavor that has notes of banana, mango, pineapple and guava. Sapotes are ripe when their green skin has turned slightly yellow and they give ever so slightly to the touch.These Sapotes were grown by Noah's Ark in Carpinteria, CA, and brought to us by our trusted distributor partner, Veritable Vegetable.	1	lb	7.99	7.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/XGCDTS59QqOsZvwnFYHZ_20161021-BeckGrove_Sapotes_MG_4708.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+26	Six Organic Smoothie Bananas	As part of our efforts to reduce food waste here at Good Eggs, we'd love to offer our riper bananas to you at a great price. These bananas are perfect for eating out of hand within a day or two of your delivery, for those of you who like to wait for your bananas to sweeten up to their fullest potential before opening. They're also great for smoothies or, if you don't get to them all right away, for throwing in the freezer for a future banana bread project.	6	count	1.99	0.8	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/aMl8olp2RlAV5cEDkm0H_DSC_3428.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+27	Lime	Sustainably grown, these first-of-the-season Limes offer a bright acidity to liven up tacos, pho or any earthy, nutty grain salad.	1	count	0.59	2.95	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/MPMLcMrtQ9XjLwpS6fug_limes_03%20copy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+28	Organic Lemon	Juicy and acidic, lemons are a must-have for any kitchen. Use it on fish or to add some life to your next salad dressing.When none of the farms we work with directly has lemons, we rely on our trusted distributor, Veritable Vegetable, to source us the highest quality organic lemons around. These Organic Lemons are grown in Riverside Co. by Corona-College Heights.	1	count	0.99	3.3	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/m1XSgyCBTXaatVP9HF5f_lemons_01%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+29	Limes	Sustainably grown, these first-of-the-season Limes offer a bright acidity to liven up tacos, pho or any earthy, nutty grain salad. With this 2 lb bulk sizing, you'll have plenty of juice for desserts or limeade.	2	lb	4.99	2.5	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/jzFHOdtESlWc5adHZPNp_bag_limes.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+30	Organic Makrut Limes	Also known as Kaffir Limes, Makrut limes are the secret ingredient to your next homemade curry paste. The zest from these limes is what really sets authentic South East Asian cooking apart from the imitations.	0.5	lb	3.99	7.98	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/MqHBOuVTW6AI63m08Sle_GKJNrALSWCvVGHSetZdX_limes_kafir_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+31	Organic Finger Limes	Known as the "caviar of citrus," this tiny fruit grows in a thorny citrus bush, making it a pain to harvest, but oh-so worth it. It contains tiny round segments bursting with an acidic, lime-like juice, making it great for coating the rim of cocktails, replacing caviar on sushi, and adding a textural pop to your next taco.	1.75	oz	5.99	3.42	oz	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/PSJRA9SXRiibU9Lj0qhT_finger_limes_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+32	Organic Red Flame Grapes	Grape season is here! Enjoy the crisp texture and excellent, sweet-tart flavor of our Organic Red Flame variety. A perfect between-meal snack, grapes are also a refreshing addition to both fruit and vegetable salads. Keep a stash on hand in your freezer for a deliciously sweet treat without the extra sugar and calories! Grapes are an outstanding source of health promoting poly-phenolic antioxidants, vitamins and minerals.	2	lb	6.99	3.5	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/W8yH5WQdS6GEKHpClDQW_lRZ_3Vy0jB72bLviUNRIIhmMxMHtE-MyA6YyjfcxwCQ.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+33	Fuyu Persimmons	Jeremy Murdock's Fuyu Persimmons are some of the most delicious we've ever had. Grown in Winters, CA, just 70 miles from our San Francisco Food Hub, these Fuyus are harvested ripe and ready to eat. Though not certified organic, Jeremy--a former CCOF inspector--knows how to grow these Persimmons to perfection without the use of any pesticides or fertilizers whatsoever. The squat, tomato-shaped Fuyu variety--unlike the acorn-shaped Hachiya variety--can be eaten firm like an apple for a mildly sweet crunchy treat, or can be left to soften to a gel-like stage for an intensely sweet experience.	1	lb	3.99	3.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/wK1ZQFRiSsSnHcnBNzb3_20161012-FuyuPersimmon_Duo_MG_3518.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+34	Organic Pomegranate	Pomegranates are the darling of fall fruit, as they hide in their caverns tiny jeweled arils that bring color to otherwise drably colored fall dishes. To easily access the arils with minimum mess, try quartering the fruit and removing arils in a bowl of water.	1	count	2.99	3.74	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/n37hm3QHTCdjp0f0ytpg_pomegranate_05.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+35	Organic Fuyu Persimmons	Of the many varieties of persimmon enjoyed worldwide, the Fuyu is by far the most popular. Fuyus are sweet, rich in flavor, and unlike their astringent Hachiya cousins, they are ready to consume while still crisp, like munching on an Autumn apple. Enjoy these seedless wonders sliced in salad, with yogurt, or right out of hand. They also make fabulous seasonal decorations!	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/YhuCf67mRO2cQseC8am2_persimmon_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+36	Organic Hachiya Persimmons	KNOW YOUR PERSIMMON VARIETIES!From Farmer Bryce Loewen: "At almost every Fall farmers' market, I get at least one potential customer that believes that they don't like persimmons because they have eaten an astringent variety--such as the Hachiya--before it was ready. So many lost sales!"The Hachiya persimmon is actually even sweeter than the Fuyu, but only when it's so ripe that it feels like a sack of jelly. If you eat it at any point before then, it has a tannic flavor (like a mouthful of mothballs) that rivals the greenest plantain. It can take a while for Hachiyas to ripen, but the good news is that they look stunning while you wait."Or you can try your hand at Hoshigaki, a difficult, fascinating method of peeling and drying Hachiyas.	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/xNrKIc7ZQXuaAedPq3O7_persimmon_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+37	Pomegranate	Bursting with fresh flavor, this quintessential fall fruit is the perfect addition to a Delicata and Arugula salad with a bit of reduced balsamic drizzled on top.These Pomegranates were grown by 3 Sisters Pomegranates in Healdsburg, CA, and brought to us by our friends at FEED Sonoma.	1	count	1.99	2.65	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/3qNmR0tTQlSSBpyrnHOD_pomegranate_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+38	Organic Honey Crisp Apples	Honey Crisp apples are a fairly new variety that has quickly become an American favorite. They are a fantastic eating apple. Explosively crisp and juicy, this refreshing apple is honey-sweet with a touch of tart flavor. Great for applesauce, juicing and baking.	2	lb	6.99	3.5	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/cHcYj1oHQiWRZQJBvhnK_prUd2aORxy4yglUNQlVg_9YPJC4yqs30_M2j8ixLn5FXI4CEd9v5k-u6bux80BDU.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+39	Organic Fuji Apples	Delicious, crisp and sweet, Stan's Fujis showcase what the Sebastopol climate and his crew's dedicated care and collective green thumb.	1	lb	2.99	2.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/RaUtxCh9RcyXklf4GGow_JvPpnrPl0QbuPp0P86Wv969AkmedfI7m4Ze93hiNbLk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+40	Organic Fuji Apples	Perfect for on-the-go snacking these Fujis are on the smaller side, but pack a sweet punch nonetheless. Mostly on the sweet side, these apples are great for throwing into salads or eating with peanut butter.	4	lb	7.99	2.0	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/idBYd9NRTbSG5cJuIMD3_xzemHBTxj3-pY7qj_myMXTyD5VVhSNK5GGm3PgSWg6Q.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+41	Organic & Biodynamic D'Anjou Pears	The d'Anjou pear (sometimes known as the Anjou pear), is sweet and juicy when ripe, with hints of a citrusy brightness, but the flesh is dense enough to hold up well to baking or poaching.  Unlike the more familiar Bartlett pear, the d'Anjou barely changes color at all when ripe (perhaps a bit more yellow, but still pretty green), so the best way to test for ripeness is the apply gently pressure to the neck of the pear, looking for the flesh to yield ever so slightly.	1	lb	2.99	2.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/YqxNOtgSLucUbIK8dwog_D%27Anjouy_Pear_Duo_60ct_MtHood.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+42	Organic & Biodynamic Bosc Pear Duo	With their long, elegant neck, and beautifully golden russeted skin, Bosc pears are as much of a delight for the eyes as they are for the mouth. The flesh is sweet even before it fully ripens up, so these pears are ideal for slicing into salads, poaching or broiling.	2	count	2.29	2.69	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/YIAdIlT0aN9v3Y9MnOtg_MtHoodOrganics_Bosc_Pear_Duo_80ct.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+43	Organic Pink Lady Apples	The Pink Lady, with it's delicate balance of both sweet and tart, almost effervescent flavor, has quickly become a customer favorite. And what a beauty it is! This cross between a Golden Delicious and Lady Williams variety is the only truly pink apple on the market. Great for baking and fantastic for applesauce!	1	lb	3.49	3.49	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/KnKv4EeNTUaTBBJifpoI_Apples_PinkLady.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+44	Organic Sweet Wickson Crab Apples	The Wickson Crab Apple is small, like other crab apples, but different in every other way. They're sweet, with a tangy acidity. They're amazing for cider and perfect for a bite-sized snack.	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/sdldTnRGTF25LkJrbFOF_20161102-Filigreen_WicksonApples_3pdMG_5924.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+45	Organic Granny Smith Apples	These Granny Smith Apples are far from your standard supermarket wax-covered apple. They're grown in Sebastopol's coastal climate, in which they slowly mature, concentrating all of their flavors into a more compact fruit, dense with sweet-tart flavor. They develop a light green, occasionally yellow tint, and are wonderful for eating and, of course, for baking projects. When Grannies are in town, they are not to be missed.	1	lb	2.99	2.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/IDwaDPUSwSqSIhNIUd9C_Apples_Gingergold_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+46	Organic Pink Lady Apples	The Pink Lady, with it's delicate balance of both sweet and tart, almost effervescent flavor, has quickly become a customer favorite. And what a beauty it is! This cross between a Golden Delicious and Lady Williams variety is the only truly pink apple on the market. Great for baking and fantastic for applesauce!	2	lb	6.99	3.5	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/Zeo0utFgTdWN8O4BdEqq_apples_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+47	Organic Newton Pippin Apples	As brightly colored as they are flavored, these Newton Pippins are the perfect choice for the tart apple lover, delicious eaten fresh and paired with mild cheeses. They have a tart-sweet flavor and a crisp, dense texture that holds up well to baking, makes them ideal for use in desserts.	1	lb	2.49	2.49	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/Q0RIy4W9TiuAwaBy5edz_TUVReWJMRKyAZSjpPn3c_LsSxwrkARMF4g1xaqi7CwECAYqGB-2Lp-UdIpZzIEeI.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+48	Organic Jonagold Apples	A very popular commercial variety, with exceptional flavour. Inherits many of the good qualities of its parents -- Jonathan and Golden Delicious. This variety has a sharp and refreshing taste!	1	lb	2.99	2.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/9RJfufXHRvSIsawK1WRz_Good%20Eggs%20010715-13.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+49	Organic Rome Beauty Baking Apples	What a beautiful apple!  Rome beauties are very firm at the beginning of the harvest, but already have exceptional flavorful.  These apples sweeten as their short season progresses, and they are renowned for the baking qualities as they maintain their shape when cooked.	1	lb	3.99	3.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/524VyaD3SZaCtLD6Z1VV_apples_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+50	Organic Sierra Beauty Apples	 With a robust flavor, and a crisp and juicy yellow flesh, there's no better use for this apple than eating out-of-hand (though we won't stop you from using it in a pie). This Biodynamically Grown Sierra Beauty is everything one could ever want out of a snacking apple. 	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/KELTVr13T0G74aVXgadn_OYJbcpt4QNWe4Ifad9kS_apples_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+51	Organic Belle de Boskoop Apples	These large, sometimes bumpy have a sharp but sweet flavor with a relatively dense flesh. They're great in baking applications, or sliced onto a cheese plate.	1	lb	4.99	4.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/ugxa01BeRylzYI0ivnxL_apples_fuji.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+52	Organic Large Mountain Rose Apple Trio	Deliciously tart, these gorgeous, pink-fleshed apples are great for baking into pies or galettes. They're also wonderful for eating out of hand, or pairing with a nicely aged gouda or cheddar.	3	count	5.99	4.79	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/YLN2J1lCSGeiuGr5j0Py_20161019-HiddenStar_PinkApple_MG_4526-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+53	Organic Royal Gala Apples	The Royal Gala is a crisp and juicy early-season variety. It has enough acidity to balance the sweetness, but isn't too tart, making it a kids' favorite. Live Earth is packing their smaller apples into 4 lb bags, so you can enjoy them throughout the week. They store best kept in the refrigerator, but take them out a few at a time if you want to enjoy them at room temperature.Regular price: $9.99. Sale price: $7.99!	4	lb	7.99	2.0	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/eF25N2t5RCu4rVHjhp0u_apples_bulk_with_bag%20save2.jpeg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+54	Assorted Organic Sauce Apples	Before we send them to your door, we sort through all our apples to pull out any bruised ones, cut ones, scarred ones, or slightly-nibbled-on ones, so that you get only the best of the best. We hate the idea of throwing out a delicious apple because of one of these defects, so we're offering them to you at a discounted price for use in sauces, juicing, dehydrating, or, for those willing to eat around a bruise or a small worm-hole, snacking!These Apples are a mix of this week's seasonal varieties, all certified organic, from any of the following farms: Devoto Orchards, Hidden Star Orchards, and Filigreen Farm.	5	lb	6.99	1.4	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/A4Ygu6WRw2v8ppckXAEt_20160812-Apples_MixedSeconds_MG_7927.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+55	Organic Davisson Apples	These apples are a non-patented variety, discovered as a chance seedling in the Davisson Orchard in Sebastopol.This big and beautiful apple has red stripes over a yellow background.  Davissons have a firm, dense, crisp texture and a sweet taste--a farmer favorite.	1	lb	3.99	3.99	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/TJqVzJqQXeqOBinWVgSc_NjNwcHCODyFgyo6Ljn6jo-rEd_Qtu55X761Kh42duiM.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+56	Valencia Orange Duo	Valencia Oranges are the ultimate off-season citrus. They produce in the summer, while most citrus fruits in the winter. They're a lower acid, high sugar citrus that are great for juicing.	2	count	2.79	2.79	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/lHTh80VOSDK8adxQIrHU_20160708-BernardRanch_Valencia_Duo_MG_4979.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+57	Cosmetically-Challenged Organic Valencia Oranges	Valencias are great for juicing, salads, cocktails and eating out of hand.These cosmetically-challenges fruits might be a bit scarred up on the outside, but they're just as sweet on the inside!These oranges were grown by Pauma Valley Citrus in Valley Center, CA, and brought to us by our trusted distributor Veritable Vegetable.	5	lb	6.99	1.4	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/eQQL9m7dTRORBZP6xozy_Capay%20Organic%20Ugly%20Juicing%20Orange%2010lb.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+58	Organic Rio Grapefruit	Powerfully tart with a bit of sweetness, these Organic Rio Grapefruits are great for eating raw or broiling with a bit of brown sugar on top.They were grown by farmers in or near Riverside County, who sell to Corona-College Heights Orange and Lemon Association, a packing and marketing association with almost 600 grower members, 80% of whom operate on 20 acres or less. They were brought to us by our trusted distributor partner, Veritable Vegetable.	1	count	2.49	2.77	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/taffXflnQMWxckx9KB7E_grapefruit.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+59	White Marsh Grapefruit Duo	Lightly acidic with plenty of sugars to balance it out, these delicious White Marsh Grapefruit from Bernard Ranches in Riverside County are the perfect healthy snack.  Try broiling the halved grapefruit with a bit of honey or brown sugar on top for a sweet and tart dessert!Note: the White Marsh can vary in flesh color from light pink to yellow-white.	2	count	3.79	2.23	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/F55rewYaTV2UBbRzTnIB_20161003-BernardRanches_GrapefruitDuo_MG_2595.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+60	Bulk Valencia Oranges	Valencia Oranges are the ultimate off-season citrus. They produce in the summer, while most citrus fruits in the winter. They're a lower acid, high sugar citrus that are great for juicing.	5	lb	9.99	2.0	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/M5daQVkRQHS4b5Az3mrw_20160708-BernardRanch_Valencia_5lb_MG_4972.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+61	Organic Limequats	The Limequat is, as its name suggests, the result of a cross between a Key Lime and a Kumquat that dates back to 1909.  It's aromatic like a lime, with the texture of a kumquat.  Very few cocktails wouldn't benefit from a Limequat garnish.	0.5	lb	3.99	7.98	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/jhPMkDXHSuMR8RMLywEe_Limequat_Deer_Creek_Heights_Ranch_Buck_Brand.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+62	White Marsh Grapefruit	Lightly acidic with plenty of sugars to balance it out, these delicious White Marsh Grapefruit from Bernard Ranches in Riverside County are the perfect healthy snack.  Try broiling the halved grapefruit with a bit of honey or brown sugar on top for a sweet and tart dessert!Note: the White Marsh can vary in flesh color from light pink to yellow-white.	5	lb	9.99	2.0	lb	Produce	Fruit	http://goodeggs1.imgix.net/product_photos/csIKBVdQq621d79rFjTq_20161003-BernardRanches_Grapefruit5pd_MG_2577.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+63	Organic Juicing Satsuma Mandarin	These oddly shaped or oddly sized Satsumas might not be the prettiest, but the juice inside them is just as sweet and tangy as their more aesthetically pleasing brethren.  Some of these are fine to be eaten out of hand, while others may need a small soft-spot cut off before juicing.  And the price on these is perfect for making you and your loved ones tangy Satsuma juice for the next few breakfasts!	25	lb	49.99	2.0	lb	Produce	Fruit	http://goodeggs2.imgix.net/product_photos/R7o2i425RSqcson31PsQ_Satsuma%20%232%20Jucing%20Side%20Hill%2025%23.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+64	Large Gwen Avocado	The Gwen is a tasty, green-skinned avocado--it doesn't darken as it ripens.  A cousin of the Hass, it is among the highest in oil content, which comes through in its rich flavor. It also oxidizes slowly, so its flesh looks bright green long after it has been cut open.  Bye-bye brown guacamole!	1	count	2.99	4.78	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/hheR8zaS2SI2wJNEz8hg_avocados_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+65	Organic Large Fuerte Avocado Trio	The Fuerte Avocado is your grandmother's avocado.  In fact, it wasn't so long ago that the Hass held little to no commercial appeal because it turned black when ripe.  In the 1950's, before the Hass reigned supreme, the Fuerte accounted for nearly two-thirds of all California avocado production, so people were more used to this thinner- and green-skinned avocado.  And even though the Hass is pretty much the only domestic avocado you find anymore outside of California and Florida, the Fuerte has a thriving fan club in the Golden State.  Once you spread some creamy Fuerte goodness over a thick slab of hearty toast, you'll understand why.	3	count	6.99	4.48	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/JUESie94TZ6pmrdDkrEy_Fuerte_Avocado_Trio_Ranch_Vazquez_48ct.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+66	Giant Hass Avocado	These giant Hass Avocados have a high oil content, a creamy texture, and a sweet flavor. The Brokaws are in their last few weeks of the California season, so enjoy these while you can!	1	count	3.49	4.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/iz0V7J3YTCGzWzEdVQUs_avocado.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+67	Organic Carrots	Sweet and crisp, these carrots are tasty cooked and raw. Try them roasted whole for a fancy side-dish, or sweep them through your favorite dip for an easy snack.	1	bunch	2.99	4.98	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/KKM5jIDZTDeVoB7uvVHJ_Medium%20Bunched%20Carrots%20Happy%20Boy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+68	Rainbow Carrots	As delicious as they are beautiful, Martin's Rainbow carrots are great for shaving raw into salads or roasting for a multi-colored side dish.	1	lb	2.49	2.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/pdd4QhpVRwaI3vDKQqtn_20161006-MixedCarrots_MG_3182.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+69	Organic Carrots	Crunchy and sweet Organic Carrots. Great for shaving into salads or steaming and topping with dill for a healthy and hearty side.	1	lb	1.49	1.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/pWksMSO2TyZ4gUT4SciN_carrots_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+70	Organic Baby Carrots	Sweet, tender baby carrots from Happy Boy Farms make a delightful snack when swept through hummus and a beautiful side-dish when roasted whole with aromatic herbs and garlic. Enjoy these while they last!	1	bunch	2.99	7.48	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/5kmAHdb2QYKm2CPOdaor_Baby%20Bunched%20Carrots%20Happy%20Boy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+71	Organic Fennel	Fennel is great in soups alongside chicken and mushroom, and delicious in rigatoni or baked, seasoned and covered in parmesan. Try it in salads and casseroles as well.	1	head	2.49	2.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/3qMY9zUJThiNwxF3yH6L_S994FmSr0wpl6gfH9_l4-be-ZKqh1U5mKlGDENYs_l8.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+72	Organic Celery	A staple for soups, a crunchy addition to fresh salads, and a healthy vehicle for peanut butter and raisins, these heads of celery can do it all.When none of the local farms we source from directly have celery, we rely on our trusted distributor partner, Veritable Vegetable. Veritable Vegetable sources their celery from a number of organic farms in California, including Deardorff and Josie's. This week's celery is coming from Deardorff Organics.	1	count	2.99	2.39	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/n9tfprUOTJGCSIdpClqg_celery_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+73	Organic Cosmetically-Challenged Juicing Carrots	The occasional cracked or misshapen carrot doesn't make it onto Fifth Crow's farmers' market tables, but their lack of skin-deep beauty has no bearing on their flavor. These carrots are perfect for juicing or, if you don't mind a bit of a funky appearance, they'll be just fine for baking or shredding into salads.	3	lb	2.99	1.0	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/xPqLCBAqSaeeAtiuqqQK_20160726-FifthCrow_JuicingCarrots_MG_5833.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+74	Organic Celery Root with Greens	Great for gratins, soups, mashes and roasted vegetable medleys, celery root is an awesome substitute for any recipe that calls for potatoes or turnips. While reminiscent of celery itself, it has a much sweeter, earthy appeal that warms the soul on a cool winter night.The greens may be a bit more bitter than standard celery, but are great used in soups or stews!	1	count	2.99	2.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/EvEkR06eQDOLQHOQMMw3_celeriac%202.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+75	Large Organic Celery Root	These odd-looking roots, which once had sprouts of celery stalks on them, can add an amazing flavor to puréed soups or roasts. Think Celery flavor mixed with potato-like texture, but a bit less starchy. Wash and shave off the skin and knobby roots (usually a paring knife works better than a vegetable peeler), then cut into 1' square and roast with other root veggies, or toss in a potato leek soup.	2	lb	3.99	2.0	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/NI1wc5HUTGGrixjIQzPf_celeriac_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+76	Organic Baby Carrots	Sweet and tender, these baby carrots (either Nelson or Mokum variety) are exceptionally fresh. Ideal as a raw snack or shredded into salads, but also thin enough to roast whole in the oven with a touch of oil and salt as a side dish that speaks for itself. Sold as 1 bunch, size and number highly variable, but typically 7-12 carrots.	1	bunch	2.49	\N	\N	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/dCLSMw26T4qYs6XINtXA_Baby%20Orange%20Carrots%20Countyline.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+77	Organic Small Slicing Cucumber	Slice into salads or layer onto sandwiches, these all-purpose cukes are sweet and crunchy.These Organic Cucumbers were grown by the Sanchez Brothers in Carpinteria, CA.	1	count	1.79	3.58	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/z8HqBCT8uuU1q3THOzw6_20160518-Lakeside_Cucumber_MG_0046.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+122	Organic Spaghetti Squash	This incredible squash has spaghetti-like flesh! Bake the squash, fork out the stringy flesh and sauté with onions, garlic and parsley for a unique take on aglio olio!	1	count	4.99	1.43	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/VeD3MIkxT1aShR7918sM_squash_spaghetti_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+78	Organic Japanese Cucumber	It's hard to believe it, since it just turned to springtime, but summer is starting up in Janet and Akira's magical greenhouses in Watsonville, CA. Hikari Farms is known for their amazing Japanese Cucumbers. They're thin-skinned and virtually seedless, so these delicate cukes are all sweet and lack the bitterness often associated with the thick-skinned, rigid, and heavily-seeded slicer cucumbers you'd generally find at the supermarket. Perfect for cutting into thin spears and dipping into hummus or chopped roughly into your next fresh green salad.	1	count	1.99	6.03	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/I5cfzT05QKeUguoBEFYw_20160607-Hikari_JapaneseCucumber_MG_1445.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+79	Organic Japanese Cucumber	Hikari Farms is known for their amazing Japanese Cucumbers. Thin-skinned and virtually seedless, these cukes lack the bitterness often associated with thick-skinned, rigid, heavily-seeded slicer cucumbers you'd generally find at the supermarket. Perfect for cutting into thin spears and dipping into hummus or chopped roughly into your next fresh green salad. Springtime may have just started, but it's already summer in Janet and Akira's magical greenhouses in Watsonville, CA.	1	lb	5.49	5.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/LibzqbVgTXON4EUIPJPW_Hikari_Japanese_Cucumber_Trio.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+80	Organic Mixed Summer Squash	Summer squash makes a great grilling addition, as the Sunburst, Eight Ball, and Zucchini varieties are perfect for slicing, dressing with olive oil, and tossing over the flame.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/4QdvBNYwQyuZgxIjz6d1_squash_mix.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+81	Organic Green Beans	Last of the season Greens Beans should help to round off your holiday menu with the strangely classic Green Bean casserole, or a more delicately prepared in a quick sauté with garlic and a squeeze of lemon at the end. These Green Beans are from OC Harvest Farms in Irvine, CA.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/SnWaO7ocTaZiklOiGd7F_iQEuuvQmKRvTlaQaMPw7LCm4LDiCrvl6X-5O3DdekGQ.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+82	Organic Zucchini	A classic for your summer grill, these Organic Zucchinis are harvested on the smaller side, making them sweet and tender. When none of the farms we work with directly have Zucchini, we work with our trusted distributor partner, Veritable Vegetable, to source us the highest quality Organic Zucchini around. This week, their Zucchini is coming from Las Hermans Farm in Hollister, CA.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/Ny93OqtQwOO9RXEQtP5S_zucchini_01%20copy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+83	Organic Globe Eggplant	An American Eggplant variety, the Globe Eggplant is also the most common. Large and pear-shaped, this classic summer veggie is versatile and tasty. Throw 'em on the grill, bake 'em or stew 'em up with some tomatoes and basil.	1	count	2.99	3.32	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/cuOKPnY9R5u5qjPlEblN_eggplant_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+84	Organic Mixed Eggplant	This farmer's choice mix of eggplant may include Globe, Listada, Machiaw, Neon, Chinese and other eggplant varieties. Allowing Riverdog to put whatever eggplant varieties they have most of on any given harvest day is a great way to help the farm reduce waste and sell through their crop.	2	lb	9.99	5.0	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/8Z396rG7ThqLPeIOjjWU_eggplant_mix_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+85	Organic Squash Blossoms	Stuffed, battered and deep-fried, these edible male flowers of the summer squash plant impart a mildly sweet, nutty and earthy taste.	12	count	7.99	\N	\N	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/vMdaKiYlS46YzEywrQzJ_7wLzTQ9nQESjEe7IuONH_squash_blossoms.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+86	Organic Persian Cucumbers	With its thin skin, this lightly seeded cuke is sweet and juicy.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/LPdORPPfQuuh3YZVcUQH_cucumbers_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+87	Organic Russet Potato Trio	Once the supply of storage potatoes starts to dwindle at the farms we work with directly, we rely heavily on our trusted distributor, Veritable Vegetable, to source the highest quality organic potatoes they can find.  These Russet Potatoes may be grown by one of the few trusted growers and labels Veritable Vegetable works with, including Nature's Pride, Fern Ridge, and Noonan. We'll do our best to update you as Veritable Vegetable's source changes.Today's Organic Russet Potatoes are coming from: Nature's Pride in Tulelake, CA.____________________________________________Veritable Vegetable: A Unique Organic DistributorAs an organic produce distributor with over 40 years of experience, Veritable Vegetable has benefited from the creativity and hard work of our employees, and the deep relationships we’ve formed with our growers. We’re proud of our reputation for quality and integrity. As a mission–driven company, we make every business decision based on a set of core values. Because we believe in supporting our growers, we maintain visibility for each of the 200+ farm labels we carry and communicate the distance each grower is from our warehouse in San Francisco. Our environmental initiatives are vast: not only do we transport our organic produce via an award winning, environmentally sustainable green fleet of trucks and trailers; we also divert 99% of our waste stream through a vigorous waste management program and the use of reusable pallets, crates and fabric wraps. Additionally, our solar array generates 70% of our electricity needs. We actively support our community by creating unique partnerships with local and national organizations, donating time, produce, and resources to sustainability efforts, and by weighing in on policy initiatives that impact sustainable food systems. Veritable Vegetable is a woman-owned, certified B Corporation, using the power of business to solve social and environmental challenges.	3	count	1.99	1.21	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/mnkbPfIQEG5JplKmbYIg_Russet_Potato_3pack_90ct.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+88	Organic Small German Butterball Potatoes	German Butterballs are sweet, fluffy and make the perfect mashed potatoes.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/TJagh2tjRYuNyAjChjdL_20161003-TerraFirma_GermanButterball_MG_2568.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+89	Organic Japanese Sweet Potatoes	These sweet potatoes have a firm, white flesh! These babies cook a little differently than their orange-fleshed cousins, so if you're unfamiliar read on: while orange sweet potatoes become soft and fluffy when cooked, white sweet potatoes remain dense and firm, making them an excellent candidate for dishes like a breakfast hash, oven roasted sweet potato fries, or chopped into chunks and added to hearty soups or stews.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/F62B1mB0S6aMLYT2FQ9R_jcWyBZvB5Dqbug3SNkrewYssa657h2iMDhee-4NdwuY.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+90	Organic Beauregard Sweet Potatoes	These organic sweet potatoes have a rich, bright orange flesh and a creamy sweetness that can't be beat! Bake or roast to your heart's content.	3	lb	7.99	2.66	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/fjsvrSRvRBKL80f0EqOg_cQ98bhSTTiuqjcPe4f9z_5t8bJBQ-fwomaGXy7UMvcK0ZmklAe_mMMsHlI0czhos.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+92	Organic Purple Majesty Potatoes	Beautiful dark purple skins with deep blue-purple flesh. Keeps its color when cooked. Firm flesh and high in antioxidants! ---Blue House Farm is a place that recognizes & nourishes the \nconnection between good food, the natural world and our community.\nWe are a small farm situated at the end of the coastal agricultural valley of\n Pescadero, California. We are nestled on three sides by rolling hills, \nredwood forests, a natural year-round creek, coastal prairie and nearby \nwild ocean beaches.\nWe grow an incredible diversity of certified organic vegetables, \nfruits and cut flowers for our Community Supported Agriculture (CSA) \nprogram, local supermarkets and farmer’s markets.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/cqkZSY9QRrq1EhicN9QJ_DpPlNMcq-CDnMf4vhUD3SI_zPEDXjMm0O9tpaYYRhbw.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+93	Yellow Potatoes	Martin grows a number of heirloom German potato varieties, and this yellow-skinned, yellow-fleshed variety is one of his favorites. Great for roasting.	1	lb	3.49	3.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/6ShHtiSRY217Dpobfkxw_potatoes_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+94	Organic Red Norland Potatoes	Organic Red Norland Potatoes are beautiful red potatoes and the accompaniment to your main dish. They do well with any task they are given, be it frying, steaming, roasting, stewing, grilling or baking. Pairs well with any herb.	1	lb	2.49	2.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/YAHSXXpDTH6iXMGzrGbt_potatoes_red.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+95	Ruby Crescent Fingerling Potatoes	These Ruby Crescent Fingerling Potatoes are the perfect small size for roasting whole or halved with maximum surface area. Martin's potatoes should be used within a few days of purchase. They should be kept in a cool, dark spot to prevent moisture loss and sprouting.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/siO8nEdgS46Ufx04v0Rw_potatoes_fingerling_banana.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+96	Organic Red Beets	This is perhaps the most familiar of the beet varieties and has the most distinct earthy beet flavor. Red beets will stain your life a beautiful hue of magenta! We recommend preparing red beets separately from any other color of beet you are cooking as the reds will take over both in flavor and color. Roasting is our preferred method of preparation!	1	bunch	3.49	5.82	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/y0bWAtRYSXK6QM4LqGwq_beets_red_bunch_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+97	Organic Gold Beets	Boiled or roasted, there's no wrong way to eat these delicious golden roots. And don't forget to save the greens to sauté--they've got a flavor very similar to Chard!	1	bunch	2.79	2.79	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/zIvWmzAXTziQZcVlpGM4_beets_gold_bunch_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+98	Organic Broccolini	Broccolini is great to have around--it's the more elegant counterpart to broccoli crowns (ironically) with slightly more concentrated flavor and crisp.	1	bunch	3.49	5.82	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/HFCQFnYHTryCivvdmvid_broccoli_rabe_01%20copy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+99	Organic Romanesco	Fun, fractal, and festive, this Romanesco Cauliflower is just the thing to spruce up any winter fare. Sweet and firmly textured like white cauliflower, a rich broccoli-like flavor make this veggie perfect to carry the weight of any stir-fry, soup, or oven-roasted mix.	1	count	4.99	4.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/l7f5YtAdRYWFFV9P8fVe_koSUig53TFWykDTFO8YO_iWOqj9d2GG31DDrduwt9pYCwbpcSgpzarODPjnL-APs.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+100	Organic Broccolini Trio	Broccolini is great to have around--it's the more elegant counterpart to broccoli crowns (ironically) with slightly more concentrated flavor and crisp.	3	bunch	7.99	4.44	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/iMhB0PHQVGYUd8Ns7LLz_20160629-Lakeside_BabyBrocolliTrio_MG_3976%20Save%20250.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+101	Organic Broccoli	Sweet and delicious! Don't forget to make use of the stems of Lakeside's Broccoli, by either steaming them or grating them into a slaw.	1	bunch	3.99	3.07	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/6xqByqkdSMaNHuahWEFB_Broccoli.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+102	Organic Rapini Greens	This relative of Broccoli has a bit more of a mustardy kick.  Stir-fry these greens with garlic and red pepper flakes for a quick side!	1	bunch	2.49	3.32	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/zsovDPljQcW4ibbHxNm2_Rapini_Greens_Riverdog_Huge.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+103	Broccoli Di Ciccio	These baby leaves of the Spigariello plant--an heirloom Italian Broccoli variety--have the Brassica sweetness of Broccoli with the tenderness of a Baby Kale.  It's great in hearty white bean soups or quickly sautéed with some olive oil, garlic and shallots, then hit with a bit of lemon juice at the end to bring out the sweetness. For a hearty salad, massage the Spigariello Greens with some buttery olive oil and let it soak in, covered in the fridge, for an hour or two.  Top with a pungent goat cheese, some slivered or toasted almonds, raw or pickled shallots, and a hit of lemon juice.	0.5	lb	3.99	7.98	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/ty64iIPXTz6OLErQtMD0_20160620-DiCiccio_1-2pd_MG_3131.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+104	Organic Broccoli Crowns	As the weather gets cooler, this classic Brassica gets sweeter and sweeter. Enjoy roasted, stir-fried or simply steamed.	2	lb	4.99	2.5	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/gFf1jRYzSZmTmKV0Cndg_broccoli_02%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+105	Organic Large Cauliflower	This beautiful Brassica can go in just about any dish.  Crumble raw into a hearty grain salad for a sweet, tangy crunch, or roast up with root veggies for a satisfying winter side.	1	count	3.49	1.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/ijaDsegRiUuy7hP7xQ9g_cauliflower_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+106	Piracicaba Broccoli	This broccoli has beautiful, nearly open florets and long, tender and entirely stems. Quick sauté with a little garlic, olive oil and red pepper flakes for a sweet, delicious addition to any meal.	0.4	lb	3.49	8.73	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/aZKXH2rpQVuYjQBZwEyv_17m_IhG0Ny-vZk_O8svvIvu8lpcKy6FryUB2d2X8f8Y.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+107	Organic Romanesco	Roasted whole, crumbled into a salad or zapped up into a creamy soup, there's no wrong way to enjoy this delectable Brassica.	2	lb	6.99	3.5	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/m0tvENTWQYGV0qIyu3C9_romanesco.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+108	Organic Brussels Sprouts	Tender and young, Brussels sprouts are a seasonal treat that should not be missed. Cook them on high heat to caramelize, which brings out their naturally sweet and rich flavor.Note: organically-grown Brussels Sprouts have had a difficult season due to early heat and then some wet and cold weather.  While Lakeside generally does a pretty good job of sorting through and cleaning up their Brussels, you should expect these to look less perfect than conventional Brussels Sprouts you might find at the supermarket.	1	lb	7.99	7.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/e6moGaonRyKtCui66Kew_Brussels_Spouts_03%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+109	Organic Medium Artichoke Duo	The Santa Cruz and Watsonville region is world renowned for it's artichoke production, and Rodoni Farms has led the way in growing them organically. Artichokes are surprisingly versatile. While they are easily enjoyed by boiling with lemon and eating with a garlic aioli, one should experiment with soups, dips and using the hearts to top a home baked pizza.	2	count	3.99	3.33	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/O3CPwDCWScm9GbBhNyOB_artichokes.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+110	Organic Delicata Squash	Delicata is the darling of winter squash, as they're sweet, quick roasting and can even be pan fried with your favorite herbs.	2	lb	4.99	2.5	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/LZWxKr5fRMifc7Yl4BMl_squash_delicata_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+111	Calçot Red Scallion	Calçots are a relatively bulb-less onion variety, widely consumed in Catalonia during their annual  Calçotada event. During the event, the onions are charred over an open flame, then wrapped in newspapers, which steams them and allows them to tenderize. The char and greens are removed and the succulent white portions of the plant are dipped in romesco sauce and accompanied by wine, bread, meat, beans and, for dessert, oranges and cava.While we won't stop you from inviting some friends over for your own personal Calçotada, these onions are perfectly delicious used in other applications: sliced thinly raw into salads, as a replacement for scallions, roasted alongside root veggies, or grilled alongside sausages for a sweet and smokey topping.	0.5	lb	2.49	4.98	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/SytBFNDWRa27c7z05sVY_Onions_Spring.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+112	Organic Honey Nut Squash	Honey Nut squash are mini Butternut Squash. They have a flavor similar to a butternut but sweeter and have a deep orange color.	2	lb	4.99	2.5	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/unyhipVaTfeBMSGSUyO4_squash_honey-nut.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+113	Organic Small Spaghetti Squash	This incredible squash has spaghetti-like flesh! Bake the squash, fork out the stringy flesh and sauté with onions, garlic and parsley for a unique take on aglio olio!These squash were grown by Johnston Family Organics in Woodland, CA, and brought to us by our trusted distributor partner, Earl's Organic Produce.	1	count	2.99	1.5	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/VauTelftRSonLHVmzVHP_squash_spaghetti_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+114	Organic Butternut Squash	Butternut Squash has a nutty flavor and is sweet like a pumpkin. When ripe, the flesh turns increasingly deep orange, and becomes sweeter and richer. It has a long shelf life and is great countertop kitchen staple. Butternut squash pairs well with sage. Caramelize your sage in butter and drizzle upon your perfectly roasted squash for an incredible treat.	1	count	3.99	1.33	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/GRa5tfq8RjKYtpAGOC80_unspecified.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+115	Organic Acorn Squash	Acorn Squash has a light, corn-like sweetness, so it takes on other flavors very well. Its large seed cavity is well suited for stuffing, so load it up with quinoa and seasonal veggies for a healthy main course.	1	count	1.99	1.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/JBQTI9yDRwa33Xmi1iMv_squash_acorn_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+116	Organic Carnival Squash Duo	Festive and decorative, this variety of squash will color your home until you bake it off. The flesh has a sweet, nutty flavor, and is a great size for stuffing.	2	count	3.99	2.0	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/HlzeaqGVRtmy04P14tNr_pESmL06ZQPyH5AR0DNO4_squash_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+117	Organic Baby Green Kabocha Squash Duo	These mini squashes from Pie Ranch are the perfect size squashes for stuffing! Kabocha squash doesn't carry as much sweetness as some of the other winter squashes. This velvety and golden - fleshed squash has a chestnut-like flavor. It packs a punch of umami that makes it the most supremely flavorful of all winter squashes. Goes great in soups, roasts, and curry.	2	count	3.99	2.0	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/k7OaEYnRQYWGrzPWkGKp_unspecified-8.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+118	Organic Baby Red Kuri Squash Duo	These mini squashes from Pie Ranch are the perfect size squashes for stuffing! Red Kuri Squash has a bright red flesh that is slightly nutty and a little bit sweet.This mellow squash is great with butter and herbs.	2	count	3.99	2.0	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/kmkBpN5xT2y7XLiiUKOU_unspecified-9.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+119	Organic Red Kuri Squash	These hubbard-type squash has a distinctly chestnutty flavor that pairs well with alliums, bay leaves and bright sweetnesses like cranberries. The Red Kuri can be hard to skin raw, so it's best cooked with the skin on or cubed and roasted. When fully cooked, the skin is edible, just like a Delicata! It has a smooth, silky orange flesh.	1	count	4.99	1.66	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/qtOd4xxnQbKeGiqnUuNg_squash_2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+120	Organic Red Kabocha Squash	Kabocha is also called the Japanese Pumpkin. It has bright red colored skin and is shaped like a squat pumpkin! With a more complex flavor than a sugar pie pumpkin, these beauties are actually higher on the brix scale (sugar content measurement) than the sugar pies or butternuts. Once you try these, you'll never go back!	4	lb	7.99	2.0	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/DDc2hCQyT6yY99BoCZ8Q_redkabocha.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+121	Giant Blue Hubbard Squash	Blue Hubbards can become a bit more of a Beige or Grey Hubbard in storage, but they'll taste delicious for months and months. Blue Hubbards are often used as a replacement for Pumpkins in cooking and baking, due to their sweet flavor, fine texture, and slightly nutty undertones. It's also popular in soups and stews. It'll store for months, so feel free to use it as a dining room table centerpiece until you're ready to use it!Please note: this is a very big squash. It weighs between 12.5-17.5 lb, and is as large, if not larger, than a basketball.	1	count	19.99	1.6	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/oNQeEhgtQjK4jHl2ijdv_20161103-RobinsonFarm_GiantBlueHubbard_MG_5987%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+123	Organic Jack-o-Lantern Pumpkin	These beautiful carving pumpkins will ready your stoop, porch or window for Halloween! While many markets that sell mostly organic produce will source conventional Pumpkins for carving, we feel strongly about supporting sustainable growing practices even when the fruit, vegetable or flower isn't being ingested. We still want everyone who touches the produce--from seed to harvest to delivery--to work in a safe environment, free of harmful pesticides, and we still want to protect the immediate and regional environments from synthetic fertilizers.	1	count	4.99	1.0	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/jEqtEu4iShCnPVx5WtpG_pumpkin.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+124	Organic Cinderella Pumpkin	These large, beautiful, lobed Pumpkins have a red-orange skin with a creamy, rich flesh. They sometimes have a dark green webbing to them and the occasional (spooky!) scarring, but that just makes them look all the cooler and shouldn't affect their flavor at all. They're beautiful enough to replace your standard Jack-O-Lantern Pumpkin, and delicious enough to roast into your next pumpkin pie filling.	1	count	14.99	1.5	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/cQLSIgzOS6C4ci5dWdtK_20161027-CinderellaPumpkinTrio_MG_5377.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+125	Organic Cardoons with Greens	The leaf stalks of the Cardoon plant have an artichoke-like flavor. They are in the thistle family, like sunchokes, sunflowers and artichokes.  They need to be cooked before being eaten, or they are very bitter.  To cook cardoons, take off any leaves with a peeler, as these tend to be too fibrous.  In order to prevent discoloration, place them in acidulated water, They can then be braised or boiled into a stew. In New Orleans, they're frequently battered and deep fried. Larger stalks can sometimes take up to an hour to soften, but the wait is well worth your while when you can add that artichoke-y sweetness to any dish.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/fP90d9iUQzWiK9ZL6oDE_FK1A1770.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+126	Organic Dry-Farmed Early Girl Tomatoes	Dirty Girl Produce is famous for their dry-farmed Early Girl Tomatoes. This waterless method of growing sometimes yields only ⅓ as many tomatoes, but the resulting fruits are dense with flavor. These have an acid to sugar ratio that is perfect for eating, canning, and making sauce! They may be the best tomatoes on the planet!	1	lb	4.99	4.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/Rz1wp1BtQq2BSQOU4Ezp_JlmyYdVAyTHOX3YI0hGKwsPpZ6okJVRIy_k3oEG8pkc.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+127	Organic Roma Tomatoes	Perfect for sauces, these fleshy (and not too juicy!) tomatoes will build the base to your next buttery-smooth marinara.	1	lb	2.79	2.79	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/knSgSZHwQ421Akqovkp2_tomatoes_roma_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+128	Organic Small Slicer Tomato Trio	Organic Slicer Tomatoes, perfect for sandos or salads!	3	count	3.49	3.88	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/a2tEC6xNQdmNpmug1eDd_tomatoes_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+129	Organic Orange Bell Pepper	Add some beautiful orange to your next fresh salad or some sweetness to your next fajita mix with these Organic Orange Bell Peppers! They're refreshingly sweet, crunchy and juicy.	1	lb	4.99	4.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/ab8hZIT2K5bd925EuSiA_Orangebellpeppers.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+130	Organic Fresh Cayenne Peppers	Hang and dry these bunches of Fresh Cayenne Peppers to enjoy a spicy kick through the colder months. While most of the hot peppers will be coming out of Mexico for the off-season, you'll be able to enjoy the local flavor of the Capay Valley one pepper at a time. Hang upside down in a windowsill with plenty of ventilation to dry.	1	bunch	7.99	15.98	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/3MZR8398Q4ibnDcYLC4p_20161006-FullBelly_CayennePeppers_MG_3121.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+131	Organic Cayenne Peppers	These gorgeous, long and ethereal looking peppers should not be passed by. Hang to dry and color your kitchen, or mince while fresh to enhance any dish calling for cayenne.	4	oz	2.99	0.75	oz	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/6CI5QhfnSaOxBBlowvZQ_x6yurmJhLN73fxEVZAwgWKpY6U5VnFn1RXohFV0uSAE.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+132	Organic Purple Bell Peppers	Add some beautiful color to your next green salad or complete the rainbow in your next fajita mix with these Organic Purple Bell Peppers! They're refreshingly sweet, crunchy and juicy.	1	lb	4.99	4.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/vBel6SJRQvWOBbnDxIfz_bell_pepper_purple.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+133	Organic Corno di Torro Peppers	Sweet and crunchy, these beautiful Corno di Torro Peppers are perfect for the grill. They also blister beautifully in a cast-iron.	1	lb	4.99	4.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/CICnasYjTwCbw3zQpmWc_peppers_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+134	Organic Green Bell Peppers	Add some beautiful green color to your next sauce or sautee with Organic Green Bell Peppers! They're refreshingly sweet, crunchy and juicy.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/DSK1I8jdSeAApSyjitCv_peppers_bell_green.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+135	Organic Red Bell Peppers	Red Bell Peppers are a great addition to any kitchen, as they're versatile and can be added to any dish, cooked or raw. Try charring them on top of the stove and adding to a simple fresh tomato sauce to add sweetness and depth of flavor.	1	lb	2.99	2.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/5AEfshZGQim7uXgCA7G0_unspecified-3.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+136	Organic Carmen Italian Frying Peppers	Widely considered one of the best flavored peppers on the market, these Carmens are sweet and robust.	1	lb	5.99	5.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/5gGNcqFSDCeUsZFoy3rb_peppers_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+137	Organic Padron Peppers	With a few spicy ones in the mix, these Padron Peppers are the perfect appetizer. Just heat up a cast iron pan with a high heat oil, toss in your peppers, let them blister on one side before shaking the pan to blister another side. Remove from heat before the peppers completely wilt, top with salt, and serve!	0.5	lb	5.99	11.98	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/yUsriqHDSGf8wjlLRJaF_20160726-FullBelly_Padron_1-2pd_MG_5819%20%284%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+154	Organic Baby Kale	So tender and sweet, Fifth Crow's Baby Kale is perfect for raw salads with light dressings.	0.4	lb	3.99	9.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/WjfcsLIkReihTgLcQTh4_20160601-FifthCrow_BabyKale_MG_0901.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+138	Organic Padron Peppers	This bulk sizing of these delicious peppers will be sure to please the whole party!With a few spicy ones in the mix, these Padron Peppers are the perfect appetizer. Just heat up a cast iron pan with a high heat oil, toss in your peppers, let them blister on one side before shaking the pan to blister another side. Remove from heat before the peppers completely wilt, top with salt, and serve!	2	lb	19.99	9.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/WKeFZgrTQlG3EJe21Nly_Padron2lbSave4.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+139	Organic Heirloom Tomato Medley	Happy Boy's heirlooms are hitting their peak late in the season. This medley may include Green Zebras, Purple Cherokees, Yellow Brandywine and more.	1.5	lb	5.99	3.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/OlaCzq4URWe1NzCT0W3K_mxP0f4cnn2t0dWGaJAuSygL_ZCebcwxtSZYxupkmDg8.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+140	Organic Serrano Pepper Trio	Hot Peppers! Perfect for salsa and great in Thai food.	3	count	0.99	0.99	oz	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/u5ZaAEOQTmyZJuDlaZLq_peppers_serrano%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+141	Organic Spicy Large Padron Peppers	At the end of Padron season, when there's still fruit on the plants, they've generally gotten to a stage of maturity where they're larger and almost guaranteed to have a bit of a kick to them. These Padron Peppers can be used much like a mild chili pepper or prepared like a milder padron for those who enjoy the extra spice.	1	lb	6.99	6.99	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/5DFs8sGARU24um1TXJdz_PadronPepper-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+142	Organic Watermelon Radishes	Mostly sweet, with a mild kick, these striking Watermelon Radishes are great sliced thinly into a salad. Make wedges or spears for dipping, or try roasting them with other root veggies!	1	lb	1.99	1.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/rFL7afRQA27pzqqBdmdj_radish_watermelon_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+143	Organic Jerusalem Artichoke	Great for gratins, mashes and roasted vegetable medleys, Jerusalem Artichokes (aka Sunchokes) are a deliciously sweet tuber of a plant in the sunflower family.  They have a sweetness reminiscent of artichokes, with a texture closer to that of a potato, but a bit less starchy.	1	lb	5.99	5.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/mgCclCTTVKbTsicPzQrQ_sunchoke_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+144	Baby French Breakfast Radishes	Martin picks his French Breakfast Radishes small, so they're all sweet, without the bitterness often associated with overgrown radishes. Chefs love working with radishes this small for their tenderness and sweetness.Try them thinly sliced on a piece of toast with butter, salt and pepper.	1	bunch	2.49	9.96	lb	Produce	Vegetables	http://goodeggs2.imgix.net/product_photos/u0VPQInuSueaWy6VZek2_radish_breakfast_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+145	Organic Rutabaga	Rutabaga is one of the many misunderstood root veggies. If allowed to brown a bit in the roasting process, Rutabagas can become quite sweet. Pair with Turnips and Carrots for a seasonal mixed veggie roast.	1	lb	2.49	2.49	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/UqzWBoxUQOOmMvftuQsh_20161104-Turnips_MG_6215.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+146	Organic Purple Kohlrabi	This unsung hero of the vegetable world is in the Brassica family, meaning it's a relative of Broccoli, Cauliflower, and Cabbage. Kohlrabi's tough exterior houses a soft and amazingly sweet flesh. Give the bulbous stem a quick shave, quarter it, and then toss it in the oven at 425F with same salt, pepper and olive oil for a delicious roasted treat.	1	count	1.29	2.58	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/ixnLEfbQiTnVNDBuZRgQ_SinglePurpleKohlrabi-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+147	Organic Loose Scarlet Queen Turnips	These vibrant and beautiful turnips can be boiled, roasted, steamed, or eaten raw. Their flavor is among the freshest of all root veggies, as they're a little sweet, and somehow very light on the palette. Mash some up with other roots for a bit of a kick, slice them up and put them on your salad for some extra zip, roast them along side your root medley and they won't disappoint.	1	lb	2.79	2.79	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/M9N7zadoQfKr3JU5imlw_turnips_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+148	Organic Black Spanish Radishes	Crunchy with a pungently spicy skin, these Organic Black Spanish Radishes are as delicious as they are beautiful.	1	lb	3.99	3.99	lb	Produce	Vegetables	http://goodeggs1.imgix.net/product_photos/4MoBkdszR2Ul3GdoChDK_Radishes-Black_cut.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+149	Organic Baby Spinach	Full Belly Spinach has a deep green color and a springy, crisp texture that makes it perfect for a fresh salad or sandwich topping.  It has a sweet flavor that melts in your mouth! Not to mention, its hearty leaves holds up in most recipes that call for spinach—from soups and dips to lasagnas and quiches!	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/4HP7uJQ7QXuxNB63vDrv_spinach_07.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+150	Organic Bunched Spinach	Full Belly Spinach has a deep green color and a springy, crisp texture that makes it perfect for a fresh salad or sandwich topping.  It has a sweet flavor that melts in your mouth! Not to mention, its hearty leaves holds up in most recipes that call for spinach—from soups and dips to lasagnas and quiches!	1	bunch	2.99	5.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/fxtIjG8eTAKIBplXMih9_Spinach.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+151	Organic Lacinato Kale	Lacinato is a classic Italian variety of kale, also known as Tuscan Kale or Dino Kale.  During the winter months, the cold nights and occasional frosts make this kale even sweeter.	1	bunch	2.99	\N	\N	Produce	Greens	http://goodeggs2.imgix.net/product_photos/L5DBbkCwRGCJJIcTE1v5_Kale_dino_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+152	Organic Green Curly Kale	Green Curly Kale is a bit milder in flavor than Lacinato or Dino Kale. During the winter months, the cold nights and occasional frosts make this kale even sweeter.  Its nooks and crannies make it perfect for soaking up flavor in a raw kale salad.	1	bunch	2.99	\N	\N	Produce	Greens	http://goodeggs1.imgix.net/product_photos/Ttc2LpvRZKZCSqnNGFkB_kale_curly.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+153	Organic Lacinato Kale Trio	Our Lacinato (also know as Dinosaur or Italian) Kale is a true classic. Sweet and strong, these lightly savoyed leaves are as versatile as they are delicious. Salads, sautees, and smoothies all stand to improve from the addition of Kale's bittersweet flavor as well as its high nutritive value. 1 bunch, which contains approximately 7-10 individual leaves, varying with size.	3	bunch	4.99	\N	\N	Produce	Greens	http://goodeggs1.imgix.net/product_photos/uY65ETRYQXevpPNFbKrh_20160607-Lacinato_KaleTrio_MG_1384.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+155	Organic Baby Lacinato Kale	The tender young leaves of this baby Lacinato Kale are tender and sweet. They are from the baby Kale plant and are perfect for sautéing.  They're also tender enough that with a brief massage of some olive oil, salt and lemon and a half-hour to let it all soak in, it can make the perfect raw salad.	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/FGsuXSkwSQiaxQ5PZNxg_kale_dino_mini_bag.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+156	Organic Baby Green Curly Kale	The tender young leaves of this baby Green Curly are tender and sweet. They are from the baby Kale plant and are perfect for sautéing.	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/BmfTAE7iQ4WU80rJmoGj_kale_baby.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+157	Organic Mixed Baby Kale	The Knolls are at it again with another one of their delicious greens: this time, it's a mix of baby kales! Exact varieties may vary week to week, but they'll always be delicious!	0.5	lb	4.99	9.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/sJYoL7AeRIh70eYMB2bw_kale_baby_mix_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+158	Organic Spinach	With a deeper flavor than the more ubiquitous Baby Spinach, these hearty bunches feature larger leaves and more sizable stems that can withstand a quick sauté without losing texture.	1	bunch	2.49	4.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/cfaYKd4QhCEMTmrkPc3E_Riverdog_Bunched%2BSpinach.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+159	Organic Red Russian Kale	The tender leaves of this Red Russian Kale are sweet and nutritious.	1	bunch	2.79	\N	\N	Produce	Greens	http://goodeggs1.imgix.net/product_photos/lNZVLEcSl6aZlVGab1hA_JD0s-JmzIa_rQVwzRVb9AEXaPsZIh9F_7AsJSSAc-Cs.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+160	Pre-Washed Organic Salad Mix	A delightfully fresh mix of sweet, tender baby lettuces with other baby salad greens. You might find small leaves of frisee, tatsoi, radicchio, escarole, baby beet greens and other greens with earthy, spicy and/or bitter flavors.Comes pre-washed, though we always suggest an extra rinse!	0.5	lb	3.79	7.58	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/Y1yIPH3RpaFIgUJuiJcw__BWnWRQNxD3qcTNVtBFGuNAFEJdOd4_b71bNdP75Wtw.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+161	Organic Pre-Washed Salanova Salad Mix	Salanova is a beautiful mix of baby Red and Green Butter and Oak Leaf Lettuce varieties. Sweet and tender, perfect for a beautiful salad. Wash, dress and serve!Comes pre-washed, but we always suggest an extra rinse!	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/odG1Xm0CRnDOzfnmx9RO_salad_mix_05.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+162	Baby Arugula	Martin grows some of the most delicious Arugula in the world. Because it's greenhouse-grown, it's delicate and tender, but it doesn't skimp on having a nice spice to it. Chefs at some of San Francisco's most renowned restaurants swear by Martin's Arugula, and once you try some, you'll swear by it, too.	0.5	lb	4.99	9.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/IfNzA1XISDiO3PlIVrRr_FK1A6779.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+163	Organic Mixed Baby Head Lettuces	Farmer's choice of that day's best lettuces. Varieties may include Green Little Gem, Red Little Gem, Baby Red Romaine, Red Oakleaf, Green Oakleaf, Mini Red Butterhead, and Red Lolla Rossa. Small, tender, sweet and oh-so-pretty!	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/qItfp61TSrVZ1L12F3gf_dD2YyI9RoJIBjfb4xVBtQ3nkvK-UveSDHs8ShuO_qis.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+164	Pre-Washed Aquaponic Salad Mix	Farmers Choice!  We harvest the freshest heads each week to delight your senses with a unique and delicious combination of flavors, textures and colors.  Contains 3-5 of the following varieties: By buying our lettuce mix, you just saved 7+ gallons of water compared to a similar mix grown in soil!Red ButterGreen ButterRed Oakleaf Green OakleafRed CrispGreen CrispRed IncisedGreen IncisedGalacticBreen	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/MKNtr8BS600raInGOZcA_lettuce_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+165	Organic Belgian Endive	"EN-dive," "on-DEEV," no matter how you pronounce it, this crunchy, sweet veggie is perfect for boats, or sliced into salads.Belgian Endive is part of the chicory family, along with Radicchio, Frisée, Escarole, and Dandelion Greens, but because their secondary growth period happens indoors, without any light, they have only a very mild amount of the characteristic bitterness of that family.	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/oDyfJ6LLQc2eQQlY3zHi_endive.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+166	Organic Little Gem Lettuces	Chris Hay and his crew at Say Hay Farm have an abundance of Little Gem Lettuces right now, and they're looking as beautiful as ever. Don't miss out on this spring salad feast!	1	lb	5.99	5.99	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/ZxWsp5DaSESMgEROdBPA_Little%20Gem%20Duo%20LIve%20Earth.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+167	Aquaponic Green Living Butter Lettuce	Butter lettuce is named for its smooth buttery texture and delicate flavors.  Excellent as a stand alone salad or mixed with other types to create a variety of textures, flavors and colors.  Our lettuce comes with the roots still attached for maximum freshness and flavor!By buying our Green Butterhead, you just saved 7+ gallons of water compared to similar lettuce grown in soil.	1	head	2.99	8.54	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/DoDBnwzZTOmPM8566fxQ_20161013-Ourboros_GreenButterhead_MG_3652.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+168	Organic Red Butter Lettuce	Butter Lettuces are just as their name suggests, like butter! Their soft cup shaped leaves have a buttery, velvety texture. They are loosely shaped, often resemble a flowering rose and will make a beautiful and tasty salad.	1	count	2.49	4.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/d3kRoRdQsKjBO9wcNXuC_Lettuce_Red_Leaf.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+169	Organic Red Butter Lettuce	Sweet and velvety, these beautiful heads of Red Butter lettuce are great for lettuce wraps or a raw salad.	1	count	1.99	2.65	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/WjR9DtIIREGbCDRGFdN8_unnamed-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+170	Aquaponic Living Butter Lettuce	A duo of Red and Green Butter lettuce.  Butter lettuce is named for its smooth buttery texture and delicate flavors.  Excellent as a stand alone salad or mixed with other types to create a variety of textures, flavors and colors.  Our lettuce comes with the roots still attached for maximum freshness and flavor!By buying our Duo of Butterheads, you just saved 14+ gallons of water compared to similar lettuce grown in soil.	2	head	4.99	6.65	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/Jitk0mA4T7wTAlIQbatk_lettuce_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+171	Organic Radicchio Treviso	Radicchio Treviso is similar to its more common, rounder relative, Chioggia Radicchio, but with larger and crunchier ribs. Like other members of the chicory family, it's characteristically bitter, but its sweetness can be brought out by paring it with an acidic, fatty dressing.	1	count	2.49	9.96	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/nMNa4IwbQ8ukY1ONFsQr_radicchio_01%20%282%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+172	Organic Garnet Dandelion Greens	Bright and flavorful, this Italian Dandelion will add a touch of bitterness and a pack of nutrition to your salad. Alternatively, spruce up your sauté with the addition of Dandelion just before serving. Pairs especially well with steak or fish! Our generous bunch size will take your enthusiasm for these greens to the next level.	1	bunch	1.99	4.97	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/RPmYikORnm8KkBZ4oV1S_XRlc3TXNSgC7ijH8EGAT_I3r6WsFTN-5jw_oc_BDjenRYvVm9FuC9_ml3qGESh9I-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+173	Organic Mesclun Mix	Fifth Crow Farm is known for their amazing speciality baby greens, and their Mesclun Mix draws lines at farmers' markets all over the Bay Area.  The mix of greens they use varies seasonally and includes fresh edible flowers during the summer. It may include: Tatsoi, Mizuna, Curly Cress, Arugula, Frisee, Radiccio, Beet Greens, Baby Kale, Red Mustard and Frilly Red Mustard. Flowers are included whenever in season, and may include Nasturtiums, Calendula, Bachelor Buttons, and Mustard.This mix is so delicate that it doesn't even need any dressing. If you do choose to use dressing, don't over-dress it, to preserve the fresh crunch of these delicate greens. Our favorite: a hearty slice of your favorite Josey Baker Bread under a five-finger pinch of this delicious Mesclun Mix, all topped by a runny, fried egg. Breakfast done right.	0.4	lb	3.99	9.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/3iFEzOZ7QIiD1gVilJfS_20160514-FifthCrow_MesclunMix_MG_9630.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+174	Pre-Washed Aquaponic Deluxe Salad Mix	A tantalizing mixture of our best lettuce with baby Red Veined Sorrel, known as Hearts of Fire, Ruby Streaks Mustard Greens, Tatsoi, and a touch of Watercress to add texture and a hint of sour and spice to your evening salad.By buying our Deluxe Salad mix, you just saved 7+ gallons of water compared to a similar mix grown in soil!	0.5	lb	4.99	9.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/BpQuWJART0KvyLLTcCYQ_JLbuiqGntNdBBbdHhg0jxmSoydYEri26ZJ41boS3ynM.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+175	Pre-Washed Family-Sized Aquaponic Salad Mix	Enough delicious salad mix to serve the whole family a few nights in a row, or perfect for your next large dinner party! We harvest the freshest heads each week to delight your senses with a unique and delicious combination of flavors, textures and colors.  By buying our lettuce mix, you just saved 42+ gallons of water compared to a similar mix grown in soil! Contains 3-5 of the following varieties: Red ButterGreen ButterRed Oakleaf Green OakleafRed CrispGreen CrispRed IncisedGreen IncisedGalacticBreen	3	lb	22.99	7.66	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/83RdURTKj5POdN61sYAb_salad_mix_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+176	Aquaponic Deluxe Salad Fixings	All the delicious extras that turn Ouroboros' famous Aquaponic Salad Mix into their even more delicious Aquaponic Deluxe Salad Mix.The Deluxe Fixings are usually a mix of Ruby Streaks Mustard, Mizuna, Hearts of Fire, Watercress and Tatsoi.	4	oz	2.49	0.62	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/okUhtetQLKN4op43eSoj_Ouroboros_Deluxe_Fixings.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+177	Aquaponic Living Baby Lettuce Trio	A trio of our freshest, most delicious baby head lettuces.  Baby lettuces add a tenderness and sweetness to any salad combination.  We include three different varieties to provide a mixture of flavors, textures and colors to make your salad mix exceptional!By buying out Baby Lettuce Trio, you just saved 12+ gallons of water compared to lettuce grown in soil!	3	head	4.19	\N	\N	Produce	Greens	http://goodeggs2.imgix.net/product_photos/AjFdA1XVSWaO8wZtxp3h_HaXtfUA7n5WWwosQm_qAvn9ttVRLPzoAjq2n6GoIzio.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+178	Organic Frisée	Small but mighty, this frilly chicory adds some volume to your salad and has all the nooks and crannies to bring dressing to your mouth, all while adding a nice bittersweet flavor to the equation. It's tied up during growth to protect the inner leaves from sunlight. These blanched heads are sweeter and more tender.	1	count	1.99	6.63	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/wmvr76ZyRKidGnzA52Y0_lettuce_frisee_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+179	Organic Chioggia Radicchio	Crisp, tender, and slightly bitter, this radicchio makes a tasty addition to a cool-season salad and is also delicious gently braised in a salty, vinegary broth.	1	head	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/JZGNqJxQSg4mPJiGZoWZ_FK1A9469.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+180	Organic Escarole	Escarole is one of the sweetest of the characteristically bitter chicory family.  This beautifully blanched head of escarole can be braised, grilled or chopped up raw into a salad.  Top it with some fat, salt and acidity to turn what little bitterness this winter veggie has into a bright and lively symphony of flavors.	1	head	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/g51zrTliQpTlEFKIMawN_Escarole.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+181	Organic Sorrel (Kid Spinach)	Sorrel goes by many names but the one that I like best is "kid spinach".  That's what I call it because it's one of the only green leaves that my kids will eat !!!  If your kids are finicky eaters, than sorrel will probably win them over with its lemony taste.It's great for adults also.  Sorrel can be used in soups to make a green borscht, in salads and stews or on a sandwich.  I love to use the leaves like a tortilla, filling them with a little refried beans, panela cheese or even a thin slice of jicama.  It's also awesome in pesto, as a straight substitute for basil.  I am sure you can come up with other uses as well. Each "bunch" weighs approximately a quarter-pound, so it is enough to keep you happy.   We hope that you'll try it and love it.	1	bunch	2.79	11.16	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/kQWC7qsURWqN6CnoS50h_FK1A7646.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+182	Organic Wasabi Arugula	Crisp, green leaves with the same wasabi flavor as in the Japanese condiment.  An intense peppery flavor as well as a a slight hint of arugula.  They come from the mustard family, along with broccoli, cabbage, radish and collard greens.They're high in vitamins C, A, Calcium and Iron.Wasabi Arugula is most popular eaten raw, as it loses its peppery taste when cooked.  It's often used as an accent in salads, with Ahi Tuna, or in sushi.  Add it to your favorite green salad--it's great paired with sweet, creamy dressings--or include in wraps or sandwiches. For a quick project and a special treat, substitute Wasabi Arugula for basil to make a peppery pesto.Enjoy!	1	count	4.99	1.81	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/BXTCTsRpSmirW13DnSBg_Hikari_Wasabi_Arugula_Clamshell.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+183	Arugula	Arugula adds a spicy kick\nto your salad or sandwich. Mix it with fava leaves, green garlic, and Meyer\nlemons for a great spring pesto.	1	bunch	2.99	\N	\N	Produce	Greens	http://goodeggs1.imgix.net/product_photos/ZwKJkVIqQMWdMyHnNSZZ_3t_9iGzvBox1ScvUOKZAMxvRu2PUoN2FC1Fjouqk0yI.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+184	Organic Batavian Lettuce	Classically crisp and versatile, Batavian Bibb lettuce has a mouthwatering crunchy texture and a mellow, sweet flavor.	1	head	2.99	5.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/Za5D02Q3QXCThp5ft9dX_lettuce_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+185	Organic Romaine Lettuce	Crisp Romaine Lettuce has sturdy leaves that are perfect for any salad, but are classicly used to make Caesar salads. This lettuce grows in tall heads with a firm rib down the center of each leaf. Unlike most lettuces, it can tolerate some heat. Try using the outside leaves for a loose salad and grill the romaine heart! Simply cut the romaine heart in half and brush with a herb vinaigrette, then throw it on the grill! It's delicious and versatile.	1	head	2.29	4.58	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/M8jiDnCvSjWComch9L6K_lettuce_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+186	Organic Baby Rainbow Chard	Baby Mixed chard is the younger leaves of the chard plant. The younger shoots are more delicate and sweet than the mature versions which makes this mix great for adding to a salad or lightly sauteing.	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/vIJi0XDSSH2HLVqGashN_wywVnMioQdii2c4n87w1_mixed_chard_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+187	Organic Rainbow Chard	As tasty as it is colorful, Rainbow Chard  has a balanced, slightly savory flavor. Try pickling the stems for a delightful, beautiful snack.	1	bunch	2.99	5.98	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/ZXZwEw3uRCWQXar7L4on_CPk4j0uNlyfgouMO2QZvofrY6CxPgAd3TQJLZpHihEg.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+188	Organic Baby Bok Choy	Sweet, tender and crunchy, Lakeside's beautiful Baby Bok Choy can be the main ingredient in your next stir-fry. Chop up the stem coarsely and throw it in a hot pan 60 seconds before the leaves, then remove from heat before any of the Bok Choy gets too soft. Pairs well with soy sauce and garlic.	1	lb	4.29	4.29	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/UcIoK9IDTJqkwU6AYsps_bokchoy_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+189	Organic Komatsuna Greens	These amazingly tender Japanese mustard greens have a spinach-y taste with a mild radish-y kick.  It can be eaten raw or cooked.  It's great for stir-fries--garlic and shiitake mushrooms go amazingly well with Komatsuna--or hotpot dishes. They were greenhouse grown, giving them a light flavor and a delicate texture.They're high in vitamins C, A, K, Calcium and Fiber.100g of Komtsuna contains: 130mg of vitamin C (162% dv)495mcg vitamin A (61% dv)210mg Calcium (21% dv)2.8g fiber	1	bunch	3.49	6.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/fzNtDId1SqmUAAaxUCsP_Hikari_Komatsuna_Tender_Bunch.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+190	Organic Braising Mix	Riverdog's braising mix includes a beautiful array of baby greens including the best of what's in the field that day: baby chard, curly kale, dino kale, bok choy and red russian kale, among others!	0.5	lb	4.29	8.58	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/xdgQjG01RkaHfLTQg4sD_KQ3r9BtYSYu0CaXJaC7x_FK1A0049.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+191	Organic Pea Greens	These early season Pea Greens are sweet and tender.  They taste just like the pods or peas themselves, but a bit grassier. Sauté them quickly with some Green Garlic and Spring Onions and salt to taste.  Pea Greens are also delicious coarsely chopped into a raw salad.From time to time, Rick Knoll will harvest his Pea Greens in their flowering stage, and you can occasionally see baby peas just beginning to form from the edible flower!	0.5	lb	4.99	9.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/yyWdodrTRPuGvaXupQfx_Knoll_Farms_Flowering_Pea_Greens_Half_Pound.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+192	Bull's Blood Beet Greens	Bull's Blood Beet Greens are beautiful, red greens that can be used fresh or cooked down. They have a naturally sweet-tangy and savory flavor that set them apart from other braising greens.	0.5	lb	3.99	7.98	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/BnYYRfxlSGCPjlUS67cj_Screen%20Shot%202016-10-27%20at%207.46.17%20PM.png?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+193	Organic Mizuna Greens	Mizuna is a Japanese mustard green with thin, delicate leaves. It has a very mild radish flavor and is often used in salad mixes or with many Japanese dishes such as sashimi or in soups.  It's best used raw or very lightly cooked.Mizuna is high in vitamins C, A, K, Calcium and Fiber.100g of Mizuna contains: 70 mg of vitamin C (100% dv)151 mcg vitamin A (30% dv)257 mcg vitmain K (200%)1790 mcg beta carotene115 mg Calcium (14% dv)3.2g fiber	1	bunch	3.49	11.63	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/0LLZF5ijSl6jsol1ifJi_Hikari_Mizuna_Tender_Bunch.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+194	Savoy Cabbage	Savoy cabbage is tender and sweet, perfect for a quick stir-fry or in an Asian-inspired slaw. It's also great for salads or vegetable wraps.	1	count	5.29	1.51	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/X0DpUjdQVS3feHfqBonN_4y-NsCExYvuI185hV-3MEB2rL7XC1vkNnxXuXEN5zPs.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+195	Organic Collard Greens	Collards are a classic member of the Brassica family.  Cooked low and slow to tenderize, enjoy these Collard Greens with some Black-Eyed Peas for your classic New Years meal.	1	bunch	2.99	\N	\N	Produce	Greens	http://goodeggs2.imgix.net/product_photos/n82ar1iTSGuq2p08tFQq_Collards.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+196	Stinging Nettles	Nettles grow like a weed, and are often discarded as such, but can be used as the base of pesto, as an addition to a hearty marinara sauce, or in soups and stews. Their flavor is similar to spinach, but with an earthier or nuttier tone.Do not eat Nettles raw or handle them bare-handed! Nettle leaves and stems have tons of stinging hairs (trichomes), whose tips act as needles when touched, injecting natural compounds that can cause painful stings. Nettles must be soaked in water or cooked to remove the chemicals from the plant, allowing them to be handled and eaten without risk of stinging.Nettles are rich in vitamins A and C, iron, potassium, manganese, and calcium. Nettles can also be composed of up to 25% protein by dry weight, which is very high for a leafy green.	0.25	lb	2.99	11.96	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/8zRKeuVpQx2xEBjOXPdw_nettles_01%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+197	Aquaponic Living Baby Red Pac Choi	This beautifully purple-red variety of Pac Choi (aka Bok Choy) is tender and sweet.  Enjoy raw, chopped up in a salad, or lightly steamed.	1	count	1.79	5.97	lb	Produce	Greens	http://goodeggs2.imgix.net/product_photos/rn2uSlmSYix72LxPCqHg_FK1A3111.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+198	Organic Red Mustard Greens	Sweet with a slight kick, these beautiful red mustard greens make the perfect centerpiece to any stir-fry.	1	bunch	2.49	7.11	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/8aVgUtpjQgOV1jOlLsiW_greens_mustard_red.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+199	Organic Red Jewel Cabbage	Long lasting, sweet, and versatile, Red Cabbage is a fantastic investment in your future fish tacos, cole slaws, or kraut.	1	head	3.49	1.99	lb	Produce	Greens	http://goodeggs1.imgix.net/product_photos/wMAbyRJRTgmfllFKEV2d_IMG_0880.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+200	Organic Pea Shoots (4oz)	Very young green pea shoots with a fresh pea flavor for salads, wraps, quick stir fry, or wilting with hot water. Eat fresh in salads for that fresh pea flavor all year. Great crunch in a fresh spring roll. For an Asian noodle dish, place pea shoots in the colander and drain the hot noodle over them for the perfect wilt. For your stir fry drop the pea shoots in to retain some crunch. All young greens concentrate the nutrition of the mature vegetable.Packed with vitamins A, C and folic acid, Pea Shoots are a delicious, nutritious modern slant on the classic British garden pea. Lyndel Costain, B.Sc.RD, award winning dietitian and author of Super Nutrients Handbook, says, “Pea Shoots are a nutritious leaf with high levels of vitamin C and vitamin A. A 50g bag of these tasty greens offers more than half of the RDA for vitamin C, a quarter of the RDA for vitamin A and significant amounts of folic acid. It is great news that this healthy and simple to prepare vegetable leaf is readily available to consumers.”From http://www.peashoots.com/peashoots-nutrition.htm	4	oz	3.99	1.0	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/8re0JSqSYyDfeB9uxwbI_UYqaOC-Tum2HJrBVLxp_fBox5ZfHFN0FyyHSxBjCxDk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+201	Organic Micro Mix	Amazing flavors unfolding on your tongue with this mix. From solid yummy broccoli to zinger arugula, and a few in between. Get all the different nutritional benefits that micro greens offer individually, combined in every mouthful.From the USDA Agricultural Research Service: In general, microgreens contained considerably higher levels of vitamins and carotenoids—about five times greater—than their mature plant counterparts, .......http//en.wikipedia.org/wiki/Micro_greens 	2.5	oz	4.49	1.8	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/bIuHJ3Tq6gJaXWRiIFLw_YInwhLt1EKnEmmkOVCfozeC5F0j51FdsQaDpTE_dMx4.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+202	Organic Salad Mix	A combination of some of your favorite New Natives micro and baby greens. Sunflower Greens, Pea Shoots, and our Micro Arugula, Broccoli, Kale, Kohlrabi, and Daikon Radish ready to mix straight into your salad bowl. With New Natives' Salad Mix it is easier than ever to bolster your salad with great nutrition and amazing flavor.From the USDA Agricultural Research Service: In general, microgreens contained considerably higher levels of vitamins and carotenoids—about five times greater—than their mature plant counterparts, .......http//en.wikipedia.org/wiki/Micro_greens 	4	oz	4.99	1.25	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/OmGkEWwUREGvDRPcZiBp_T2kwFO0Vo4x3v-x7bMif-0IxJiiipEJbLbue5fJfeHQ.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+203	Organic Sunflower Greens (4oz)	Nutty Sunflower Greens are perfect for salads, green smoothies, wraps, or sandwiches. Sunflower seed flavor in a crunchy green. \n\n\n\n\n\n\n\nNutritional info:\nVitamins A, B, C and E\nCalcium, Chlorophyll, Iron, Magnesium, Niacin, Phosphorus, Potassium\nAmino Acids\nProtein: 20-25%	4	oz	3.99	1.0	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/og0Jo9faS5uUFlGjEdLh_Broccoli%20%20IMG_7566.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+204	Organic Protein Crunch (Sprouted Mixed Beans)	Protein crunch is a mighty mix of germinated peas, lentils, adzuki and mung beans. Enjoy this protein-packed crunchy treat raw or cooked. USDA Certified OrganicAdd some protein to your salad Add to soupsRoast or pan fry (when lightly oiled)Substitute them for chickpeas in hummusFor more recipes and nutritional info please visit www.localgreensfarm.com	8	oz	4.99	0.62	oz	Produce	Greens	http://goodeggs2.imgix.net/product_photos/WPqmRJe6TjW6adxcM9FW_FK1A7465.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+205	Organic Super Salad	Enjoy this mighty mix of Organic baby radish greens, baby kale and sorrel.  The super salad has a base of baby radish greens topped with a touch of sorrel and kale to make it the perfect salad mix.  The radish greens are zesty, but mellow out when eaten with an oil based dressing.Upon harvest, our super salad is packed into a plastic bag and refrigerated. We don't rinse the salad before packaging because it stays fresher that way. Please rinse before enjoying.	9	oz	8.75	0.97	oz	Produce	Greens	http://goodeggs2.imgix.net/product_photos/oNdaGRrRTbCJhigJRnhv_522e24663d92f70200000134_standard.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+206	Organic Baby Radish Greens	Baby Radish Greens (aka Kaiware, or daikon sprouts), are great tasting, versatile and super nutritious for you.  They are an excellent base for your salad, added to a soup, put onto a sandwich or as a garnish for tacos.  They are a must for sushi.  These little guys add a great spicy kick to whatever they are accompanying.   For some people, eating them raw is a little too intense.  In that case, or for a change of pace, they can  also be lightly cooked in a soup or saute and this will mellow out the flavor and spice considerably.Kaiware has been studied recently in Japan for its ability to fight cancer and results have been very promising.  One study called kaiware "a naturally multipotent chemopreventive agent".We hope you'll try it for yourself.... I don't think that you'll be disappointed.	2	oz	2.99	1.5	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/4bkIRv0gS8ywJq7uCEMv_Baby%20Radish%20Greens%202oz%20Green%20Skies%20Vertical.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+207	Organic Micro Kale	Local Greens' Micro Kale  it's USDA Certified Organic and hydroponically-grown.USDA Certified OrganicHydroponically-grown in Berkeley, CAGrown using 1 cup of waterPerfect for adding to a green salad mix or for topping eggs, soups or any other dishFor more recipes and nutritional info please visit www.localgreensfarm.com	2	oz	4.99	2.5	oz	Produce	Greens	http://goodeggs2.imgix.net/product_photos/LUVw8K7wSLeR6YfrAoVF_FK1A7508.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+208	Organic Micro Broccoli	This is the really, really nutritious one and it tastes great! Top off a salad, soup, rice bowl, sandwich, or just eat em out of the container. Crunchy, fresh, and full of flavor.	2.5	oz	4.49	1.8	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/6ANVIwotQNS9h0DI48wu_nEVAZCOBVtqfEa8kEpqgB8adHd7ho6jfrfFggAyluy4.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+269	Safflower	Safflower, one of humankind's earliest crops, is an annual flower bearing a passing resemblance to a thistle. Their bright orange flower heads contrast beautifully against their lush, green foliage. Long-lasting, they should live for about 10-14 days in a clean vase. Care for them by regularly changing their water and trimming their stems (especially after delivery), allowing them to up maximum amounts of water.	1	bunch	7.99	\N	\N	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/0OEGYt0xQqetgvPNsk5s_20160628-FullBelly_Safflower_MG_3756.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+209	Organic Micro Arugula	Very Arugula!! Super packed with flavor and nutrition. Sprinkle our little greens on your salad, pasta just before you serve it, or try them on sandwiches and in wraps. From the USDA Agricultural Research Service: In general, microgreens contained considerably higher levels of vitamins and carotenoids—about five times greater—than their mature plant counterparts, .......http//en.wikipedia.org/wiki/Micro_greens 	2.5	oz	4.49	1.8	oz	Produce	Greens	http://goodeggs1.imgix.net/product_photos/gb8VcfESt6uxDZhPgkya_AhBdUmeQyVzkhsC_4BPN0lfPTTd2v78g_nrkYjEFpnk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+210	Organic Sprouted Wheat	With highly-touted nutritional benefits, this Sprouted Wheat can be a healthy addition, chewy, and hearty addition to any salad.	8	oz	2.99	0.37	oz	Produce	Greens	http://goodeggs2.imgix.net/product_photos/p5hhYdfZQdOd5akXXtFj_20160910-GreenSkies_SproutedWheat_MG_0695.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+211	Organic Germinated Peas	Sprouted Peas are just newly germinated, nutritionally-dense peas.  Enjoy this protein-packed crunchy treat raw or cooked. USDA Certified OrganicAdd some protein to your salad Add to soupsRoast or pan fry (when lightly oiled)Substitute them for chickpeas in hummusFor more recipes and nutritional info please visit www.localgreensfarm.com	9	oz	4.99	0.55	oz	Produce	Greens	http://goodeggs2.imgix.net/product_photos/RvvZbq0FQmGbc9X07cro_20160429-LocalGreeen_GerminatedPeas_MG_8501.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+212	Organic Crimini Mushrooms	The classic Crimini is widely versatile, as many dishes can benefit from their rich, meaty, and earthy flavors. A quickly sauté with butter, garlic, and your favorite herb always amounts to a tasty starter, or add a few to your next late night grilled cheese, vegetarian nut roast, or lasagna.	8	oz	2.99	5.98	lb	Produce	Mushrooms	http://goodeggs2.imgix.net/product_photos/e4LG13KjSfWv1IkxjbW3_r8dVolYMQAu1nt8clGF9_s9gy2ycTTsCfDYLiJ77d_z6_ky29DCzM-yRUzrxvFEsY6lkSI7-uK4UFifIJd4vk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+213	Fresh Organic Shiitake Mushrooms	Shiitake is also known as "black mushroom" of Oriental cuisine.  They are full-bodied with a meaty texture and distinctively woodsy flavor. They are one of the most versatile mushrooms for a novice of exotic mushrooms and high in both protein and vitamin D.	6	oz	5.79	15.44	lb	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/dNIfB5RoRyerIt9qJMzl_FK1A4406.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+214	Organic White Button Mushrooms	White Mushrooms are the same species as Criminis, but younger, resulting in a closed cap and a meatier texture. They have a clean, fresh flavor that makes them great candidates for eating raw.	8	oz	2.79	5.58	lb	Produce	Mushrooms	http://goodeggs2.imgix.net/product_photos/LqZVvgoTtKUcNuKgPxLW_p9MJXXLkQTWA6S00j2DR_jmseGhEy-tm8FssZRSiV8qOROVghhW2GtLBBhrC9MMg.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+215	Fresh Organic Maitake Mushroom	Maitake are also know as Hen of the Woods and can be gathered wild on the East Coast.  Our cultivated organic Maitake have a firm crisp texture and intense roasted chicken/ earthy mushroom flavor.  Known for it's immune enhancing abilities these mushrooms are also one of the best culinary mushrooms to eat.  They are easy to clean and can last for 10 days in refrigeration.  Perfect for a simple broth soup, roasting or a quick egg scramble.	6	oz	6.99	18.64	lb	Produce	Mushrooms	http://goodeggs2.imgix.net/product_photos/dE9E4OFAQIWuEPrfsiKK_MUkGcMpiNF6EbWaCXKeZc_eiwvypLHhRfDCZtuyYV1k.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+216	Fresh Organic King Trumpet Mushrooms	Our Organic King Trumpets are sweet and hardy.  Usually used as a replacement for Porcini, these mushrooms are best grilled whole or cut thin and cooks with greens.  We like to cut then into long strips and use them as a noodle substitute.	6	oz	5.99	15.97	lb	Produce	Mushrooms	http://goodeggs2.imgix.net/product_photos/ldu0VLTKSJy5Wlklo6kw_HdZwkxSbUmqyInszrzYYlcqr-RSn_zYrKAMrkjr1gAU.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+217	Organic Portabella Mushroom Duo	Did you know that the Portabella Mushroom is just a Crimini Mushroom that's been given a few more days to grow?  It's got a somewhat earthier flavor and a much meatier texture. Enjoy it grilled whole or chopped up into a stir-fry!	2	count	6.99	9.99	lb	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/pCZNEt6cSh6BA7gGK8Q4_Portabella_Duo_Monterrey_Mushroom_One_Pound_Gils.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+218	Fresh Organic Exotic Mix Mushrooms	Throughout our daily harvest, we hand pick the finest mushrooms from our largest crops and place them in this clamshell.  Shiitake, Tree Oyster, King Trumpet, Lions Mane, Maitake, Yellow Oyster, Pink Oyster, Nameko and Pioppini may be found in this versatile pack.  If you’re looking for a pleasant surprise or a unique mix for your soup, sauté, stir-fry or risotto, check out this mystery box and enjoy	6	oz	6.99	18.64	lb	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/kNpandRKTg6sVKZlul02_FK1A7434.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+219	Dried Porcini Mushrooms	Flavor­-loaded dried porcini should be on every single pantry shelf. Our dried porcini are picked and dried here in Northern California. We know where these mushrooms are picked because we’ve been sustainably harvesting in the same forests for decades. Our little family is a fussy bunch, and the care we take in harvesting and handling make these dried wild mushrooms state­ of­ the­ art.Having our large tube of dried porcini is the equivalent of always having over a pound of fresh porcini or boletes in the house. Porcini's legendary rich flavor is just a 15 minute water or broth soak away. Once tender they are ready for a quick sauté and bring intense, rich earthiness to to everything, from endless pasta sauces, to soups. Porcini will elevate something as simple as meatloaf into something extraordinary.	0.8	oz	8.49	10.61	oz	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/viWuNEo8QnSoy5InsidB_20160505-WineForest_Porcini_MG_8880.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+220	Dried Chanterelles	Our Wine Forest Dried Chanterelles have a mild, earthy mushroom flavor with a hint of dried apricot, and will rehydrate with the intensity of flavor dried mushrooms provide plus a wonderful meaty texture that make them ideal for incorporation into vegan dishes, soups and stews.At Wine Forest, we’ve haunted the Western woods hunting wild mushrooms for over three decades now. Chefs like Thomas Keller, Michael, Mina, Traci des Jardin and a herd of others have been devoted to the wild fruits of our work. There simply are no better wild mushrooms.	0.96	oz	8.99	9.36	oz	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/mH4uVqIQBGD02lVIvzSc_20160505-WineForest_Chanterelles_MG_8886.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+270	Organic Large Bouquet	A beautiful mix of seasonally changing blooms, these bouquets are sure to spruce up any holiday table.	1	count	24.99	\N	\N	Produce	Flowers	http://goodeggs2.imgix.net/product_photos/al4TQdFESyuvPEvgJU3z_20161102-ThomasFarm_LargeHolidayBouquet_MG_5969%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+221	Dried Porcini Mushrooms	Flavor­-loaded dried porcini should be on every single pantry shelf. Our driedporcini are picked and dried here in Northern California. We know where these mushrooms are picked because we’ve been sustainably harvesting in the same forests for decades. Our little family is a fussy bunch, and the care we take in harvesting and handling make these dried wild mushrooms state­ of­ the­ art.Having our large tube of dried porcini is the equivalent of always having over a pound of fresh porcini or boletes in the house. Porcini's legendary rich flavor is just a 15 minute water or broth soak away. Once tender they are ready for a quick sauté and bring intense, rich earthiness to to everything, from endless pasta sauces, to soups. Porcini will elevate something as simple as meatloaf into something extraordinary.	1.6	oz	10.99	6.87	oz	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/GQTs5R28R6isxX7gYX0w_20160505-WineForest_Porcini_MG_8896.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+222	Dried Chanterelles	Our Wine Forest Dried Chanterelles have a mild, earthy mushroom flavor with a hint of dried apricot, and will rehydrate with the intensity of flavor dried mushrooms provide plus a wonderful meaty texture that make them ideal for incorporation into vegan dishes, soups and stews.At Wine Forest, we’ve haunted the Western woods hunting wild mushrooms for over three decades now. Chefs like Thomas Keller, Michael, Mina, Traci des Jardin and a herd of others have been devoted to the wild fruits of our work. There simply are no better wild mushrooms.	1.92	oz	11.49	5.98	oz	Produce	Mushrooms	http://goodeggs1.imgix.net/product_photos/7You7B5TtKj7XIwT4wIw_20160505-WineForest_Chanterelles__MG_8889.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+223	Organic Garlic	Affectionately called "the stinking rose," garlic is powerfully flavorful and medicinal! Anti-inflammatory, antimicrobial, antioxidizing and anti-cancerous, it truly is a wonder of the culinary world. Garlic was first cultivated over 5,000 years ago, making it one of the oldest known vegetables, and is now a staple in every kitchen around the world.	1	count	0.99	6.6	lb	Produce	Garlic & Onions	http://goodeggs1.imgix.net/product_photos/GycDcXBWTneTkmPZtm9t_Garlic-Jumbo.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+224	Organic Large Red Onion	Sweet with a bit of a kick, this kitchen staple is great raw and sliced thin or added to stir-fries.When none of the farms we work with directly have Organic Red Onions, we work with our neighbor and trusted distributed partner, Earl's Organic to source us the highest quality produce they can. This week's Red Onions were grown by Peri & Sons in California's Imperial Valley.	1	count	0.99	1.65	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/JMH6bUZgRCJSlD7FltpQ_Hummingbird_Medium_Red_Onion2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+225	Organic Senmoto Negi Green Onion	This Green Onion variety from southern Japan, is known as Senmoto Negi. It has a have a very intense, almost garlicky aroma and is very tender. Unlike most green onions, which tend to be a bit on the milder side, this variety is so pungent, it will make your eyes water when cutting!	1	bunch	3.49	13.96	lb	Produce	Garlic & Onions	http://goodeggs1.imgix.net/product_photos/2sw0x5lZREKOQfx56hWl_20160531-Hikari_SenmotoGreenOnion_MG_0769.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+226	Organic Leeks	Our spring-planted, medium-large sized Pandora leeks with 1-2 inches of white flesh are nothing but young and succulent. Classic soup aside, these leeks also crisp up nice when separated into rings and roasted in the oven with a touch of oil and salt.	1	lb	2.99	2.99	lb	Produce	Garlic & Onions	http://goodeggs1.imgix.net/product_photos/IjTQbzC9SHux8P7pCWJ1_leeks_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+227	Organic Medium Yellow Onion	Once the supply of storage onions starts to dwindle at the farms we work with directly, we rely heavily on our trusted distributor, Veritable Vegetable, to source the highest quality organic onions they can find.  These onions may be grown by one of the few trusted growers and labels Veritable Vegetable works with, including Hummingbird, Peri & Sons, Pinnacle/Foster Farms, and Heger Farms. We'll do our best to update you as Veritable Vegetable's source changes.Today's Organic Yellow Onions are coming from: Anderson Organics, in Washington____________________________________________Veritable Vegetable: A Unique Organic DistributorAs an organic produce distributor with over 40 years of experience, Veritable Vegetable has benefited from the creativity and hard work of our employees, and the deep relationships we’ve formed with our growers. We’re proud of our reputation for quality and integrity. As a mission–driven company, we make every business decision based on a set of core values. Because we believe in supporting our growers, we maintain visibility for each of the 200+ farm labels we carry and communicate the distance each grower is from our warehouse in San Francisco. Our environmental initiatives are vast: not only do we transport our organic produce via an award winning, environmentally sustainable green fleet of trucks and trailers; we also divert 99% of our waste stream through a vigorous waste management program and the use of reusable pallets, crates and fabric wraps. Additionally, our solar array generates 70% of our electricity needs. We actively support our community by creating unique partnerships with local and national organizations, donating time, produce, and resources to sustainability efforts, and by weighing in on policy initiatives that impact sustainable food systems. Veritable Vegetable is a woman-owned, certified B Corporation, using the power of business to solve social and environmental challenges.	1	count	0.49	1.96	lb	Produce	Garlic & Onions	http://goodeggs1.imgix.net/product_photos/Halqe4MiQxyBQuBf52sz_onion_large_03.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+228	Organic Yellow Cippolini Onions	These disc-shaped onions are smaller and higher in residual sugars, making them perfect option for slow caramelization or whole-roasting.	1	lb	4.99	4.99	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/lZPVec33Td2W48t9tm4E_20160812-HappyBoy_YellowChipoliniOnions_MG_7931.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+229	Organic Shallots	One of the sweetest and mildest cured alliums, the Shallot is perfect for adding a subtle kick to a vinaigrette or caramelizing with some low and slow heat	1	lb	4.99	4.99	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/GlLCEmxGT1PWk3DPBbr6_shallots_03%20copy.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+241	Organic Spearmint	Our organic mint is a great addition to a salad, drinks or desert.   So refreshing !   Or, for a pot of tea, to relax after a difficult day.  Our mint is grown in a water based system so it is super green and fresh all year round, even in the hot summer months.  For tea, we suggest rinsing the mint with water, then chopping finely with a butcher's knife.  Then, add to your tea pot, fill with boiling water and let steep for a few minutes.  It's also great combined with our peppermint.  We hope you enjoy it!	1	bunch	1.99	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/4IfcCfW9T62itD1TrzH8_mint.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+242	Organic Dill	Dill is a wonderfully aromatic herb that can be used in any number of recipes including tzatziki sauce or pickling. Try tossing a handful of dill into your next green salad to add zest and freshness.	1	bunch	2.49	0.62	oz	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/vSRqKnCkRuzGFwPdgMDI_s24paOb7Qmi2UB3JurIg_4J6RedHCRuGvFwHbJyzp_dill.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+230	Organic Small Red Onions	Stock up on these sweet members of the Allium family! These small sizes are perfect for being able to use the whole thing in one sitting.Once the supply of storage onions starts to dwindle at the farms we work with directly, we rely heavily on our trusted distributor, Veritable Vegetable, to source the highest quality organic onions they can find.  These onions may be grown by one of the few trusted growers and labels Veritable Vegetable works with, including Hummingbird, Peri & Sons, Pinnacle/Foster Farms, and Heger Farms. We'll do our best to update you as Veritable Vegetable's source changes.Today's Organic Red Onions are coming from: Hummingbird.____________________________________________Veritable Vegetable: A Unique Organic DistributorAs an organic produce distributor with over 40 years of experience, Veritable Vegetable has benefited from the creativity and hard work of our employees, and the deep relationships we’ve formed with our growers. We’re proud of our reputation for quality and integrity. As a mission–driven company, we make every business decision based on a set of core values. Because we believe in supporting our growers, we maintain visibility for each of the 200+ farm labels we carry and communicate the distance each grower is from our warehouse in San Francisco. Our environmental initiatives are vast: not only do we transport our organic produce via an award winning, environmentally sustainable green fleet of trucks and trailers; we also divert 99% of our waste stream through a vigorous waste management program and the use of reusable pallets, crates and fabric wraps. Additionally, our solar array generates 70% of our electricity needs. We actively support our community by creating unique partnerships with local and national organizations, donating time, produce, and resources to sustainability efforts, and by weighing in on policy initiatives that impact sustainable food systems. Veritable Vegetable is a woman-owned, certified B Corporation, using the power of business to solve social and environmental challenges.	5	lb	7.99	1.6	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/EbNM2eqpRJSvfPIbJ4zh_RedOnionsBulk-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+231	Organic Elephant Garlic Cloves	Elephant Garlic is actually a variant of a garden leek, but has a garlicky bite to it, but less pungent and often less juicy than other varieties of garlic. Its large-sized cloves make it perfect for making garlic chips or roasting whole.Note: sometimes the outer layer of the cloves will fall off or be cracked enough to expose the flesh of the clove, which causes the outside of the clove to harden a bit. But don't worry, this garlic is perfectly safe and delicious to eat!	0.5	lb	4.99	9.98	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/uMIK3kzvTYywU0qXgFkP_FK1A6593.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+232	Organic Large White Onion	Once the supply of storage onions starts to dwindle at the farms we work with directly, we rely heavily on our trusted distributor, Veritable Vegetable, to source the highest quality organic onions they can find.  These onions may be grown by one of the few trusted growers and labels Veritable Vegetable works with, including Hummingbird, Peri & Sons, Pinnacle/Foster Farms, and Heger Farms. We'll do our best to update you as Veritable Vegetable's source changes.Today's Organic White Onions are coming from: Peri & Sons.____________________________________________Veritable Vegetable: A Unique Organic DistributorAs an organic produce distributor with over 40 years of experience, Veritable Vegetable has benefited from the creativity and hard work of our employees, and the deep relationships we’ve formed with our growers. We’re proud of our reputation for quality and integrity. As a mission–driven company, we make every business decision based on a set of core values. Because we believe in supporting our growers, we maintain visibility for each of the 200+ farm labels we carry and communicate the distance each grower is from our warehouse in San Francisco. Our environmental initiatives are vast: not only do we transport our organic produce via an award winning, environmentally sustainable green fleet of trucks and trailers; we also divert 99% of our waste stream through a vigorous waste management program and the use of reusable pallets, crates and fabric wraps. Additionally, our solar array generates 70% of our electricity needs. We actively support our community by creating unique partnerships with local and national organizations, donating time, produce, and resources to sustainability efforts, and by weighing in on policy initiatives that impact sustainable food systems. Veritable Vegetable is a woman-owned, certified B Corporation, using the power of business to solve social and environmental challenges.	1	count	0.99	1.98	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/wvTOsnbFQy12R7WgT09o_Peri_and_Sons_Jumbo_White_Onion2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+233	Organic White Onions	White onions are somewhat sweeter with a cleaner taste than yellow onion.  They're great for soaking up flavor, so you can use them raw in a pico de gallo or cooked into a vegetable medley or a savory stew.	1	lb	1.79	1.79	lb	Produce	Garlic & Onions	http://goodeggs2.imgix.net/product_photos/Y0OvHMbISSW2PshWXIZR_White%20Onion%203.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+234	Organic Basil	Knoll's basil is looking beautiful right now! Full leaves of pungent, bright basil, just waiting for some sliced Heirloom Tomatoes and fresh Mozzarella. 	1	bunch	2.49	0.62	oz	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/M0VDe27hTumvLi4d2IvF_basil_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+235	Organic Thyme	A classic herb sure to intrigue dinner guests, thyme is amazing on roasted pork or chicken. Try it mixed in with dill and cream sauce to drizzle on top of salmon. Thyme is also great added to sautéd mushrooms or mushroom based sauces.	1	bunch	2.29	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/jvLfForQLChJzRDE3akZ_thyme_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+236	Organic Ginger Root	Warming and spicy, this root is the quintessential flavoring to a number of sweet and savory dishes. Organically grown in Hawaii. It is great in curry, juices, and cookies.This Ginger is grown by Kolo Kai in Kauai, Hawaii. They are a small family farm that only distributes directly to small retailers, in order to insure that the final consumer receives the product within 10 days or less. 	4	oz	3.99	1.0	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/kcY9byYfSUWaJRERaov9_unspecified-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+237	Organic Chives	Excellent tossed with potatoes or thrown atop scrambled eggs!Due to the drought, this perennial herb is flowering more frequently than other, wetter years. Don't fear the flowers though: they are lovely and mild in flavor, and make a beautiful garnish and are delicious (and delightful!) when tossed into salads.	1	bunch	1.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/1Q8CWwDS3GLpSBpbB9ih_Chives_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+238	Organic Rosemary	Rosemary is a hearty perennial herb that'll bring a liveliness and depth to winter roasts of root veggies or beef. If you only need a couple of sprigs, strip the bottom leaves first, and leave the rest in a cup of water in the fridge!	1	bunch	1.49	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/6MFm2ENQDeQbwyFL7l8p_rosemary_08.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+239	Organic Flatleaf Parsley	A staple for soups, hearty grain salads, and roasted anything, this beautiful Flatleaf Parsley When none of the local farms we source from directly have parsley, we rely on our trusted distributor partner, Veritable Vegetable. Veritable Vegetable sources their Parsley from a number of organic farms in California. This week's Flatleaf Parsley is coming from Nojoqui Farms in Buellton, CA.	1	bunch	1.99	0.33	oz	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/oAbPSSVRQtGr83H1S7jp_parsley.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+240	Organic Italian Parsley	Flat leaf Italian parsley is a kitchen staple, helping to form the foundation of infinite dishes. It also acts as a fresh ingredient to juice, helping to cut through sweetness.	1	bunch	2.29	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/V9hfB0vmRBC9fgBDOVM8_O7jjIXdExsv6jWJn4_-NiuaTl5hgTdMne3rI27FsHHE.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+243	Genovese Basil	Local Greens' 1 oz. package of Genovese Large Leaf basil contains very little stems so you get the best part of the plant. They grow basil in a protected environment in Berkeley, CA, all year round using non-GMO organic seeds and natural nutrients. If you trim the stems and place in a cup of water, they'll last for over a week!Their basil is the one product that isn't currently certified organic--the nutrients they used to use in their aquaponic system for basil, though ecologically sustainable, weren't recognized by OMRI's list--but they are excited to announce that their organic certification for this crop is 3-4 months out!	1	oz	3.99	3.99	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/MPPwgn7TAW8J2z0MnGQO_FK1A7489.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+244	Organic Oregano	The great, classic, Italian herb. The go-to spice for pizza, for pastas and Italian style breads, oregano is also amazing on roasted tomatoes. Try it mixed into a breadcrumb with parmesan or just sprinkle it across the top of a nice feta with olive oil as an appetizer.	1	bunch	1.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/NOR6OfFZQ8aAGnSEBJni_oregano_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+245	Organic Cilantro	Cilantro is a fantastic herb that adds fresh, zesty flavor to soups, sauces and salsas, and curry dishes. 	1	bunch	2.49	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/DK8NKcjbRw6l5xKHb3rA_cilantro_04.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+246	Organic Cilantro	Cilantro is used in salsas, stewed into black beans, or chopped into ceviche.	1	bunch	2.29	1.15	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/RK3qn4x9REGob5efKfEn_cilantro_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+247	Organic Sage	Great in a brie and sage stuffed chicken breast and terrific on roasted broccoli. Try it in creamed onions or on roasted pork! Sage is amazing and versatile. For a real treat try spareribs with a savory sage rub including garlic, thyme, lemon, pepper and rosemary.	1	bunch	1.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/XOZe7CmAQeiMiwYvAx9Y_sage_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+248	Organic Tarragon	Beloved in French cuisine, Tarragon adds a licorice mystique to any dish.  It pairs naturally with chicken and fish, but it can also be infused into vinegar for dressing.  Fresh Tarragon has a far more intense flavor than dried, and when heated, is stronger still, so a little goes a long way.  Time to experiment!	1	bunch	2.49	2.49	oz	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/CRVRYaOFSqet8VDpTdqR_tarragon.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+249	Organic Marjoram	Marjoram is a cousin of oregano with a more balanced, tender and mint-like flavor. Use it raw in marinades, tossed into salads for unexpected fresh flavor, or in tomato sauces. "Marjoram is addictive."                  --The Art of Simple Cooking II, Alice Waters	1	bunch	1.99	3.98	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/xdjACOCWRytEyZHNX1wH_Happy_Boy_Small_Marjoram.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+250	Organic Fresh Turmeric Root	Juicers and curry-makers rejoice! A new harvest of freshly-dug, barely-cured turmeric is upon is.This fresh turmeric root is brighter in flavor than its powdered counterpart.  Prepare it as you would ginger and add to fresh curries to brighten them up with a slight kick.  Turmeric also contains high levels of curcumin, a natural anti-inflammatory compound, making it a much sought-after item for adding to fresh fruit and veggie juices.Almost all commercially available fresh organic turmeric is imported from Peru or Hawaii, but we're lucky to have Whiskey Hill Farms growing this special treat for us just down the road in the Watsonville area. The wonders of heated greenhouses!	4	oz	4.99	1.25	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/7vfp3quZSiKVGFaE8lIw_20161014-Tumeric_MG_4239.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+251	Organic Bay Leaf	An irreplaceable ingredient in your favorite hearty soups and stews like split pea, chicken or even a moroccan vegetable  soup.Picked fresh from the tree just for you.	1	bunch	1.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/1oDawwRkSmKtUgNqxwYO_eat_well_bay_leaf.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+252	Organic Peppermint	Peppermint is here !!!  This is the mint that chef's love for all their dishes.  Using peppermint instead of spearmint takes mint to the next level because it has menthol, making the experience that more intense.  Great in desserts and savory dishes as well or just to chew on, as a calming snack.Our certified organic peppermint is grown in a water based system so it is super green and fresh all year round, even in the hot summer months. It's also great for a pot of tea, to relax after a difficult day.  For tea, we suggest rinsing the mint with water, then chopping finely with a butcher's knife.  Next, add to your tea pot, fill with boiling water and let steep for a few minutes.  It's also great combined with our spearmint.  We hope you enjoy it!	1	bunch	2.59	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/IgmCuEYNTT2S4TA76iPQ_ken5beg5uXSRGnHh2QbXc8mAZqZkygSpw26szVxz3v8.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+253	Organic Garlic Chives	This chive variety has a slightly garlicky kick, and is great for stir-fries or for adding, coarsly chopped, into salty, brothy soups.	1	bunch	2.29	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/mx0RepiFRiPDGnVplQyQ_garlic_chives.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+254	Aquaponic Living Genovese Basil	A living Genovese basil plant fresh out of our system, harvested just for you.  Young, tender leaves, fresh and full of flavor will add a unique and dynamic experience to any dish prepared with this most popular of basils.	1	bunch	3.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/GTIqvdKCRiwly2coyExG_YN1G9sNAL19uNWylh_uHncLBagK-uzXsouZ68OaInJ0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+255	Organic Lemongrass	Lemongrass is a staple for Vietnamese cooking. Hikari's lemongrass is tender and not too fibrous.	1	count	1.49	1.49	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/IKPQn9lYRkeuMx8wzL4g_Ouruboros_Lemongrass.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+256	Dried Culinary Bouquet	Krysia at Oak Hill Farm of Sonoma has put together a most gorgeous kitchen bouquet with lovingly gathered safflower, dried chiles, yarrow, bay and lavender. Amazingly colorful for a dried bouquet, this makes a perfect gift for a cook!	1	bunch	12.99	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/Ot39ybnVQ9muXj0bWGkV_IMG_8421.JPG?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+268	Organic Farmer's Choice Chrysanthemum	This species of Asteracea was first cultivated as an herb China. Chrysanthemums have grown to become a symbol of Royalty in Japan and China. They are a hearty flower with a fresh herbaceous fragrance. Trim the ends under water every day and give them fresh water for a long vase life. These Chrysanthemums may come in a variety of colors.	1	bunch	9.99	\N	\N	Produce	Flowers	http://goodeggs2.imgix.net/product_photos/l7a1AhnTnqCiUyOoE6QI_20161102-ThomasFarm_MixedChrysanthemum_MG_5967.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+257	Organic Horseradish Root	Knoll's horseradish root is generally thinner and a bit gnarlier looking than you might generally see in the supermarket, but it's certainly not lacking in flavor.Horseradish root contains highly volatile oils that are released when root cells break down by grating.  Vinegar can be added immediately to freshly ground or grated horseradish to stabilize the flavor before it gets too hot, or if you want three minutes to add the vinegar, you'll end up with a very hot paste. Fresh horseradish can also be finely shaved and used to top a plate of steak, potatoes or anything else that could benefit from a slight kick.Fresh horseradish should be scrubbed thoroughly before being grated or thrown into a blender, but as a whole root, it can last for many weeks (if not months) in the fridge in a plastic bag.	0.5	lb	3.99	7.98	lb	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/4hAt5CwUTUeTvmZ69kd6_FK1A1656.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+258	Aquaponic Living Red-Veined Sorrel	Sweet with a bright, citric tartness, this Red-Veined Sorrel's flavor is as complex and intriguing as its leaves are beautiful. Use Sorrel to brighten up any heavy potato or egg dish or to accent a creamy soup. Chop it thinly and add it to a green salad, and it'll add enough brightness to leave the vinegar out of your vinaigrette!	1	count	1.49	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/HVY4hWjzSBeVs4Xwbsbd_20160603-RedSorrell_MG_1212.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+259	Organic Lemon Verbena	Because it lacks the acidity of lemons but still has a great lemony flavor, it's truly exceptional when used in desserts, as a flavoring in ice creams or jams, or for adding to simple syrup. It can also be used to make a truly unique pesto or to brighten a pork chop brine. Enjoy!	1	bunch	2.49	2.49	oz	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/GP8fBz0vQpebpkueyu3i_lemon_verbena_02.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+260	Aquaponic Lemongrass	An absolute must for many a Thai dish and in other Asian cuisines, Lemongrass will give you the a sweet depth of flavor you can't do without. Ken's aquaponically-grown lemongrass is incredibly tender and flavorful, with plenty of juice in prized bottom half.	1	count	1.49	\N	\N	Produce	Herbs	http://goodeggs1.imgix.net/product_photos/Flf6FoCOSGyBs3RONS6c_FK1A4659.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+261	Bulk Organic Turmeric Root (3 lbs.)	Juicers and curry-makers rejoice! This fresh turmeric root is brighter in flavor than its powdered counterpart.  Prepare it as you would ginger and add to fresh curries to brighten them up with a slight kick.  Turmeric also contains high levels of curcumin, a natural anti-inflammatory compound, making it a much sought-after item for adding to fresh fruit and veggie juices.Almost all commercially available fresh organic turmeric is imported from Peru or Hawaii, but we're lucky to have Whiskey Hill Farms growing this special treat for us just down the road in the Watsonville area. The wonders of heated greenhouses!This 3 lbs. bag of Turmeric is perfect for serious juicers.  And fear not, just like Ginger, Turmeric can hold for several weeks in the refrigerator, so you'll have plenty of time to use it all up!	3	lb	49.99	1.04	oz	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/bCrUtiZiTOqCua7muT4R_FK1A7063.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+262	Organic Dried Lavender	These beautiful dried bunches of Lavender grown by Capay Organic in the heart of Yolo County, CA, will add a wonderful fragrance to any kitchen. Hang these up, or put them in a waterless vase, for some rustic beautification.  Enjoy the subtle scent of this wonderful herb for months to come.	1	bunch	9.99	\N	\N	Produce	Herbs	http://goodeggs2.imgix.net/product_photos/3tBHI0AsQm2TfPfjcJlw_20160921-Capay_DriedLavendar_MG_1602.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+263	Organic CSA Box	The best of the week of seasonal organic produce from our small farm! Our farm boxes often include, but are not limited to: a mix of bunched greens, roots, squash, and herbs.  Don't forget to check out our Facebook page for news and updates on the farm!Shop the Good Eggs market to add our Organic Pastured Soy-Free Eggs and meet all of your kitchen needs!	1	count	22.99	\N	\N	Produce	Produce Boxes & Bulk	http://goodeggs1.imgix.net/product_photos/B08HFVNITjG1Pgwd8k2f_3o2UTAQUtDZkhb86ZD8IZT7SubgOx9HBNZ3nY7HaXEQ.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+264	Organic Farmer's Choice Mixed Veggie Box	A variety of seasonal vegetables fresh from our farm. In fall, our box typically includes 8-10 items such as loose or bunched roots, salad greens, leafy cooking greens, broccoli/cauliflower, and other seasonal items such as sweet peppers, lemons, winter squash, and apples! (Want to check out the contents of our boxes or find recipe suggestions for that one elusive vegetable? Click Here! Updated on Wednesdays. Contents may vary from those listed.)	1	count	34.99	\N	\N	Produce	Produce Boxes & Bulk	http://goodeggs1.imgix.net/product_photos/f6PVVKttToK8Br3G78P5_KCWPQrBpQrqt3gSQkPJz_FK1A3476.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+265	Office Snacks Mixed Produce Box	The freshest easy-to-eat fruits and veggies in The Bay Area, delivered to your office!The office produce box offers a weekly changing assortment of the best peak-season produce that will keep employees satisfied and healthy. 	1	count	49.99	\N	\N	Produce	Produce Boxes & Bulk	http://goodeggs2.imgix.net/product_photos/AkOXFnAsRKmi0mfTabJ6_20160912-OfficeBoxFall_MG_0751.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+266	Medium Farm-to-Vase Bouquet	Oak Hill Farm calls these medium sized bouquets "Posies", and they're as cute and colorful as they sound! Amongst the greens are some of the finest fall flowers still blooming in Sonoma County.Chuy, the flower production manager at Oak Hill, selects different flowers each week, depending upon what's looking good. So the Posy you get might not look exactly like the one pictured, but it'll be equally as beautiful.In order to give your bouquet the longest life, give each stem a diagonal fresh cut and place in a jar of clean water. (The diagonal cut increases the surface area for each stem to uptake water.) Every couple of days, change out the water and give another fresh cut. Warm water works best.	1	bunch	11.99	\N	\N	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/WTdp1fugRZqGwMsimw7R_20160606-FullBelly_SeasonalBouquet_MG_1232.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+267	Organic Baby Sunflowers	These beautiful sunflowers, grown at Thomas Farm in Aptos, CA, are a sure sign that summer is on the way!The earliness of the season means that these sunflowers will have slightly smaller heads, and may arrive slightly closed. This will allow more time for you to enjoy them as they open in your home! To care for them, change their water and cut their stems frequently.	1	bunch	7.99	\N	\N	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/RzT1U8BMSwCUmylX9cXq_FK1A5093.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+285	Frozen Broccoli	Tender and bright green, our broccoli florets have a rich farm-fresh flavor.  They are the perfect addition to soups and side dishes or add to macaroni and cheese for a great variation.	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs2.imgix.net/product_photos/MuD3N03qT1iEO8Z6Sg7S_FK1A9789.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+271	Organic Dried Flower Bouquet	So many of Full Belly's summer and fall blooms, dried and arranged into a gorgeous, long-lasting bouquet. When most markets turn towards Southern California or South America for their winter flowers, we love continuing to support Full Belly Farm's floral program through the winter months. Having a steady off-season revenue stream allows Full Belly to provide as many year-round employment opportunities as possible, a relative rarity in the agriculture world.	1	bunch	17.99	\N	\N	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/jhZ4nKyLQ2rW1UsRHnt4_20161019-FullBelly_DriedBouquet_MG_4520.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+272	Cockscomb	The uniquely textured cockscomb flower looks like a colorful Coral Reef. Presenting in shades of lemon, cranberry, and amaranth purple, they provide a curious sight and lush atmosphere for the summertime heat.Care for these flowers by trimming their stems upon delivery, and doing so periodically, while changing their water daily. They should last a little over a week with proper care.	1	bunch	7.99	\N	\N	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/QB4R2kosSxK6incroppj_unspecified-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+273	Organic Foxtail Millet	Grains are the quintessential ornamental foliage for fall. Foxtail Millet features puffy seed heads that resemble a fox's tail. Trim every few days and place in fresh water or leave them without water for drying.	1	bunch	9.99	\N	\N	Produce	Flowers	http://goodeggs2.imgix.net/product_photos/m9n4I6kyRDupGMyNy3ZV_unspecified-6.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+274	Mixed Mini Decorative Gourd Trio	Nothing says autumn like Decorative Gourds. With Oak Hill Farm's mini versions of this festive, decorative curcurbit, you'll be able to make your table beautiful while leaving plenty of room for the food!	3	count	7.99	4.0	lb	Produce	Flowers	http://goodeggs1.imgix.net/product_photos/hOz3sblLSJCIXEyhwQqz_20161003-Oakhill_GourdTrio_MG_2542.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+275	Broom Corn	Broom Corn is a seasonal delight--a long-lasting dried grass that just screams autumn.May vary in color from dark red to green to orange to purple.	1	bunch	7.99	\N	\N	Produce	Flowers	http://goodeggs2.imgix.net/product_photos/rdpQNSsRxSHlwcF31IEl_20161021-BroomCorn_MG_4730.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+276	Frozen Strawberries	Treat yourself to these Oregon strawberries – deep red through and through, delicate and deliciously sweet.	10	oz	4.79	7.66	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/7T8cFUOtRaCYeCaQqzWm_FK1A9918.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+277	Frozen Blueberries	Enjoy the sweet taste of summer year round with our fresh frozen, sustainably grown blueberries. We harvest during peak season, then vacuum seal and flash freeze the berries to assure optimum flavor. These juicy bursts of deliciousness can be added to an endless variety of both sweet and savory dishes. From cobblers, muffins and cheesecakes, to barbeque sauces, chutneys, vinaigrettes and more! Ready and on hand in your freezer.	1	lb	6.99	6.99	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/xEnLKjYxToC36POljdAi_FK1A7643.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+278	Frozen Health Berry Blend	For this super-premium berry blend, we selected the berries richest in color.  Add to smoothies for a rich breakfast.Ingredients: Marion Blackberries, Blueberries, and Black Raspberries.	10	oz	4.79	7.66	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs2.imgix.net/product_photos/bKQWfQ2YQBqCvoW3Oj1o_FK1A0693.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+279	Frozen Raspberries	Our raspberries are sweet, plump and delicate in flavor. Enjoy this healthy treat right out of the bag!	10	oz	4.79	7.66	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs2.imgix.net/product_photos/sZzpsFgYTVCtXonwBSsN_FK1A9752.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+280	Frozen Marion Blackberries	Like a fine wine, these deeply hued berries boast complex layers of flavor and fragrance.Located in the heart of Oregon's lush Willamette Valley, Stahlbush Island Farms is an environmentally friendly farm and food processor committed to sustainable agriculture. Our philosophy is that farming practices should leave the soil, air, water, plant life, animals and people healthier. For us, sustainability is a continuing journey.What does it mean to be sustainable? Good question! At Stahlbush, we think it’s important to explain to people what we mean when we use this term to describe our way of farming and producing food. We define sustainable as “meeting the needs of the present without compromising the ability of future generations to meet their own needs” (based on “Report of the World Commission on Environment and Development,” United Nations, 1987). We like this definition because it shows the quest for sustainability is a philosophy. Our philosophy of sustainability guides our farming practices and affects the way we use energy and care for soil, water, people and wildlife.	10	oz	4.79	7.66	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/SZv6AdhkT7qpmFp4negy_FK1A4859.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+281	Frozen Cranberries	Starvation Alley's no-spray cranberries are transitional organic, meaning that the farms growing the cranberries are in the process of being certified organic. These little berries are super-tart and delicious, not to mention a fantastic source of Vitamin C, manganese, and other naturally-occurring vitamins and minerals. Cranberries are great for roasting alongside veggies and meat, blending into smoothies, cooking down into sauces or compotes, or (of course!) baking into a perfect apple-cranberry pie.Ingredients: Cranberries.	10	oz	3.49	5.58	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/qCbpEmnAT5edqhT75MAF_20161021-StarvationAlley_Cranberries_MG_4762.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+282	Frozen Cranberries	Our cranberries are tart, lively, and full of antioxidants. A great addition to baked goods, and smoothies, or use in your favorite cranberry sauce recipe!	10	oz	4.29	6.86	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/1cqprvCYQimsaCqn5z5X_IMG_8550.JPG?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+283	Frozen Green Peas	A favorite among our tasting table donations to the local schools, our sweet tasting green peas even get kids excited about eating veggies.  Try combining them with basil, olive oil, garlic, lemon juice, and Parmesan cheese for a fantastically simple pesto dish.	10	oz	2.69	4.3	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/PZ3d3ETQwSJvxqs71CVw_FK1A9833.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+284	Frozen Sweet Corn	Flash-frozen straight from the field, our corn retains its summertime on-the-cob flavor.  Try combining it with our Cut Spinach, red pepper, garlic, and a little olive oil for the perfect stir-fry.	10	oz	2.69	4.3	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs2.imgix.net/product_photos/EV8UqWEoSUyIGHA149gm_FK1A0673.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+286	Frozen Spinach	Frozen within an hour of harvest, our farm-fresh spinach tastes just like it came from your garden at home.  It’s great for breakfast omelets and scrambles, dips, and savory side dishes.  Try combining it with a bag of our super sweet corn, red pepper, garlic, and a little olive oil for the perfect stir-fry.	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/Gpjcq0lmQNqdrFdg0qb2_FK1A9934.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+287	Frozen Sweet Potatoes	Equally at home in both sweet and savory dishes, we love these bite-size sweet potatoes for their versatility. Ingredients: Non-GMO Sweet Potatoes	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs2.imgix.net/product_photos/xCCYuchmRMmXQrZ2dkyQ_FK1A7627.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+288	Raw Coconut Meat (Frozen)	You can now get the raw coconut meat that we cut fresh out of the young thai coconuts. The meat is immediately packaged and frozen with a shelf life of at least 6 months. Add to: Smoothies!Vegan WrapsYogurtPuddingCurriesPiesIce CreamOr, you can dry it and make Coconut ChipsIngredients: raw frozen young thai coconut meat100% Raw and VeganNo Preservatives or AdditivesDairy, Soy, Carrageenan, and Gluten FreeHealthy and Delicious!   Raw coconut meat naturally contains many viable living enzymes, which are helpful for digestion and metabolism.  It is high in lauric acid, which is used by the body to make disease-fighting fatty acids. Raw coconut meat is also high in essential fat burning energy giving Medium Chain Fatty Acids as well as concentrated trace minerals: Manganese-Potssium-Copper.The coconut meat has no preservatives, so if you are not ready to consume, please keep it frozen at all times.  The frozen coconut meat can keep for at least six months in the freezer, but we recommend consuming it within 9 months from purchase.To Consume: Please place coconut meat pouch to defrost in the refrigerator.  Once the coconut meat is completely defrosted in the refrigerator, unopened, the coconut meat may last up to 4 days in the refrigerator.  For faster defrost, place the frozen coconut meat pouch into a cold water bath. When it is defrosted, please consume right away or place it back into the fridge while the coconut meat pouch is still cold to touch.	12	oz	8.99	11.99	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/MWCqcQKlTp26w9EPpNgo_FK1A0784.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+289	Frozen Butternut Squash	Our peeled, diced butternut squash takes the work out of preparing this scrumptious fall favorite.  Try roasting it in the oven with a little olive oil and fresh thyme for a quick, nutritious side dish.	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/CAwRk5x2TKuP0Sr4wkw1_FK1A9864.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+290	Frozen Cauliflower	With a subtle nutty flavor and satisfying crunch, our cauliflower florets have been carefully frozen to lock in their farm-fresh flavor. A great substitute for heavier starches like potatoes (try them mashed!) or as the base of a creamy soup.Ingredients: Non-GMO Cauliflower	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/jO52KnwWTaSfEYvuov5Q_FK1A7618.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+291	Frozen Sliced Beets	A great addition to salads or paired with goat cheese, these sliced beets pack all the earthy richness you expect from farm-fresh produce, without the time and stains that accompany preparing beets from scratch. Ingredients: Non-GMO Beets	10	oz	2.79	4.46	lb	Produce	Frozen Fruit & Vegetables	http://goodeggs1.imgix.net/product_photos/L04CwxtASl29ahRodqnb_FK1A7648.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+292	Organic Dried Mango	Peeled Snacks' Much-Ado-About-Mango® makes the perfect alternative to sugary filled snacks. Starting with whole organic mangoes harvested at the peak of ripeness, this gently sun dried snack has been preserves with no added sugar, preservatives or oils. Rich in flavor, vitamins and a variety of phytonutrients, with Peeled Snacks’ mango you can snack your way to a healthy new you.\nTo source the mangos for this snack, Peeled works directly with Mexican growers in the Western Sinaloa region. Through initiatives such as the implementation of solar panels on farms, increasing overall organic acreage in the region, and supporting cooperative organizing of workers, Peeled is a proud steward of fair labor and sustainable practices that encourage clean food production and sustain healthy communities.\nIngredients: Organic Mango	2.8	oz	3.99	1.43	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/qPzg4TbNRlmQFTK4ooAg_20160713-Peeled_DriedMango_MG_5175.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+293	Golden Raisins	Our sparkling Golden Raisins are a sweet and tangy bite. Add zing to your trail mix or eat them by the handful as an energy-boosting snack. Golden raisins add a natural sweetness to savory dishes and a bright burst of flavor to baked goods. Chewy, moist and delicious, these golden gems will keep you smiling!	1	pint	5.99	0.67	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/QUrrTUAYSeyVciy98ci1_FK1A9579.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+294	Fresh Medjhool Dates	While the Medjhool may be the most common date variety grown commercially in California, the flavor of Flying Disc Ranch's Medjhool Dates is anything but common. These dates are large and pillowy. When freshly harvested and not fully dried, these dates have a huge amount of moisture left in them. If their skin breaks slightly and their sugars seep out a bit, they might form some crystallized sugars as they dry, which can sometimes be confused with mold, but are perfectly safe (and delicious!) to eat!	8	oz	6.99	0.87	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/IlG40LCxRcWXD4dlQDvg_20161013-FlyingDisc_SoftMedjhoolDates_MG_3640.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+295	Dried Bing Cherries	Our sun-dried Bing cherries bring you the sweet taste of summer with every chewy bite. Add zing to an entree, brighten a salad or intensify a sauce. Their delicious, earthy flavor blends well with both sweet and savory dishes. Packed with powerful antioxidants, dried Bing cherries are a perfect snack and a popular ingredient in baking. Don't miss out on these little jewels!	1	pint	7.99	0.89	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/ElfaMpi1RxqpeqmQElIv_FK1A9642.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+296	Organic Dried Apples	Bursting with flavor, these gently-dried organic apples are an excellent source of fiber and vitamins without any added sugar, preservatives or oils. With recipes for dried apples documented as far back as 1700 BC Mesopotamia, Peeled Snacks' Apple-2-The-Core® honors the storied tradition of preserving the sweet, subtly tart flavor of fresh apples so they can be enjoyed conveniently on the go.  An essential ingredient of Peeled Snacks’ ethos is building long lasting relationships with organic farms and suppliers. In supporting the organic food revolution, Peeled is committed to advancing fair labor and sustainable farming practices that encourage clean food production and healthy producer communities worldwide. \nIngredients: Organic Apples. 	2.8	oz	3.99	1.43	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/NcUyD9FfRMCgsVv82VH3_20160713-Peeled_DriedApple_MG_5190.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+297	Barhi Dates	Barhi dates are nature's caramel. Sensual, velvety, and buttercream-sweet, these dates will please more than any candy bar, ice cream, or pie.	8	oz	4.99	0.62	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/ITBUZ3YDTKK4UEEd2BoJ_Good%20Eggs5415.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+298	Lil' Apricots	Our sun dried ‘Lil Apricots have a mega sweet & tangy\nflavor. They are the Royal Blenheim variety which have a long history in\nCalifornia as the queens of apricots. The growers, Good Humus Produce, have been organic farming in Capay Valley since 1977 . We take their apricots, re-hydrate them to a chewy\ntexture and then cut them into bit-size bits. Great snack for kids of any age!\n\n\n\n\n\nAll of our products use ONLY organic ingredients. They are packaged in resealable, reusable zip bags for your convenience.	1.5	oz	2.99	1.99	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/edDISDETRJCPKOkarZoC_20160421-YoloFarmstead_Apricots_MG_7599%202.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+299	Sun Dried Peaches (7oz)	Our organic, sun-dried peaches are sulfur-free and soaked with\nCalifornia sunshine. We call ‘em ‘good and ugly’. The peaches are grown at \nFull Belly Farm, a certified organic grower in Guinda, CA. Absolutely \nnothing is added: no salt, no oil, no sugar. All of our products use ONLY organic ingredients.Our products are packaged in resealable, reusable zip bags for your convenience.	7	oz	10.49	1.5	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/UUqX69UdTrqfhGcPXnKG_FK1A7346.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+300	100% Organic Mini Medjool Dates	Our smallest Medjool grade of the season. The minis tend to be slightly drier and chewier than the larger medjool date grades we offer.	4	oz	4.99	1.25	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/qrVaqlhpR02nk6Wq00ES_FK1A2069.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+301	Khadrawi Dates	The Khadrawi Date is absolutely delicious! It's chewy and caramely with a very satisfying flavor. it would fit right in in a box of chocolates.	8	oz	5.99	0.75	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/HNsxqiUrQA6vOmGxn7yv_20160912-KhadrawiDates_MG_0822.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+302	Medjool Dates	While the Medjool may be the most common date variety grown commercially in California, the flavor of Flying Disc Ranch's Medjool Dates is anything but common. These dates are large and pillowy. It has a meaty texture with a strong, satisfying and quite sweet flavor.	8	oz	6.99	0.87	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/L1slR6JFRWaMhZn029YB_Flying_Disc_Ranch_Medjool_Date_8oz.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+303	Raisins (7oz)	Our Red Flame Raisins provide a natural energy booster anytime of the day. The plump and juicy Red Flame variety raisins are not coated in any oil, unlike most raisins on the market. Benzler Farms in Fresno, CA is a certified organic grower and are a third generation farm. All of our products use ONLY organic ingredients. They are packaged in resealable, reusable zip bags for your convenience.	7	oz	3.69	0.53	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/2qJ9riOZQCSj0AiubEbs_FK1A3114.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+304	Flame Raisins	Our Flame Raisins are a seriously sweet and tasty bite. Large, moist and chewy, they add a delicious burst of fruit to your favorite muffin or raisin bread recipe. Perfect in all kinds of desserts and savory dishes. Flames are considered the sweetest of raisins. Go ahead and satisfy your candy cravings with this scrumptious, guilt-free snack!	1	pint	5.99	0.67	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/sQ9MYohwTcmR584d8dVw_FK1A9600.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+305	Raisins (16oz)	Our Red Flame Raisins provide a natural energy booster anytime of the\n day. The plump and juicy Red Flame variety raisins are not coated in \nany oil, unlike most raisins on the market. Benzler Farms in Fresno, CA \nis a certified organic grower and are a third generation farm. All of our products use ONLY organic ingredients. They are packaged in resealable, reusable zip bags for your convenience.	16	oz	6.99	0.44	oz	Produce	Fruit & Veggie Snacks	http://goodeggs1.imgix.net/product_photos/2qJ9riOZQCSj0AiubEbs_FK1A3114.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+306	Peachies - Bite-Size Sun Dried Peaches	Peachies are 'cut to bits' organic sun dried peaches grown by Annie & Jeff Main at Good Humus, certified organic growers in Capay Valley. They're not so pretty but man, are they sweet! They are a great morning or afternoon snack and the perfect complement to our raw almonds if you're looking for a protein/sweet combo. And bonus - they are kid tested so try them in their lunch or on your next visit to the playground! Absolutely \nnothing is added: no salt, no salt, no sugar.                                                                                                                                           All of our products use ONLY organic ingredients. They are packaged in resealable, reusable zip bags for your convenience.	1.5	oz	2.99	1.99	oz	Produce	Fruit & Veggie Snacks	http://goodeggs2.imgix.net/product_photos/8tzRjOq7Q32FSz2N6v3P_FK1A4676.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+307	Organic Raw Pecans	Our certified organic US grown pecans remain raw for ultimate versatility in your favorite dishes and baked goods.	8	oz	7.99	15.98	lb	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/Qw9wOpvtTSy3y11hQWHx_Good%20Eggs_111515-9.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+308	Organic Almonds	Our certified organic California almonds are steam pasteurized to only the extent required by the FDA at our solar powered processing facility in Salinas county. A great snack on their own, or add roasted to your favorite recipes.	8	oz	7.49	14.98	lb	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/whXL7kWnR46Z3iKaqKYV_FK1A9496.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+309	Toasted Almonds (3.5oz)	Our toasted almonds are incredibly flavorful. Eat just one? Forget it! Great to pair with variety of cheeses - sharp to soft! We use Carmel variety almonds & roast them at 350º just short of burning. This retains their oil for moisture but intensifies their flavor. There is nothing like it available anywhere.Our grower, Baugher Ranch \nOrganics, is a certified organic grower in Orland, CA. We use only \norganic ingredients in all our products.Our products are packaged in resealable, reusable zip bags for your convenience.	3.5	oz	4.99	1.43	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/s8U45iyNRAOSS5zWoNHr_FK1A8758.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+580	Lox Cream Cheese	House-made cream cheese blended together with house-cured salmon. Ingredients: cream cheese, lox. Lox ingredients:  Fresh salmon, kosher salt, brown and white sugar, pint peppercorn, lemon and fresh herbs.	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/qPGk0BZMRA26wNE9QS2c_FK1A4616.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+310	Organic Toasted Chandler Walnut Halves	Old Dog Ranch grows Chandler Walnuts, a varietal of the English Walnut. These large and light colored nuts have a mild flavor and are high in Omega 3s. Lightly toasted with no added oils or salt, enjoy sprinkled on top of salads and in your favorite baked goods. Proudly grown in observance of sustainable organic practices on a 5th generation family farm located in San Joaquin County.Ingredients: Organic Chandler Walnut Halves Contains: Tree Nuts (Walnuts)	16	oz	18.99	1.19	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/Ret2ixxpRoG5c5dw7D2H_FK1A7418.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+311	Organic Spicy Raw Lemon Almonds	This Low-Glycemic snack is a divine spin on your everyday trail mix. Soaked in lemon and dehydrated at low temps for optimal digestion this spicy snack can get you through any hunger hurdles during a long day.Sprouted Almonds*, Lemon Juice*, Cayenne*, Himalayan Pink Salt	2	oz	5.99	3.0	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/9TFDoiWWRwIOwmCv1fCA_FK1A3779.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+312	Walnut Halves (16oz)	Oh man. The 2015 harvest is especially creamy & has terrific flavor. Absolutely nothing is added to our Chandler walnuts \nfrom Fillmore Farms, a certified organic grower in Gridley, CA. They are\n an excellent source of Omega-3 fatty acids and essential minerals. Enjoy.Our products are packaged in resealable, reusable zip bags for your convenience.	16	oz	16.99	1.06	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/zbYVbNYLR4ge07j7ucXQ_FK1A7240.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+313	Marcona Almonds	Marcona nuts are fatter, rounder and have a buttery taste, like a cross between an almond and a macadamia nut. Marconas are savored all over the world and are a staple at Spanish tapas bars everywhere. Traditional varieties are blanched almonds or almonds fried in olive oil & salted. Have them with cheese, wine, or beer. They are great chopped on salads, in baked goods, or simply just for snacking.Ingredients: Spanish Marcona Almonds, Olive Oil, Salt.	4	oz	7.49	1.87	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/QlJIdePHSua9zlxeJmu0_FK1A1896.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+314	Raw Almonds (7oz)	Our raw almonds are the nonpareil variety from the 2014 \nharvest, steam-pasteurized to retain maximum nutrients & \nflavor. They are a complete protein and simply good. Absolutely nothing \nis added: no salt, no oil, no sugar.Our grower, Baugher Ranch \nOrganics, is a certified organic grower in Orland, CA. We use only \norganic ingredients in all our products.Our products are packaged in resealable, reusable zip bags for your convenience.	7	oz	9.19	1.31	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/Fe7Fu0GpQgaAXCQmQag9_FK1A7204.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+315	Roasted Almonds (7oz)	Our roasted almonds are the Carmel variety which are packed with \nflavor - slow roasted at 310 degrees - delicious alone or as the perfect\n complement to a wide variety of fruits & cheeses. They are a \ncomplete protein and simply good. Absolutely nothing is added: no salt, \nno oil, no sugar. Our grower, Baugher Ranch \nOrganics, is a certified organic grower in Orland, CA. We use only \norganic ingredients in all our products.Our products are packaged in resealable, reusable zip bags for your convenience.	7	oz	9.59	1.37	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/oOTSZDJcR6aRWWRQWPvS_FK1A7196.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+316	Raw Almonds (16oz)	Our raw almonds are the nonpareil variety from the 2014 \nharvest, steam-pasteurized to retain maximum nutrients & \nflavor. They are a complete protein and simply good. Absolutely nothing \nis added: no salt, no oil, no sugar.Our grower, Baugher Ranch \nOrganics, is a certified organic grower in Orland, CA. We use only \norganic ingredients in all our products.Our products are packaged in resealable, reusable zip bags for your convenience.	16	oz	17.99	1.12	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/Fe7Fu0GpQgaAXCQmQag9_FK1A7204.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+317	Organic Black Chia Seeds	An exceptional source of omega-3 fatty acids, protein, fiber, and nutrients, chia seeds are incredibly versatile and can be incorporate into many of your favorite recipes thanks to their mild flavor and texture. Try mixed into yogurt or smoothies for an extra boost, and even in salads when you desire a satisfying crunch. We particularly love them rehydrated in coconut water (although any liquid will do) for a hydrating pick me up. To rehydrate soak 1 part chia to 10 parts liquid and let sit for 10 minutes until consistency changes to a gel. Edison Grainery travels the world to identify and partner with transparent small scale producers committed to sustainable growing and fair labor practices. Having visited the source farms in person, they are excited to offer you these quality organic chia seeds from Mexico and Bolivia. Ingredients: Organic Black Chia Seeds. Processed in a dedicated gluten-free facility in Oakland, CA that also handles tree nuts.	16	oz	9.99	9.99	lb	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/xNvrDVuQRuaTCBXxzxMw_20160520-Edison_ChaiSeeds_MG_0245.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+318	Organic Raw Hazelnuts	Grown without the use of pesticides or other additives, our raw hazelnut kernels are sourced from the Willamette Valley of Oregon, America's largest producing region of hazelnuts. Ready to roast for snacking or as an addition to your favorite recipes.	8	oz	7.99	15.98	lb	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/uVAHePgAT7irs7L0u7lz_Good%20Eggs_111515-10.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+319	Mediterranean Pine Nuts	Our extra-fancy grade pine nuts are sorted and lightly toasted at our solar powered facility in Salinas county. A great way to add crunch and buttery flavor to soups and salads, or as the base of your favorite pesto recipe! Product of Turkey.	4	oz	14.69	\N	\N	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/78vNtKqxQNW29lhCDOdx_Good%20Eggs_111515-13.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+320	Organic Golden Flaxseed	Similar nutritional value to brown flax, it’s used in the same ways as well. Be sure to grind the seeds so your body can benefit from the low-carb, high fiber, vitamins, minerals, and antioxidants. Get your flax straight. Golden Flax has the same benefits as Brown Flax and can be used in the same creative ways. Try it ground up orsprinkled on top of your breakfast cereal, yogurt or fresh fruit.Stuff to know:High in Omega 3 fatty acidsHigh in dietary fiberEat whole, sprouted or ground for optimal health benefits Country of Origin: USA	1	lb	3.99	3.99	lb	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/KwueBRfqTFi2TL0tZ3gK_FK1A0232.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+614	Ricottage with Garlic and Dill	This cheese is an Orland Farmstead creation. It is a mild cheese like Cottage, with a dryer texture like Ricotta.  Ricottage with garlic and dill is great as a dip or spread.  Ricottage can be used as a snack like cottage cheese or to take the place of ricotta in dishes such as lasagna or Manicotti  The garlic dill Ricottage is great with Pita chips.	8	oz	6.29	12.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/mWTcocYJTkaK00iW4rWV_FK1A2984.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+321	Hulled Hemp Seed Hearts	With a pleasant nut-like flavor and creamy texture, these raw hulled hulled hemp seeds are a nutritious and delightful addition to hot cereal and smoothies. Their light flavor allows them to blend easily into desserts, breads, pancakes, granola bars and other baked goods. Try them sprinkled on salads and blended into pilafs, you’ll find hemp seeds to be a delightful, nutritious enhancement to almost any dish.Hemp seeds are raw and are not toasted or salted. Because of their high oil content, hemp seeds should be stored in an airtight container in the fridge or freezer to keep fresh.Ingredients: hulled hemp seed. Manufactured in a facility that also uses tree nuts, soy, wheat & milk. 	12	oz	13.49	1.12	oz	Produce	Dried Fruit & Nuts	http://goodeggs2.imgix.net/product_photos/iLOEeiSFS1dpj5NQnTQT_20160803-BobsRedmill_HempSeedHearts_MG_7237.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+322	Snack Pack (5 Bag Sampler)	The snack pack provides a delicious & different snack for every day of the week. The almonds are Carmel & nonpareil varieties, our plump and un-coated raisins are Red Flame, our walnuts are Chandler & Hartley and our sun-dried, sulfur-free peaches are mostly the heirloom Suncrest and O'Henry. Absolutely nothing is added: no salt, no oil, no sugar. Our products are packaged in resealable, reusable zip bags for your convenience.All of our products use ONLY organic ingredients.Includes one bag each of the following:Raw Almonds (2 oz)Roasted Almonds (2 oz)Two Mix (2.5 oz): Raisins & Raw AlmondsThree Mix (2.4 oz): Raisins, Raw Almonds & WalnutsFour Mix (2.2 oz): Raisins, Raw Almonds, Walnuts & Peaches	5	count	14.49	1.31	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/M9GsaYCOTBe7bnjnCpxk_FK1A7857.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+323	Three Mix (16oz)	Our Three Mix  provides a super combo of protein, omega 3 fatty acids \nand essential minerals. The almonds are the flavorful Carmel variety, \nour plump\n and un-coated raisins are Red Flame's & our walnuts are Chandler \n& \nHartley's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. Our products are packaged in resealable, reusable zip bags for \nyour convenience.	16	oz	13.59	0.85	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/2U7jtEIbSIE8nUKen3wV_FK1A7282.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+324	Four Mix (7oz)	Our Four Mix is singularly yummy. The almonds are the flavorful Carmel variety, our plump\n and un-coated raisins are Red Flame's, our walnuts are Chandler & \nHartley's and our sun-dried, sulfur-free peaches are heirloom \nSuncrest and O'Henry's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. They are packaged in resealable, reusable zip bags for \nyour convenience.	7	oz	7.29	1.04	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/nk5phK2KTQC0XarwbVwY_FK1A7309.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+325	Four Mix (2.2oz)	Our Four Mix is singularly yummy. The almonds are the flavorful Carmel variety, our plump\n and un-coated raisins are Red Flame's, our walnuts are Chandler & \nHartley's and our sun-dried, sulfur-free peaches are heirloom \nSuncrest and O'Henry's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. Our products are packaged in resealable, reusable zip bags for \nyour convenience.	2.2	oz	2.99	1.36	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/nk5phK2KTQC0XarwbVwY_FK1A7309.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+326	Three Mix (7oz)	Our Three Mix  provides a super combo of protein, omega 3 fatty acids \nand essential minerals. The almonds are the flavorful Carmel variety, \nour plump\n and un-coated raisins are Red Flame's & our walnuts are Chandler \n& \nHartley's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. Our products are packaged in resealable, reusable zip bags for \nyour convenience.	7	oz	7.19	1.03	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/2U7jtEIbSIE8nUKen3wV_FK1A7282.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+327	Two Mix (3.5oz)	Our Two Mix provides a natural\nenergy booster anytime of the day. The almonds are the flavorful Carmel variety & \nour plump\n and un-coated raisins are Red Flame's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. Our trail mixes are packaged in resealable, reusable zip bags for \nyour convenience.\n	3.5	oz	3.69	1.05	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/vrhIdFKuTT6nuVYBcrUQ_FK1A7165.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+328	Three Mix (2.4oz)	Our Three Mix  provides a super combo of protein, omega 3 fatty acids and essential minerals. The almonds are the flavorful Carmel variety, our plump\n and un-coated raisins are Red Flame's & our walnuts are Chandler & \nHartley's. Absolutely nothing is added: no salt, no oil, no \nsugar.All of our products use ONLY organic ingredients. Our products are packaged in resealable, reusable zip bags for \nyour convenience.	2.4	oz	2.99	1.25	oz	Produce	Dried Fruit & Nuts	http://goodeggs1.imgix.net/product_photos/2U7jtEIbSIE8nUKen3wV_FK1A7282.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+329	Organic Pasture Raised Eggs (Jumbo)	Alexandre Kids Organic Pasture Raised Large Eggs- from Alexandre Family EcoDairy Farms, Crescent City, CAHands down some of the best eggs we've ever tasted, these hens are part of a multi-species rotational grazing system, moving twice every week onto fresh green grass all year round. "5-egg" ranking from the Cornucopia Institute, certified organic, and really, really delicious! Read more about Alexandre Kids eggs here!All of the hens are raised on organic pastures under the watchful eyes of the Alexandre dairy cows and Great Pyrenees guard dogs. The hens graze on green, lush organic grass and have room to roam in the fresh coastal air and sunshine. They intermingle with the dairy cows and enjoy a natural farm life setting where they can produce the most nutritious organic eggs. Hens are housed in mobile “egg-mobiles,” designed and constructed by the Alexandre Family. The “egg-mobiles” are moved to new areas of pasture twice a week so the pasture gets desired fertilizer and to prevent overgrazing. Our chickens eat certified organic feeds; irrigated dairy pastures consisting of 50 to 100 variety of plant species ranging from grasses, forbs, herbs and clovers; oyster shell, with limited daily feeding of mixture of organic grains and minerals. We never add any chemicals, hormones or antibiotics. Collected eggs are processed daily at the Alexandre Kids egg ranch.	1	half dozen	4.99	\N	\N	Dairy	What We Love	http://goodeggs1.imgix.net/product_photos/fQWhXRbyQBWakK5i5fOe_20160908-AlexanderKids_HalfDozenEggs_MG_0405.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+581	Tillamoos Medium Cheddar	A century in the eating, Tillamook Medium Cheddar is still made from the same recipe we’ve used for over 100 years. While our equipment might look a little different these days, we use only four simple ingredients and age every batch naturally for at least 60 days. No wonder it was voted 'America's Best' at the 2015 International Cheese Awards.Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).	7.5	oz	4.99	10.65	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/EstegN8sRyKzfPGIYhat_tillamoos_2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+330	Organic Vanilla Whole Milk Greek Yogurt	"Full fat, vanilla goodness! Perfect to snack on any time of the day!" Erin, Good Eggs' BuyerWallaby Organic Whole Milk Greek yogurt is rich and creamy. While maintaining the traditional, unhurried cooking process and authentic straining, the process starts with whole milk. This offers a slightly richer taste, giving you consistent flavor in every spoonful.Ingredients:Organic Cultured Pasteurized Milk and Cream, Organic Cane Sugar, Natural Flavor, Organic Locust Bean Gum, Pectin, Organic Vanilla Beans.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	What We Love	http://goodeggs2.imgix.net/product_photos/ielVXwaT2ywkNiwhgKEV_FK1A5791.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+331	Organic Egg Nog	A favorite for your holiday season, our old-fashioned Organic Eggnog is made with simple, organic ingredients and finished with a touch of organic nutmeg.No emulsifiers or thickeners are ever used in this rich, delicious blend of organic milk, organic cream, organic sugar and organic, pasteurized egg yolks. It's absolutely delicious and worth waiting all year for.Seasonal - only available through JanuaryRecyclable, reusable glass bottlesPrice includes $1.50 bottle deposit.Ingredients: Pasteurized Organic Milk, Organic Cream, Organic Cane Sugar, Organic Egg Yolk, Organic Nutmeg	1	quart	7.49	0.23	fl oz	Dairy	What We Love	http://goodeggs1.imgix.net/product_photos/EYta75dRTgu2ngY6noid_FK1A3326.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+332	Organic Hodo Fresh Handmade Yuba	Yuba is a delicacy. Also known as “bean curd sheet,” yuba is the\nthin veil that forms on the surface as the cream rises in heated soymilk. At Hodo, we hand harvest the yuba, one sheet\nat a time. Hodo Yuba has a creamy, nutty and subtly complex flavor,\nwith a firm bite. Hodo Yuba is\ngluten-free, protein-rich and has zero cholesterol. All Hodo Yuba is made from organic, non-GMO, US-grown whole soybeans.Hodo Yuba comes in thin sheets that can be cut\ninto noodles and makes for a great all-organic, gluten-free pasta dish. Hodo Yuba is perfect for wraps and spring\nrolls or as a wonderful addition into stews, soups and sautés.Ingredients: Water, Organic Non-GMO Soybeans.Recipes: http://goo.gl/ExABmN	5	oz	6.99	1.4	oz	Dairy	What We Love	http://goodeggs2.imgix.net/product_photos/gNveqFRSJOuVdRiXDlGg_853404002237.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+333	Bijou	"Vermont Creamery's Bijou is my go-to goat cheese for snacking. Grab some apples or other fruit and this two pack and you have your 3pm snack for all week." Erin, BuyerAn American line of French-style ripened goat cheeses wouldn’t be complete without a small Bijou-like Crottin. Bijou is French for “jewel” and epitomizes all that is special about goats’ milk and the making and caring for a small cheese. This geotrichum-rinded cheese has a unique sweet and yeasty flavor.Made with fresh pasteurized goats’ milk from family farms, Bijou curd coagulates overnight, drains in cheese cloth and is then shaped into little buttons. Dried, and ripened for one week, Bijou evolves with time, gaining a sharpness and complexity after thirty days. Serve toasted on baguette with a salad for a traditional French Bistro Chevre Chaud or on a cheeseboard.Ingredients: Pasteurized goats' milk, salt, cultures, enzymes.contains dairy	4	oz	10.99	43.96	lb	Dairy	What We Love	http://goodeggs2.imgix.net/product_photos/d8YDvdAQSWgY9YjndJ3w_FK1A4643.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+334	Organic Original Soy Milk	Eden's Organic Original Soy Milk is naturally sweetened to create a delicious and nutritious drink, high in protein and essential fatty acids. It's made using only Non-GMO Verified soybeans grown on family farms in the Midwest and processed at Eden's own organic facility in Michigan, with no carageenan added. Their packaging is compostable and the soy milk can be stored unrefrigerated until opened.Carageenan Free, Non-GMO Verified.Ingredients: Purified Water, Organic Soybeans, Naturally Malted Organic Wheat and Barley Extract, Calcium Carbonate, Kombu Seaweed, Sea SaltContains: Soy	32	fl oz	3.69	0.12	fl oz	Dairy	What We Love	http://goodeggs2.imgix.net/product_photos/flu7OyT5SpqL8qorKYoz_20161007-EdenSoy_Original_MG_3283.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+335	Organic Whole Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumExcellent source of calciumIngredients: Organic grade A milk, vitamin D3	1	half gallon	4.49	0.07	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/zNv1C63zSVeKUREEH0Zj_FK1A9922.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+336	Organic Whole Milk	Our Organic, Cream Top Whole Milk is the way it used to be, with the cream on the top. The cream in our organic milk floats naturally to the top because it is non-homogenized.Straus Family Creamery Organic Whole Milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of our cows’ diet.All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Recyclable, reusable glass bottles.Ingredients: Pasteurized Organic Milk.	1	half gallon	4.99	0.08	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/az8cr19SNS7CqAp4G1sX_FK1A5733.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+337	Organic Whole Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumExcellent source of calciumIngredients: Organic grade A milk, vitamin D3	1	gallon	7.99	0.06	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/cV82b2TSTdO2azipp9v3_FK1A7554.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+591	Sharp Cheddar	This sharp cheddar is aged for nine long months. That’s what it takes to produce the full-bodied, naturally-aged sharpness of Tillamook Sharp Cheddar. For their farmer-owners, patience isn’t just a virtue, it’s a value, and it guides the cheesemaking process. Maybe that’s why the United States Championship Cheese Contest® voted it ‘America’s Best’. You can use it to zing up your appetizers, main dishes, and sandwiches.Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color)	2	lb	13.99	7.0	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/wH6GMuIeSme5DBygIgRg_FK1A0920.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+338	Organic Whole Milk	Please note that this milk comes in plastic containers that can be recycled or reused. One gallon is 128 oz.Our Organic, Cream Top Whole Milk is the way it used to be, with the cream on the top. The cream in our organic milk floats naturally to the top because it non-homogenized.Straus Family Creamery Organic Whole Milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of our cows’ diet.The pasture grasses our cows graze on tend to be sweeter out here in Northern California’s Marin and Sonoma County Coasts. The first thing you’ll notice when you pop the top of our cream-top milk is its beautiful aroma. Milk is supposed to have an aroma and a fresh taste. Enjoy!All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Ingredients: Pasteurized Organic Milk.	1	gallon	8.49	0.07	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/F6IiAC6fQKm3RXweQWnt_FK1A5721.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+339	Organic Whole Milk	Our Organic, Cream Top Whole Milk is the way it used to be, with the cream on the top. The cream in our organic milk floats naturally to the top because it is non-homogenized.Straus Family Creamery Organic Whole Milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of our cows’ diet.All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Recyclable, reusable glass bottles.Ingredients: Pasteurized Organic Milk.	1	quart	3.29	0.1	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/P5r4upAZSdafhLe9vaIK_FK1A2603.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+340	Whole Milk	Clover sources its rBST-free and anti-biotic-free milk and cream from a select group of small family farms on the North Coast of California. Our milk and cream arrive at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. We do this so your family can enjoy Clover Milk and Cream products in a good conscience and good health!Ingredients:  Milk, vitamin D3 added	1	half gallon	2.49	0.04	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/kVup6FxcS6ySAjxVh6MI_20160422-Clover_HalfGallon_MilkWhole_MG_7831.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+341	Organic Eggnog	Our rich and creamy eggnog is perfect by itself, or as part of your favorite family recipe!Ingredients: Organic milk and organic cream, organic sugar, organic nonfat milk powder, organic egg yolks, organic tapioca starch, organic nutmeg, salt, carrageenan, organic natural flavor, organic annatto & organic turmeric (for color)	1	quart	5.99	0.19	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/e63ZHEeOQyCuFKAmCRkm_FK1A7095.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+342	Organic Whole Raw Milk	OPDC raw milk is alive with fully active enzymes, a broad spectrum of\n naturally occurring beneficial bacteria, all 22 essential amino acids, \n18 good fatty acids, metabolically available vitamins, immunoglobulins, \nminerals, antioxidants, and CLA.The milk is never damaged or \nchanged by pasteurization, homogenization, or other processing. Organic \nPastures produces 100% USDA certified organic, Grade A, raw milk of \nsuper premium quality. USDA organic standards require that cows be pasture grazed just four months out of the year. OPDC goes far beyond this standard and grazes our cows on green pastures every day. In addition to green pastures, our cows are fed: a specially formulated organic mineral supplement, free choice salt and trace mineral blocks, high test organic alfalfa, and some sweet organic corn to keep them healthy and strong. A disease free life: a life with optimal health starts with a strong immune system - and raw milk is the finest immune system support food available.	1	quart	5.99	0.19	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/J6xDwjpQ6gHyZYmwKRwu_FK1A1943.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+343	Organic Whole Raw Milk	OPDC raw milk is alive with fully active enzymes, a broad spectrum of\n naturally occurring beneficial bacteria, all 22 essential amino acids, \n18 good fatty acids, metabolically available vitamins, immunoglobulins, \nminerals, antioxidants, and CLA.The milk is never damaged or \nchanged by pasteurization, homogenization, or other processing. Organic \nPastures produces 100% USDA certified organic, Grade A, raw milk of \nsuper premium quality. USDA organic standards require that cows be pasture grazed just four months out of the year. OPDC goes far beyond this standard and grazes our cows on green pastures every day. In addition to green pastures, our cows are fed: a specially formulated organic mineral supplement, free choice salt and trace mineral blocks, high test organic alfalfa, and some sweet organic corn to keep them healthy and strong. A disease free life: a life with optimal health starts with a strong immune system - and raw milk is the finest immune system support food available.	1	half gallon	9.99	0.16	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/0l2S1nG3TB6VlJhLuo6c_FK1A1924.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+344	Organic Whole Raw Milk	OPDC raw milk is alive with fully active enzymes, a broad spectrum of naturally occurring beneficial bacteria, all 22 essential amino acids, 18 good fatty acids, metabolically available vitamins, immunoglobulins, minerals, antioxidants, and CLA.The milk is never damaged or changed by pasteurization, homogenization, or other processing. Organic Pastures produces 100% USDA certified organic, Grade A, raw milk of super premium quality. USDA organic standards require that cows be pasture grazed just four months out of the year. OPDC goes far beyond this standard and grazes our cows on green pastures every day. In addition to green pastures, our cows are fed: a specially formulated organic mineral supplement, free choice salt and trace mineral blocks, high test organic alfalfa, and some sweet organic corn to keep them healthy and strong. A disease free life: a life with optimal health starts with a strong immune system - and raw milk is the finest immune system support food available.	1	gallon	17.99	0.14	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/OQ5xJ8nNSKW99lscb2NR_FK1A1913.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+345	Organic Whole Jersey Milk	The Jersey cows at Saint Benoît Creamery in Sonoma are always outside year-round and fed from the pastures they graze on.  This milk is rich and creamy thanks to the high protein and good fat content of a pastured diet. The original fat content remains in the milk to protect the naturally occurring vitamin A and D, providing superior quality taste.Non-homogenizedVat pasteurizedSourced from a small fourth generation dairy farmPlease note, we can only process bottle and jar returns for St. Benoit orders that have been placed via Good Eggs!  If you have other St. Benoit containers to return you can do so at any of the locations listed here.	1	liter	3.99	0.12	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/C8dgCZu0Tqqv56JlN96X_FK1A5755.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+346	Organic 2% Reduced Fat Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumExcellent source of calciumIngredients:  Certified organic grade A reduced fat milk, certified organic nonfat dry milk, vitamin A palmitate, vitamin D3	1	half gallon	4.49	0.07	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/J35OVXygQgaO8P5e73qT_FK1A9909.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+347	Organic 2% Reduced Fat Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumExcellent source of calciumIngredients:  Certified organic grade A reduced fat milk, certified organic nonfat dry milk, vitamin A palmitate, vitamin D3	1	gallon	7.99	0.06	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/ZPr0RMbqS0WodT0eJIBQ_FK1A9932.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+348	Organic 2% Reduced Fat Milk	The cream floats to the top, just like in our Organic Whole Milk.Our Organic, Cream Top 2% Reduced Fat milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.The pasture grasses our cows graze on tend to be sweeter out here in Northern California’s Marin and Sonoma County Coasts. The first thing you’ll notice when you pop the top of our cream-top milk is its beautiful aroma. Milk is supposed to have an aroma and a fresh taste. Enjoy!Ingredients: Pasteurized Organic Reduced Fat Milk, Vitamin A Palmitate.	1	half gallon	4.99	0.08	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/fG4sVGJ9SxyGB0GGQ2o7_FK1A5738.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+349	2% Reduced Fat Milk	Clover sources its rBST and anti-biotic-free milk and cream from a select group of small family farms on the North Coast of California. Our milk and cream arrive at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. We do this so your family can enjoy Clover Milk and Cream products in a good conscience and good health!Ingredients: Milk, nonfat milk, vitamin A palmitate, vitamin D3	1	half gallon	2.49	0.04	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/CG8lzeDSLKVz7A0K6b9A_20160422-Clover_HalfGallon_2percentMilk_MG_7830.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+350	Organic 1% Low Fat Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow fatExcellent source of calciumGood for reduced calorie dietsIngredients: Certified organic grade A low fat milk, certified organic nonfat dry milk, vitamin A palmitate, vitamin D3Contains Dairy	1	half gallon	4.49	0.07	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/nGGvW18IQzqgQgA7YT78_FK1A9914.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+351	Organic 1% Low Fat Milk	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow fatExcellent source of calciumGood for reduced calorie dietsIngredients: Certified organic grade A low fat milk, certified organic nonfat dry milk, vitamin A palmitate, vitamin D3Contains Dairy	1	gallon	7.99	0.06	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/048Dyg4T9yHfWaRMIuXT_FK1A9928.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+352	Low Fat Chocolate Milk	"This is a new product and we’re excited about it because-- well who doesn't love chocolate milk?" Erin, Good Eggs Buyer.Clover sources its rBST and anti-biotic-free milk and cream from a select group of small family farms on the North Coast of California. Our milk and cream arrive at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. We do this so your family can enjoy Clover Milk and Cream products in a good conscience and good health!Ingredients:  Nonfat Milk, Milk Evaporated Cane Juice, Cocoa (Processed with Alkali), Corn Starch, Salt, Carrageenan, Guar gum, Vanilla, Vitamin A Palmitate, and Vitamin D3.	1	half gallon	3.99	0.06	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/Q6Gng6mkQWYlS7dfTAwu_20160422-Clover_HalfGallon_ChocolatetMilk_MG_7842.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+353	Organic 1%  Lowfat Milk	The only Organic 1% Lowfat Milk available with cream on top!Our Organic, Cream Top Lowfat milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.The pasture grasses our cows graze on tend to be sweeter out here in Northern California’s Marin and Sonoma County Coasts. The first thing you’ll notice when you pop the top of our cream-top milk is its beautiful aroma. Milk is supposed to have an aroma and a fresh taste. Enjoy!Ingredients: Pasteurized Organic Lowfat Milk, Vitamin A Palmitate.	1	half gallon	4.99	0.08	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/0XqeB1kGTv6BucEaJvHI_FK1A5736.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+354	1% Low Fat Milk	Clover sources its rBST and anti-biotic-free milk and cream from a select group of small family farms on the North Coast of California. Our milk and cream arrive at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. We do this so your family can enjoy Clover Milk and Cream products in a good conscience and good health!Ingredients:  Nonfat milk, milk, vitamin A palmitate, vitamin D3	1	half gallon	2.49	0.04	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/ouhvVn2ET8WHH5lOvNj7_20160422-Clover_HalfGallon_1percentMilk_MG_7828.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+355	Organic Nonfat Milk	Most people agree that our Organic Nonfat Milk is sweeter and richer than any skim milk they've ever tasted. It's the skim milk with the full-bodied flavor of low fat milk.Our Organic Nonfat Milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Recyclable, reusable glass bottles.Ingredients: Pasteurized Nonfat Milk, Vitamin A Palmitate.	1	half gallon	4.99	0.08	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/0C62QH2wTziKGBP3r3YD_FK1A5740.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+356	Organic Nonfat Milk	Please note that this milk comes in plastic containers that can be recycled or reused. One gallon is 128 ounces.Most people agree that our Organic Nonfat Milk is sweeter and richer than any skim milk they've ever tasted. It's the skim milk with the full-bodied flavor of low fat milk.Our Organic Nonfat Milk is pasteurized at 171°F for 18 seconds. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.The pasture grasses our cows graze on tend to be sweeter out here in Northern California’s Marin and Sonoma County Coasts. The first thing you’ll notice when you pop the top of our cream-top milk is its beautiful aroma. Milk is supposed to have an aroma and a fresh taste. Enjoy!All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Ingredients: Pasteurized Nonfat Milk, Vitamin A Palmitate.	1	gallon	8.49	0.07	fl oz	Dairy	Milk	http://goodeggs2.imgix.net/product_photos/oE1WF6EOQjuOHQIZ7o7J_FK1A1809.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+357	100% Sheep's Milk	"Haverton is the only sheep dairy on the West Coast to bottle their sheep milk! This mild milk will have you fighting for the layer of creamy fat at the top of the bottle!" - Erin, BuyerTastes great and is good for you! Sheep’s milk is naturally homogenized, easily digestible and is the perfect alternative for people with lactose intolerance.  Containing almost double the protein and calcium compared to cows milk. Sheep’s milk is high in mono and poly unsaturated fats, and contains substantial amounts of vitamins A, D, E, B12, Folic acid and minerals like zinc, magnesium and phosphorous.  All this plus a mild, creamy flavor make Haverton Hill 100% Sheep’s Milk the healthy choice.Our milk is provided in glass bottles that are re-usable with BPA free tamper evident caps.  Our glass bottles are odor free, providing you with farm fresh cold milk. Not only is our milk nutritious but we are environmentally friendly too.	1	quart	9.29	0.29	fl oz	Dairy	Milk	http://goodeggs1.imgix.net/product_photos/EgHwYlfqQXTM9Jf1qS4Q_FK1A8300.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+358	Organic Whipping Cream	Close in flavor to the cream bottled by small dairies in Europe, our Organic Whipping Cream is pure and simple with no added stabilizers. With 35% butterfat, you’ll really taste the difference in, and the true flavor of our cows’ healthy diet.All of Straus Family Creamery’s certified organic milk products are Non-GMO Project Verified, certified kosher and gluten-free.Recyclable, reusable glass bottles. Ingredients: Pasteurized Organic Cream.	1	pint	4.89	0.31	fl oz	Dairy	Cream	http://goodeggs1.imgix.net/product_photos/wdaLkQJFSqebL0Pqklur_FK1A5767.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+359	Organic Half and Half	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!Organic rBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumPerfect for your morning coffee and your favorite family recipes!Ingredients: Certified organic grade A milk and certified organic cream	1	quart	4.29	0.13	fl oz	Dairy	Cream	http://goodeggs2.imgix.net/product_photos/xuDRxQsOT9Kej7cydZGL_FK1A0595.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+360	Organic Half and Half	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!Organic rBST and antibiotic-freeFresh pasteurized to ensure the qualityGluten freeLow sodiumPerfect for your morning coffee and your favorite family recipes!Ingredients: Certified organic grade A milk and certified organic cream	1	pint	2.49	0.16	fl oz	Dairy	Cream	http://goodeggs2.imgix.net/product_photos/lRTcZGSsS7R0d6c3Lbsg_FK1A2031.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+361	Organic Heavy Whipping Cream	Clover Organic Farms sources its rBST and antibiotic-free milk and cream from a select group of small, organic family farms on the North Coast of California. Our milk and cream arrives at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. In 2000, we became the first U.S. dairy processor to be awarded the American Humane Certified label for humanely produced dairy products by the American Humane Association. We invite you to enjoy Clover Organic Farms Milk and Cream products in a good conscience and good health!OrganicrBST and antibiotic-freeFresh pasteurized to ensure the qualityMinimum 40% butter fat Gluten free Low sodiumGreat for Baking!Ingredients: Certified organic grade A cream	1	pint	4.59	0.29	fl oz	Dairy	Cream	http://goodeggs2.imgix.net/product_photos/tynsidYQapnWxo0Fv4rA_FK1A0603.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+362	Organic Half & Half	Our Organic Half & Half is rich and delicious for your morning coffee, tea or cereal! It is made up of our Organic Milk and Organic Cream to achieve an 11% butterfat content.Our organic Half & Half is pasteurized at 171°F for 18 seconds and lightly homogenized to emulsify the milk and cream. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.Recyclable, reusable glass bottles.Ingredients: Pasteurized Organic Milk and Organic Cream.	1	pint	2.99	0.19	fl oz	Dairy	Cream	http://goodeggs1.imgix.net/product_photos/pBJgDwveSY2Jepu1ekGK_FK1A5774.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+363	Grade A Cultured Low Fat Buttermilk	Cultured with lactic acid bacteria for flavor and thickness.Ingredients: Nonfat milk, milk, culture and salt	1	quart	1.79	0.06	fl oz	Dairy	Cream	http://goodeggs1.imgix.net/product_photos/S6bBoHRuQT2xXDVSqZaV_FK1A9924.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+364	Half & Half	Clover sources its rBST and anti-biotic-free milk and cream from a select group of small family farms on the North Coast of California. Our milk and cream arrive at the plant the same day the cows are milked and it is fresh pasteurized* to ensure quality while preserving its fresh farm taste and nutritional value. We do this so your family can enjoy Clover Milk and Cream products in a good conscience and good health!Ingredients: Milk and cream	1	quart	2.79	0.09	fl oz	Dairy	Cream	http://goodeggs2.imgix.net/product_photos/iZCABPCpT2aWVgPyTqBH_20160422-Clover_OneQuart_HalfNHalf_MG_7823.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+365	Organic Half & Half	Our Organic Half & Half is rich and delicious for your morning coffee, tea or cereal! It is made up of our Organic Milk and Organic Cream to achieve an 11% butterfat content.Our organic Half & Half is pasteurized at 171°F for 18 seconds and lightly homogenized to emulsify the milk and cream. Unlike most milk, which is ultra-pasteurized (at or above 280°F for at least two seconds), we preserve the true flavor of milk that results from our cows’ diet.Recyclable, reusable glass bottles.Ingredients: Pasteurized Organic Milk and Organic Cream.	1	quart	4.79	0.15	fl oz	Dairy	Cream	http://goodeggs1.imgix.net/product_photos/9ZeDfFMMSgLuLp91BRxF_XyGXMnUr5X1F7mWXySCfkUoDIERjWiAjxq89NqMeVeU.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+366	Organic Raw Cream	OPDC Raw Cream is skimmed from the rich raw milk. This incredibly delicious raw cream provides all of the benefits found in raw milk and raw butter, but can be made into whipped cream or raw ice cream, and is ideal for pouring over fruit or cereal. Raw cream is perfect for culturing into crème fraîche or sour cream and makes the most delicious cream cheese you have ever tasted!	1	pint	12.79	0.8	fl oz	Dairy	Cream	http://goodeggs2.imgix.net/product_photos/Pxy6t0WZQCqLNa3PVTvB_FK1A5460.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+367	Organic Cage Free Brown Eggs (Large)	Organic Cage Free Large Eggs- Glaum Egg Ranch, Aptos CAMany of our customers have expressed a desire for cage-free eggs. After careful consideration and in collaboration with our producer community, we have chosen to offer organic, cage-free eggs from Glaum Egg Ranch in Aptos, CA—just south of Santa Cruz.  Glaum goes beyond the letter of the law when it comes to their layers.  These birds have outdoor access from both ends of the barn, constant access to organic feed and water, and space within the barn to spread their wings, scratch and dust bathe. The sides of the barns are screened and can be opened to allow in natural sunlight and the fresh sea breeze.A true family business, Glaum has been far ahead of the game for generations (four, to be precise) when it comes to cage-free eggs and sustainable ranching. They are the first egg ranch in California to be Certified Humane by Humane Farm Animal Care, and have produced zero manure waste since 1988. Glaum is also a member of CAAF (Community Alliance with Family Farmers), and certified organic by the USDA National Organic Program, and are well regarded within the egg producing community, even coming at the recommendation of some of our current egg producers.Follow this link to check out a video of Glaum's organic layers in action: https://www.youtube.com/watch?v=VSyxtcsSaNc&feature=youtu.beClick here to learn more about egg labeling standards	1	dozen	5.49	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/tFaJ9FjFS2mbP2mtXCX7_20160708-Glaum_DozenEggsMG_4926.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+368	Organic Pasture Raised Eggs (Large)	Gently Gathered Daily\n• Gluten Free\n• No Antibiotics\n• No Added Hormones\n• No Preservatives	1	dozen	7.99	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/ynrbcfrSS16cvaYIRVuU_FK1A9532.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+369	Pasture Raised Eggs (Large)	Living out in the pasture, our hens are free to explore, chase bugs and snack on hearty green grasses. Three times a day, we serve them freshly mixed non-GMO feed. In the their spacious mobile coops, they lay beautiful eggs and roost for the evening."Appreciate Nature's Perfection"	1	dozen	8.29	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/fCQYz1HcSKeqWItobqnU_FK1A9515.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+370	Organic Pasture Raised Eggs (Medium)	Coastal Hill Farm eggs are as natural as can be.  The hens are allowed to feed on grasses, insects, and seeds, as well as given ample feed and space. These conditions make our birds comfortable and happy, which is reflected in their eggs.  Typically, the good cholesterol and omega-3 fatty acid levels are higher in chickens that are allowed to feed on greens such as grasses.Local Certified Organic Pasture Raised EggsCoastal Hill Farm, PetalumaMedium Grade AA, one dozen eggsCertified Organic by MOCA	1	dozen	8.79	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/G1kQkvASruj6LpXUE41m_FK1A9561.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+371	Organic Soy Free Pasture Raised  Eggs (Large)	These eggs are from our pasture-raised, roaming hens.  In addition to the bugs and vegetables in our fields, these hens eat a certified organic feedstock free of soy, herbal tonics, lacto-fermented dairy and grains.  Our attention to detail and natural low-stress environment produces a flock of happy hens and healthy eggs.  Please visit our website to understand more about how our hens and crops function in an integrated agricultural system.This special flock of soy-free hens was inspired by our CSA members with severe soy allergies or other concerns about soy.	1	dozen	9.99	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/UZYjRSnQaG4Zb7b6BTAv_FK1A0962.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+372	Organic Pasture Raised Eggs (Large)	Gently Gathered Daily from Pasture Raised Hens • Gluten Free\n• No Antibiotics\n• No Added Hormones\n• No Preservatives	1	half dozen	4.29	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/LyhxSQURQGmIl1SpPADG_FK1A9403.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+373	Pasture Raised Eggs (Medium)	Living out in the pasture, our hens are free to explore, chase bugs and snack on hearty green grasses. Three times a day, we serve them freshly mixed non-GMO feed. In the their spacious mobile coops, they lay beautiful eggs and roost for the evening."Appreciate Nature's Perfection"	1	dozen	6.79	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/C6bRX2pBRvtnzV6s1gYw_FK1A9548.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+374	Soy Free Pasture Raised Eggs (Medium)	These eggs come to you from Lost Marbles Ranch via the Capay Valley Farmshop.Lost Marbles RanchHi, My name is Lora Murray. Along with my husband I run a small farm playfully named Lost Marbles Ranch near Capay, northern Yolo County. My chickens are free range on irrigated pasture that has no herbicieds, pesticides or fertilizers applied. The feed they are given is GMO and soy free. I get many compliments on their eggs at farmers markets, I hope you enjoy them as well. Feel free to visit the Lost Marbles Ranch Facebook page. Thank you!	1	dozen	6.99	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/w79bZoLKRea6wg2yWd1N_FK1A7612.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+375	Pasture Raised Eggs (Large)	Living out in the pasture, our hens are free to explore, chase bugs and snack on hearty green grasses. Three times a day, we serve them freshly mixed non-GMO feed. In the their spacious mobile coops, they lay beautiful eggs and roost for the evening."Appreciate Nature's Perfection"	1	half dozen	4.29	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/UTAVlvPR4uSi2ygCiKyQ_FK1A9589.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+376	Organic Soy Free Pasture Raised Eggs (Large)	These eggs are from our pasture-raised, roaming hens.  In addition to the bugs and vegetables in our fields, these hens eat a certified organic feedstock free of soy, herbal tonics, lacto-fermented dairy and grains.  Our attention to detail and natural low-stress environment produces a flock of happy hens and healthy eggs.  Please visit our website to understand more about how our hens and crops function in an integrated agricultural system.This special flock of soy-free hens was inspired by our CSA members with severe soy allergies or other concerns about soy.	1	half dozen	5.79	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/iRSF1OVSY2n2QX4MYLLw_FK1A0985.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+377	Pasture Raised Eggs (Small)	Four times a year we have a new flock start laying.  These new eggs are fabulous for baking.Living out in the pasture, our hens are free to explore, chase bugs and snack on hearty green grasses. Three times a day, we serve them freshly mixed non-GMO feed. In the their spacious mobile coops, they lay beautiful eggs and roost for the evening."Appreciate Nature's Perfection"	1	dozen	4.99	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/zVxD6q68QfxPX2w8n4Cw_FK1A9542.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+378	Extra Large Pasture Raised Duck Eggs	Enjoy extra large duck eggs with deep orange yolks from hens that forage freely on certified organic pasture and swim in a half acre pond in Marin County's beautiful Chileno Valley.	1	half dozen	6.99	\N	\N	Dairy	Eggs	http://goodeggs2.imgix.net/product_photos/iw5HWatTaWX65HZMIU63_UvavzzUSBScOQlsnTQEJ_tNu5XNYvAwrhcs0xAiKVqF6P_iQ_q1fDuli-9R8UlLY.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+379	Large Pasture Raised Duck Eggs	Enjoy large duck eggs with deep orange yolks from hens that forage freely on certified organic pasture and swim in a half acre pond in Marin County's beautiful Chileno Valley.	1	dozen	9.99	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/PiCEWIRx2HSWI3KA3rkA_FK1A8467.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+380	Extra Large Pasture Raised Duck Eggs	Enjoy extra large duck eggs with deep orange yolks from hens that forage freely on certified organic pasture and swim in a half acre pond in Marin County's beautiful Chileno Valley.	1	dozen	10.99	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/PtBwwUNDSiiZqEKJW61H_1lPc526NtLGqGFVBhRWPESWQzGippCn8DoGsNujePqg.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+381	Jumbo Pasture Raised  Duck Eggs	Enjoy jumbo duck eggs with deep orange yolks from hens that forage freely on certified organic pasture and swim in a half acre pond in Marin County's beautiful Chileno Valley.	1	dozen	12.99	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/2osOtfwhQBmBFOtQ2lAz_PtBwwUNDSiiZqEKJW61H_1lPc526NtLGqGFVBhRWPESWQzGippCn8DoGsNujePqg.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+382	Basket Staples: Milk and Eggs	You buy them every week, now get them in one click! Our Milk and Eggs Bundle contains:Organic whole milk from Straus Family Creamery, 1 half gallonPastured large eggs from St. John Family Farm, 1 dozen	1	count	14.29	\N	\N	Dairy	Eggs	http://goodeggs1.imgix.net/product_photos/441mf2yHQYicDSuAE67K_FK1A9218.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+383	Organic Plain Whole Milk Yogurt	Our Organic, Plain Whole-Milk Yogurt is smooth, tart and creamy.  And, it’s our bestseller.Made only with Organic Whole Milk and live cultures. No thickeners or additives are used, yet the consistency is so smooth it pours beautifully out of the container. It’s a great choice for breakfast cereals, for smoothies or as a substitute for sour cream.All Straus Family Creamery’s certified organic yogurts are Non-GMO Project Verified, certified kosher and gluten-free.Ingredients: Pasteurized Organic Whole Milk, Organic Sweet Cream Buttermilk, Living Yogurt Cultures.	32	oz	4.59	0.14	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/niUc3KsHSgCpEmvJrDnA_plain%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+384	Organic French-Style Plain Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!Ingredients: Whole Organic Jersey Milk, Living Cultures. 	23	oz	7.49	0.33	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/QwXNXh0rTZOsXm1ybxXK_032116_GoodEggs-4737.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+385	Organic Vanilla Whole Milk Yogurt	Smooth and creamy with a pure, delicious vanilla taste.Made with Organic Whole Milk, live cultures, organic cane sugar and organic vanilla. These simple ingredients combine to make the most delicious organic vanilla yogurt you’ll ever taste!  It’s creamy, smooth and it pours right out of the container.All Straus Family Creamery’s certified organic yogurts are Non-GMO Project Verified, certified kosher and gluten-free.Ingredients: Pasteurized Organic Whole Milk, Organic Cane Sugar, Organic Sweet Cream Buttermilk, Organic Vanilla Extract, Living Yogurt Cultures.	32	oz	4.59	0.14	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/QeT2E24wQmiX8IznJpU2_vanilla%20yog%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+386	Organic Plain Nonfat Yogurt	This Organic, Plain Nonfat Yogurt is made from Organic Nonfat Milk and live cultures.No thickeners or additives are used, yet the consistency is so smooth it pours beautifully out of the container. It is great in smoothies, on cereals or as a substitute for sour cream. This is our bestselling nonfat yogurt.All Straus Family Creamery’s certified organic yogurts are Non-GMO Project Verified, certified kosher and gluten-free.Ingredients: Pasteurized Organic Nonfat Milk, Organic Sweet Cream Buttermilk, Living Yogurt Cultures.	32	oz	4.59	0.14	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/BoLYzNfeR7mpgvtPlx3T_nonfat%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+387	Organic French-Style Meyer Lemon Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. We use local jams for our fruit-at-the-bottom flavors. They come from farms in Sonoma county that grow the fruit organically and make the jam by hand.  Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!Ingredients: Whole Organic Jersey Milk, Meyer Lemon Spread (Organic Meyer Lemon, Organic Sugar), Living Cultures. 	23	oz	7.49	0.33	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/YijASihRST6t3GcOe2Nr_FK1A4734.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+388	Organic French-Style Vanilla Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!Ingredients: Whole Organic Jersey Milk, Organic Vanilla Sauce (Organic Cane Sugar, Organic Milk, Organic Vanilla Beans), Living Cultures.	23	oz	7.49	0.33	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/9kcLNRsmR0iJHbI7ybyM_032116_GoodEggs-4741.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+389	Organic Cream on Top Strawberry Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Organic Strawberries, Organic Evaporated Cane Juice, Pectin, Organic Corn Starch, Natural Flavor and Live Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/LHxlag8S8ydEHQClVJ9w_FK1A1877.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+390	Organic French-Style Strawberry Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. We use local jams for our fruit-at-the-bottom flavors. They come from farms in Sonoma county that grow the fruit organically and make the jam by hand.  Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!\nIngredients: Whole Organic Jersey Milk, Organic Strawberry Spread (Organic Strawberries, Organic Sugar, Pectin), Living Cultures. 	4.75	oz	2.49	0.52	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/C1oOhoIT6a4l3LF6YDjG_Straw_GoodEgg-4745.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+391	Organic Cream on Top Vanilla Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Organic Nonfat Milk, Organic Cane Sugar, Organic Vanilla Extract, Pectin Organic Corn Starch and Live Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/7yMY04B0R1mBFwt1sa2P_FK1A1869.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+392	Organic Cream on Top Peach Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Organic Nonfat Pasteurized Milk, Organic Peaches, Organic Cane Sugar, Pectin, Organic Corn Starch, Natural Flavor and Live Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/CQCXTtvQSKCXX0uJAcAt_FK1A1881.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+393	Organic Cream On Top Blueberry Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Organic Nonfat Pasteurized Milk, Organic Blueberries, Organic Cane Sugar, Pectin, Organic Corn Starch, Natural Flavor and Live Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/ep403NrSQQKJr0Zcy5AS_FK1A1871.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+394	Organic Cream On Top Forest Berry Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Organic Nonfat Pasteurized Milk, Organic Raspberries, Organic Strawberries, Organic Blueberries, Organic Cane Sugar, Pectin, Organic Corn Starch, Natural Flavor and Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/GzBP7ktRBWHNI5J7R9ap_FK1A1874.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+395	Organic Cream On Top Plain Yogurt	Clover Organic Farms Yogurts are produced by culturing a mixture of fresh, organic milk from our local family farms along with fresh, organic fruit, sweeteners, and the addition of vitamin A. This particular yogurt has a deliciously rich layer of cream on top. Ingredients: Organic Pasteurized Milk, Organic Pasteurized Cream, Pectin, Organic Corn Starch and Live Active Cultures.	6	oz	1.29	0.22	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/iod0CMRlTAWuX41F6Iad_FK1A1879.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+396	Organic French-Style Vanilla Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!Ingredients: Whole Organic Jersey Milk, Organic Vanilla Sauce (Organic Cane Sugar, Organic Milk, Organic Vanilla Beans), Living Cultures.	4.75	oz	2.49	0.52	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/wVCbxHWTlOXCZEOIXUFQ_Vanilla_GoodEgg-4747.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+513	Organic Lemon Cookie Ice Cream	An ice cream with a cult following! Three Twins combines their notoriously creamy lemon ice cream with chunks of vanilla sandwich cookies turning the classic cookies and cream combo on its head. Ingredients: Organic Milk, Organic\n  Cream, Organic Evaporated Cane Juice, Organic Sandwich Cookies (Organic Wheat\n  Flour, Organic Powdered Sugar With Organic Corn Starch, Organic High Oleic\n  Sunflower Oil, Organic Sugar, Organic Oat Flour, Organic Molasses, Baking\n  Soda, Sea Salt, Organic Vanilla Extract, Soy Lecithin, Natural Flavor),\n  Organic Egg Yolks, Organic Nonfat Milk, Organic Lemon Flavor.	1	pint	4.99	0.31	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/XYLbqBENRPPmvkBT6uUL_FK1A0512.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+397	Organic French-Style Meyer Lemon Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. We use local jams for our fruit-at-the-bottom flavors. They come from farms in Sonoma county that grow the fruit organically and make the jam by hand.  Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!\nIngredients: Whole Organic Jersey Milk, Meyer Lemon Spread (Organic Meyer Lemon, Organic Sugar), Living Cultures. 	4.75	oz	2.49	0.52	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/Zy6CX4S5SeKHbpi5GhtT_lemon_GoodEgg-4746.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+398	Organic French-Style Plain Yogurt	We use wholesome pasture-fed organic cow's milk from John Mattos’ family farm in Two Rock (near Petaluma) in Sonoma county. Our Yogurt culture comes from France where it has been used for decades to produce sweet, mild and smooth yogurts. Unlike most producers, we add no thickeners, stabilizers or preservatives. Just milk and culture, that’s it!\nIngredients: Whole Organic Jersey Milk, Living Cultures. 	4.75	oz	2.49	0.52	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/d30ZPIwwQ9e8N1dKZsRG_PLAINGoodEgg-4748.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+399	Organic Whole Greek Yogurt	Just two simple ingredients go into our yogurt: organic milk and live, active cultures. Rich, creamy and packed with probiotic goodness, our Greek yogurt is unforgettable. Our cows graze on pasture grass on the beautiful hillsides of Marin and Sonoma Counties in the coastal region of Northern California, for a difference you can taste. Our organic Greek yogurt is certified kosher, gluten-free and is the only Non-GMO Project Verified organic Greek yogurt on the market.Ingredients: Pasteurized organic whole milk, live yogurt cultures.	32	oz	7.99	0.25	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/VpCXMmPCQfKlMmEG0ObN_FK1A5703.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+400	Organic Plain Lowfat Greek Yogurt	These lowfat Greek yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek yogurt that’s not only organic, but unparalleled in taste.Ingredients:Strained Yogurt (Organic Cultured Pasteurized Lowfat Milk)Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	16	oz	4.99	0.31	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/WYqtu0oTyqj7xhrjLNgW_FK1A5780.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+401	Organic Nonfat Greek Yogurt	Enjoy an extra $1.00 off Straus Organic Nonfat Greek Yogurt for the month of October!Just two simple ingredients go into our yogurt: organic milk and live, active cultures. Rich, creamy and packed with probiotic goodness, our Greek yogurt is unforgettable. Our cows graze on pasture grass on the beautiful hillsides of Marin and Sonoma Counties in the coastal region of Northern California, for a difference you can taste. Our organic Greek yogurt is certified kosher, gluten-free and is the only Non-GMO Project Verified organic Greek yogurt on the market.Ingredients: Pasteurized organic nonfat milk, live yogurt cultures.	32	oz	7.99	0.25	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/9ZxocAGVSc2G6V6wJLfl_FK1A5711.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+402	Organic Nonfat  Plain Greek Yogurt	Crafted with the perfect balance of creaminess and tang, our Plain Greek Yogurt is anything but plain. Starring fresh Clover Organic Nonfat Milk direct from the happy cows on our family-owned dairy farms, this thick, rich yogurt has a luxurious mouth-feel and texture perfect in its pure form, or used to enhance other foods.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Organic Pasteurized Nonfat Grade A Milk. Live cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	32	oz	8.29	0.26	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/iwAvZoCdRlS1x4H9vEHp_FK1A0485.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+403	Organic Nonfat  Vanilla Greek Yogurt	America’s favorite flavor just got better! We’ve blended fresh Clover Organic Nonfat Milk with aromatic vanilla bean, then strained it for a creamy consistency and rich, tantalizing taste that’s perfect for breakfast, a healthy snack, or a nutritious smoothie.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Organic Pasteurized Nonfat Grade A Milk, Vanilla Blend (Organic sugar, pectin  natural flavors, organic locust bean gum, organic lemon juice concentrate, vanilla beans, tricalcium citrate). Live cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	32	oz	8.29	0.26	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/sleXx6YVSXGB9yP80NfH_FK1A0481.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+404	Organic Plain Kefir	Clover Organic Farms kefir starts with organic milk from small, family-run dairies on the North Coast of California. Ten beneficial live and active probiotic kefir cultures are added to the milk along with the freshest fruit available to create this tasty and healthy-for-your-body beverage. Drinking kefir is an excellent way to promote improved wellbeing and a balanced immune system and is great for those with milk sensitivities.  Enjoy Clover Organic Farms Kefir in good conscience and good health.Ingredients: Certified Organic Nonfat Milk, Organic Milk, Vitamin A Palmitate, and Cultures.	1	quart	4.79	0.15	fl oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/tlB0ea4RSa12A3v6W0UA_FK1A1840.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+405	Organic Raw Milk Kefir	Our delicious raw kefir, made from our raw skim milk, is easy to digest, probiotic, tummy-friendly and immune-building! Twelve live and active cultures are added to make the most delicious and nutritious kefir around. USDA organic standards require that cows be pasture grazed just four months out of the year. OPDC goes far beyond this standard and grazes our cows on green pastures every day. In addition to green pastures, our cows are fed: a specially formulated organic mineral supplement, free choice salt and trace mineral blocks, high test organic alfalfa, and some sweet organic corn to keep them healthy and strong.	1	quart	4.99	0.16	fl oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/sWRXZ1FzTvG4hGERH6j0_FK1A1939.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+406	Organic Lactose Free Plain Kefir	Simple delicious cultured flavor makes plain kefir a natural for recipes and anything calling for buttermilk as an ingredient: from soups and sauces, to smoothies and desserts. And, because there is no added sugar, (the sugar listed is the naturally-occuring milk sugar), you can feel good that you are enjoying the healthful nutrition of cultured dairy and nothing else.Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA. Ingredients: Organic Lowfat Pasteurized Milk, Lactase Enzyme, Vitamin A and Flourish Live Active Cultures: L. Bulgaricus, L. Acidophilus, L. Casei, L. Rhamnosus, L. Lactis, L. Diacetylactis, S. Thermophilus, L. Cremoris, Leuconostoc Cremoris and B. Bifidum.	1	quart	5.29	0.17	fl oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/yWUeqeUhTpiAj09r7JEA_greenvalley_plain%20kefir.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+407	Blackberry Sheep's Milk Yogurt	With superb Northwestern blackberries.Our sheep's milk yogurt is sweeter than goat's milk, tastier than soy and richer than cow's milk! Made with naturally homogenized sheep milk, our yogurt contains no antibiotics or growth hormones. For an added benefit, sheep milk could be the answer for those who are lactose intolerant. Did you know that Bellwether Farms tasty Sheep Milk Yogurt is…Made from 100% pure sheep milkMade from milk from healthy, pastured animals and active cultures L.bulgaricus, S. themophilus, L. acidophilus, and Bifidus – all very good for the body’s proper functioning.Is an excellent source of B vitamins, including B12, as well as calcium and riboflavin.Ingredients: Pasteurized Sheep Milk, Live, Active Cultures: S. Thermophilus, L. Bulgaricus, L. Acidophilus, & Bifidus.	6	oz	2.49	0.42	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/4x6mKdYT6OaSllxK8uSQ_FK1A7713.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+408	Plain Goat's Milk Yogurt	Enjoy the delicious, velvety simplicity of Plain Goat Yogurt!Redwood Hill Farm Goat Milk Yogurt is a gold medal-winning European-style yogurt made with the highest-quality Grade A un-homogenized whole goat milk. The slight cream layer at the top can either be enjoyed or removed if you prefer a lower fat yogurt. We add a special blend of living cultures with acidophilus and bifidus to promote healthy digestion, and create a classic yogurt flavor.Ingredients: Grade A Pasteurized whole goat milk, tapioca starch, pectin.Live active cultures: S. Thermophilus, L. Bulgaricus, L. Acidophilus & Bifidus	6	oz	2.29	0.38	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/GF7fCOQfG4ZYWR48ToBQ_FK1A1739.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+409	Plain Sheep's Milk Yogurt	Our sheep's milk yogurt is sweeter than goat's milk, tastier than soy and richer than cow's milk! Made with naturally homogenized sheep milk, our yogurt contains no antibiotics or growth hormones. For an added benefit, sheep milk could be the answer for those who are lactose intolerant. Did you know that Bellwether Farms tasty Sheep Milk Yogurt is…Made from 100% pure sheep milkMade from milk from healthy, pastured animals and active cultures L.bulgaricus, S. themophilus, L. acidophilus, and Bifidus – all very good for the body’s proper functioning.Is an excellent source of B vitamins, including B12, as well as calcium and riboflavin.Ingredients: Pasteurized Sheep Milk, Live, Active Cultures: S. Thermophilus, L. Bulgaricus, L. Acidophilus, & Bifidus.	16	oz	6.29	0.39	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/CNewEwHQZa1w7ILaiI49_FK1A5852.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+410	Organic Strawberry Lowfat Greek Yogurt	These lowfat Greek yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek yogurt that’s not only organic, but unparalleled in taste.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Lowfat Milk.STRAWBERRY FRUIT PREPARATION (20%): Organic Strawberries, Organic Cane Sugar, Organic Lemon Concentrate, Organic Locust Bean Gum, Pectin, Natural Flavors, Fruit and Vegetable Juice for Color.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/aIPVffOuRIySLDt0vYU6_FK1A5799.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+411	Organic Blueberry Whole Milk Greek Yogurt	Wallaby Organic Whole Milk Greek yogurt is rich and creamy. While maintaining the traditional, unhurried cooking process and authentic straining, the process starts with whole milk. This offers a slightly richer taste that is further complimented by the blending of premium organic fruit throughout each and every cup, giving you consistent flavor in every spoonful.Ingredients:Organic Cultured Pasteurized Milk and Cream, Organic Blueberries, Organic Cane Sugar, Natural Flavor, Organic Locust Bean Gum, Pectin.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.69	0.32	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/JrNXsglRQEm6jznKE4nu_blub%20yogurt%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+412	Organic Nonfat  Vanilla Greek Yogurt	America’s favorite flavor just got better! We’ve blended fresh Clover Organic Nonfat Milk with aromatic vanilla bean, then strained it for a creamy consistency and rich, tantalizing taste that’s perfect for breakfast, a healthy snack, or a nutritious smoothie.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Organic Pasteurized Nonfat Grade A Milk, Vanilla Blend (Organic sugar, pectin  natural flavors, organic locust bean gum, organic lemon juice concentrate, vanilla beans, tricalcium citrate). Live cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/3tW44UtTSeVXZe7GL66P_FK1A0470.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+413	Organic Nonfat  Strawberry Greek Yogurt	Reminiscent of summer at its peak, our Strawberry Greek Yogurt is like dipping your spoon into a ripe, juicy berry patch blended fresh Clover Organic Nonfat Milk.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Pasteurized Organic Nonfat Grade A Milk, Organic Strawberries, Organic Sugar, Pectin, Natural Flavor, Carrot Juice (color), Organic Locust Bean Gum,Citric Acid, Calcium Chloride. Live Cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/EdC16CyTLGAR7IbUObNC_FK1A0468.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+414	Organic Nonfat  Peach Greek Yogurt	Organic Peach: Savor the fresh-picked essence of sweet, sun-kissed peaches plucked from the tree and perfectly paired with fresh Clover Organic Nonfat Milk. It’s a creamy treat that’s just plain peachy!We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Pasteurized Organic Nonfat Grade A Milk, Organic Peaches, Organic Sugar, Pectin, Natural Flavor, Organic Locust Bean Gum, Organic Annatto (color), Calcium Chloride, Citric Acid. Live Cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/9oPJ2ReZGR8kh4oszgk0_FK1A0472.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+415	Organic Nonfat  Black Cherry Greek Yogurt	Get ready to fall in love with this burst of flavorful tart organic cherries paired with creamy Clover Organic Nonfat Milk and subtle floral notes of cassis and fresh-baked pie.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Pasteurized Organic Nonfat Grade A Milk, Organic Cherries, Organic Sugar, Pectin, Organic Juice (Black Currant, Apple, Black Carrot) (color), Natural Flavor, Citric Acid, Tricalcium Phosphate. Live Cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/WtVROvL9TqKlkTCxdOi0_FK1A0477.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+416	Organic  Nonfat Blueberry Greek Yogurt	Sweet and tangy come together in this classic flavor that combines the floral, jammy notes of Organic Blueberries and Elderberry married with fresh Clover Organic Nonfat Milk.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Pasteurized Organic Nonfat Grade A Milk, Organic Blueberries, Organic Sugar, Pectin, Natural Flavor, Organic Locust Bean Gum, Organic Elderberry Juice Concentrate (color), Calcium Chloride, Citric Acid. Live Cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/DfPcsUoSTIS2IS39LQeM_FK1A0466.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+417	Organic Nonfat  Plain Greek Yogurt	Crafted with the perfect balance of creaminess and tang, our Plain Greek Yogurt is anything but plain. Starring fresh Clover Organic Nonfat Milk direct from the happy cows on our family-owned dairy farms, this thick, rich yogurt has a luxurious mouth-feel and texture perfect in its pure form, or used to enhance other foods.We think that if you can't make it right, you shouldn't make it at all. And we've found a way to make it right: in our organic, authentically strained Greek yogurt, with nonfat milk and 22 grams of protein per serving. For decades we've partnered with a handful of humane, family-owned farms where the cows are raised in open pastures to produce our organic milk. Clo even gave her approval. Ingredients: Cultured Organic Pasteurized Nonfat Grade A Milk. Live cultures: Lactobacillus bulgaricus, Streptococcus thermophilus, Lactobacillus acidophilus, Bifidus, Lactobacillus casei.	5.3	oz	1.79	0.34	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/xLQVck84R1bVKhNAUSSP_FK1A0465.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+418	Organic Blueberry Lowfat Greek Yogurt	These lowfat Greek yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek yogurt that’s not only organic, but unparalleled in taste.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Lowfat MilkBLUEBERRY FRUIT PREPARATION (20%): Organic Blueberries, Organic Cane Sugar, Natural Flavor, Organic Locust Bean Gum, Pectin, Organic Lemon Concentrate.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/crIyXsxQXi4uPPHpXIxl_FK1A5796.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+419	Organic Mixed Berry Nonfat Greek Yogurt	These Greek yogurts are so thick and creamy, you might find it hard to believe they're nonfat. Wallaby Organic Greek nonfat yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek nonfat yogurt that's not only organic, but unmatched in taste and quality.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Nonfat Milk.MIXED BERRY FRUIT PREPARATION: Organic Cane Sugar, Organic Strawberries, Organic Blueberries, Organic Raspberries, Natural Flavors, Organic Locust Bean Gum, Pectin, Organic Lemon Juice Concentrate, Fruit and Vegetable Juice for Color.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/v7VhjcPsRDiJhcA6Ys0V_FK1A5805.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+420	Organic Dark Chocolate Lowfat Greek Yogurt	These lowfat Greek yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek yogurt that’s not only organic, but unparalleled in taste.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Lowfat Milk.CHOCOLATE PREPARATION: Organic Cane Sugar, Organic Chocolate Liquor, Organic Locust Bean Gum, Organic Vanilla ExtractLive Active Ingredients:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/lvslsFkMT5OUpMUv4qV0_FK1A5809.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+547	Organic Mango Agave Sorbet	Mangos are cultivated all over the world.  In tropical and subtropical climates. India is where it originated and it is considered sacred. There are so many varieties of mango trees and cuisines that utilize this delectable fruit. The creamy, pulpy, meat of the mango makes a rich and smooth sorbet. Sometimes the fruit is more tart and sometimes sweet, but always delicious and full flavor.Ingredients: Organic Mango, Organic Light Agave, Organic Lemon Juice, Water	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/saJvTmiQY6ajpj5dT5q3_FK1A7849.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+421	Organic Peach Nonfat Greek Yogurt	These Greek yogurts are so thick and creamy, you might find it hard to believe they're nonfat. Wallaby Organic Greek nonfat yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek nonfat yogurt that's not only organic, but unmatched in taste and quality.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Nonfat Milk.PEACH FRUIT PREPARATION: Organic Peaches, Organic Cane Sugar, Organic Lemon Juice Concentrate, Organic Locust Bean Gum, Pectin, Natural Flavor, Organic Turmeric and Annatto Extract for Color.Live Active Cultures: L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	5.3	oz	1.99	0.38	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/PNz7DL6fTQiZgDMAyRMH_FK1A5794.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+422	Organic Plain Nonfat Greek Yogurt	These Greek yogurts are so thick and creamy, you might find it hard to believe they're nonfat. Wallaby Organic Greek nonfat yogurts are authentically strained, rich in protein, and made with premium organic ingredients. In addition to straining, a traditional, unhurried cooking process is used to develop the texture of these yogurts naturally and authentically—bringing you a Greek nonfat yogurt that's not only organic, but unmatched in taste and quality.Ingredients:STRAINED YOGURT: Organic Cultured Pasteurized Nonfat Milk.Live Active Cultures:L. acidophilus, L. bulgaricus, S. thermophilus, bifidus.	6	oz	1.99	0.33	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/kSDE39vQhyKjAUv5zykg_FK1A5802.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+423	Organic Nonfat Peach Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic peaches, organic cane sugar, water, pectin, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/ibqK2pjQEYzhyBoZAbpg_FK1A4458.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+424	Organic Whole Milk Pure Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic grade A pasteurized whole milk, live and active cultures	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/G18FdsgmSBHH1wjANxDQ_FK1A4466.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+425	Organic Nonfat Coconut Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, water, organic cane sugar, organic dehydrated coconut, pectin, organic coconut flavor, organic lemon juice, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/TSXRQVQyQD2W1btas139_FK1A4462.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+426	Organic Nonfat Strawberry Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic strawberries, organic cane sugar, water, pectin, organic fruit and vegetable juice for color, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/DGqqJmH0SbCR716sVoNc_FK1A7294.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+427	Organic Whole Milk Cherry Chia Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic grade A pasteurized whole milk, organic black cherries, organic cane sugar, water, pre-hydrated organic chia seeds, organic cherry flavor, pectin, organic fruit and vegetable juice concentrate for color, organic lemon juice concentrate, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/kabf1goTR6aBSUpUv3LO_FK1A4460.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+428	Organic Nonfat Blueberry Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic blueberries, organic cane sugar, water, pectin, organic blueberry juice concentrate, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/eeJURAnaSqGFOFOQtRIc_FK1A7281.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+429	Organic Nonfat Vanilla Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic cane sugar, organic vanilla extract, organic vanilla bean, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/pZFQprRmQjK2Wu87Yl6u_FK1A7298.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+430	Organic Whole Milk Vanilla Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk, organic grade A pasteurized whole milk, organic cane sugar, organic vanilla extract, organic vanilla bean, live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/ndnj07xLSAiRXYRbPQmy_FK1A4456.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+431	Organic Nonfat Pure Icelandic Yogurt	Smári yogurt has more protein per serving than any other yogurt in the US. It's thicker than most other yogurt. Creamier, also. It's thick because we strain off most of the water, and leave the yogurt. It's concentrated. It takes four cups of whole milk to make one cup of Smári.Ingredients: Organic grade A pasteurized skim milk. Contains live and active cultures.	5	oz	1.99	0.4	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/aUge9aY4TDuwXpGRqfL6_FK1A7286.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+432	Lavender Coconut & Almond Yogurt	Lavender infused non-dairy yogurt made from almond and coconut milk. From one of our customers:"Hi ,Just wanted to say I LOVE YOUR PRODUCT!!!! I have tried every non-dairy yogurt on the market and found them barely palatable at best. I can't get enough of Crunch Culture... SO good I even eat them as a dessert in the afternoon and evenings! I've been ordering them in my regular Good Eggs delivery..."\nLavender-infused Yogurt ingredients: almond milk, coconut\nmilk*, sugar*, lavender, tapioca flour, agar agar, live active bacteria\n(Bifidobacterium bifidum, Lactobacillus acidophilus, Lactobacillus casei,\nLactobacillus delbrueckii subsp bulgarcus, Lactobacillus rhamnosus,\nStreptococcus thermophiles) *Organic\nAlmond Milk Contains Less\nThan 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A,\nVitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Carrageenan,\nPotassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt. 	16	oz	7.29	0.46	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/tGuHr5vSiKR7Up4UZdXA_FK1A1898.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+433	Lemon Coconut & Almond Yogurt	Lemon non-dairy yogurt made from almond and coconut milk. From one of our customers:"Hi ,Just wanted to say I LOVE YOUR PRODUCT!!!! I have tried every non-dairy yogurt on the market and found them barely palatable at best. I can't get enough of Crunch Culture... SO good I even eat them as a dessert in the afternoon and evenings! I've been ordering them in my regular Good Eggs delivery..."Lemon Yogurt ingredients: almond milk, coconut milk*, sugar*, lemon juice, tapioca flour, agar agar, live active bacteria (Bifidobacterium bifidum, Lactobacillus acidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp bulgarcus, Lactobacillus rhamnosus, Streptococcus thermophiles) *OrganicAlmond Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Carrageenan, Potassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt.	16	oz	7.29	0.46	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/OOmeUJ7iRB6NYt5nWl8J_FK1A1911.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+434	Almond & Coconut Milk Lavender Yogurt	Almond & Organic Coconut milk lavender-infused yogurt with coconut-candied citrus peel and pistachio granola.Coconut Candied Citrus Peel Granola: oats*, coconut, sugar*, brown rice syrup*, coconut oil*, lemons, pistachios, salt.Lavender-Infused Non-dairy Yogurt: almond milk, coconut milk*, lavender, sugar*, tapioca flour, agar agar, live active bacteria (Bifidibacterium difidum, Lactobacillus acidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp bulgarius, Lactobacillus rhamnosus, Streptococcus thermophilus) *OrganicAlmond Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Locust Bean Gum, Potassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt.	7	oz	4.79	0.68	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/PmdiG1mdTG2XGmVh2Fw2_FK1A1876.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+435	Almond & Coconut Milk Lemon Yogurt	Almond & Organic Coconut milk lemon yogurt with candied ginger, slivered almond granola.Candied Ginger  Granola: oats*, sugar*, brown rice syrup*, coconut oil*, almonds, candied ginger (ginger, sugar), salt.Lemon Non-dairy Yogurt: almond milk, coconut milk*, natural lemon juice, sugar*, tapioca flour, agar agar, live active bacteria (Bifidibacterium difidum, Lactobacillus acidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp bulgarius, Lactobacillus rhamnosus, Streptococcus thermophilus) *OrganicAlmond Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Locust Bean Gum, Potassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt.	7	oz	4.79	0.68	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/d9ExSZMQa6u9fEU5NWVR_2gR3VJm9Uve2VOjhAV-JBiYYbdLFn64RREUE4Iqa1tY.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+436	Almond & Coconut Milk Strawberry Yogurt	Almond & OrganicCoconut milk basil-infused yogurt with dried strawberry, slivered almond granola.Strawberry Balsamic Granola: oats*, coconut, sugar*, brown rice syrup*, coconut oil*, almonds, dried strawberries, balsamic vinegar*, salt.Basil-Infused Non-dairy Yogurt: almond milk, coconut milk*, basil*, sugar*, tapioca flour, agar agar, live active bacteria (Bifidibacterium difidum, Lactobacillus acidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp bulgarius, Lactobacillus rhamnosus, Streptococcus thermophilus) *OrganicAlmond Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Locust Bean Gum, Potassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt.	7	oz	4.79	0.68	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/0ORfJ68ERTuHR5ydUaOu_FK1A1879.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+437	Maple Coconut & Almond Yogurt	Maple non-dairy yogurt made from almond and organic coconut milk.Maple Non-dairy Yogurt:\n almond milk, coconut milk*, pure maple extract (alcohol, water, natural\n caramel color, glycerine, maple concentrate), sugar*, tapioca flour, \nagar agar,\n live active bacteria (Bifidibacterium difidum, Lactobacillus \nacidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp \nbulgarius, Lactobacillus rhamnosus, Streptococcus thermophilus) *OrganicAlmond\n Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend \n(Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, \nVitamin B2, Zinc), Gellan Gum, Carrageenan, Potassium Citrate, Sunflower\n Lecithin, Natural Flavors, Sea Salt.	16	oz	7.29	0.46	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/8JhAbHuR52Qrm8MEtTgZ_FK1A1889.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+438	Organic Lactose Free Vanilla Yogurt	The aromatic flavor notes of organic vanilla beans from Madagascar complement the subtle sweetness and enhance the natural creaminess of the fresh yogurt. The rich, delicious taste is accented by a clean, crisp finish, which makes this yogurt one you will want to enjoy often. Whether you have a lactose restriction or not, this is as good as real vanilla can get.Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA. Ingredients: Organic Lowfat Pasteurized Milk, Organic Evaporated Cane Juice, Organic Vanilla Extract, Lactase Enzyme, Pectin, Flourish 10 Live and Active Cultures.	6	oz	1.79	0.3	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/tyKcHhvbQXafzJxaM1Hi_FK1A5826.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+439	Organic Lactose Free Strawberry Yogurt	Real organic strawberries add a rich complexity of fruit flavors, which balance perfectly with the subtle tartness of the yogurt cultures. The creaminess of the organic milk marries the flavors in a luscious harmony.Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA. Ingredients: Organic Lowfat Pasteurized Milk, Organic Fruit (Organic Evaporated Cane Juice, Organic Strawberries, Water, Pectin, Organic Locust Bean Gum, Natural Flavor, Vegetable Juice), Lactase Enzyme, Pectin, Flourish 10 Live and Active Cultures.	6	oz	1.79	0.3	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/f4pHkgOVRdCHJbEf6rKf_FK1A5816.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+440	Organic Lactose Free Blueberry Yogurt	Green Valley Organics' favorite yogurt flavor is made from luscious blueberries. You will never miss the lactose because this blueberry is loved by the tolerant and intolerant alike. The tanginess of the yogurt and the berries enhance one another. Whether you like to stir-it-up or dig-in-deep, it will astound your taste buds.Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA.   Ingredients: Organic Lowfat Pasteurized Milk, Organic Fruit (Organic Evaporated Cane Juice, Water, Organic Blueberries, Natural Flavors, Pectin, Organic Locust Bean Gum), Lactase Enzyme, Pectin, Flourish 10 Live and Active Cultures.	6	oz	1.79	0.3	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/SOkpmI83SWinmZ5GkOZo_FK1A5821.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+441	Almond & Organic Milk Maple Yogurt	Almond & Organic Coconut milk maple yogurt with cinnamon walnut granola.Cinnamon Walnut Granola: oats*, coconut, sugar*, brown rice syrup*, coconut oil*, walnut, cinnamom, salt.Maple Non-dairy Yogurt:\n almond milk, coconut milk*, pure maple extract (alcohol, water, natural caramel color, glycerine, maple concentrate), sugar*, tapioca flour, agar agar,\n live active bacteria (Bifidibacterium difidum, Lactobacillus \nacidophilus, Lactobacillus casei, Lactobacillus delbrueckii subsp \nbulgarius, Lactobacillus rhamnosus, Streptococcus thermophilus) *OrganicAlmond\n Milk Contains Less Than 1% Of The Following: Vitamin/Mineral Blend \n(Calcium Carbonate, Vitamin A, Vitamin E, Vitamin D2, Vitamin B12, \nVitamin B2, Zinc), Gellan Gum, Locust Bean Gum, Potassium Citrate, Sunflower\n Lecithin, Natural Flavors, Sea Salt.	7	oz	4.79	0.68	oz	Dairy	Yogurt	http://goodeggs2.imgix.net/product_photos/k5tudAp9T0ux2M1zTdzP_FK1A1939.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+442	Basil Coconut & Almond Yogurt	Basil infused non-dairy yogurt made from almond and coconut milk. From one of our customers:"Hi ,Just wanted to say I LOVE YOUR PRODUCT!!!! I have tried every non-dairy yogurt on the market and found them barely palatable at best. I can't get enough of Crunch Culture... SO good I even eat them as a dessert in the afternoon and evenings! I've been ordering them in my regular Good Eggs delivery..."\nBasil Yogurt Ingredients: almond milk, coconut milk*, sugar*,\nbasil*, tapioca flour, agar agar, live active bacteria (Bifidobacterium\nbifidum, Lactobacillus acidophilus, Lactobacillus casei, Lactobacillus\ndelbrueckii subsp bulgarcus, Lactobacillus rhamnosus, Streptococcus\nthermophiles) *Organic  \nAlmond Milk Contains Less\nThan 1% Of The Following: Vitamin/Mineral Blend (Calcium Carbonate, Vitamin A,\nVitamin E, Vitamin D2, Vitamin B12, Vitamin B2, Zinc), Gellan Gum, Carrageenan,\nPotassium Citrate, Sunflower Lecithin, Natural Flavors, Sea Salt.	16	oz	7.29	0.46	oz	Dairy	Yogurt	http://goodeggs1.imgix.net/product_photos/9xrPOkybRhmLmsIdrXNw_FK1A1906.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+443	Organic Unsalted Butter	Clover Organic Farms quality butters are made in small batches with rich, organic milk and cream from a select group of family farms on the North Coast of California. The cows on these farms are not treated with antibiotics or the growth hormone rBST and are American Humane Certified by the American Humane Association, resulting in superior milk and cream used to make our delicious butter products. Enjoy Clover Organic Farms butter in good conscience and good health.OrganicThe cream is culturedGluten freeLow sodiumGreat for baking, cooking and to top your favorite foods!Ingredients: Certified organic cream (derived from milk), cultures	16	oz	7.79	7.79	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/65G9e9rlShKnNuMIKBqk_FK1A0581.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+444	Graziers Unsalted Grass-Fed Butter	Graziers Butter is made with certified Graziers Cream. Not only is the delicious butter grass-fed, it is vat cultured for a minimum of 16 hours, and made European-Style with 83% butterfat. Make this a staple in your house!	8	oz	4.79	9.58	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/ehkIOsJQQXWkZ7C79OhV_FK1A5629.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+445	Organic Unsalted Butter	Our European-style, Organic, Unsalted Butter is freshly churned in small batches at our own creamery. Our Organic Unsalted Butter is rich, sweet and creamy, with 85% butterfat content and extremely low moisture levels. Butter with lower moisture content results in flakier pastry that rises higher and browns more evenly. This is the chefs' butter because it doesn't burn as easily as other butters. We make it in small batches in our old-fashioned 1950s butter churn.Named "One of the Top Premium Butters in America" by Food and Wine Magazine. Straus Family Creamery’s certified Organic Butter is also certified kosher and gluten-free.Ingredients: Certified Organic Pasteurized Cream	16	oz	9.99	9.99	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/IIggguphQUCfAkpWatFd_FK1A5947.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+446	Organic Grass Fed Ghee	Ghee is a premium cooking oil celebrated for its taste, nutritional benefits, and medicinal qualities. Ayurveda, the ancient medical science of India, recognizes ghee as an essential part of a balanced diet, and considers it to be the best fat one can eat. Ghee is the very essence of butter; the end result of a long, slow, careful clarification process that removes all the moisture, milk solids and impurities. The absence of milk solids and water in ghee make it completely shelf stable. Ghee has one of the highest flash points (485ºF) which make this oil the best choice for high temperature cooking.Ghee is comprised of full spectrum short, medium and long chain fatty acids, both unsaturated and saturated. Ghee contains Omega 3 and Omega 9 essential fatty acids along with vitamins A, D, E and K. Ghee made from organic butter of pastured cows is one of the highest natural sources of CLA (Conjugated Linoleic Acid). 9 phenolic anti-oxidants, as well as numerous other minerals are present in ghee.Ancient Organics Ghee is always made by hand in small batches, using only organic sweet cream butter from Straus Family Creamery. We are committed to making ghee of uncompromising quality. We exclusively source unsalted sweet cream butter from our local Straus Family Creamery.  The Straus cows are pastured and grass-fed year round enjoying the Mediterranean micro climate of Marin and Sonoma county which provides a constant high level of moisture. When you use your ghee, use a clean, dry utensil to obtain your desired serving. Replace the lid as soon as possible. Be careful no to let any moisture get into the jar. (An easy way you can tell if your ghee has gone sour is to smell it. If it does not smell sweet, it has spoiled.) Sunlight will cause ghee to oxidize and lose its nourishing properties. We recommend keeping unopened jars in a cool, dark, temperature stable place. Opened jars can be kept in a cabinet, away from light for up to 3 months, or refrigerated for up to a year thereafter.	8	fl oz	13.99	1.75	fl oz	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/9d3SBv6ZSE6JcU7dxw86_FK1A7505.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+447	Organic Unsalted Butter	Our famous butter made in the European style. We separate the cream, then let it set for 3 days with the culture before churning it just like in the old days. This sweet butter is a chef favorite! You can use for all of your cooking and baking for amazing results.Ingredients: USDA Organic Culture Pasteurized Grade A Jersey Brand Cream, Enzymes.	8	oz	4.99	9.98	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/nnkcPiS7RRu09V5erkqh_FK1A5978.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+448	Organic Grass Fed Ghee	Ghee is a premium cooking oil celebrated for its taste, nutritional benefits, and medicinal qualities. Ayurveda, the ancient medical science of India, recognizes ghee as an essential part of a balanced diet, and considers it to be the best fat one can eat. Ghee is the very essence of butter; the end result of a long, slow, careful clarification process that removes all the moisture, milk solids and impurities. The absence of milk solids and water in ghee make it completely shelf stable. Ghee has one of the highest flash points (485ºF) which make this oil the best choice for high temperature cooking.Ghee is comprised of full spectrum short, medium and long chain fatty acids, both unsaturated and saturated. Ghee contains Omega 3 and Omega 9 essential fatty acids along with vitamins A, D, E and K. Ghee made from organic butter of pastured cows is one of the highest natural sources of CLA (Conjugated Linoleic Acid). 9 phenolic anti-oxidants, as well as numerous other minerals are present in ghee.Ancient Organics Ghee is always made by hand in small batches, using only organic sweet cream butter from Straus Family Creamery. We are committed to making ghee of uncompromising quality. We exclusively source unsalted sweet cream butter from our local Straus Family Creamery.  The Straus cows are pastured and grass-fed year round enjoying the Mediterranean micro climate of Marin and Sonoma county which provides a constant high level of moisture. When you use your ghee, use a clean, dry utensil to obtain your desired serving. Replace the lid as soon as possible. Be careful no to let any moisture get into the jar. (An easy way you can tell if your ghee has gone sour is to smell it. If it does not smell sweet, it has spoiled.) Sunlight will cause ghee to oxidize and lose its nourishing properties. We recommend keeping unopened jars in a cool, dark, temperature stable place. Opened jars can be kept in a cabinet, away from light for up to 3 months, or refrigerated for up to a year thereafter.	16	fl oz	19.99	1.25	fl oz	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/4U2PPEBXRVu9wFozcShW_FK1A7510.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+449	Unsalted Cultured Butter	This Unsalted Butter log is perfect for baking with its 86% butterfat content. Cut into your scones or pie dough for a delicate crumb and super flaky texture. While working on a dairy farm in Brittany, France, Allison Hooper took careful note of what happened to the milk. After each milking, she set the cream aside. Natural, lactic bacteria took over, ripening it into cultured cream—or crème fraîche. When the thick result was churned into butter, she knew she had learned something valuable. Inspired by this lesson, our cream is churned in small batches becoming a rich European-style butter with a unique farm-fresh taste. Ingredients: cream, culture.contains dairy	8	oz	4.99	9.98	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/8cRduvahTSu7yfQotM7d_FK1A5293.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+450	Organic Grass Fed Ghee	Ghee is a premium cooking oil celebrated for its taste, nutritional benefits, and medicinal qualities. Ayurveda, the ancient medical science of India, recognizes ghee as an essential part of a balanced diet, and considers it to be the best fat one can eat. Ghee is the very essence of butter; the end result of a long, slow, careful clarification process that removes all the moisture, milk solids and impurities. The absence of milk solids and water in ghee make it completely shelf stable. Ghee has one of the highest flash points (485ºF) which make this oil the best choice for high temperature cooking.Ghee is comprised of full spectrum short, medium and long chain fatty acids, both unsaturated and saturated. Ghee contains Omega 3 and Omega 9 essential fatty acids along with vitamins A, D, E and K. Ghee made from organic butter of pastured cows is one of the highest natural sources of CLA (Conjugated Linoleic Acid). 9 phenolic anti-oxidants, as well as numerous other minerals are present in ghee.Ancient Organics Ghee is always made by hand in small batches, using only organic sweet cream butter from Straus Family Creamery. We are committed to making ghee of uncompromising quality. We exclusively source unsalted sweet cream butter from our local Straus Family Creamery.  The Straus cows are pastured and grass-fed year round enjoying the Mediterranean micro climate of Marin and Sonoma county which provides a constant high level of moisture. When you use your ghee, use a clean, dry utensil to obtain your desired serving. Replace the lid as soon as possible. Be careful no to let any moisture get into the jar. (An easy way you can tell if your ghee has gone sour is to smell it. If it does not smell sweet, it has spoiled.) Sunlight will cause ghee to oxidize and lose its nourishing properties. We recommend keeping unopened jars in a cool, dark, temperature stable place. Opened jars can be kept in a cabinet, away from light for up to 3 months, or refrigerated for up to a year thereafter.	32	fl oz	39.99	1.25	fl oz	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/4U2PPEBXRVu9wFozcShW_FK1A7510.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+451	Graziers Salted Grass-Fed Butter	Graziers Butter is made with certified Graziers Cream. Not only is the delicious butter grass-fed, it is vat cultured for a minimum of 16 hours, and made European-Style with 83% butterfat. Make this a staple in your house!	8	oz	4.79	9.58	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/lYWszO1LTfyMYSbBGFch_FK1A5634.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+452	Organic Salted Butter	Clover Organic Farms quality butters are made in small batches with rich, organic milk and cream from a select group of family farms on the North Coast of California. The cows on these farms are not treated with antibiotics or the growth hormone rBST and are American Humane Certified by the American Humane Association, resulting in superior milk and cream used to make our delicious butter products. Enjoy Clover Organic Farms butter in good conscience and good health.OrganicThe cream is culturedGluten freeGreat for baking, cooking and to top your favorite foods!Ingredients:  Certified organic cream (derived from milk), sea salt, cultures	16	oz	7.79	7.79	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/buKuaA23ROWlzxucWmdg_FK1A0587.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+453	Sea Salt Cultured Butter Roll	While working on a dairy farm in Brittany, France, Allison Hooper took careful note of what happened to the milk. After each milking, she set the cream aside. Natural, lactic bacteria took over, ripening it into cultured cream — or crème fraîche. When the thick result was churned into butter, she knew she had learned something valuable.Ingredients: Pasteurized cows' cream(milk), sea salt, salt, cultures.contains dairy	4	oz	3.69	14.76	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/l53m8OPHSjCzVpBhAjzA_FK1A5321.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+454	Organic Salted Butter	Our famous butter made in the European style. We separate the cream, then let it set for 3 days with the culture before churning it just like in the old days. Very lightly salted, with French “Guerande” sea salt, to bring out its flavor.This butter will give you a lot of satisfaction. Try it on your favorite bread or English muffin in the morning!Ingredients: USDA Organic Culture Pasteurized Grade A Jersey Brand Cream, Salt, Enzymes.	8	oz	4.99	9.98	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/QKemTH62QmO6xXcUfZjg_FK1A5972.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+455	Organic Salted Butter	We make Organic Butter like no other. Once you’ve tried this one, you’ll never go back.Rich, sweet and creamy, with 85% butterfat content and extremely low moisture levels, our European-Style, Organic, Lightly Salted Butter contains only half the salt of other butters. With lower moisture, baking results in flakier pastry that rises higher and browns more evenly. This is the “chefs” butter, because it doesn't burn as easily as other butters. We make it European-style, in small batches in our old-fashioned 1950s butter churn.Named "One of the Top Premium Butters in America" by Food and Wine Magazine.Straus Family Creamery's certified Organic Butter is also certified kosher and gluten-free.Ingredients: Certified Organic Pasteurized Cream, Salt. 	16	oz	9.99	9.99	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/tPTkTzA0SDKEZSFy8tUC_FK1A5946.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+456	Sea Salt Cultured Butter Basket	While working on a dairy farm in Brittany, France, Allison Hooper took careful note of what happened to the milk. After each milking, she set the cream aside. Natural, lactic bacteria took over, ripening it into cultured cream — or crème fraîche. When the thick result was churned into butter, she knew she had learned something valuable.Ingredients: Pasteurized cows' cream(milk), sea salt, salt, cultures.contains dairy	6	oz	6.99	18.64	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/qpod2HiUQYOSGWbyjIHT_FK1A4567.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+457	Lightly Salted Cultured Butter	While working on a dairy farm in Brittany, France, Allison Hooper took careful note of what happened to the milk. After each milking, she set the cream aside. Natural, lactic bacteria took over, ripening it into cultured cream—or crème fraîche. When the thick result was churned into butter, she knew she had learned something valuable.Inspired by this lesson, our cream is churned in small batches becoming a rich European-style butter with 86% butterfat content and unique farm-fresh taste. Use this cultured butter at high temperatures for a perfect pan sear, or smear on toasted sourdough with jam.Ingredients: pasteurized cows' cream (milk), salt, cultures. contains dairy	8	oz	4.99	9.98	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/aNEkWlNgSkyhsEdO1Vqu_FK1A5304.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+458	Sheep Butter with Sea Salt	Farmstead Cream | Slowly Churned | Lightly Salted | Small Batch | Hand-packedHaverton Hill 100% Sheep’s Milk Butter is handcrafted in small batches using our fresh farmstead sheep cream produced at the source on our farm in Petaluma.  Our fresh cream  is slowly churned while delicious fine sea salt is lightly sprinkled throughout each batch creating our signature  European - style uncultured butter .  A creamy white appearance with an 85% butterfat and it's rich, smooth and mildly sweet flavor make Haverton Hill award winning 100% sheep butter a perfect addition to any meal.  Enjoy!2015 American Cheese Society WinnerIngredients: Sheep cream and sea salt	8	oz	13.99	27.98	lb	Dairy	Butter	http://goodeggs1.imgix.net/product_photos/EcZv5DQTEe1Ey4KKsfyk_X07aQEqt1B3i59vT9ZtUV9cLeF7zneaaNhYWTPQnvQI.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+459	European Style Cultured Vegan Butter	Melts, cooks, bakes, spreads and tastes like butter. Made with Organic Coconut Oil & Organic Cashews. Made without palm oil or milk products.Free of cholesterol, lactose, egg, gluten and soy. Non-GMO product.Ingredients: Organic Coconut Oil, Water, Organic Safflower Oil or Sunflower Oil, Organic Cashews, Soy Lecithin, Sea Salt, Cultures.	8	oz	7.99	15.98	lb	Dairy	Butter	http://goodeggs2.imgix.net/product_photos/Q0Qgn4CuTqu9gDKMAFeD_FK1A0515.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+460	Vanilla Bean Almond Milk	Our vanilla bean almond milk is light, refreshing and naturally nutritious. It is 100% pure, raw, organic and abundant in almonds. Ideal for breakfast, as a post-workout drink, or a delicious and wholesome on-the-go beverage. Ingredients: organic almonds, organic medjool date, vanilla bean, purified water, pink himalayan salt	10.75	fl oz	4.99	0.46	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/8aXVcu1jS728rry4vX1w_FK1A3454.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+470	Organic Unsweetened Vanilla Almond Milk	By popular customer demand!  Our smooth almondmilk flavored with real vanilla is perfect in cereal, coffee, or anywhere you might use milk.  Consisting only of almonds and vanilla, Three Trees Unsweetened Vanilla Almondmilk is pure and healthy deliciousness.Simple, quality ingredients and tons of almonds – that’s how we achieve the pure deliciousness in every bottle. A slightly modified recipe of the original, Three Trees now mimic milk more closely. Three Trees is perfectly satisfying as a light meal, after a workout, or anytime you’re craving nourishing, clean energy.Ingredients: Filtered Water, Organic Almonds, Organic Vanilla Extract.	33.8	fl oz	8.99	0.27	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/R5ZDmBGWQ0C2BETO06D5_032116_GoodEggs-4733.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+612	Feta	Made with fresh cow's and goat's milk, our feta has a lighter flavor than goat or sheep milk feta.It is lightly salted to bring out the flavor of the cheese, without being as strong as a Mediterranean style feta. 	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/SeIwLb9T1qoXrxfScmBi_FK1A2989.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+461	Almond Vanilla Chia Milk	Organic Ingredients: sprouted almond milk, sprouted chia seeds, hemp seeds, vanilla extract, agave nectar, pink himalayan salt, filtered water.Marin Living Foods strives to be a 100% organic company, with that in mind our ingredients are of the highest quality in our almond milk drinks.  Our almonds are in a raw and sprouted state before we make our almond milk drinks. Our Almond Vanilla Chia Milk is a lightly sweetened milk with the ancient super-seed, the chia.  Each bottle contains 2 tablespoons of chia which has 24% RDI for magnesium and 50% RDI for manganese.  These tiny seeds are truly magical.Almond milk is one of the most nutritious milk substitutes available.  Almond milk does not need to be fortified as almonds are naturally very nutritious, containing vitamin E, omega-3 fatty acids, manganese, selenium, magnesium, potassium, zinc, iron, fiber, phosphorous, calcium and flavonoids.Our almond milk is prepared free of preservatives and is 100% healthy.  The nut's soft texture, milk flavor, and light colouring makes for an efficient analog to dairy, and a soy-free choice for lactose intolerant people and vegans. Please shake well before enjoying our drinks. 	10	fl oz	6.99	0.7	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/Xh0HK43QCKc92fbnAv8Z_FK1A5251.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+462	Cacao Almond Smoothie	Organic Ingredients: sprouted almond milk, raw cacao, agave nectar, vanilla extract, maca, pink himalayan salt.Marin Living Foods strives to be a 100% organic company, with that in mind our ingredients are of the highest quality in our almond milk drinks.  Our almonds are in a raw and sprouted state before we make our almond milk drinks. Our Cacao Almond Smoothie is made with raw cacao that is rich in magnesium and with the great Incan super food, Maca.  Maca is loaded with Vitamin B1, B2, B6, B12, fiber and so much more.  This chocolate milk will definitely make your taste buds chasse across the dance floor.  Enjoy!  Almond milk is one of the most nutritious milk substitutes available.  Almond milk does not need to be fortified as almonds are naturally very nutritious, containing vitamin E, omega-3 fatty acids, manganese, selenium, magnesium, potassium, zinc, iron, fiber, phosphorous, calcium and flavonoids.Our almond milk is prepared free of preservatives and is 100% healthy.  The nut's soft texture, milk flavor, and light colouring makes for an efficient analog to dairy, and a soy-free choice for lactose intolerant people and vegans. Please shake well before enjoying our drinks. 	10	fl oz	6.99	0.7	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/LOCm79yRO6JxTf8LvaTw_FK1A5266%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+463	Cold Brew Coffee Almond Milk	Our cold brew coffee almond milk is made from the finest Ritual cold brewed coffee, combined with the refreshing taste of lightly sweetened almond milk. It is 100% pure, raw, organic, and up to 67% less acidic than conventional coffee. A healthful and delicious alternative to your daily brew.Ingredients: organic almonds, organic medjool date, cold brew coffee, purified water, pink himalayan salt	10.75	fl oz	4.99	0.46	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/vSgpH9J9SuMM2onytPZs_FK1A3440.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+464	Chai Spice Almond Milk	Our chai spice almond milk is lightly spiced, delicately sweet and naturally nutritious. It is 100% pure, raw, organic and abundant in almonds. Ideal for breakfast, as a post-workout drink, or a delicious and wholesome on-the-go beverage. Ingredients: organic almonds, organic medjool date, vanilla bean, organic cinnamon, organic cardamom, organic ginger, organic turmeric, purified water, pink himalayan salt	10.75	fl oz	4.99	0.46	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/xpf0Bh1vSMCrunEAGh56_FK1A3432.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+465	Raw Coconut Almond Milk (Pint)	Ingredients: young coconut water paired with sprouted almonds, filtered water, organic vanilla and pink himalayan sea salt 100% Raw and VeganNo Preservatives or AdditivesDairy, Soy, Carrageenan, and Gluten FreeHealthy and Delicious!   4 day shelf life (delivered fresh to GOOD EGGS on Saturday AM)Always Shake Well and Keep Refrigerated	16	fl oz	9.99	0.62	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/Lj0mNvYTiCzUQ3WQ89QR_FK1A1401.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+466	Cacao Almond Milk	Our cacao almond milk has the delicious taste of raw cacao, lightly spiced with cinnamon. It is 100% pure, raw, organic and abundant in almonds. Ideal for breakfast, as a post-workout drink, or a delicious and nutritious on-the-go beverage. Ingredients: organic almonds, organic medjool date, organic cacao, organic cinnamon, purified water, pink himalayan salt	10.75	fl oz	4.99	0.46	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/NGi9GbodTle2E0d8nrBV_FK1A3425.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+467	Almond Milk	Organic Ingredients: organic sprouted almonds, filtered water.Marin Living Foods strives to be a 100% organic company, with that in mind our ingredients are of the highest quality in our almond milk drinks.  Our almonds are in a raw and sprouted state before we make our almond milk drinks. Almond milk is one of the most nutritious milk substitutes available. Almond milk does not need to be fortified as almonds are naturally very nutritious, containing vitamin E, omega-3 fatty acids, manganese, selenium, magnesium, potassium, zinc, iron, fiber, phosphorous, calcium and flavonoids.Our almond milk is prepared free of preservatives and is 100% healthy.  The nut's soft texture, milk flavor, and light colouring makes for an efficient analog to dairy, and a soy-free choice for lactose intolerant people and vegans. Please shake well before enjoying our drinks. 	32	fl oz	10.99	0.34	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/n6WuRFd9QeVvc9MMnuDy_FK1A5246.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+468	Organic Unsweetened Almond Milk	Our unsweetened almond milk is the true staple for your fridge. Four simple, organic ingredients create everything you need, and nothing you don’t. We start with single-source spring water and blend it with delicious organic almonds. Then we add just a touch of sea salt for balance, and organic acacia gum to make sure it actually comes back together when you shake it. Our unsweetened almond milk is just like you would make in your own kitchen. Simple, delicious, and good for just about anything.Ingredients: Organic Almondmilk (Spring Water, Organic Almonds), Organic Acacia Gum, Sea SaltContains AlmondsGluten-free, soy-free, produced in a peanut-free facility	28	fl oz	6.29	0.22	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/QC4Kab8YRguvBzytG71H_FK1A3553.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+469	Raw Coconut Almond Milk (Quart)	Ingredients: young coconut water paired with sprouted almonds, filtered water, organic vanilla and pink himalayan sea salt 100% Raw and VeganNo Preservatives or AdditivesDairy, Soy, Carrageenan, and Gluten FreeHealthy and Delicious!   4 day shelf life (delivered fresh to GOOD EGGS on Saturday AM)Always Shake Well and Keep Refrigerated	32	fl oz	13.99	0.44	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/l0P2rs1NSM6ntQEv53yL_FK1A1392.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+471	Organic Unsweetened Almond Milk	Taste the difference of true almondmilk.  We never use any additives, so what you're getting is a true almondmilk. The smooth, rich taste of our almond milks comes only from more almonds – that's the Three Trees difference.Simple, quality ingredients and tons of almonds – that’s how we achieve the pure deliciousness in every bottle. A slightly modified recipe of the original, Three Trees now mimic milk more closely. Three Trees is perfectly satisfying as a light meal, after a workout, or anytime you’re craving nourishing, clean energy.Ingredients: Filtered Water, Organic Almonds.	33.8	fl oz	8.99	0.27	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/Cz9C7yqRnqMRUjb1wYB6_032116_GoodEggs-4728.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+472	Organic Unsweetened Almond Milk	We take organic almonds and add a gentle roast to allow their natural flavor to shine through. The result is our signature taste that’s a pleasure to drink by the glass and blends perfectly in your recipes.     INGREDIENTS: Almond Base* (Water, Almonds*)Rice Starch*Sea SaltVanilla*Natural FlavorCarrageenanRiboflavin (B2)Vitamin A PalmitateVitamin D2	32	fl oz	3.49	0.11	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/9tG7YGHTtSTeT06dle5A_FK1A0438.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+473	Organic Unsweetened Vanilla Almond Milk	We take organic almonds and add a gentle roast to allow their natural flavor to shine through. The result is our signature taste that’s a pleasure to drink by the glass and blends perfectly in your recipes.        INGREDIENTSAlmond Base* (Water, Almonds*)Rice Starch*Vanilla*Sea SaltNatural FlavorCarrageenanRiboflavin (B2)Vitamin A PalmitateVitamin D2	32	fl oz	3.49	0.11	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/DFNNe2acQlejzd2UtREw_FK1A0431.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+474	Unsweetened Classic Almond Milk	Classic Almond Milk (Unsweetened)Ingredients: organic blanched almonds, filtered waterIn two simple words our vegan milks are absolutely scrumptious! We are really reinventing the wheel here. Yes nut and rice milks have been made and consumed by vegans and the dairy intolerant for years, but when was the last time you had a nut milk infused with organic cacao and rose water? The Living Apothecary is hard at work, coming up with mouth watering vegan milk libations that are not only good for you in in-numerous ways, but are also so tasty they are impossible to resist. We pride ourselves on pushing the boundaries in just about every imaginable way in the world of living vegan. Our vegan milks are no exception. Every ingredient is made from scratch. Every combination, painstakingly taste tested. They are a perfect yang to our cold pressed juice and kefir water tonic's yin. After all, life is all about balance. 	32	fl oz	12.29	0.38	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/wngfgcNoS8iTbgOK8ntg_FK1A2669.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+475	Organic Original Almond Milk	We take organic almonds and add a gentle roast to allow their natural flavor to shine through. The result is our signature taste that’s a pleasure to drink by the glass and blends perfectly in your recipes.     INGREDIENTSAlmond Base* (Water, Almonds*)Dried Cane Syrup*Potassium CitrateSea SaltCarrageenanRiboflavin (B2)Vitamin A PalmitateVitamin D2 	32	fl oz	3.49	0.11	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/JRIeDIgtQtmKAaXuoNHH_FK1A7360.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+476	Organic Almond Milk	Our sweetened almond milk is made just like you would make it at home. We start with single-source spring water and blend it with delicious organic almonds. Then we add just a touch of maple syrup and sea salt to give it the perfect balanced taste. Finally, we use organic acacia gum to make sure it actually comes back together when you shake it. Our sweetened almond milk is perfect for people who love the taste of regular dairy milk, but with only 7 grams of sugar. It is perfect for drinking straight out of a glass.Ingredients: Organic Almondmilk (Spring Water, Organic Almonds), Organic Maple Syrup, Organic Acacia Gum, Sea SaltContains AlmondsGluten-free, soy-free, produced in a peanut-free facility	28	fl oz	6.29	0.22	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/YaNo3vG7RmiBilPZ8rav_FK1A3544.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+477	Classic Almond Milk	Classic Almond Milk Ingredients: organic blanched almonds, dates, vanilla bean, filtered waterIn two simple words our vegan milks are absolutely scrumptious! We are really reinventing the wheel here. Yes nut and rice milks have been made and consumed by vegans and the dairy intolerant for years, but when was the last time you had a nut milk infused with organic cacao and rose water? The Living Apothecary is hard at work, coming up with mouth watering vegan milk libations that are not only good for you in in-numerous ways, but are also so tasty they are impossible to resist. We pride ourselves on pushing the boundaries in just about every imaginable way in the world of living vegan. Our vegan milks are no exception. Every ingredient is made from scratch. Every combination, painstakingly taste tested. They are a perfect yang to our cold pressed juice and kefir water tonic's yin. After all, life is all about balance. 	32	fl oz	12.29	0.38	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/wngfgcNoS8iTbgOK8ntg_FK1A2669.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+478	Organic Nuts & Vanilla	A luscious blend of cashews, almonds and oats scented with cinnamon and ground vanilla beans, plus just a hint of sweetness from dates. This drink provides products that deliver high levels of healthy unsaturated fats, protein, antioxidants and phytochemicals and are great as a low sugar grab-and-go snack.Ingredients: Cashew milk (filtered water, cashews*), Almond milk (filtered water, almonds*), Oatmilk (Filtered water, gluten-free oats*), Dates*, Fermented corn sugar*, Vanilla bean*, Cinnamon*, Sea salt. *Organic Ingredients. Contains: Tree Nuts (Cashews, and Almonds)	16	fl oz	6.99	0.44	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/5mbYKR3MRHOmgBfq6PEk_20160422-Forager_NutsVanilla_MG_7821.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+479	Organic Vanilla Almond Milk	We take organic almonds and add a gentle roast to allow their natural flavor to shine through. The result is our signature taste that’s a pleasure to drink by the glass and blends perfectly in your recipes.      INGREDIENTSAlmond Base* (Water, Almonds*)Dried Cane Syrup*Potassium CitrateSea SaltNatural Vanilla Flavor With Other Natural FlavorsCarrageenanRiboflavin (B2)Vitamin A PalmitateVitamin D2	32	fl oz	3.49	0.11	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/zw9NpbqSQbmRtsIjWzVM_FK1A7350.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+577	Organic Lactose Free Cream Cheese	Green Valley Organics® lactose-free cream cheese has a superb cheesy flavor, is lower in salt, and has a thick, creamy texture. Enjoy this minimally-processed, real dairy cream cheese on a bagel, in baking, as a spread, in dips, and in creamy sauces and soups.Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA. Ingredients: organic cream, sea salt, lactase enzyme and live, active cultures	8	oz	3.39	6.78	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/1sq8vPbBSiOiU8TaKUrY_greenvalley_creamcheese.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+480	Organic Vanilla Almond Milk	Our vanilla almond milk is unlike anything you’ve ever tasted. In a good way. We start with single-source spring water and blend it with delicious organic almonds. Then we add just a touch of maple syrup and sea salt to give it the perfect balanced taste. Next, we use organic acacia gum to make sure it actually comes back together when you shake it. And, finally, we add organic vanilla extract, which gives it the signature vanilla flavor. Our vanilla almond milk is the favorite of kids everywhere. Some even say it takes like a milkshake. Try it in cereal, cold-brew coffee, or right out of bottle.Ingredients: Organic Almondmilk (Spring Water, Organic Almonds), Organic Maple Syrup, Organic Vanilla Extract, Organic Acacia Gum, Sea Salt.Contains AlmondsGluten-free, soy-free, produced in a peanut-free facility	28	fl oz	6.29	0.22	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/eNW33BRR14PgnnW4pRpg_FK1A3549.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+481	Organic Original Cashew Milk	Still pure and simple, a dash of fiber rich dates makes our delicious and carefully crafted original a slightly sweeter symphony of subtle goodness.Forager’s 100% organic nut milks are perfect for people seeking to make their daily routine a little healthier. Light and creamy, all of our nut milk products are made using organic, unfiltered cashews. We use dates to provide sweetness with meaning while organic cacao delivers powerful antioxidants. These Paleo-pleasing products are also vegan, gluten-free and soy-free.Ingredients: Cashewmilk (filtered water, cashews*), Dates*,Cassava root*, Fermented corn sugar*, Sea salt.	28	fl oz	6.99	0.25	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/whCapRNNQpeWLmXcS3AH_20161025-Forager_OriginalCashewMilk_MG_4868.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+482	Organic Soy Milk	This is as pure and simple as it \ngets – just soybeans and water.  Hodo Organic Soymilk is rich, creamy, and full of goodness. Good soybeans make good milk and we make our non-dairy milk the artisan way - a fine grind, boiled, triple pressed and strained -  using the \nfinest organic, non-GMO whole soybeans.  Unsweetened.Ingredients: Water, Organic Non-GMO SoybeansRecipe ideas: Best in it's pure form!  Or, add a splash of ginger vanilla syrup, or whisk in some matcha green tea.	1	half gallon	5.49	0.09	fl oz	Dairy	Nut & Soy Milk	http://goodeggs2.imgix.net/product_photos/rIVsPBMgT4ShAHUPNmNt_FK1A1359.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+483	Organic Unsweetened Soy Milk	Eden's Organic Unsweetened Soy Milk is smooth, delicious, and high in protein and essential fatty acids. It's made using only Non-GMO Verified soybeans grown on family farms in the Midwest and processed at Eden's own organic facility in Michigan, with no carageenan added. Their packaging is compostable and the soy milk can be stored unrefrigerated until opened. A great addition to your non-dairy pantry!Certified Gluten-Free, Carageenan Free.Ingredients: Purified Water, Organic SoybeansContains: Soy	32	fl oz	3.69	0.12	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/Nj3avKES7GhXJIOaU7c5_20161007-EdenSoy_UnsweetenedOrigianl_MG_3285.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+484	Organic Unsweetened Cashew Milk	Pure, honest, and artfully crafted using heart healthy, 100% organic cashews. Our simple, subtle recipe sings the praises of whatever it accompanies.Forager’s 100% organic nut milks are perfect for people seeking to make their daily routine a little healthier. Light and creamy, all of our nut milk products are made using organic, unfiltered cashews. This product is unsweetened but there is some naturally occurring sugar from the cashews -- one ounce of cashews has 1.7g of sugar.We have added fermented corn sugar to our nut drinks to help naturally preserve product quality. Fermented corn sugar inhibits the growth of bacteria and spoilage organisms. It is Organic, non-GMO and makes up less than 0.5% of the overall product. It does not change the flavor or nutrition panel of the final product, it is not added as a sweetener and there is no additional grams of sugar as a result of its inclusion.Ingredients: Cashewmilk (filtered water, cashews*), Cassava root*, Vanilla extract*, Fermented corn sugar*, Sea salt.*Organic ingredients	28	fl oz	6.99	0.25	fl oz	Dairy	Nut & Soy Milk	http://goodeggs1.imgix.net/product_photos/XJiQMDo3SDWJj3bpAFMU_20161025-Forager_PlainCashewMilk_MG_4866.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+485	Salted Caramel Ice Cream	Our number one seller, famous for the deep rich flavor of sweet caramel balanced with just the right amount of salt.Cream*, Sugar*, Milk*, Egg Yolks*, Salt  (*= organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/ZnSlBR1rT4OQIXMnL6GM_FK1A6809.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+486	Mint Chip Ice Cream	Our mint chip is made with Seely Farm’s mint oil from Oregon and TCHO chocolate chips we make ourselves to ensure they are thin and delicate.Cream*, Milk*, Egg Yolks*, Sugar*, TCHO Bittersweet Chocolate, Seely Farm’s Mint Oil*, Rice Bran Oil, Salt (*= organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/F0coyQZNQ8uvHx16xaBL_FK1A9240.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+487	Organic Vanilla Bean Ice Cream	We brought this most traditional ice-cream flavor back to the basics and to perfection: The six certified organic ingredients of cream, milk, sugar, egg yolks, vanilla extract and flecks of real vanilla bean are carefully blended. It will remind you of freshly churned ice cream you'd make at home. All Straus Family Creamery’s gourmet organic ice creams are Non-GMO Project Verified, certified kosher and gluten free.Ingredients: Pasteurized Organic\n  Cream And Organic Nonfat Milk, Organic Cane Sugar, Organic Egg Yolk, Organic\n  Vanilla Extract, Organic Ground Vanilla Bean.	1	pint	5.59	0.35	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/xdrBj9OYQAq1OAGnoswn_FK1A1773.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+488	Chocolate Chip & Tahitian Vanilla Ice Cream Sandwich	A brown sugar-y, chewy-but-soft chocolate chip cookie paired with Tahitian Vanilla Bean (made with the finest vanilla beans) to create the Mies Vanilla Rohe. Ingredients: pastry flour, pure chocolate chips, brown sugar, butter, whole eggs, natural vanilla, salt, baking soda, fruit juice, dextrin, milk, heavy cream, sugar, vanilla bean, salt, stabilizer. Contains dairy	5.8	oz	4.69	0.81	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/cLkFwJcSmC6KXFT1JSyy_Good%20Eggs%20072314-050.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+489	Cookies and Cream Ice Cream	We make our Cookies and Cream with Newman O’s, hand chopped,  and mixed in to our ice cream. One of the most popular flavors we make for our younger guests.Cream*, Milk*, Sugar*, Eggs, Flour*, Palm Fruit Oil*, Rice Bran Oil, Cocoa, Chocolate*, Baking Soda, Soy Lecithin, Vanilla Extract, Salt (*= organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/j5uP1dFvQ8G5tpnTVuHL_c9z2zEjVVOEMDFu6HdxTc8W3qB9wdFxLxxk8Se4BrPE.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+490	Dark Chocolate Smoked Sea Salt Ice Cream	Dark Guittard chocolate is paired with a touch of smoked sea salt for the the perfect balance of savory and (not too) sweet that is sure to please even the most particular chocolate lovers. Since 2008 Humphry Slocombe has been handcrafting small batch ice cream with the best stuff available so everything tastes like it’s supposed to, but better—grab a spoon, this pint is calling!\nIngredients: Ice Cream Base (Cream, Nonfat Milk, Sugar, Egg Yolk, Buttermilk), Dark Chocolate (Cacao Beans, Pure Cane Sugar, Cocoa Butter, Sunflower Lecithin, Vanilla Beans), Tapioca Syrip, Sugar, Water, Cocoa Powder, Smoked Sea Salt. Contains: Milk, and Egg. Manufactured on equipment that also processes peanuts and tree nuts. Keep Fozen	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/g8psgbxS0GHLx9LY9h2A_20160617-HumphrySlocombe_DarkChocolateSeaSalt_MG_2967.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+491	Organic Sea Salted Caramel Ice Cream	Salted caramel is the new neutral and for good reason. Sweet and salty, it lends even more richness to this already creamy blend of milk, sugar, and eggs. Three Twin's signature heavy does of Madagascar vanilla really takes this one over the top!Ingredients: Organic Milk, Organic\n  Cream, Organic Evaporated Cane Juice, Caramel (Organic Sugar, Organic Cream,\n  Organic Non Fat Milk, Organic Tapioca Syrup, Organic Caramelized Sugar, Sea\n  Salt), Organic Egg Yolks, Organic Non Fat Milk, Organic Vanilla Extract.	1	quart	7.49	0.23	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/W94ih7jRxuuQcPPb9lCm_FK1A0473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+492	Organic Sea Salted Caramel Ice Cream	Salted caramel is the new neutral and for good reason. Sweet and salty, it lends even more richness to this already creamy blend of milk, sugar, and eggs. Three Twin's signature heavy does of Madagascar vanilla really takes this one over the top!Ingredients: Organic Milk, Organic Cream, Organic Evaporated Cane Juice, Caramel (Organic Sugar, Organic Cream, Organic Non Fat Milk, Organic Tapioca Syrup, Organic Caramelized Sugar, Sea Salt), Organic Egg Yolks, Organic Non Fat Milk, Organic Vanilla Extract.	1	pint	4.99	0.31	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/W94ih7jRxuuQcPPb9lCm_FK1A0473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+493	Organic Mint Confetti Ice Cream	Mint chip enthusiasts rejoice! With flecks of the finest chocolate swirled throughout a smooth peppermint base, this is the most refined version we've ever tasted. Refreshing and indulgent!Ingredients: Organic Milk, Organic\n  Cream, Organic Evaporated Cane Juice, Organic Chocolate Chips (Organic Cane\n  Sugar, Organic Cocoa Paste, Organic Cocoa Butter, Non Gmo Soy Lecithin\n  (Emulsifier)), Organic Egg Yolks, Organic Nonfat Milk, Organic Vanilla\n  Extract, Organic Peppermint Extract, Organic Soybean Oil.	1	pint	4.99	0.31	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/aESGq1ohTnadh41DygIO_FK1A0528.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+494	Snickerdoodle & Salted Caramel Ice Cream Sandwich	A perfect, soft cinnamon and sugar cookie paired with Maldon sea salt and caramel ice cream. Together they create the Caramia Lehrer.Ingredients: Unbleached all-purpose flour, cane sugar, butter, cinnamon, natural vanilla extract, baking soda, fruit juice, dextrin, milk, cream, Maldon sea salt, maltodextrin, skimmed milk powder, dextrose, guar gum, locust bean gum. Contains dairy	5.8	oz	4.69	0.81	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/b1tl3tlyT2G4oW3brmgK_Good%20Eggs%20072314-063.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+495	Double Chocolate & Mint Chip Ice Cream Sandwich	A decadent, chewy brownie cookie paired with fresh mint-infused ice cream with semisweet chocolate chips and a hint of brown sugar. Together they create the Mintimalism sandwich. Ingredients: Pastry flour, pure chocolate chips, cocoa powder, brown sugar, butter, whole eggs, natural vanilla, salt, baking soda, water, fruit juice, dextrin, milk, heavy cream, mint leaves, dark brown sugar, stabilizer.Contains dairy	5.8	oz	4.69	0.81	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/4g7CVwPRS2w7CNLFMnFg_Good%20Eggs%20072314-069.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+496	Organic Vanilla Bean Ice Cream	Anything but Plain Jane, this staple flavor really showcases all the beautiful, fragrant nuance of truly world-class vanilla extract. The perfect companion for birthday cake and berry pie, this is also just perfect all on its own. Ingredients: \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n\n  Organic Milk, Organic\n  Cream, Organic Evaporated Cane Juice, Organic Egg Yolks, Organic Nonfat Milk,\n  Organic Vanilla Extract.	1	quart	7.49	0.23	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/ffD2fFGsSmWBEvxrnQ3J_FK1A0470.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+497	Organic Vanilla Bean Ice Cream	Anything but Plain Jane, this staple flavor really showcases all the beautiful, fragrant nuance of truly world-class vanilla extract. The perfect companion for birthday cake and berry pie, this is also just perfect all on its own. Ingredients:  Organic Milk, Organic Cream, Organic Evaporated Cane Juice, Organic Egg Yolks, Organic Nonfat Milk, Organic Vanilla Extract.	1	pint	4.99	0.31	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/jc2hBaBySaO4J68qd25r_FK1A2137.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+498	Vanilla Ice Cream	We use two types of vanilla in our recipe, both from Madecasse, to create the most vanilla-intense flavor we could make.Cream*, Milk*, Egg Yolks*, Sugar*, Madecasse Vanilla Beans and Extract, Salt (*=organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/ZrxYQCcRSDSgmQOqI0NH_FK1A9436.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+499	Tahitian Vanilla Ice Cream	Vanilla ice cream with fresh hand-scraped Tahitian Vanilla BeansIngredients: Cream, non-fat milk, sugar, egg yolk, sweet cream buttermilk, wheat and malted barley extracts, dry whole milk, salt, vanilla, sodium bicarbonate, vanilla extract. Contains egg, dairy, gluten.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/zShO37I0TeROq4P2AAtv_20160617-HumphrySlocombe_TahitianVanillaMG_2930.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+500	Organic Bittersweet Chocolate Ice Cream	Bittersweet Chocolate is Three Twins' standard chocolate ice cream, but there's really nothing standard about it. An abundance of organic cocoa makes it darker than most chocolate ice creams, and it also adds an incredibly rich flavor and texture. The milk, cream, sugar and eggs that Three Twins uses to make their clean, simple base form a blank palette on which to build this enticing flavor. They then add more organic cocoa than is standard. And, the twist: At a point where others consider their chocolate ice cream finished, they add the same organic vanilla extract that helps make so many of their other flavors so darn good. In fact, they actually add as much vanilla to their Bittersweet Chocolate as they put in their Madagascar Vanilla. Ingredients: Organic Milk, Organic\n  Cream, Organic Fair Trade Certified Cane Sugar, Organic Fair Trade Certified\n  Cocoa Powder Processed With Alkali, Organic Egg Yolks, Organic Nonfat Milk,\n  Organic Fair Trade Certified Vanilla Extract.	1	quart	7.49	0.23	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/2WaRow5QZWQzBVW1boD3_FK1A0476.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+501	Organic Bittersweet Chocolate Ice Cream	Bittersweet Chocolate is Three Twins' standard chocolate ice cream, but there's really nothing standard about it. An abundance of organic cocoa makes it darker than most chocolate ice creams, and it also adds an incredibly rich flavor and texture. The milk, cream, sugar and eggs that Three Twins uses to make their clean, simple base form a blank palette on which to build this enticing flavor. They then add more organic cocoa than is standard. And, the twist: At a point where others consider their chocolate ice cream finished, they add the same organic vanilla extract that helps make so many of their other flavors so darn good. In fact, they actually add as much vanilla to their Bittersweet Chocolate as they put in their Madagascar Vanilla. Ingredients: Organic Milk, Organic Cream, Organic Fair Trade Certified Cane Sugar, Organic Fair Trade Certified Cocoa Powder Processed With Alkali, Organic Egg Yolks, Organic Nonfat Milk, Organic Fair Trade Certified Vanilla Extract.	1	pint	4.99	0.31	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/1esWkcxjQvi24IU3e5SO_FK1A2126.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+502	Organic Dutch Chocolate Ice Cream	Lusciously rich, this organic ice cream is a chocolate lover’s delight. Dutch Cocoa is paired with only five simple, certified organic ingredients: Cream, milk, sugar, egg yolks and vanilla extract. No gums, fillers or artificial colorings get in the way of the rich, chocolate flavor. All Straus Family Creamery’s gourmet organic ice creams are Non-GMO Project Verified, certified kosher and gluten free.Ingredients: \n\n\n\n\n\n\n\n\n\n\n\n\n\n \n \n\n  Pasteurized Organic\n  Cream And Organic Nonfat Milk, Organic Cane Sugar, Organic Dutch Cocoa\n  (Processed With Alkali), Organic Egg Yolk, Organic Vanilla Extract.\n\n \n	1	pint	5.59	0.35	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/29nSUPMERRa8YtwWuDrL_FK1A1714.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+503	Malted Vanilla with Peanut Brittle	This flavor combines malted vanilla ice cream with house make peanut brittle (made with Virginia peanuts) and TCHO milk chocolate pieces. (This flavor is co-owner Anne Walker’s favorite).Cream*, Milk*, Sugar*, Egg Yolks*, Malt Powder*, Milk Chocolate*, Tapioca Syrup*, Peanuts, Vanilla Beans, Butter, Salt, Baking Soda  (*= organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/cYKxtaPSSrONXFoC25US_FK1A9349.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+504	Malted Milk Chocolate Ice Cream	Rich, Guittard Milk Chocolate ice cream with MaltIngredients: Cream, non-fat milk, sugar, bittersweet chocolate (chocolate liquor processed with alkali, sugar, cocoa butter, milk fat, soy lecithin, vanilla), milk chocolate (sugar, whole milk powder, cocoa butter, soy lecithin, vanilla), egg yolk, sweet cream buttermilk, wheat and malted barley extracts, dry whole milk, salt, sodium bicarbonate. Contains egg, dairy, soy, gluten.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/XWCHYUBcTjC7oU7lYljz_20160617-HumphrySlocombe_MaltedMilkChoclate_MG_2959.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+505	Organic Coffee Ice Cream	Just a hint of organic Dutch Cocoa is blended with organic, decaffeinated, ground coffee bean. The result is a lusciously, rich taste that comes from just cream, milk, sugar, egg yolks, and decaffeinated organic coffee beans. It’s a coffee lover's delight.All Straus Family Creamery’s gourmet organic ice creams are Non-GMO Project Verified, certified kosher and gluten free.Ingredients: Pasteurized Organic\n  Cream And Organic Nonfat Milk, Organic Sugar, Organic Egg Yolk, Organic\n  Decaffeinated Freeze Dried Coffee, Organic Dutch Cocoa (Processed With\n  Alkali), Organic Vanilla Extract.	1	pint	5.59	0.35	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/IF6VEFFTpa3fpwTe0vSw_FK1A1516.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+506	Blue Bottle Vietnamese Coffee Ice Cream	Traditional\nVietnamese Coffee with Chicory, Sweetened Condense Milk and Giant Steps blend\nBlue Bottle CoffeeIngredients: Milk, cream, sugar, coffee, salt, chicory. Contains dairy.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/itohR4VVR94fLFruCbSg_20160617-HumphrySlocombe_BlueBottleVietnameseCoffee_MG_2935.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+507	Coffee Toffee Ice Cream	Starting with organic dairy from Straus Family Creamery in Marshall (West Marin), we then blend in locally roasted Ritual Roasters coffee for a charged base that pairs exceptionally with crunchy bits of house made almond toffee mixed throughout. Ingredients: Cream*, Milk*, Egg Yolks*, Sugar*, Ritual Roaster’s Coffee, Butter, Tapioca Syrup*, Almonds, Vanilla, Salt. Contains: Dairy, Tree Nuts (Almonds) *Organic Ingredients	1	pint	9.99	\N	\N	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/8a5lgMMPT92VAEZiuY1M_FK1A9227.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+508	Sauce Duo	Turn plain old ice cream into heaven on a spoon. Mix and match with \nBurnt Caramel Sauce and Extra-Bitter Chocolate Sauce from our gourmet \ndessert Sauce Duo. (Two 9 oz jars).	2	count	21.99	1.22	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/Z4Q6BlmtSpy9RhEeE4bb_FK1A8973.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+509	Extra-Bitter Chocolate Sauce	Our Extra-Bitter Chocolate Sauce is made with Michael's smoky custom \nblend of 64% dark chocolate, creating an extra thick consistency, and is\n finished with vanilla to enhance the roasted cacao profile of this \nchocolaty sauce! Warm to serve.INGREDIENTS: Dark chocolate ( cocoa beans, sugar, cocoa butter, soya lecithin\n(emulsifier), natural vanilla extract),\nsugar, cream, natural vanilla extract, cocoa\npowder. Contains\nMilk. Made in a facility that processes peanuts and tree nuts.	9	oz	10.99	1.22	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/Aq7ZMbyMTMyoRb5XdNdd_FK1A8372.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+510	Burnt Caramel Sauce	Our signature Burnt Caramel Sauce has an intense, smoky flavor with a \nlingering, buttery finish. Serve over fresh fruit, poached fruit or pie \nand ice cream.INGREDIENTS: Sugar, cream, butter. Contains Milk. Made in a facility that processes peanuts and tree nuts.	9	oz	10.99	1.22	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/yOyWOtMSzySkVrxAvotZ_FK1A8368.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+511	Bourbon Caramel Sauce	A Humphry Slocombe classic: Bourbon Caramel. What more could you want? (Go ahead, put some in your coffee. We won't tell.)Ingredients: sugar, water, bourbon, tapioca syrup, salt.	9	oz	10.99	1.22	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/hEap1ZjQZsiGTXaX0fPg_20161103-HumphreySlocombe_BourbonCarmel_MG_6148.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+512	Fernet Fudge Sauce	Dark chocolate is even better when paired with SF's favorite Fernet. The result: minty, herbal, indulgent deliciousness. This intensely chocolatey sauce is thick at room temperature, so we recommend warming it gently in a small saucepan or in a bowl in the microwave.Ingredients: water, sugar, tapioca syrup, cocoa powder, salt, 72% chocolate, Fernet.	9	oz	10.99	1.22	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/ar9gcghNS1uSKYNtQXvU_20161103-HumphreySlocombe_FernetFudge_MG_6150.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+514	Organic Caramel Toffee Crunch Ice Cream	This newest organic ice-cream flavor combines sea-salt infused toffee and caramel to create a delicious mix of sweet and savory flavors. The caramel is made with Straus's own Organic Butter and Organic Cream. All Straus Family Creamery’s gourmet organic ice creams are Non-GMO Project Verified, certified kosher and gluten free.Ingredients: Pasteurized Organic Cream And Organic Nonfat Milk, Organic Cane Sugar, Organic Dark Brown Sugar, Organic Cream [Organic Cream], Organic Egg Yolks, Water, Sea Salt, Organic Soy Lecithin (Non-Gmo, Added As An Emulsifier).	1	pint	5.59	0.35	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/BsSGQhBUQQmz3QDNvnuv_FK1A1825.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+515	Organic Raspberry Ice Cream	This flavor tastes like a bowl of raspberries and cream...which it is!  No gums, stabilizers or colorings disturb the fresh, tangy flavor of organic raspberries in this blend of all-organic ingredients.All Straus Family Creamery’s gourmet organic ice creams are Non-GMO Project Verified, certified kosher and gluten free.Ingredients: Pasteurized Organic\n  Cream And Organic Nonfat Milk, Organic Sugar, Organic Raspberry Puree,\n  Organic Egg Yolk, Organic Vanilla Extract.	1	pint	5.59	0.35	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/Y4hNuDJtTSevRwhdvj9O_FK1A1637.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+516	Honey Lavender Ice Cream	Made with local honey from Sonoma and organic dried lavender for a classic Provencal combination.Cream*, Milk*, Egg Yolks*, Sugar*, Local Honey, Lavender*, Salt   (*= organic)Proudly made with Straus Family Creamery organic dairy located in Marshall, in West Marin, only 35 miles away.	1	pint	8.99	0.56	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/5RMGEoYSEesvsRT0jv31_FK1A9323.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+517	Peanut Butter Fudge Ripple Ice Cream	Peanut butter ice cream with a dark chocolate fudge swirlIngredients: Cream, peanut butter, fudge (corn syrup, sugar, water, butter, bittersweet chocolate, cocoa powder, salt, vanilla extract) salt. Contains dairy, egg, nuts	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/4LKvSRbUQziXWcIDnOdT_20161103-HumphreySlocombe_PeanutButterFudge_MG_6121.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+518	Secret Breakfast Ice Cream	Bourbon ice cream with Cornflakes CookiesIngredients: Milk, cream, sugar, sweetened condensed milk (milk, sugar), bourbon alcohol, bleached enriched flour (bleached wheat flour, malted barley flour, niacin, iron, thiamin mononitrate, riboflavin, folic acid), butter (pasteurized cream, natural flavors), brown sugar, salt, corn flakes (milled corn, sugar, malt flavor, 2% or less salt, BHT added for freshness), eggs, baking soda, vanilla bean. Contains alcohol, dairy, gluten.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/UEsGel8cRmCaYri8u9I6_20160617-HumphrySlocombe_SecretBreakfast_MG_2941.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+519	Maple Walnut Ice Cream	Intensely maple-y ice cream folded with toasted walnuts combines autumnal sweetness and toasty crunch. Try it with Humphry Slocombe's Bourbon Caramel sauce. We promise you won't regret it!Ingredients: maple syrup, brown sugar, milk, salt, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), maple extract, vanilla extract, walnuts.Contains: milk, eggs, tree nuts.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/GS6aAlrJQdqsG7EkfcXt_20161103-HumphreySlocombe_MapleWalnut_MG_6097.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+520	McEvoy Olive Oil Ice Cream	You've never experienced an ice cream like this one. Smooth, velvety olive oil ice cream with a hint of citrus zest to set it off. Deliciously refreshing!Ingredients: olive oil, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), salt, orange zest.Contains: milk, eggs.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/xQFOuoG4TW8BZ02gQrCw_20161103-HumphreySlocombe_McEvoysOiliveOil_MG_6095.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+521	Crème Fraîche Ice Cream	Humphry Slocombe uses local crème fraîche from Cowgirl Creamery in this brand-new, limited edition flavor. Its sweet tang is just what your pie is calling out for: fantastic with fall fruit galettes, tarts, or frankly just by the spoonful. It's only here in November, so snag a pint (or three) while you can!Ingredients: crème fraîche, sour cream, tapioca syrup, sugar, salt, buttermilk, vanilla extract. Contains: milk, eggs.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/rlisGANQ2LaPvewXEEfw_20161103-HumphreySlocombe_CremeFraiche_MG_6114.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+522	Brown Butter Ice Cream	What's better than butter? Brown butter of course! Made by caramelizing the milk solids in butter, this nutty & delicious flavor is our preferred ice cream for affogatos and fall desserts. It's a seasonal offering, so get it while you can! Ingredients: butter, brown sugar, salt, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), apple cider vinegar.Contains: milk, eggs.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/7NNXiCpTQQWAiKjlSnPE_20161103-HumphreySlocombe_BrownButter_MG_6090.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+523	Matchadoodle Ice Cream	Generous chunks of cinnamon-y house-made snickerdoodle cookies are mixed throughout creamy matcha green tea ice cream. Don’t take our word for it, this one-of-a-kind pairing is one take on tea time you don’t want to pass up. Since 2008 Humphry Slocombe has been handcrafting small batch ice cream with the best stuff available so everything tastes like it’s supposed to, but better—grab a spoon, this pint is calling!\nIngredients: Ice Cream Base (Cream, Nonfat Milk, Sugar, Egg Yolk, Buttermilk), Snickerdoodle [All Purpose Flour (Bleached Wheat Flour, Malted Barley Flour), Unsalted Butter, Sugar, Brown Sugar, Eggs, Salt, Vanilla Extract (Water, Alcohol, Sugar, Vanilla Bean Extractives), Ground Cinnamon, Baking Soda, Cream of Tartar, Matcha Powder, Salt. Contains: Milk, Egg, and Wheat. Manufactured on equipment that also processes peanuts and tree nuts. 	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/XleadbHTmSR7SEMwN1AW_20160617-HumphrySlocombe_MatchaDoodle_MG_2974.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+524	Harvey Milk and Honey Graham Ice Cream	Milk\nand Raw Blackberry Honey ice cream with Housemade Graham CrackersIngredients: Cream, non-fat milk, cane sugar, honey, egg yolk, sweet cream buttermilk, bleached enriched flour (wheat flour, malted barley flour, niacin, iron, thiamin mononitrate, riboflavin, folic acid), whole wheat flour, salt, graham flour, baking soda, cinnamon. Contains egg, dairy, gluten.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/H8dfRwalTqGdRgNGltrM_20160617-HumphrySlocombe_HoneyGraham_MG_2920.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+578	Plain Cream Cheese	House-made cream cheese. Ingredients: cream, milk.	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/9VQYbSAuRieFIE2z8CHy_FK1A4607.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+525	Friendsgiving Ice Cream Bundle	Can you possibly choose just one of Humphry Slocombe's limited-edition flavors? We know we can't, so we made it easier. Get them all, and be the dessert star of your Friendsgiving (or stock your own freezer). 1 pint each of: Crème Fraîche, Brown Butter, McEvoy Olive Oil, and Maple Walnut ice creams.Ingredients: Crème Fraîche: crème fraîche, sour cream, tapioca syrup, sugar, salt, buttermilk, vanilla extract. Maple Walnut: maple syrup, brown sugar, milk, salt, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), maple extract, vanilla extract, walnuts.McEvoy Olive Oil: olive oil, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), salt, orange zest.Brown Butter: butter, brown sugar, salt, ice cream base (cream, nonfat milk, sugar, egg yolk, buttermilk), apple cider vinegar.Contains: milk, eggs, tree nuts	4	pint	39.99	0.62	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/fUBNkmcpQTuRk71Mzt95_20161103-HumphreySlocombe_4Flavors_MG_6129.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+526	Organic Black Sesame Ice Cream	We lightly toast the Sesame Seeds and grind them for each batch. This ice cream is packed with antioxidants. The flavor is of light, toasty aroma, with a hearty, warming essence. We love this flavor especially in cold weather. It also makes a great combo with Coconut. Curl up with a container and enjoy.Ingredients: Organic Milk, Organic Cream, Organic Egg Yolks, Organic Sugar, Organic Black Sesame Seeds	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/xRie9g8jTdyZmIcWC6C0_FK1A7946.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+527	Organic Coconut Ice Cream	We call this pillows of heaven. This coconut ice cream is loaded with coconut flakes and full flavor. A classic staff favorite for sure! Not too sweet and so much coconut flavor and texture. Ingredients: Organic Milk, Organic Cream, Organic Light Coconut Milk, Organic Coconut Flakes, Organic Egg Yolks, Organic Sugar	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/xP4RK85XT9WXYe4UvKyb_FK1A7977.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+528	Organic Lavender Ice Cream	Organic Lavender lends a floral and slightly sweet flavor. This ice cream is made from dried Organic Provence ~ French Lavender Flowers. It is so soothing, relaxing, delicate, and divine. Also it is often used as aromatherapy for relaxation. Close your eyes, put your feet up and pretend your at the ice cream spa. Or try it on grilled stone-fruit. Peaches, plums, or nectarine! Either way it's delicious. Ingredients: Organic Milk, Organic Cream, Organic Egg Yolks, Organic Sugar, Organic Dried Lavender Flowers	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/0l5k9zuRmOriXSrNBx59_vEi0-oypiMlziBi7se4K9KDgvlY0bBV5pLkeWMVfMdk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+529	Organic White Pepper Chocolate Chip Ice Cream	This was one of Tara’s first flavors. Inspired by Asian cooking with White Pepper and the love of dark chocolate.  This ice cream has many layers to the flavor. It starts with sweet cream, then turns into the pepper spice, & it is rounded out with the dark chocolate bits.Be sure to try this one! It's a party in your mouth. Ingredients: Organic Milk, Organic Cream, Organic Egg Yolk, Organic Sugar, Organic White Pepper, Organic Dark Chocolate Chip	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/e5fUuWgSqGuJof2MfI7P_FK1A7971.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+530	Organic Jasmine Green Tea Ice Cream	This delectable Organic Tea is made from freshly picked green tea leaves semi-fermented within fresh Jasmine flowers to impart a distinct floral aroma and flavor. A fragrant and delightful, creamy ice cream. It's like putting milk in your aromatic tea. So soothing and divine. Ingredients: Organic Milk, Organic Cream, Organic Egg Yolks, Organic Sugar, Organic Jasmine Green Tea	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/s8kONWCGRC2RQ2kjtCyJ_FK1A7922.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+531	Organic Basil Ice Cream	Made from fresh local Organic Basil this flavor is refreshing, savory, and bright. It makes a great a la mode on chocolate anything, fruit pie, crisp, or cobbler. Think of it as the new mint. Ingredients: Organic Milk, Organic Cream, Organic Egg Yolks, Organic Sugar, Organic Basil	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/xTT2kypKSFisMOQkXLmD_FK1A7832.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+532	Organic Orange Cashew Ice Cream	This ice cream is like a creamsicle with salty cashew bits. It is Organic Orange ice cream with roasted salted cashew. It’s crunchy, exciting, and refreshing all in one.Ingredients: Organic Milk, Organic Cream, Organic Egg Yolks, Organic Sugar, Organic Roasted Salted Cashew, Organic Orange Flavor	12	oz	9.29	0.77	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/UEJugScvTV6Eoq17uMrJ_FK1A7780.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+533	Masala Chai Paleo Gelato	Steeped with Samovar’s organic masala chai, this non-dairy frozen dessert has the deep spice and subtle sweetness of chai with a smooth and creamy mouth feel. Hand-packed and made in a dedicated Gluten and Nut-Free facility in the Dogpatch, San Francisco, all of Jöne’s Gelato delicious flavors are vegan, diabetic friendly, and free of the top 8 allergens. Ingredients: Organic Coconut Milk (Organic Coconut, Water), Birch Tree Xylitol, Organic Masala Chai (Organic black tea, organic cinnamon, organic cardamom, organic ginger, organic black pepper, organic clove), Sea Salt, Agar Agar. Contains: Coconut	12	oz	8.59	0.72	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/QXdd0qO4SxE4PSCSIGLw_chai%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+534	Dark Chocolate Paleo Gelato	Made with PASCHA’s 100% Cacao Chocolate Chips (certified vegan) this non-dairy frozen dessert has a rich and full-bodied flavor with a smooth mouth feel. Hand-packed and made in a dedicated Gluten and Nut-Free facility in the Dogpatch, San Francisco, all of Jöne’s Gelato delicious flavors are paleo, vegan, diabetic friendly, and free of the top 8 allergens. Ingredients: Organic Coconut Milk (Organic Coconut, Water), Organic Cacao Mass, Birch Tree Xylitol, Organic Raw Cacao, Sea Salt, Agar Agar	12	oz	8.59	0.72	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/4d9MI0IgQ1ROnOYa4xkw_chocolate%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+535	POG Tropical Fruit Sorbet	A true tropical vacation in a scoop, enjoy layers of flavor from passion fruit, orange and guava in this non-dairy dessert. Where the guava lends a pear-like mouth feel, it's the passionfruit that really stands out contributing a caramel complexity that helps cut back against the sweetness. Inspired by the seasons and their imaginations, Humphry Slocombe has been crafting inventive flavors with only the best ingredients since 2008—grab a spoon, this pint is calling!\nIngredients: Water, Sugar, Guava Paste (Guava Pulp, Sugar, Citric Acid, Pectin), Passionfruit Puree, Orange Juice, Tapioca Syrup, Lime Juice, Apple Cider Vinegar, Salt, Guar Gum. Manufactured on equipment that also processes peanuts and tree nuts.	1	pint	9.99	0.62	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/Uek40FpTQKREZraO6zdo_20160617-HumphrySlocombe_PogSorbet_MG_2952.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+536	Strawberry Paleo Gelato	Summer has arrived! Enjoy the bright and luscious flavor of peak-season local organic strawberries in Jöne's latest non-dairy frozen dessert offering. No added colors—just real strawberry goodness with a touch of vanilla to balance it all out. Hand-packed and made in a dedicated Gluten and Nut-Free facility in the Dogpatch district of San Francisco, all of Jöne’s Gelato delicious flavors are paleo, vegan, diabetic friendly, and free of the top 8 allergens.\nIngredients: Coconut Milk* (Coconut*, Water), Strawberries*, Birch Tree Xylitol, Vanilla Extract*, Sea Salt, Agar Agar. Contains: Coconut 	12	oz	8.59	0.72	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/gxiTxaSWQxylMEsfBcZT_strawberry%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+537	Vanilla Bean Paleo Gelato	Organic Bourbon vanilla beans have been cold extracted to capture their delicate intensity providing this non-dairy frozen dessert with a beautiful vanilla flavor throughout. Hand-packed and made in a dedicated Gluten and Nut-Free facility in the Dogpatch, San Francisco, all of Jöne’s Gelato delicious flavors are paleo, vegan, diabetic friendly, and free of the top 8 allergens.\nIngredients: Organic Coconut Milk (Organic Coconut, Water), Birch Tree Xylitol, Organic Vanilla Extract, Organic Vanilla Bean, Sea Salt, Agar Agar	12	oz	8.59	0.72	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/tozBlnqR7yW50XybWnRg_vanilla%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+538	Strawberry Rose Water Dairy-Free Gelato	Starting with our organic cashew base, we add strawberries and a dash of Bulgarian rose water.  The resulting rich creamy gelato is bursting with strawberry flavor with a hint of rose water.  Our newest flavor, it has quickly become one of our best sellers.No air is introduced during our production process, so that our 12 oz container often weighs more than a traditional pint of ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Strawberry Puree, Bulgarian Rose Water, Organic Guar Gum, Organic Gum AcaciaContains: Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/cZYzONf9SrOaCysiZRxM_strawberryrose.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+539	Roasted Banana Paleo Gelato	Crafted with roasted organic bananas at their ripest, this non-dairy frozen dessert has a satisfying sweetness with notes of caramel and a smooth mouth feel. Hand-packed and made in a dedicated Gluten and Nut-Free facility in the Dogpatch, San Francisco, all of Jöne’s Gelato delicious flavors are vegan, diabetic friendly, and free of the top 8 allergens. \nIngredients: Organic Coconut Milk (Organic Coconut, Water), Organic Bananas, Birch Tree Xylitol, Organic Vanilla Extract, Sea Salt, Agar Agar	12	oz	8.59	0.72	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/T02PU4vOSIqC3zEYisKA_banana%20sale.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+540	Chocolate Hazelnut Dairy-Free Gelato	A luscious rich blend of hazelnuts and organic Peruvian chocolate.   Chocolate Hazelnut is one of the most popular gelato flavors in Italy.  And the Italians really know their gelato!!No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Roasted Hazelnuts, Organic Cane Sugar, Organic Cashews, Organic Cacao Powder, Organic Guar Gum, Organic Gum AcaciaContain: Tree Nuts (Cashews and Hazelnuts)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/S50odoFwTT6JNWVaEQkN_chocolatehazelnut.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+541	Salted Date Caramel Non-Dairy Gelato	A creamy blend of our date caramel nut emulsion with organic roasted cacao nibs. A rich and creamy treat with a distinctive crunch!No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Organic Dates, Organic Cacao Nibs, Natural Flavors, Organic Guar Gum, Organic Gum Acacia. Contains: Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/CHLc9CwYQfqHc5CZs1tq_salteddate.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+542	Simply Pistachio Dairy-Free Gelato	You haven't had pistachio gelato until you've tried this one. Our best seller from the start!  As the name states, it is simply a blend of our creamy pistachio base with just a touch of sea salt.  Absolutely the best!!No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients: Water, Pistachios, Organic Cane Sugar, Organic Cashews, Roasted Pistachio Oil, Sea Salt, Organic Guar Gum, Organic Gum AcaciaContain: Tree Nuts (Pistachios and Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/lYKfyAILR82Y6x8QQhUJ_pistachio.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+543	Chocolate Peanut Butter Non-Dairy Gelato	We blend our organic cashew base with organic cacao powder and organic creamy peanut butter for a nutty and decadent treat!No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Organic Peanut Butter, Organic Cacao Powder, Organic Guar Gum, Organic Gum Acacia.Contain: Peanuts and Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/hbmwCHxqQYihbFSZHLMV_chocolatepeanutbuttah.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+544	Madagascar Vanilla Dairy-Free Gelato	Not your Mother's vanilla!!  We blend our organic cashew base with organic Madagascar vanilla to produce the liveliest flavor ever.No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Organic Madagascar Vanilla Extract, Organic Guar Gum, Organic Gum AcaciaContains: Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/Iu6G2IqbRbSx6ZQ7mSyE_vanilla.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+545	Simply Dark Chocolate Dairy-Free Gelato	A dark chocolate lover's delight!  We blend our creamy organic cashew base with organic Peruvian cacao for a flavor sure to satisfy your chocolate cravings.No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Organic Cacao Powder, Organic Vanilla Extract, Organic Guar Gum, Organic Gum AcaciaContains: Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs2.imgix.net/product_photos/zoeJkhguTaYnAWlSI43o_simplydark.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+546	Chocolate Raspberry Dairy-Free Gelato	We blend our organic cashew base with organic cacao powder and organic raspberry for a rich and bright treat!No air is introduced during our production process, so that our 12 oz container often weighs more than a pint of traditional ice cream.Ingredients:  Water, Organic Cashews, Organic Cane Sugar, Organic Cacao Powder, Organic Raspberry Extract, Organic Guar Gum, Organic Gum Acacia. Contains: Tree Nuts (Cashews)	12	oz	9.99	0.83	oz	Dairy	Ice Cream	http://goodeggs1.imgix.net/product_photos/uKRvnq17TcmzKH28SxrP_chocraspberry.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+548	Fior di Latte Fresh Mozzarella	Belfiore Cheese Company is one of the few remaining small, family-owned cheese making operations in the Bay Area. All Belfiore products are made 100% naturally without any additives or preservatives. The operation was established in 1987 as one of first pioneers producing hand crafted Italian-style Mozzarella, Fior di Latte (or Fresh Mozzarella in water) here inAmericaIn 1989, new owners, pursuing the same dreams of perfection in cheese making, took over the small operation and continued the same traditional cheese making techniques with a passion to preserve the genuine quality and homemade style that has become the signature of the Belfiore Cheese brand.Ingredients: Pasteurized cow's milk , vinegar, sea salt, cultures, vegetarian rennet.Contains dairy	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/2xq0yI5PQs2PQ8UxoubF_FK1A1757.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+549	Ciliegine Mozzarella	Excellent for quick appetizers and salads with cherry size tomatoes. Fun for kids!	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/nGN5SJASRKaJkc7puJKJ_FK1A1803.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+550	Burrata	Burrata is a small bag of mozzarella, filled with cream and more mozzarella. Belfiore's flavor is milky-creamy-gooey goodness, much like the flavor of fresh milk. Adding olive oil and a pinch of salt is a straight trip to an Italian trattoria.Ingredients: Pasturized cow's milk, cream, vinegar, sea salt, cultures, vegetarian rennet. 	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/bqrFSvAOQdazhLvnGuUD_FK1A7351.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+551	Organic Mozzarella	The classic Italian mozzarella is made fresh with our best organic ingredients. Resembling Monterey Jack in color and texture, this stirred curd organic Mozzarella is available in a whole milk version.Mozzarella is a favorite ingredient in Italian dishes such as pizza, lasagna, and caprese salad. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	8	oz	5.49	10.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/4KYtO87fTTV37vRpDlUg_FK1A0997.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+552	Ricotta	Made with fresh whole cow's milk. Creamy and delicious, perfect for lasagna and other pasta dishes.Belfiore Cheese Company is one of the few remaining small, family-owned cheese making operations in the Bay Area. All Belfiore products are made 100% naturally without any additives or preservatives. The operation was established in 1987 as one of first pioneers producing hand crafted Italian-style Mozzarella, Fior di Latte (or Fresh Mozzarella in water) here inAmericaIn 1989, new owners, pursuing the same dreams of perfection in cheese making, took over the small operation and continued the same traditional cheese making techniques with a passion to preserve the genuine quality and homemade style that has become the signature of the Belfiore Cheese brand.Ingredients: Whole milk and wheyContains Dairy	16	oz	4.99	4.99	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/GdrNlD1hSDufzeOv2nZx_FK1A1839.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+553	Jersey Cow's Milk Ricotta	Traditionally in Italy ricotta is made only using the finest milk. Unlike other American ricotta that uses whey, Bellwether honors Italian cheesemaking by only using fresh Jersey Cow's milk. The rich and decadent texture is due to the high fat content in the milk. Want to spruce up a lackluster recipe? Add this ricotta! Alternatively, take advantage of the ice cream like texture and add honey, fruit, nuts, or chocolate. It's the perfect cure to any after dinner sweet tooth!Ingredients: Cultured Grade A Pasteurized Jersey Cow’s Milk, Salt Contains: Dairy	12	oz	6.99	9.32	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/oNih4E13Qv2j08ogUjAF_FK1A1883.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+554	Pt. Reyes Farmstead Fresh Mozzarella	Fresh Mozzarella Cheese - Pt Reyes Farmstead Cheese CompanyThe best fresh mozzarella we've tried, ready to be melted on a pizza or sliced for a caprese salad.  Light & pillowy soft, the ball comes packed with water in a recyclable plastic container.Pasteurized Cow's MilkVegetarian RennetCertified Kosher & Gluten Free	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/zQL12PA8QEeZPiT1n5U8_FK1A1935.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+555	Sheep's Milk Ricotta	This fluffy, decadent ricotta is reminiscent of homemade marshmallows or a meringue. In order to ensure that there is no waste at Bellwether, they mix the drained off whey from the production of their harder cheeses and fresh sheep's milk. It is soft and light. Because of it's rich texture we suggest using it as a perfect substitute for cream cheese, creme fraiche, or fromage blanc! Or just open up the package, add some honey, grab a spoon, and dig in!Ingredients: Cultured Pasteurized Sheep Whey, Pasteurized Sheep Milk, SaltContains: Dairy	12	oz	10.99	14.65	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/y3wbFUDoTASwA1O2DhiY_FK1A0969.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+556	Ricotta Salata	"I always keep this in my fridge. Perfect for crumbling on any dish. Cheese kitchen staple for sure!" Erin, Good Eggs BuyerRicotta Salata is an Italian cheese made from the whey part of sheep milk, which is pressed, salted and aged for at least 90 days. It is milky white in colour with firm texture and salty taste. The cheese is often used in salads and ideal for slicing, crumbling and grating.	5.34	oz	4.99	14.95	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/f4FafCmhTba0CpVtKzzU_FK1A0105.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+557	Mascarpone	Italian-style Cream Cheese Mascarpone is the magic ingredient in the Italian dessert Tiramisu. Not long ago, the word mascarpone would draw quizzical looks. Nowadays, the distinctly Italian-sounding name is the only thing obscure about this velvety, rich cream cheese.It was only a matter of time before Allison Hooper and Bob Reese, co-founders of Vermont Creamery, were asked by chefs to create mascarpone locally. The fresh, high quality Vermont cream from the local St. Albans Cooperative is cooked at a high temperature until it is thick, smooth, and sweet. For desserts, whip, sweeten, and serve with fresh berries, or poached pears. Swirl it into soups or fold it into risotto and polenta, mix it with Parmesan cheese and fill raviolis or layer it in lasagna.Ingredients: cream, milk solids, glucono delta lactone (natural acidulant).Ingredients: cream, milk solids, glucono delta lactone (natural acidulant).contains dairy	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/M1QDKdVaTHirI90hagpx_FK1A5831.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+579	Scallion Cream Cheese	Sliced chives mixed with cream cheese.Ingredients: Chives, Cream, Milk.	8	oz	6.99	13.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/hn1OTeDvTlaxOaONqQlD_vmri3CGjcxmXqO8FyN8melFetvugRaIM24A32LwGUdU.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+558	Shredded Mexican 2 Cheese	Tillamook Medium Cheddar and Pepper Jack Cheese team up to pack twice the flavor into this shredded blend. And neither is short on flavor alone. Our Medium Cheddar is aged naturally for 60 days, just like its century-old recipe calls for. And our Pepper Jack is laced with real bits of peppers. Uno, open the bag. Dos, use it to top tacos, enchiladas, and nachos. Olé!Ingredients:  Pepper Jack Cheese (cultured pasteurized milk, jalapeno peppers, salt, enzymes), Medium Cheddar Cheese (cultured milk, salt, enzymes, annatto [color]), Potato Starch and Cellulose Powder (added to prevent caking), Natamycin (natural mold inhibitor).Allergens: Contains Milk	8	oz	4.29	8.58	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/OxM8R9d3RimRiqif0Rq3_FK1A2832.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+559	Organic Sliced Sharp Cheddar	Perfect for cheeseburgers on Memorial Day!Our sharp organic cheddar has a full flavor with a balanced sharpness that's perfect for cheese lovers! Cheddar Cheese is a hard pale yellow to orange smooth textured cheese originally made in the English village of Cheddar, in Somerset. Cheddar flavors vary depending on length of aging and its origin. Sharp cheddar is aged for one to two years. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/P1MZ1IsLS3OHWxcCeNwp_FK1A9351.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+560	Shredded Sharp Cheddar	For nine long months, we wait. That’s what it takes to produce the full-bodied, naturally-aged sharpness of Tillamook Sharp Cheddar. For our farmer-owners, patience isn’t just a virtue, it’s a value, and it guides the cheesemaking process. Maybe that’s why the United States Championship Cheese Contest® voted it ‘America’s Best’. We think you’ll agree when you use it to zing up your appetizers, main dishes, and sandwiches.Contains no animal rennet (vegetarian)Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color), Potato Starch and Cellulose Powder (added to prevent caking), Natamycin (natural mold inhibitor).Allergens: Contains milk	8	oz	4.29	8.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/u2giT5MnRmikAqhmLs0h_FK1A6744.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+561	Organic Sliced Havarti	Havarti is a deliciously mild, very creamy, natural, semi-soft cheese.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/6ZRksyHNTw6IvPJyX9SI_FK1A9338.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+562	Organic Sliced Monterey Jack	A California original, Monterey Jack was originally made by Franciscan monks of Monterey, California during the 1800’s and later marketed by businessman David Jacks, hence the name Monterey Jack. This organic version is a pale yellow semi-hard cheese, with a creamy texture and a mild flavor. Rumiano’s organic Monterey Jack color is a direct result from the high butterfat organic Jersey cow’s milk that it is made from. Rich Jersey cow’s milk also gives it a creamy buttery texture and mild flavor. Organic Monterey Jack is a versatile cheese eaten as a snack with bread or crackers or used in cooked foods. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/UK3gIlJIQpem3ecW9vNV_FK1A9318.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+563	Shredded Mozzarella Cheese	Creamy and mild, Tillamook Mozzarella was made to do exactly what you want it to: melt atop scrumptious dishes. That’s because we make it with the highest-quality, farm-fresh milk. Our facilities even use larger pipes than most to transport our milk so that we’re extra gentle to it. Use our Mozzarella to crown pizzas, fold it between layers of lasagna, or melt it atop pasta. It goes from shreds to gooey meltedness before you can even say cheese.Contains no animal rennet (vegetarian)Ingredients: Cultured Pasteurized Part-Skim Milk, Salt, Enzymes, Potato Starch and Cellulose Powder (added to prevent caking), Natamycin (natural mold inhibitor).Allergens: Contains Milk	8	oz	4.29	8.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/cM90U9iMSm27C231joOp_FK1A2824.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+564	Shredded Medium Cheddar	A century in the eating, Tillamook Medium Cheddar is still made from the same recipe we’ve used for over 100 years. While our equipment might look a little different these days, we use only four simple ingredients and age every batch naturally for at least 60 days. No wonder it was voted 'America's Best' at the 2015 International Cheese Awards.Contains no animal rennet.Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color), Potato Starch and Cellulose Powder (added to prevent caking), Natamycin (natural mold inhibitor).Allergens: Milk	8	oz	4.29	8.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/W5nQmaWORQWQEDCso2He_FK1A2833.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+565	Sliced Sharp Cheddar	Tillamook's Sliced Sharp Cheddar is aged for nine months, resulting in a full-bodied and naturally aged sharpness. From next-level grilled cheese sandwiches to a perfectly balanced omelette, you'll find a hundred and one perfect ways to use this flavorful cheese.Contains no animal rennet (vegetarian)Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).Allergens: Milk	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/M33raeiBQNC2hasSpgN6_20161012-Tillamook_SharpCheddarSlices_MG_3587.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+566	Sliced Medium Cheddar	Aged naturally for at least 60 days, Tillamook's Sliced Medium Cheddar is made using the same recipe they've used for over 100 years. A great balanced flavor from a classic cheese for sandwiches, melting or easy shredding for use in other recipes. Contains no animal rennet (vegetarian)Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).Allergens: Milk	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/qID6jHJDTE6y61T4GVmH_20161012-Tillamook_MediumCheddarSlices_MG_3592.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+567	Organic Sliced Mild Cheddar	This semi-soft organic mild cheddar has a mild cheddar flavor and is a favorite on its own, as well as in many cooking recipes. Cheddar Cheese is a hard pale yellow to orange smooth textured cheese originally made in the English village of Cheddar, in Somerset. Cheddar flavors vary depending on length of aging and its origin. Mild is typically aged for less than 6 months. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/55BveA13QhWNvPYF0zNi_FK1A9333.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+568	Sliced Colby Jack	A long-time favorite, Tillamook's Colby Jack is a two-time winner of the US Championship Cheese Contest. We're happy to bring it to you in this sliced version, a perfect mellow blend of flavors. We think it'll win you over, too.Contains no animal rennet (vegetarian)Ingredients: Cultured Pasteurized Milk, Salt, Enzymes, Annatto (color).Allergens: Milk	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/eWwtsXSZSqkM2354ISZD_20161012-Tillamook_ColbyJAckSlices_MG_3600.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+569	Organic Sliced Pepper Jack	Perfect for cheeseburgers on Memorial Day!This spicy organic variation of our classic Monterey Jack includes hot peppers for added flavor. Rumiano Cheese Company is known for popularizing the term of the use "pepper jack" for this spicy style of Monterey Jack cheese. Organic Pepper Jack cheese is made using only the finest organic green and red jalapeno peppers. These ingredients combined with the creamy organic Monterey Jack create a zesty flavor that is sure to have any fan of spice coming back for more. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, organic jalapeno peppers, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/5L9C1OmVS1CoyRiomrYh_FK1A9308.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+570	Shredded Italian 3 Cheese	Tillamook Italian Blend Shredded Cheese combines Mozzarella and Parmesan—the rich and creamy building blocks of any great Italian dish. Every shred is made with pure and natural milk from cows not treated with artificial growth hormones.* Plus, it comes in an easy-to-use, re-sealable bag. Now that’s Tillamook quality and convenience. Perfetto!Contains no animal rennet (vegetarian)Ingredients: Mozzarella Cheese (cultured pasteurized part-skim milk, salt, enzymes), Parmesan Cheese (cultured pasteurized part-skim milk, salt, enzymes), Potato Starch and Cellulose Powder (added to prevent caking), Natamycin (natural mold inhibitor).Allergens: Contains milk	8	oz	4.29	8.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/jMj5pbSNRrOrz4GJMA16_FK1A2872.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+571	Organic Sliced Mozzarella	The classic Italian mozzarella is made fresh with our best organic ingredients. Resembling Monterey Jack in color and texture, this stirred curd organic Mozzarella is available in a whole milk version. Mozzarella is a favorite ingredient in Italian dishes such as pizza, lasagna, and caprese salad. This cheese is Certified Organic, Kosher, American Humane Certified and Non-GMO Verified.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	6	oz	3.79	10.11	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/HDY15RavRRKiUlmyvbBX_FK1A9345.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+572	Sliced Swiss Cheese	A bit nutty and a bit sweet, this 75-day aged Tillamook Swiss Cheese is as holey as anyone could ask for. Neatly sliced for perfect sandwiches, cheeseburgers or just eating out of hand.Contains no animal rennet (vegetarian).Ingredients: Cultured Part-Skim Milk, Salt, Enzymes.Allergens: Milk	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/9110XCrQR3W131HoR8iP_20161012-Tillamook_SwissSlices_MG_3602.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+573	Organic Farmhouse Cream Cheese	Made with only milk & cream and sea salt (no gums or fillers), this Best of Show award-winning cheese is vat-cultured, drained in muslin bags, and hand-rotated to produce a unique flavor & texture that you’ll find delightfully addictive!Sierra Nevada Cheese Company strives to bring you the best products free from artificial ingredients or hormones. Our organic dairy partners achieve American Humane Association animal welfare standards.Ingredients: Organic Pasteurized Cultured Milk and Cream, Sea Salt	7	oz	4.29	9.81	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/gC7IHWHuSQO7IBkMTBpz_FK1A8543.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+574	Organic Jersey Cow's Milk Cream Cheese	"Tomales Farmstead now has Organic Jersey cow's milk cream cheese that is decadent and delicious. I suggest making a spinach and artichoke dip with it or just spread it on a bagel. Either way it's the perfect cream cheese" - Erin, Grocery BuyerThe first and only Bay Area organic, cream cheese. The jersey milk comes from a farmer friend in the town of Tomales. No added gums or fillers. Several of us were sitting around kevetching about the lack of a great local cream cheese and our love for our Sunday lox and bagels so we decided to just make it happen.Luscious and velvety with the sweetness of Jersey milk from the gorgeous pastures of West Marin to your bagel! Enjoy!Ingredients: Organic pasteurized jersey cow's milk, cream cheese cultures, rennet, salt. Contains dairy	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/AurSigbSUCFsIRQmCinr_20160429-TomalesFarmstead_CreamCheese_MG_8494.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+575	Jalapeño Cream Cheese	House-made cream cheese blended together with local farm fresh jalapeños. Ingredients: jalapeños and cream cheese.	8	oz	6.99	13.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/ezx7nV1aQJO92y0t0RZH_FK1A4571.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+576	Vegetable Cream Cheese	House-made cream cheese together with local farm fresh vegetables. Ingredients: Green, Red bell peppers, Carrot, Cucumber, Red onion, and cream cheese.	8	oz	6.99	13.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/R9lLe8MrTRSUvIzwwPdS_FK1A4593.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+582	Gruyere	While Switzerland is the country most people associate with Gruyere's origin, its history actually encompasses several European countries. About a thousand years ago, the Holy Roman Empire extended its wily grip around all of what we now know as France, Switzerland, and some of Germany, and the forests of this area were called "gruyeres." Charlemagne's men sold wood to the cheesemakers of the area to power their curd cooking kettles, and the cheesemakers paid for the wood with their cheeses. These are the cheeses that we now know, eat and love as Comte and Gruyere. Gruyere is smooth in texture and has rich, beefy flavors that are tempered by hints of apples and pears. Famously used in fondue recipes, this cheese melts fabulously and is amazing in grilled cheese sandwiches, gratins, sauces or just for snacking.	6	oz	8.49	22.64	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/S9BqwRgGR8KFc6txpHRM_FK1A2398.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+583	Oaxacan String Cheese	This string cheese comes from Cesar's Cheese company out of Columbus, WI. Cesar and his family moved to Wisconsin from Oaxaca and started making the cheeses that Cesar's learned how to make as a young boy. In 2008, after Cesar earned his cheesemaking license, his company opened. Oaxaca cheese is traditionally pulled by hand and Cesar and his wife Heydi continue this tradition by pulling all the string cheese by hand. This string cheese has a beautiful chewy texture and the perfect amount of salt. Pack in your lunch, eat on the run, or have an afternoon snack. This Oaxacan string cheese knows no age limits so adults and kids enjoy!Ingredients: Pasteurized cow's milk, enzymes, cultures, salt ( and love!).Contains dairy	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/aID1SChzR8WDz5imI8Fg_20160825-Cesar_StringCheese_MG_8754.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+584	Sharp White Cheddar Tillamoos	For nine whole months, Sharp White Cheddar waits. It waits and it waits because that’s how we make cheese—without rushing it out the door. Once its full, sharp flavor has just enough bite to pair magically with crackers, meats, smoked fish, nuts, and wine—we’re satisfied. And if that sounds like a feast, it’s because nine months of preparation deserves a celebration.Ingredients: Cultured Milk, Salt, Enzymes.Contains milk 	7.5	oz	4.99	10.65	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/nLlttVRcT6qm9XAjPpHv_tilamoos_whitecheddar.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+585	Graziers Raw Milk Monterey Jack	Monterey Jack is a very mild, buttery tasting cheese perfect for melting on everything from sandwiches to omelets!Graziers Raw Milk Sharp Cheddar Cheese is made from milk from Certified Graziers at Alderson and Belo Dairies. Enjoy the benefits of grass-fed and raw milk! 	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/KvUaZdASQi6hA5QYLsm8_File0201.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+586	Tillamoos Colby Jack	A century in the eating, Tillamook Medium Cheddar is still made from the same recipe we’ve used for over 100 years. While our equipment might look a little different these days, we use only four simple ingredients and age every batch naturally for at least 60 days. No wonder it was voted 'America's Best' at the 2015 International Cheese Awards.Ingredients: Cultured Pasteurized Milk, Salt, Enzymes, Annatto (color).Contains milk Contains no animal rennet (vegetarian)	7.5	oz	4.99	10.65	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/8xBd53SFQYSzwzUkC5cy_FK1A7752.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+587	Organic Monterey Jack	This is our classic organic Monterey Jack, a semihard cheese with a fresh, mild flavor. A California original, Monterey Jack was originally made by Franciscan monks of Monterey, California during the 1800’s and later marketed by businessman David Jacks, hence the name Monterey Jack. This organic version is a pale yellow semi-hard cheese, with a creamy texture and a mild flavor. Rumiano’s organic Monterey Jack color is a direct result from the high butterfat organic Jersey cow’s milk that it is made from. Rich Jersey cow’s milk also gives it a creamy buttery texture and mild flavor. Organic Monterey Jack is a versatile cheese eaten as a snack with bread or crackers or used in cooked foods.Rumiano Cheese Company is California's oldest family-owned cheese company, dedicated to the manufacture and distribution of the highest quality cheese. Their main focus is providing their customers with the utmost service and quality. Their success is measured by their loyalty to their employees and vendors and to the success of their customers.Ingredients: Natural Cheese made from pasteurized cultured organic milk, sea salt, enzymes.	8	oz	5.49	10.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/moKJ4kcFTNehbzeIeXYG_FK1A9291.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+588	Organic Meadow Gold Monterey Jack Cheese	Steckler Grassfed 'Meadow Gold' is an  Organic Jack Cheese is produced from 100% grass-fed, raw, organic milk, fresh from our own Dutch Belted dairy herd. Each batch of jack is made by hand on our farm in our new creamery, which has been inspected and approved by the Indiana State Board of Animal Health.Our farmstead artisan cheese is aged for a minimum of 60 days to develop its delicious, nutty flavor and creamy texture. Fresh raw milk from grass-fed cows produces cheese that has a uniquely complex flavor profile. Steckler Grassfed Jack is packed with nutrition that comes naturally from grass-fed raw milk. Our cheddar includes a balanced blend of omega 3 and omega 6 fats, as well as digestible vitamins and minerals.Ingredients: Organic Raw Whole Milk, salt, cultures, enzymes.Contains dairy	8	oz	11.99	23.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/KLu1SPwkT7WZXjAothEH_20160809-StrecklersGrassfed_monterayJack_MG_7583.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+589	Swiss Cheese	Tillamook's Swiss Cheese is a European-style recipe, aged for 75 days to create a full-bodied, delicious flavor. This holey cheese is perfect for snacking, slicing into sandwiches, or melting.Contains no animal rennet (vegetarian)Ingredients: Cultured Part-Skim Milk, Salt, Enzymes.Allergens: Milk	16	oz	7.99	7.99	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/HHSoUjZhQUWQ1JMZrCqS_20161012-Tillamook_Swiss_MG_3572.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+590	Organic Truly Raw Shredded Cheddar	Our TRULY RAW cheddar cheese is made with 100% organic, Grade A, raw whole milk from cows that pasture-graze, daily. This creamy cheddar has a delicious milk aroma, with a delightful flavor that offers a rich cheese tasting experience. Our raw cheddar is handcrafted; artisan made using traditional cheese making techniques, and only seasoned with kosher sea salt. We believe in keeping our products TRULY raw, which is why we never warm our raw milk above 102 degrees F. Many so-called “raw cheeses” are actually heated to temperatures just under legal pasteurized temperatures of 161 F, denaturing proteins, enzymes, and killing beneficial bacteria. While doing new product research, our team strongly agreed that if there was a way to never add cellulose and natamycin to the shredded cheese product, then we would strongly prefer keeping it OUT of our products. WE ARE PROUD to announce that we have NO cellulose and natamycin in our delicious, healthy, and probiotic Truly Raw Cheddar Cheese Shredded Bags!	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/yKwHexqGRc2jbTIpDhlo_FK1A4715.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+592	Medium Cheddar	Perfect for cheeseburgers on Memorial Day!A century in the eating, Tillamook Medium Cheddar is still made from the same recipe they’ve used for over 100 years. While their equipment might look a little different these days, they use only four simple ingredients and age every batch naturally for at least 60 days. No wonder it was voted 'America's Best' at the 2015 International Cheese Awards.Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).	2	lb	13.99	7.0	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/eWz2jxXGTAi62P0fd3d4_FK1A0916.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+593	Sharp Cheddar	Tillamook's Sharp Cheddar is aged for at least nine months in order to bring you this intensely savory, sharp flavor. Easy to slice for sandwiches or shred for quesadillas and omelettes!Contains no animal rennet (vegetarian)Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).Allergens: Milk	8	oz	4.49	8.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/kiuo1srITniXfTujEmA7_20161012-Tillamook_SharpCheddar_MG_3579.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+594	Medium Cheddar	Aged at least 60 days, this Medium Cheddar cheese from Tillamook has a delicious and easy-to-love balance of mellow nuttiness and sharp flavor.Contains no animal rennet (vegetarian)Ingredients: Cultured Milk, Salt, Enzymes, Annatto (color).Allergens: Milk	8	oz	4.49	8.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/nOgnytk9S9mGiSdHNjuU_20161012-Tillamook_MediumCheddar_MG_3580.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+595	Graziers Raw Milk White Sharp Cheddar	This sharp cheddar cheese will be a fridge staple!Graziers Raw Milk Sharp Cheddar Cheese is made from milk from Certified Graziers at Alderson and Belo Dairies. Enjoy the benefits of grass-fed and raw milk! 	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/8ZXdGk1QniY5dq2qqKSX_File0219.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+596	Graziers Raw Milk White Medium Cheddar	A milder, cheddar cheese flavor the kids will love! Graziers Raw Medium Cheddar Cheese is made from milk from Certified Graziers at Alderson and Belo Dairies. Enjoy the benefits of grass-fed and raw milk! 	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/Ki988hkTQDE9dwnHv0BJ_File0205.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+597	Organic Sharp White Cheddar	Creamy in texture and aged to medium sharpness, this is a cheese to always have on hand. The secret is the milk of Jersey cows, which contains a high butterfat content, creating an incomparably rich and creamy cheese. We use only milk, salt and natural enzymes to create our cheeses; never any growth hormones, additives or preservatives. Ingredients: USDA organic culture pasteurized grade A Jersey milk, salt, enzymes.	8	oz	6.99	13.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/yA9Y37SHOBQmSZqCtZYQ_FK1A7567.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+598	Organic Truly Raw Milk Cheddar Cheese	Our raw cheddar cheese is North America's first truly raw pasture fed cheddar cheese. Unlike most other raw cheeses, Truly Raw is never heated above 105 degrees (Fahrenheit) during the cheese making procedure.Why Say “Truly Raw”?Many so called raw cheeses are actually heated to temperatures "just under" legal pasteurized temperatures of 161 degrees, denaturing enzymes and killing beneficial bacteria. It is done primarily to offset the poor quality of milk used to make raw cheese in the conventional market and to increase the activity of the cultures that are added. The cheddar cheese is aged a minimum of 60 days.USDA organic standards require that cows be pasture grazed just four months out of the year. OPDC goes far beyond this standard and grazes our cows on green pastures every day. In addition to green pastures, our cows are fed: a specially formulated organic mineral supplement, free choice salt and trace mineral blocks, high test organic alfalfa, and some sweet organic corn to keep them healthy and strong. Ingredients: Organic Whole Raw Milk, Vegetable Rennet, Cultures, Salt	8	oz	8.49	16.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/puIfo2YjTluse2qpYf03_FK1A5474.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+599	Bright Meadow Extra Sharp Organic Cheddar	Steckler Grassfed 'Bright Meadow' Organic Cheddar Cheese is produced from 100% grass-fed, raw, organic milk, fresh from our own Dutch Belted dairy herd. Each batch of cheddar is made by hand on our farm in our new creamery, which has been inspected and approved by the Indiana State Board of Animal Health.Our farmstead artisan cheese is aged for a minimum of 60 days to develop its delicious, nutty flavor and smooth texture. Fresh raw milk from grass-fed cows produces cheese that has a uniquely complex flavor profile. Steckler Grassfed Cheddar is packed with nutrition that comes naturally from grass-fed raw milk. Our cheddar includes a balanced blend of omega 3 and omega 6 fats, as well as digestible vitamins and minerals.Ingredients: Organic Raw Whole Milk, salt, cultures, enzymes.Contains dairy	8	oz	11.99	23.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/S01DUdGkQ6OSZR4pW0NS_20160512-Strecklers_BrightMeddow_MG_9498.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+600	Cambria Clothbound Cheddar	A medium format natural-rind bandaged cow's milk cheddar with a crumbly but creamy texture. The flavor is savory more than sweet, and has a distinct sharpness on the mouth-watering finish. As this cheese matures beyond four months, it develops distinct tyrosine crystals. Our cheddar pairs well with Cabernet, hoppy beers, and cider.Ingredients: Pasteurized cows milk, salt, calcium chloride, cultures, and rennet.	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/x3bafYRKWovM60a4mCAk_20160705-StepLadder_CambriaClothbound_MG_4287.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+601	Jasper Hill's Cabot Clothbound Cheddar	IN 2003, Cabot Creamery asked the Cellars of Jasper HIll to age a special batch of cheddar, sparking a revolutionary collaboration. Clothbound's milk is sourced exclusively from George Kempton's farm in Peacham, Vermont. After it comes to the Jasper Hill where they coat the young cheese in lard and add an additional layer of cloth. The cheeses age for 10-15 months in their Cellars, where they are constantly brushed, turned, and monitored for quality.SENSORY NOTES  - Clothbound is an approachable but complex natural-rind, bandaged cheddar with a crumbly texture and nutty aroma. The flavor is deeply savory and slightly tangy with caramel sweetness to the finish.PAIRING AND SERVICE  - Clothbound has a signature tang and caramel nuttiness with a rustic crystalline texture that becomes creamy on the palate. This savory-sweet balance of flavor makes a perfect match for charcuterie, apple jelly, or a rich chestnut honey. Pair with an off-dry sparkling apple cider, hoppy ale, or an oaked Cabernet Sauvignon. Clothbound is an award winning cheese, including American Cheese Society's 2006 Best in Show.	5.34	oz	9.99	29.93	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/GYpkJawKS6sgfgEbYGQW_FK1A0891.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+613	Ricottage	This cheese is an Orland Farmstead creation. It is a blend between a ricotta and a cottage cheese. Ricottage can be used as a snack like cottage cheese or to take the place of ricotta in dishes such as lasagna.  	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/SexNegvKSyyG0EH7y0a3_FK1A2977.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+602	Goat Cheddar	Our goat milk cheddar pairs a smooth texture with a sweet, mild flavor. Free of the pungent aromas and flavors associated with most rind-ripened goat cheeses, this cheddar is a great introduction into the world ofgoat cheese. Perfect as a table cheese with pears, apples or just as is, Goat Milk Cheddar cheese is also versatile, a wonderful melting cheese, ideal for quesadillas, baked into enchiladas, mixed into polenta or melting onto vegetables like cauliflower. Good on its own, Smoked Goat Cheddar also lends itself well to two other American classics, the hamburger and grilled cheese.Goat Cheddar cheese can last up to a year unopened in your refrigerator where they continue to age gaining sharpness and flavor complexity. Re-wrap after opening in plastic or cheese wrap and keep refrigerated.Ingredients: Aged Goat Cheddar Pasteurized cultured goat milk, sea salt and vegetable enzyme.	6	oz	7.99	21.31	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/8Zy0i69AS9OKwoMZyWYD_FK1A3629.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+603	Smoked Goat Cheddar	A goat cheese for tailgate parties has arrived! Our twist on an American classic, Smoked Goat Cheddar, has a smoky flavor strong enough to hold its own with salty chips, zesty salsas and hoppy beers. Like our Aged Goat Milk Cheddar this smoked version possesses an even, smooth texture and milky flavor with a rich smoky taste. Aged five to six months, this cheddar possesses a complex flavor, with a firm, smooth texture.Serving & Storage SuggestionsPerfect as a table cheese with pears, apples or just as is, Goat Milk Cheddar cheese is also versatile, a wonderful melting cheese, ideal for quesadillas, baked into enchiladas, mixed into polenta or melting onto vegetables like cauliflower. Good on its own, Smoked Goat Cheddar also lends itself well to two other American classics, the hamburger and grilled cheese.Goat Cheddar cheese can last up to a year unopened in your refrigerator where they continue to age gaining sharpness and flavor complexity. Re-wrap after opening in plastic or cheese wrap and keep refrigerated.Ingredients: Smoked Goat Cheddar Pasteurized cultured goat milk, sea salt and vegetable enzyme, natural smoke flavor.	6	oz	7.99	21.31	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/0U3GSoBTyy3Fla0c2zkS_FK1A3658.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+604	Organic Plain Fresh Curds	This is Cheddar before it’s been pressed and aged. Because it is freshly made, the enzymes in it are still very active and will help your digestive system. This healthy snack tastes amazing! Its “squeaky” texture makes it great to eat as is, and will also go well in salads and melts, similar to Mozzarella.Ingredients: USDA Organic Culture Pasteurized Grade A Jersey Brand Milk, Salt, Enzymes.	8	oz	6.29	12.58	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/SQDmC0Y3TxiwneyOWkwg_FK1A5882.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+605	Organic Garlic Fresh Curds	This is Cheddar before it’s been pressed and aged. Because it is freshly made, the enzymes in it are still very active and will help your digestive system. This healthy snack tastes amazing! Its “squeaky” texture makes it great to eat as is, and will also go well in salads and melts, similar to Mozzarella.Ingredients: USDA Organic Culture Pasteurized Grade A Jersey Brand Milk, Salt, Enzymes.	8	oz	6.29	12.58	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/t1vdrhnKQG6rdRMK1l2W_FK1A5892.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+606	Cabrillo	Cabrillo is a Spanish style cheese created from a blend of goat's and cow's milk named for the iconic HW1 that runs along the rugged California coastline minutes from our farmstead. It has a rich, nutty character and golden color and pairs great with Pinot, almonds, and figs. Cabrillo is a cheese we make predominantly in the fall as our goats' production wanes and their milk takes on a stronger characterIngredients: Pasteurized goat & cows milk, salt, calcium chloride, cultures, and rennet.	8	oz	15.99	31.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/JKWnqBqdTLiYRqEwWJyC_20160914-Stepladder_Cabrillo_MG_1019.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+607	Graziers Raw Milk Jalapeno Jack	Jalapeño Jack is made with locally sourced red and green Jalapeños. This cheese packs a punch! Great for stacking on sandwiches and melty quesadillas!Graziers Raw Milk Jalapeño Jack is made from milk from Certified Graziers at Alderson and Belo Dairies. Enjoy the benefits of grass-fed and raw milk!	8	oz	4.99	9.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/68kHaGfTRKHJhwzpOCdb_File0191.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+608	Organic Small Curd Cottage Cheese	Clover Organic Farms Cottage Cheeses are produced by introducing non-animal rennet , a natural enzyme, to fresh, organic milk from our local family farms. The rennet causes the milk to separate into curds and whey. The curds are then drained to separate them from the whey, and then a small amount of whey is added back in for texture and flavor.  We invite you to enjoy Clover Organic Farms Cottage Cheese in good conscience and good health. Great for salads, with fruit and in all your favorite family recipes!Ingredients: Cultured pasteurized grade A organic nonfat milk, pasteurized grade A organic milk, pasteurized organic cream, salt, stabilizer (organic guar gum, xanthan gum, carageenan, organic locust bean gum), carbon dioxide (to maintain freshness)	16	oz	5.29	0.33	oz	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/6sECVFnTj6NSBMTXWGaQ_FK1A9938.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+609	Organic Sour Cream	Our Organic Sour Cream is rich and delicious with the perfect balance of sweet and tangy.Made with only three ingredients, our Organic Sour Cream is slowly cultured, using a traditional 16-hour process. This creates a naturally thick texture and pure, rich flavor. Use it as a base for dips and dressings or as the perfect spoonful of luxury on a baked potato. No fillers, additives or stabilizers, ever.Straus Family Creamery’s certified Organic Sour Cream is Non-GMO Project Verified,certified kosher and gluten-free.Ingredients: Cultured Pasteurized Grade A Nonfat Milk and Cream, Enzymes.	1	pint	4.29	0.27	oz	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/xpuVDxrtQmWICjaGuoWP_FK1A5763.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+610	Organic Low Fat Cottage Cheese	Clover Organic Farms Cottage Cheeses are produced by introducing non-animal rennet , a natural enzyme, to fresh, organic milk from our local family farms. The rennet causes the milk to separate into curds and whey. The curds are then drained to separate them from the whey, and then a small amount of whey is added back in for texture and flavor.  We invite you to enjoy Clover Organic Farms Cottage Cheese in good conscience and good health. Great for salads, with fruit and in all your favorite family recipes!Ingredients: cultured pasteurized grade A organic nonfat milk, pasteurized organic grade A milk, salt, stabilizer (organic guar gum, xanthan gum, carrageennan, organic locust bean gum), vitamin A palmitate, carbon dioxide (to maintain freshness).	16	oz	5.29	0.33	oz	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/QosxonuUQCutuju6qNRN_goaI8UjWTEOejqaPZPfr_A4LaMCWUQyCdDtKabd6QDA9WuG94YDMrNmH8uoeI-9c.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+611	Feta	Delightful table cheese. Delicate salt and pungent flavor balance for any recipe or pizza topping	12	oz	5.49	7.32	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/dDoYqkFZQCEA0Q2Mhq8x_FK1A3140.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+615	Organic Fat Free Cottage Cheese	Clover Organic Farms Cottage Cheeses are produced by introducing non-animal rennet , a natural enzyme, to fresh, organic milk from our local family farms. The rennet causes the milk to separate into curds and whey. The curds are then drained to separate them from the whey, and then a small amount of whey is added back in for texture and flavor.  We invite you to enjoy Clover Organic Farms Cottage Cheese in good conscience and good health. Great for salads, with fruit and in all your favorite family recipes!Ingredients: Cultured pasteurized organic nonfat milk, salt, organic locust bean gum, carbon dioxide (to maintain freshness), carrageenan, citric acid, vitamin A palitate and microbial enzymes, live and active L. acidophilus and B. bifidus cultures	16	oz	5.29	0.33	oz	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/u1YHYS9dQJeDoTJkKvfp_FK1A6695.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+616	Sheep's Milk Feta	"This new feta from Haverton made it's debut about 1 month ago. It's bright and salty flavor is most comparable to Bulgarian feta. Crumble on top of a salad or mix with your favor warm pasta to make a rich creamy sauce." Erin, Good Eggs BuyerHaverton Hill Creamery sheep milk feta is produced from our fresh sheep milk and produced on site at our farm in Petaluma. Handcrafted in small batches, each batch is delicately crafted by hand to create a classic + traditional feta. Made to order using only 100% sheep milk creates a creamery soft texture with a classic salty finish. There's an appealingly “barnyard” tang versus the more mild, grassy taste and crumbly texture of cow milk feta. Enjoy.Ingredients: Pasteurized sheep's milk, sea salt, cultures, enzymes.	8	oz	10.99	21.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/kOnKzq0RCmZqK81Vnijs_20160810-HavertonHill_SheepFeta_MG_7598.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+617	Goat Milk Feta	With a long history throughout the Balkan Peninsula, especially in Greece, Feta is traditionally made from a combination of sheep and goat milk. Redwood Hill Farm’s award winning feta, is made with pure goat milk. We gently cut the curd and form it into blocks by hand. Then it is brined in a natural, salt water brine before aging.  Try it sliced or cubed, sprinkled with fresh cracked pepper and drizzled with olive oil, or on top of a salad. Serve with assorted olivesStorage & Serving SuggestionsLeft in its packaging it will last refrigerated for 6 months or more. After opening, re-wrap your cheese in fresh plastic or cheese wrap and keep it refrigerated. Redwood Hill Farm Feta is fabulous sliced or cubed, sprinkled with fresh cracked pepper and organic oregano and then drizzled with your best olive oil. Serve with assorted olives.Ingredients: Cultured goat milk, sea salt and vegetable enzyme.	6	oz	8.79	23.44	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/DknwNWeSge1VfbWGcv3Z_goat%20feta%20photo.jpeg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+618	Cosmos	"Cosmos is one of my favorite feta-style cheeses! It's the perfect summer cheese! Make a melon or stonefruit salad, mix in some prosciutto, and top with some Cosmos! It's goes with all the summer seasonal fruits and veggies!" - Erin, Grocery BuyerCosmos is a raw sheep milk Feta-style cheese, brined aged for 2 months. Rich and tangy, with a creaminess that stands up to the salty brine. Use it on salads, pasta, roasted vegetables, pizza--anything that needs a little something!Ingredients: Raw Sheep milk, salt, rennet, cultures.	4	oz	7.49	29.96	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/8V9FBHTTQO6CGy0nrr58_File0405.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+619	Queso Fresco	This traditional fresh Mexican cheese has a creamy texture, but because we press the curds, the cheese can be easily crumbled and softens well when heated.Queso Fresco can be used in many Mexican dishes, such as enchiladas and empanadas, or crumbled over soups and salads.	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/8sRTrCrzQ1mDbs0V76XG_QuesoFresco.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+620	Smoked Sea Salt & Rosemary Chevre	"Good Eggs and Chevoo are stoked about our new partnership! Chevoo has been a favorite of mine since it launched and I am so excited to sell (and be able to buy!) on Good Eggs! To celebrate this partnership  we are offering $2 off each jar for a limited time!"- Erin, Grocery BuyerOur most versatile flavor. A delicate chèvre hand-blended with smoked sea salt and cracked pepper, marinated in a rosemary-infused extra virgin olive oil blend. An accessible and fresh flavor reminiscent of the Pacific coast.Ingredients: Goat Cheese (Pasteurized Goat Milk, Smoked Sea Salt, Salt, Cracked Pepper, Cultures, Enzymes), Oil Infusion (Non-GMO Canola Oil, Extra Virgin Olive Oil, Rosemary), Pink PeppercornsContains dairy	7.1	oz	8.99	20.26	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/YDcam4DRCi9Zar6tpLkQ_20160825-ChevooSaltRosemary_MG_8777.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+621	California Dill Pollen & Garlic Chevre	"Good Eggs and Chevoo are stoked about our new partnership! Chevoo has been a favorite of mine since it launched and I am so excited to sell (and be able to buy!) on Good Eggs! To celebrate this partnership  we are offering $2 off each jar for a limited time!"- Erin, Grocery BuyerA taste of Northern California. Fresh chèvre hand-blended with locally harvested dill pollen, marinated in a light garlic-infused extra virgin olive oil blend. Subtle highlights that quietly echo the rolling hills of Wine Country.Ingredients: Goat Cheese (Pasteurized Goat Milk, Salt, Dill Pollen, Dill Weed, Cultures, Enzymes), Oil Infusion (Non-GMO Canola Oil, Extra Virgin Olive Oil, Garlic),Pink PeppercornsContains dairy	7.1	oz	8.99	20.26	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/gIFmwMpoQIqzIJsfpcjB_20160825-Chevoo_DillGarlic_MG_8764.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+622	Aleppo-Urfa Chili & Lemon Chevre	"Good Eggs and Chevoo are stoked about our new partnership! Chevoo has been a favorite of mine since it launched and I am so excited to sell (and be able to buy!) on Good Eggs! To celebrate this partnership  we are offering $2 off each jar for a limited time!"- Erin, Grocery BuyerVelvety chèvre hand-blended with Aleppo and Urfa chili peppers, marinated in a delicate lemon-infused extra virgin olive oil blend. A sophisticated mix of heat and citrus, with a hint of old world charm.Ingredients: Goat Cheese (Pasteurized Goat Milk, Salt, Aleppo Chili, Urfa Chili, Cultures,Enzymes), Oil Infusion (Non-GMO Canola Oil, Extra Virgin Olive Oil, Lemon),Pink PeppercornsContains dairy	7.1	oz	8.99	20.26	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/wJjkOYqRReME0peSjTAO_20160825-Chevoo_ChiliLemon_MG_8769.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+677	Briana	Briana is a semi-firm, smear-ripened cheese, dense and easily melted.  It is carefully aged for a minimum of 90 days to develop a wonderfully complex flavor.Because we use the freshest milk from our own grass-fed cows, our specialty cheeses have a delicious flavor unique to our farm.  Our cheeses are hand crafted with care using our own specially-developed artisan recipes and the freshest grass-fed ingredients.   We know you will taste the difference.Ingredients: Raw cow's milk, cultures, salt.Contains dairy	6	oz	9.79	26.11	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/HUF2tn3sRASLjFY7LBjA_20161004-JacobsBrichford_Briana_MG_2642.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+623	Organic Lactose Free Sour Cream	Delicious and rich, with the cultured, slightly sweet and nutty flavor that characterizes the best crème fraîche, Green Valley Organics Lactose Free Sour Cream will quickly become a staple in your kitchen. This is real dairy with all the flavor and versatility but none of the lactose. Add to sauces and soups, blend into bread or cakes for a delectable, tender crumb. Or simply whip gently, add sweetener or flavor of your choice, and top seasonal fresh fruit … the possibilities are endless. Enjoy!Green Valley Organics' lactose-free dairy is made by Redwood Hill Farm & Creamery in Sebastopol CA. Ingredients: Organic Pasteurized Cream, Lactase Enzyme, Live Active Cultures.	12	oz	3.69	0.31	oz	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/NoI3xzY6SSqnggJpIKv2_greenvalley_sourcream.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+624	Crème Fraîche	This classic, French-style cultured cream has a rich, nutty flavor with an appealing tart edge. A basic pantry item in French kitchens, it is an ingredient used by fine cooks in many cuisines. Pour over fruit, whip into soups, stir into sauces. Créme Fraîche never curdles while cooking.	7.5	oz	5.49	11.71	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/dWlrD0blRWaDlwMBpuJf_FK1A9023.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+625	Crème Fraîche	Crème fraîche is an exquisitely rich cultured cows’ cream with a thick, creamy texture and a tart, slightly nutty flavor. Incredibly versatile, crème fraîche can be used as a base for dips and sauces, as an ingredient in baking, or as a simple topping for pies and soups. Unlike other cream based products, crème fraîche will not curdle over high heat or separate when mixed with wine or vinegar; it retains a rich, smooth texture and adds depth of flavor. It can also be whipped and sweetened for desserts. Ingredients: Pasteurized cows' cream, culture. contains dairy	8	oz	5.99	11.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/LfmOQHhDRcyswpDkHUpa_FK1A4547.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+626	Organic Fromage Blanc	Used like cream cheese, fromage blanc is a staple of the French diet. Because Cowgirl Creamery Fromage Blanc is made with whole milk instead of cream, it contains 30% less fat than cream cheese and about 80% more flavor, making it a favorite with Bay Area restaurant chefs.Flavor notes: Smooth and silky, a spoonful to be savored.Ingredients: Organic pasteurized whole milk, organic cream, salt, cultures, and enzymes.	8	oz	3.99	7.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/IKMdqqtxRTmLWDPgh06y_FK1A3888.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+627	Quark	German for “fresh curd,” quark is a fresh and slightly drained cows’ milk cheese that is similar to old-fashioned cream cheese. Inspired by its versatility and at the request of European chefs, co-founders Allison Hooper and Bob Reese crafted their first batch in 1985.At the creamery, Quark is made from fresh local milk that is coagulated overnight into fresh curd, then drained in cheesecloth and whipped with a trace of crème fraîche. Its low butterfat content and smooth texture make it a great base for fluffy cheesecakes and mousse. Top with granola for breakfast or mix with anything from mashed potatoes to boysenberries, and it earns its keep with flair. Ingredients: Pasteurized cows' milk, salt, cultures, enzymes. contains dairy	8	oz	4.69	9.38	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/E2H0b7QFTnKK9NjS3aVn_FK1A4545.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+628	Fromage Blanc	Our Fromage Blanc won the 2014-2015 World Cheese Gold Award!A creamy, spreadable cheese that can be used in place of cream cheese. It has a tangy, lemon flavor that can be used in sweets, such as cheese cakes or brownies, or in savory dishes such as lasagna, ravioli or any pasta. It makes a great spread on crackers or broiled on top of french or sourdough bread.Stock up and Save, Fromage Blanc freezes great!	8	oz	5.29	10.58	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/6AMRMuJtTMmjOrwX4jso_FK1A2963.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+629	Fromage Blanc Tomato Pesto Torta	Our traditional creamy and spreadable fromage blanc layered with sun dried tomatoes and freshly made pesto. Delicious on broiled bread, used as a sauce for pasta, or even just on crackers for a snack.Ingredients: Pasteurized milk, salt, enzymes, basil, olive oil, parmesan cheese, garlic, lemon juice, crushed tomatoes, sun dried tomatoes, canola oil, walnuts, pine nuts, herbs, spices, salt. Contains dairy and nuts	8	oz	8.99	17.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/YlL00FPMT4SgjihQxoed_FromageBlanc.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+630	Garlic and Chive Chèvre	Chèvre is a fresh, light-textured, rindless goat cheese that is similar to cream cheese but softer and fluffier with only 1/3 of the fat and calories. Made in the French style, Redwood Hill's Garlic and Chive chevre is light and fluffy with hints of minced garlic and chopper chives.Storage & Serving SuggestionsMild and fresh with a complex flavor, Fresh Chèvre  is versatile and can be used in both savory and sweet dishes. Try in a roasted beet salad, over pasta, in a cheesecake or simply spread on a bagel.Try this delicious goat cheese spread, one of our favorite recipes!Opened cheese will last 7-10 days stored at 38-42 degrees in your refrigerator.Ingredients: Garlic Chive Chèvre Pasteurized cultured Grade A goat milk, chives, organic garlic, sea salt and vegetable enzyme.	4	oz	5.99	23.96	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/BwkvVdrSyOiieuBvYFmz_FK1A4415.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+631	Atika Goat & Sheep Cheese	Atika is a blend of sheep and goat milk in roughly equal parts, this 3- to 4-pound tomme smells like warm melted butter and crème fraiche. The rind is hard, dry and deeply marked by the draining basket. The firm, dry paste has numerous small openings, and the flavor is buttery and tart. - review by Janet Fletcher.  Atika is aged between 3 and 6 months.  This a farmstead cheese, the goats and sheep are raised and milked on the same farm that the cheese is made thus the milk is as fresh as it can possibly be. Pairs well with local, crisp apples.  Atika was a 2014 Good Food Award winner.  This award means a great deal to us since it is judging on both taste and the overall sustainability of our farm and creamery.  This is to say how we treat the land, animals, people and food!  This cheese also won a 2nd place ribbon in its class in 2014 at the American Cheese Society conference.  	5	oz	10.29	32.93	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/1DNJOEs0SQO39V554YJJ_FK1A0847.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+632	Goat Cheese Log	Our deliciously fresh goat cheese logs are mild flavored with a soft, spreadable texture made in the traditional French elongated shape. Laura Chenel’s Log is the original cheese, when sliced into rounds, breaded and baked, that adorned the iconic Mixed Greens and Goat Cheese Salad made famous at Chez Panisse restaurant in Berkeley, California.Slice the log into rounds, coat with fine homemade bread crumbs, chopped toasted walnuts or pecans, and bake until browned. Serve atop dressed salad greens – and dream that you are at Chez Panisse sitting in those perfect seats at the front with light streaming in through the windows.Ingredients: Cultured Pasteurized Goat Milk, Salt, Enzymes.	8	oz	6.49	12.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/MLRZJ3wT0mlk5n4dck6y_FK1A7444.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+633	Chef Chevre	The name ‘Chef’s Chèvre’ is one indication of the 20-year popularity this cheese has had with chefs, caterers and quality foodservice operations. Chef’s Chèvre is our highest moisture, very freshest cheese. It is clean-tasting, smooth, light, tangy and spreadable. The texture of Chef’s Chèvre is very similar to cream cheese and the cooking applications are as diverse, with the benefit of being lower in calories and cholesterol and higher in protein than cream cheese.For professionals or “home chefs,” Chef’s Chèvre melts perfectly into sauces for pasta and poultry dishes. It mixes well with herbs for topping crostini or filling ravioli and tortellini. Chef’s Chèvre is the preferred cheese in fluffy goat cheesecakes.Ingredients: Cultured Pasteurized Goat Milk, Salt, Enzymes.	8	oz	6.99	13.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/cMs7PIhiRauRxvpnmEfy_FK1A7522.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+634	Honey Goat Log	" Tiny white flowers bloom on California’s orange trees each spring imparting a fragrant fresh citrus scent to local honey. We blend just the right balance of orange blossom honey and fresh chèvre for natural sweetness. Like cream cheese, Honey Log is spreadable- ready for breakfast, lunch or dessert any time.AWARDS: CalExpo State Fair 2014, Gold; CalExpo State Fair 2013, Silver Ingredients: Made with Cultured, Pasteurized Goat Milk, Honey, Salt, Enzymes.	5.4	oz	5.49	16.27	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/0ByjV4VCSSGzD7AUQJzb_FK1A7420.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+635	Plain Chèvre	Chèvre is a fresh, light-textured, rindless goat cheese that is similar to cream cheese but softer and fluffier with only 1/3 of the fat and calories. Made in the French style, Redwood Hill's chevre is light, fluffy and sumptuously spreadable. It offers notes of citrus, balanced by a mild earthiness that makes it delicious in both savory and sweet dishes.Ingredients: Pasteurized cultured Grade A goat milk, sea salt and vegetable enzyme.	4	oz	5.69	22.76	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/Fi3jTmWCRCyK8WD4TIaO_FK1A0873.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+636	Black Truffle Goat Log	The coveted Italian black summer truffle is sure to enhance any recipe. The truffle’s earthy perfume is balanced with bright fresh goat cheese for creamy, rich-textured appetizers or gratins.AWARDS: CalExpo State Fair 2013 & 2014, SilverIngredients: Made with Cultured, Pasteurized Goat Milk, Black Truffles, Salt, Enzymes.	5.4	oz	5.79	17.16	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/kF4snnrvQTq8SsKdVrma_FK1A7907.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+637	Liwa Goat Cheese	Liwa is a fresh, 3 day goat cheese from West Marin, modeled after a European style farmer's cheese. This cheese is amazing paired with just about anything. Customers love it on their morning toast, in salads, on fruit or in a steak sandwich. Very versatile! http://www.tolumafarms.com/ 	12	oz	13.99	18.65	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/kcMWrQqbQneY4p5Im5Ry_20160602-TamalesFarmstead_Liwa_MG_1037.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+638	Cabecou	Our California original Cabecou is a goat cheese button, aged slightly to give it a nutty flavor and dense texture. Then we marinate the discs in a mixture of savory herbs, organic canola oil and California extra virgin olive oil.Ingredients: Cultured Pasteurized Goat Milk, Salt, Enzymes, Herbs, Canola Oil, Extra Virgin Olive Oil.	6.2	oz	8.29	21.39	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/yyaOgVQZ6r0TLHPqTxiA_FK1A7349.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+639	Humboldt Fog Mini	The subtle, tangy flavor and distinctive layer of edible vegetable ash are a prized combination in this iconic American original. You'll enjoy buttermilk and fresh cream, complemented with floral notes, herbal overtones and a clean citrus finish. As Humboldt Fog matures, the layer of proteolysis just under the rind will increase developing a more intense flavor.Serving Suggestions:Drizzle with honey and serve with prosciutto, tart apple and marcona almonds.Crumble atop mixed baby greens and roasted beets and serve with a simple vinaigrette.Pairing Suggestions:Wheat Beer, IPA, Pale Ale, and StoutsSauvignon Blanc, bubbly, Rose, and Pinot NoirIngredients: Pasteurized cultured goat milk, salt, enzymes, and vegetable ash.Contains dairy	16	oz	21.99	21.99	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/lkKQhNTMTLafKq7X5ueV_20160825-CypressGrove_GoatHumboltFog_MG_8750.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+640	Goat Brie	This is a new product from Laura Chenel made in a Brie-style using goat's milk. After again between 9-14 days the cheese develops a bloomy rind with a delicious, buttery inside.Ingredients: Cultured pasteurized Goat milk, salt and microbial enzymes.	5	oz	7.99	25.57	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/ubSR7LaJQmK30m5m1wRy_FK1A7451.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+641	Teleeka Goat, Sheep & Cow's Cheese	Teleeka, named for the Miwok word for "three," blends farmstead goat, sheep and a neighbor's cow milk into a bloomy-rinded soft-ripened cheese. The flavor profile of this award winning cheese is buttery, creamy and rich with deep afternotes. Pairs well with figs, fruit, prosecco/champagne, beer and cider. Leave at room temperature before serving/eating, gets nice and gooey!	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/bzbzQPReTqK0ppqKFs7X_FK1A0278.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+642	Purple Haze	Purple Haze is Cypress Grove's lush and fluffy chevre, sprinkled with tender purple buds of lavender and fennel pollen. The lavender and fennel pollen add an ethereal quality to the already rich goat cheese; floral and piquant, Purple Haze tastes like spring air after a long rain.Recipe Suggestions:Stuff into pitted Medjool dates and wrap with prosciutto.Crumble on fresh mixed baby greens; add sliced strawberries, toasted pecans and balsamic reduction.Purple Haze® CheesecakeFromage Blanc FrostingIngredients: Pasteurized goat milk, salt, fennel pollen, lavender, cultures and enzymes.Awards:2nd Place, American Cheese Society, 2013Best of Show, California State Fair Cheese Competition, 2009Best of Class, U.S. Cheese Championship 2011Third Place, World Championship Cheese Contest 2014	4	oz	6.79	27.16	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/x05v8TEqRkOd0nTs7GyI_0WwMrbuIFw969E82sSg9TCQD_Qyf1YKjM-jmzDJij0c.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+643	Black Eyed Susan	Black Eyed Susan is a raw sheep milk cheese aged 2 to 4 months. It is dry and sharp with a rich buttery flavor. It is perfect for grating over pasta or risotto or just nibbled on with some salami and beer.	4	oz	8.49	33.96	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/dqHO1O1mQ3G89cNoztNB_FK1A1719.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+759	Filet Mignon (Frozen)	Looking for\nthe most tender, lean, delicious steak available? Prather Ranch Filet Mignon is the\nticket. Filet lovers all over the Bay Area come to our farmers markets to pick\nup our filets - the perfect combination of dry-aged tenderness, flavor and low\nfat. Prather beef is grass fed and \nbarley/alfalfa hay finished, then dry-aged for 16-21 days. Certified Humane Raised and Handled, GMO free, and Food Alliance Certified.	0.5	lb	14.49	28.98	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/LsCsq2RMRMylLRE6eJt9_FK1A4861.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+644	Crescenza	Rich and buttery with stiff notes of tart yeast to balance it, Crescenza is modeled after the centuries-old Italian cheese, Stracchino di Crescenza. Bellwether's Crescenza is a soft-ripened cow's milk cheese without a rind to hold back the luscious ooze. Spread it over crackers, bread, fruit—anything you want imbued with creamy intensity.Cindy Callahan, a nurse by training, was in her 50s when she first began raising sheep as a way to keep pasture grasses under control. She soon began milking her flock, and before long, her son Liam joined her as a cheesemaker. Today, Bellwether Farms makes an array of fresh and aged Italian-style sheep and cow's milk cheeses.	6	oz	5.99	15.97	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/pEwiyS3cQWULiXvbVRG5_IIwtlzATsvLJ5ANKwB6Ot5y9X1RhlmvspDzpls0rZr0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+645	Kenne Goat Cheese	"This is one of my favorite cheeses to put on a summer time cheese plate! It's an all goat soft-ripen cheese reminiscent of a robiola. I like to pair this with some local honey, bubbly, or a nice, light refreshing kolsch"- Erin, Grocery BuyerKenne (pronounced “kennay”) is a farmstead cheese made entirely from goat’s milk – the word “kenne” is the term the area’s early inhabitants, the Miwoks, used for “one.” It has a dense, creamy texture and a delicate wrinkly rind, which are meant to conjure the Italian soft-ripened cheeses. The high quality of the milk is perfectly showcased in the paste’s mild, slightly earthy flavors. kenne pairs well with beer, champagne, fruit and nuts.We are thrilled to see this cheese in so many of our favorite Bay Area restaurants.http://www.tolumafarms.com/ 	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/AyxYSOTxS9C8tQkGWWeH_20160602-TamalesFarmstead_Kenne_MG_1031.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+646	Mt. Tam	Mt Tam, Cowgirl Creamery's signature cheese, is a smooth, creamy, elegant, 8 oz triple-cream. It is made with organic milk from the Straus Family Dairy. Mt Tam is firm, yet buttery with a mellow, earthy flavor reminiscent of white mushrooms.2nd Place - Original Recipe / Open Category Made From Cow's Milk - 2010 ACS competitionIngredients: Organic pasteurized milk, organic pasteurized cream, salt, cultures, and enzymes.Contains Dairy	8	oz	13.99	27.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/lTncgIUcRAaG0mQTomkV_unspecified.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+647	Petite Crème	Petite Crème rich and smooth Brie-style cheese. It spreads beautifully across crusty bread or crisp crackers, and pairs well with dry sparkling wines,  Petite Syrah or IPA.Ingredients: pasteurized cultured cow’s milk, pasteurized cream,\nsalt and microbial enzymes.contains dairy	4	oz	4.99	19.96	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/aIWr7kKtRZWbV0Du9uax_FK1A6717.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+648	Red Hawk	Cowgirl Creamery captures the essence of West Marin with its Red Hawk, a triple-cream, washed-rind, fully-flavored cheese made from organic cow's milk. Aged four weeks and washed with a brine solution that tints the rind a sunset red-orange, Red Hawk won Best-In-Show at the American Cheese Society's Annual Conference in 2003 and a Gold Ribbon and 2nd Best-in-Show in 2009.Ingredients: Organic pasteurized milk, organic pasteurized cream, salt, cultures, and enzymes.Contains dairy	8	oz	13.99	27.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/ceiRTfprR4GuXgnHcfX8_FK1A0601.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+649	Triple Crème Brie	With a rich and smooth texture, slightly sweet flavor and blooming with fluffy white rind, Marin French Triple Crème Brie expresses the high quality milk from neighboring Marin County dairies. Crowned World Cheese Awards Champion in 2005 – the first time an American cheese topped the French in an International competition for Brie cheese. This remarkable 1st place honor was repeated in 2010.Ingredients: pasteurized cultured cow’s milk, salt and microbial enzymes.	8	oz	9.99	19.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/7446rHWnTfWO5qMmkdW0_FK1A4352.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+650	Petite Truffle	Petit Truffle is specked with Urbani Italian Black Truffles for the irresistibly earthy aroma of mushrooms balanced with sweet milk. Pair with California sparkling wine or Champagne.Ingredients: Pasteurized cultured cow’s milk, pasteurized cream,\nBlack Truffle (3%), salt and microbial enzymes.	4	oz	6.99	27.96	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/MA8i4qbiTSciNXMWKHF9_FK1A6735.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+651	Willoughby	Willoughby is an original creation of Marisa Mauro’s Ploughgate Creamery, a Cellars collaborator that ceased production of the cheese after a creamery fire in 2011. With Marisa’s blessing we resurrect this pudgy little washed-rind and have continued to develop the recipe at Jasper Hill Creamery. This succulent and buttery washed-rind cheese has aromas of peat, roasted beef and onions – a strong and complex front for the subtle milky, herbal, ripe-peach flavors within. Willoughby has a thin, tender, rosy-orange rind, which adds earthy dimension to the texture and flavors of the gooey interior.Willoughby’s small format is ideal for selling whole on the retail counter, or quickly rotating through a professional kitchen. The pudding-like texture may become softer with age, but should remain sliceable for portioning until 9 weeks after its production date. Pair with juicy rose, funky saison beer or raw floral honey.Ingredients: Pasteurized cows milk, rennet, cultures, salt, 	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/dzzDUsy9R9yAS8H7aon7_20160921-JasperHill_Willoughby_MG_1523.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+652	Jalapeño Baking Brie	Who can resist the melty, buttery, richness of warm baked Brie with a spicy kick? Marin French Cheese Jalapeño Baking Brie is a ready-to-bake Brie in its microwave-safe, oven-safe elegant wooden cup. Jalapeño Baking Brie is perfect for snacking or as an appetizer, and ready in only 12 minutes in the traditional oven or 1 minute 30 seconds in the microwave oven. 	8	oz	10.99	21.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/y1B9jRSOTi6km1gmhDj1_FK1A0118.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+653	Petite Breakfast Cheese	Marin French Breakfast Cheese is a California original – a fresh unripened Brie made in our Marin creamery since the late 1800’s. Petite Breakfast has been selected a Winner in the 2015 Good Food Awards. Look for it with the vintage-style label ‘1865’ during our 150th Anniversary year, 2015. Pairs with California Sauvignon Blanc, Wheat Beer or Hard Cider.Ingredients: pasteurized cultured cow’s milk,\nsalt, and microbial enzymes. Contains dairy	4	oz	5.99	23.96	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/6ZKKdfTwqim5IoRubIAQ_FK1A6707.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+760	Ribeye (Frozen)	It’s no wonder why Prather Ranch Rib-Eyes have become a\nBay Area steak lover’s dream. Prather beef is grass fed and barley/alfalfa hay finished, then dry-aged for 16-21 days. Well marbled and tender, these steaks are simply addicting. Certified Humane Raised and Handled, GMO free, and Food Alliance Certified.	0.75	lb	17.99	23.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/1YMCFzdQ5KzVft5Ui1VA_FK1A4836.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+654	Buttermilk Blue Cheese Crumbles	Made in small batches from the freshest milk, our rich, creamy blue is beautifully balanced, sultry and seductive, with piquant and earthy flavors. Delicately laced and veined. Higher butterfat for the creamiest texture. Tangy with a touch of mellow. Bold with a bit of restraint. Finishes clean and sweet. Roth Buttermilk Blue lets you experience and explore the deliciously creamy, tangy tastes that can only come from our little corner of the world. Perfect form mixing into salads, crumbling over steaks and burgers, and making the best blue cheese dip or dressing. Pairs perfectly with raw veggies, figs, pears, dark chocolate, and Riesling.Ingredients: Raw cultured cow's milk, salt, enzymes, penicillium roqueforti.Contains milk	4	oz	3.69	14.76	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/p10JhQldQoSx0WBentrO_20160513-Roth_ButtermilkBlue_MG_9521.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+655	Schloss	Fashioned after an Austrian style washed rind cheese named “castle” we’ve been making Marin French Schloss since the early 1900s for a loyal (and growing) following of cheese lovers who crave its pungent aroma, robust flavor and rich smooth texture.Pair with hearty California red wines, aromatic whites , cider, or a sour beer. Ingredients: Cultured Pasteurized Milk, Pasteurized Cream, Salt and\nMicrobial Enzymes. Marin French cheeses are made with fresh local\nmilk that is guaranteed rBST free. All of our milk is pasteurized, and\nwe use only vegetarian approved rennet (no animal rennet). Contains Dairy	8	oz	9.99	19.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/na3XkH34T7eQsSyOqUj2_FK1A7396-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+656	Foggy Morning	Foggy Morning from Nicasio Valley Cheese Company is a hand ladled cheese made using 100% organic farmstead cow's milk. This soft, delicate cheese with a subtle tang has sour-cream flavour. It can be spread on bagels, toast or pizza or eat with any sweet or savory dish.Ingredients: Organic cow's milk, animal rennet, salt.	6.5	oz	8.99	22.13	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/dKTkRO0VT3CpnN8dwIDc_FK1A1559.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+657	Organic Weybridge	Patty and Roger Scholten manage a herd of Dutch Belt cows in the rolling landscape of Weybridge, VT. Organic, high quality milk production has helped the Scholtens survive a competitive milk market. Farmstead cheese is now a way to diversify the business and include the next generation - their daughter’s family has come on board to help run the farm and creamery.Weybridge is an organic, lactic-set cheese with a delicate bloomy rind. The lightly aged style is meant to showcase the Scholtens’ rich and complex Dutch Belt milk. The thin rind surrounds a delicate cream-line, showing a toasty, mushroomy flavor in contrast to the bright acidity of the dense, milky core.The small medallion format appeals to any occasion – a snack for two or a garnish for a larger spread. Weybridge’s rich, milky flavor makes it an ideal breakfast cheese alongside berry preserves and freshly-baked bread. Classic beverage pairings include dry, bubbly white wine, sparkling apple cider or a crisp German pilsner.Ingredients: Pasteurized cows milk, rennet, cultures, salt, 	4	oz	6.99	27.96	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/GvC4x8mFQ5iOWj9VYyc7_20160921-JasperHill_Waybridge_MG_1502.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+658	Original Blue Wedge	Made from raw milk and aged for six months, Original Blue is creamy and tangy with a medium punch of blue flavor, and a perfect balance of salt. The cheese’s rich, unique flavors are attributed to the high quality of the farm’s pastures and their proximity to the ocean. Original Blue is wonderful on a cheese plate, crumbled into a salad, or served alongside a grilled steak.The Giacomini family traces its roots to the mountainous terrain of northern Italy. In the early 20th century, Tobias Giacomini left Europe to settle in Northern California. A half-century later, his grandson, Bob, and Bob's new wife, Dean, bought a farm near Tomales Bay and began raising Holstein cows and selling milk to a local creamery. Their herd grew from 150 to 500 by the mid-1990s, and the farm’s lush pastures are now certified organic. Bob and Dean had four daughters and, in 2000, the family launched the Point Reyes Farmstead Cheese Company, using its own milk to make its first cheese, Point Reyes Original Blue.	6	oz	8.99	23.97	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/0lA8Iu7R8yyOkLBThAVi_FK1A0481.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+659	Point Reyes' Bay Blue	Savory & Sweet. Try the newest addition to our product line. Inspired by the sheer natural beauty of our coastal climate and locale, Bay Blue is a rustic-style blue cheese reminiscent of Stilton. It is known for its mellow flavor and sweet, salted-caramel finish.Fudgy Texture with a gorgeous natural rind. All natural and made with pasteurized milk, Bay Blue is gluten-free and aged 90 days. Tasting Note: Mild and mellow blue-mold flavor with earthy notes and a salted-caramel finish.Uses: A great Cheese Course blue, paired with toasted hazelnuts. In recipes it complements mushrooms beautifully -- especially melted in pasta or risotto.Ingredients: Cultured, Pasteurized Cows Milk (MILK), Salt, Enzymes and Penicillium Roqueforti.	5.34	oz	9.29	27.84	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/E1FnnTMFSduhT8admIZN_FK1A0053.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+660	Harbison	Harbison is named for Anne Harbison, affectionately known as the grandmother of Greensboro. Along with breathtaking views, traditions and people are part of what makes Vermont's working landscape special; we're proud to honor Ms. Harbison's contribution with this cheese.Harbison is a soft-ripened cheese with a rustic, bloomy rind. Young cheeses are wrapped in strips of spruce cambium, the tree's inner bark layer, harvested from the woodlands of Jasper Hill. The spoonable texture begins to develop in our vaults, though the paste continues to soften on the way to market. Harbison is woodsy and sweet, balanced with lemon, mustard, and vegetal flavors.Harbison is a great excuse to gather a few friends and scoop into a decadent treat. When a bit younger, the bark can be peeled away for sliced portioning. If the bark has fused with a more loosened paste, then the best approach is to leave the bark intact and spoon out portions from the top. Pair with oaked white wine, or barrel-aged sour beer. Fruit mostarda and crusty bread make nice accompaniments.Ingredients: Pasteurized cows milk, rennet, cultures, salt, 	10	oz	16.49	26.38	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/PLGcM8X0RqyYfcMy13eQ_20160921-JasperHill_Harbison_MG_1519.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+661	Parmigiano Reggiano	Parmigiano Reggiano is a hard Italian Cheese made from partly skimmed, unpasteurized milk. It is only allowed to be produced in the provinces of Parma, Reggio-Emilia and Modena, as well as parts of Emilia-Romagna. Its nuttiness and intense savory flavors  are guaranteed to impress on any cheese board, spice up any broth, and compliment pasta and risotto. Ingredients: Part-skim milk, salt, rennet.	6	oz	7.49	19.97	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/SBzWN6VKSaX7MFdSAwhk_FK1A7890.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+662	Manchego	Perhaps Spain’s most famous cheese, Manchego is a D.O. (Denominacion de Origen) protected cheese, meaning the traditional recipe must use 100% Manchega sheep milk. The breed has proven sturdy enough over the centuries to traverse the rocky, arid central plateau region of La Mancha – where cows just can’t hang. Made using fresh, pasteurized sheep’s milk, this Manchego develops a rich nuttiness and pleasant gaminess (think toasted almonds and broiled lamb chops) after over a year of aging. The patterned rind is a nod to the grass baskets previously used to form the cheese. Firm enough to grate for any culinary application, highlight its sharp, caramelly flavor anywhere you would use Parmigiano.	6	oz	8.79	23.44	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/fWeHFFYoSKi785exSgWZ_FK1A7436.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+663	Pt. Reyes Farmstead Toma	Point Reyes Farmstead Cheese Company - Marin CountyToma is a creamy semi-firm cheese with a pleasant tangy finish. It's easily the highlight of any cheeseboard & pairs well with hoppy beers, pinot noir, or chardonnays. It melts perfectly in an omelette & is a favorite for grilled cheese sandwiches. Hand cut & wrapped in compostable cheese paper.Pasteurized Cow's MilkVegetarian RennetCertified Kosher & Gluten Free	6	oz	7.49	19.97	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/X8i01xcXSS2ffoVMPkZq_toma.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+664	Pecorino Romano	A hearty, full flavored, unpasteurized sheep's milk cheese. The milk is rich and fat and in protein. It has a bold, salty flavor that is perfect for grating over any dish and eaten with some honey.	6	oz	6.79	18.11	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/2sLSO5QSScaGZpsFPnLd_FK1A2388.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+665	Beemster X.O	Aged 26 monthBeemster Extra Aged is revered by cheese connoisseurs for its complex and deep notes of butterscotch, whiskey and pecan. The flavor develops through natural aging of no less than 26 months in our historic warehouses. Due to the unique milk and craftsmanship used in each wheel, Beemster Extra Aged stays creamy, producing a delectable flavor and texture that is more enjoyable than other extra-aged Dutch cheeses. • Extra Aged, Hard & Robust. With a deep, long-lasting taste.• Pairs well with elegant wines, olives, and nuts. Ingredients: Pasteurized cow’s milk, salt, cheese culture, rennet, annatto. Contains: milk	5.34	oz	8.99	26.94	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/5BgJsm8RpG9fAvurRv6W_FK1A9985.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+666	Carmody	Our Carmody was also inspired by a trip to Italy. We had an opportunity to watch\nGorgonzola being made near Milan. Many Gorgonzola makers are secretive and limit\naccess to their cheese making but our contact was able to get us inside for a short\ntour. After watching the cheese make we went into a ripening room they had at the\nfacility to see some of the early stages of Gorgonzola aging. In one of the rooms there\nwere some small wheels of cheese on an out of the way shelf. We were able to try\na wheel and found it to be a very mild but creamy cheese that still had a great deal\nof fresh milk flavor. We never saw the cheese made but began to notice similar table\ncheeses wherever we bought cheese. They were marketed under a variety of names\nbut meant for local consumption. It occurred to us that a cheese of this type might\nappeal to our customers in the US as an alternative to the young Cheddars or Jack\ncheeses that dominated the market. Once we returned from the trip I began working\non the cheese by using our pecorino recipe as a starting point and making changes\nin response to the flavors and texture of the cheese. Eventually we found a combination\nwe liked. Carmody is meant to highlight the buttery flavors or Jersey milk. At that\npoint we gave it a name with local meaning—Carmody is the road that runs adjacent\nto the farm.\nIngredients:\nPasteurized Jersey Cows Milk, Vegetable Rennet, Cultures and Salt\nTexture: Semi-Firm\nAged: Minimum of 6 weeks\nRind: Natural	7	oz	8.59	19.63	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/6lGfmlFfTVG4vzKXCyAP_FK1A2882.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+667	Fontina Val d'Aosta	This is the real deal Fontina, made from the raw milk of cows grazing in 6,500 foot high Alpine pastures. Today, milk for production comes from the Valdaostana cows that graze on the Alpine pastures (which are dotted with wildflowers and native herbs) at the foot of Mont Blanc. This semi-firm is washed weekly helps develop its signature funk. The uniquely rich and nutty flavor is reminiscent of truffles, with a subtle fruity, grassy aroma and supple texture. Flavors of Fontina are subtle but complex, and while it makes an excellent and versatile cheese for cooking, it is also delicious for straightforward eating. There are savory notes of fruit, grass, earth and cellar, balanced by a gentle sweetness.	5.34	oz	7.29	21.84	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/jsdtjg3xSW6I5hwjMN7G_FK1A0006.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+668	Ossau Iraty	Ossau-Iraty is probably the least known 'Appelation d'Origine Controlee' (A.O.C) cheese. The Ossau-Iraty unites two regions of France in the Western Pyrénées: Ossau in the valley of the Bearn, and Iraty in the beech forests of the Pays Basque. The Ossau-Iraty is full of a delicious, nutty, robust taste if it is produced during the period from June to September when the herds move up to the high mountain meadows. Covered by a thick orange to grey rind, the pâte is white, supple and ceamy. It becomes more firm as the maturing period is longer. An artisan pate may have small holes and should not stick to the palate.Made by the Onetik dairy cooperative with the raw milk of Manech and Basco-Bearnaise sheep and aged for 90 days, Ossau Iraty is unctuous, nutty, sweet, and slightly gamey. And if you’re so inclined, it melts like a dream.	5.34	oz	8.99	26.94	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/c6ZCHvLKRc1JiVb7hEuQ_FK1A0029.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+669	Comté	Comté is a French cheese produced in the Jura Massif region of Eastern France. The unpasteurised cow's milk used is mainly from Montbeliarde Cattle or French simmental (or cross breeds of the two). This hard mountain cheese is matured to perfection in the silence and darkness of special caves where the cheese gets its unique taste, texture and color. There are several maturing cellars in the region where Comté is ripened for a minimum of 4 months to 18 or 24 months. Comté was one of the first few cheeses to receive an AOC (Appellation d'origine controlee) status in 1958. It is one of the most popular AOC cheeses in France with around 40,000 tones of annual production.Considered one of the finest cheeses in the world, a wedge of Comte reveals a pale yellow interior and a texture that can vary from silky, flabby to crystalline.There are practically 83 flavours, which can be savored while tasting Comté. But the main aromatic flavours that delicately linger on the palate are a balance of brown-butter and roasted-nut aromas and a sweet finish.Its ability to melt easily means Comté goes well with many recipes right from fondues to Croque Monsieur. The cheese pairs well with Rhone reds, a Palo Cortado or off-dry Amontillado sherry from Spain.	5.34	oz	9.99	29.93	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/uYJB6dAhRWaUQgpWjPiF_FK1A0070.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+670	Young Gouda	Oakdale's Young Gouda is a throwback to a classic dutch gouda. Soft, mild, creamy, and buttery. Perfect for snacking and for melting! Pack it in a picnic basket, add some apples, or even a hard cider, and enjoy!Four days a week we start the 11 week process of making Gouda.  The cheesemaker's work begins the night before when he makes sure that the fresh milk we receive from a local dairy is properly transferred and chilled.  Before the sun rises the next morning, he starts the pasteurization process and adds cheese cultures to the milk.  Within a few hours, curds start to form and the whey is separated from the batch.  Shortly after, the curds are pressed into a large block and cut into 10 pound pieces which are placed in their molds, fitted with a lid and pressed into wheels.  The next day, the wheels are transferred to a brine solution to cure.  Two days later, the cheese is transferred to wooden drying racks, coated with wax, and begins the aging process where it matures to perfection.Ingredients: Pasteurized whole milk, salt, annatto coloring, and enzymes. Contains dairy	8	oz	9.49	18.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/RNC40OMQOG6T3H5kjW7Z_20160513-Oakdale_YoungGouda_MG_9612.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+671	Aged Gouda	Oakdale's Aged Gouda is aged to perfection for 7 months. It's nutty flavor is balanced with a sweet finish. Serve alone, with fruit, or nuts. Pair with a hard, dry cider or a sour beer to bring out the caramel notes on the finish. Four days a week we start the 11 week process of making Gouda.  The cheesemaker's work begins the night before when he makes sure that the fresh milk we receive from a local dairy is properly transferred and chilled.  Before the sun rises the next morning, he starts the pasteurization process and adds cheese cultures to the milk.  Within a few hours, curds start to form and the whey is separated from the batch.  Shortly after, the curds are pressed into a large block and cut into 10 pound pieces which are placed in their molds, fitted with a lid and pressed into wheels.  The next day, the wheels are transferred to a brine solution to cure.  Two days later, the cheese is transferred to wooden drying racks, coated with wax, and begins the aging process where it matures to perfection.Ingredients: Pasteurized whole milk, salt, annatto coloring, and enzymes. Contains dairy	8	oz	12.49	24.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/RKptd8etQTa6wDC4gj2L_20160513-Oakdale_AgedGouda_MG_9601.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+672	Emmentaler	"This classic Swiss cheese is my go to for turkey sandwiches, grilled cheeses, or snacking with apples and almonds." Erin, Good Eggs BuyerThis is the original Swiss cheese, world famous for its distinctive holes\n􏰀􏰁􏰂􏰃􏰄􏰁􏰅􏰆􏰄􏰇􏰆􏰀􏰆􏰈􏰉􏰁􏰂􏰃􏰊􏰀and one-of-a kind flavor.  First produced􏰋􏰀􏰁􏰂􏰃􏰄􏰁􏰅􏰆􏰄􏰇􏰆􏰀􏰆􏰈􏰉􏰁􏰂􏰃􏰊􏰀􏰋􏰄􏰌􏰍􏰃􏰎􏰉􏰌􏰏􏰐􏰃􏰑􏰌􏰄􏰂􏰒􏰓􏰅􏰂􏰃\nmore than eight centuries ago in the\ncanton of Bern in the valley of the\nEmme River, Emmentaler AOP is still made in giant 200-pound wheels.Emmentaler is always made from fresh, raw milk produced by grass-fed cows in sustainable meadows on family farms. Expert cheesemakers age it for a minimum of 120 days in the microclimate of the Emmi cellars. 􏰡􏰚􏰉􏰏􏰃􏰅􏰁􏰂􏰔􏰅􏰏􏰏􏰔􏰟􏰃􏰑􏰄􏰑􏰒􏰔􏰀􏰌􏰃􏰓􏰚􏰅􏰅􏰏􏰅􏰃􏰑􏰔􏰀􏰟􏰏􏰃This endlessly popular cheese plays an essential role in Swiss communities,\ncommerce and culture—and in American\n􏰓􏰒􏰉􏰏􏰉􏰁􏰅􏰃􏰄􏰇􏰃􏰕􏰀􏰁􏰟􏰃􏰈􏰉􏰁􏰂􏰏􏰍 cuisine of many kinds.Ingredients:  Raw cultured cow's milk and\nnonfat milk, salt, enzymes\nContains milk\n 	6	oz	5.49	14.64	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/oMn3X8H1QTCEGghXQDAv_20160512-Emmi_EmmenthalerWedge_MG_9469.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+673	Grand Cru Wedge	By combining the finest Wisconsin milk and crafting in authentic copper vats, we’ve created an original alpine-style cheese unmatched in America. Careful crafting brings out light floral notes, nutty undertones, a hint of fruitiness and a mellow finish. Perhaps that’s why Grand Cru has been awarded year after year by the American Cheese Society and in the World Champion Cheese Contest. It's perfect for fondue, french onion soup, croque monsieur, and as  a topping to any kind of potato. Pairs perfectly with apples, pears, grapes, and apple cider. Ingredients: Pasteurized Cow's milk, salt, enzymes.Contains milk	6	oz	5.49	14.64	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/gBzWgCoyRnm8jUwHrQyy_20160512-Emmi_GrandCru_MG_9472.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+674	Everton	Everton is aged 8-12 months, styled after Alpine style cheeses, with a firm, creamy texture and a savory, sweet flavor that gets sharper with age. Good Food Awards Winner 2014.Because we use the freshest milk from our own grass-fed cows, our specialty cheeses have a delicious flavor unique to our farm.  Our cheeses are hand crafted with care using our own specially-developed artisan recipes and the freshest grass-fed ingredients.   We know you will taste the difference.Ingredients: Raw cow's milk, cultures, salt.Contains dairy	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/A7oHHiFTRSRhmCcb8PVe_20161004-JacobsBrichford_Everton_MG_2640.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+675	Rioly Run	Rioly Run is a washed-rind cow’s milk cheese that expresses all of the fruit and funk of the beer it is washed in. Libertine Brewing is located in San Luis Obispo, near our farm and provides us with its Saison beer to bathe our cheese. This cheese has a slightly musty but sweet aroma and orange-brown mottled rind. The paste is pale yellow, and has a balanced springy and creamery texture. This cheese stands alone well on a cheese plate, but is also very well suited to a raclette-style treatment of melting + scraping.Ingredients: Pasteurized cows milk, beer, salt, calcium chloride, cultures, and rennet.	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/QYvm6c6QZ2tK7Xcs3rrg_20160705-SteppLadder_RiolyRun_MG_4284.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+676	Briana	Briana is a semi-firm, smear-ripened cheese, dense and easily melted.  It is carefully aged for a minimum of 90 days to develop a wonderfully complex flavor.Because we use the freshest milk from our own grass-fed cows, our specialty cheeses have a delicious flavor unique to our farm.  Our cheeses are hand crafted with care using our own specially-developed artisan recipes and the freshest grass-fed ingredients.   We know you will taste the difference.Ingredients: Raw cow's milk, cultures, salt.Contains dairy	8	oz	12.99	25.98	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/HUF2tn3sRASLjFY7LBjA_20161004-JacobsBrichford_Briana_MG_2642.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+761	Sirloin Tip (Frozen)	Quick and easy to cook, the sirloin tip is a lean cut off the top sirloin. Great to pan fry and versatile in application. Feeling fancy? Slice them up for a stir fry or kabobs!	0.6	lb	6.59	10.98	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/i7vCGNT27bUdfATKMOQc_FK1A4793.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+678	Briana with Truffles	Briana with Truffles is semi-firm, smear-ripened cheese, dense and easily melted, made with Italian truffle oil and black truffles throughout the cheese. Second Place Winner at American Cheese Society 2016.Because we use the freshest milk from our own grass-fed cows, our specialty cheeses have a delicious flavor unique to our farm.  Our cheeses are hand crafted with care using our own specially-developed artisan recipes and the freshest grass-fed ingredients.   We know you will taste the difference.Ingredients: Raw cow's milk, cultures, salt, truffle paste (truffles, water, salt), truffle oil.Contains dairy	8	oz	15.59	31.18	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/WYFuqPwRE6ZkIkQL1mTQ_20161004-JacobsBrichford_BriancaTruffle_MG_2624.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+679	Vegan Ricotta	Our ricotta has sweet, and cultured overtones, and a buttery, smooth finish. It is moist and incredibly versatile. Its silky texture makes for a great mascarpone substitute and is ideal for desserts.You can use our ricotta in any recipe that calls for dairy-based ricotta. It is particularly good in pasta fillings and cheesecakes.Ingredients: Almond milk (water, almonds), salt, enzymes, cultures.Contains Tree Nuts (Almonds)	8	oz	7.99	15.98	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/9IZttb2TLO0JICzE5GrH_20160601-KiteHillRicotta_MG_0943.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+680	Classic Double Cream Chive Vegan Cheese	This versatile round packs a buttery, savory, mild herbal garlic flavor. The creamy delight is a crowd pleaser enjoyed by everyone from kids to sophisticated foodies. Serve on crackers or use as a delicious sandwich spread. Free of cholesterol, lactose, egg, gluten and soy. Non-GMO product.Ingredients: Organic Cashews, Filtered water, Organic Coconut Oil, Organic Chives, Organic Chickpea Miso (Organic Chickpeas, Organic Rice Koji, Sea Salt, Water, Koji Spores), Sea Salt, Nutritional Yeast, Cultures.	6.5	oz	9.99	24.59	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/mJGCAXwqTsOfTQe9SGUJ_FK1A0467.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+681	Fresh VeganMozz  Vegan Cheese	Just like traditional mozzarella di bufalo, our cashew-based vegan version is the perfect answer for everything from pizzas, to caprese salad, to paninis. Creamy, smooth, and with just the perfect amount of springiness. Melts and Browns. Delicious Hot or Cold. Ingredients: Water, Organic Coconut Oil, Organic Cashews, Organic Tapioca Starch, Agar, Sea Salt, Cultures.	8	oz	8.79	17.58	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/5Aboc9FcRW2Y2kmYXBmU_20160421-Miyokos_veganMozz_MG_7624.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+682	Double Cream Sundried Tomato Garlic Vegan Cheese	A creamy, robust, and pungent wheel filled with deep Mediterranean flavors. Serve as is with crackers, or toss with pasta for an instant creamy sauce. Free of cholesterol, lactose, egg, gluten and soy. Non-GMO.Ingredients: Organic Cashews, Filtered Water, Organic Coconut Oil, Organic Dried Tomatoes, Organic Chickpea Miso (Organic Chickpeas, Organic Rice Koji, Sea Salt, Water, Koji Spores), Sea Salt, Nutritional Yeast, Organic Garlic Powder, Cultures	6.5	oz	9.99	24.59	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/wbxklJadRoC54ohgnVmE_FK1A0445.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+683	Double Cream Garlic Herb Vegan Cheese	Buttery and savory, a classic combination of garlic and herbs in a creamy base makes for delightful eating on crackers, melted on a baked potato, or as a schmear for bagels. Free of cholesterol, lactose, egg, gluten and soy. Non-GMO product.Ingredients: Organic Cashews, Filtered Water, Organic Coconut Oil, Organic Parsley, Organic Chickpea Miso (Organic Chickpeas, Organic Rice Koji, Sea Salt, Water, Koji Spores), Sea Salt, Organic Garlic, Nutritional Yeast, Organic Herbs, Cultures	6.5	oz	9.99	24.59	lb	Dairy	Cheese	http://goodeggs1.imgix.net/product_photos/R312hF9kSMqQAxyqCh9t_FK1A0457.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+684	Aged English Smoked Farmhouse	A semi-hard wheel with rich, smoky and sharp tones that linger on your tongue. Best served at room temperature with crackers, warm in sandwiches, or added to sauces.Free of cholesterol, lactose, egg, gluten and soy. Non-GMOIngredients: Organic Cashews, Filtered Water, Organic Chickpea Miso (Organic Chickpeas, Organic Rice Koji, Sea Salt, Water, Koji Spores), Nutritional Yeast, Sea Salt, Cultures	6.5	oz	10.99	27.05	lb	Dairy	Cheese	http://goodeggs2.imgix.net/product_photos/E15nILg3Qw6VApm7WEuM_FK1A0412.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+685	Organic Firm Tofu	"This tofu is a great consistency. I like to marinate in sesame oil, ponzu, minced garlic and rice vinegar, then fry lightly in peanut oil to use in noodle or cabbage salads!" - Darren, Grocery BuyerOur Organic Firm Tofu is made with our rich soymilk that is\nsweet and creamy. We brew our soymilk with just the right amount of water and\nsoybeans. Then we bring it to a specific temperature in order to produce the\nperfect consistency of texture and flavor.  Precision and accuracy is how we make our tofu\nin order to provide the best quality from our family to yours. \nWe are the largest and oldest family (three generations)\nowned and operated manufacturer in Northern California. \nWe take great pride in our tofu that is made with our family\nrecipe for over 90 years.  Our tofu and\nsprouts are produced with only the highest quality ingredients and care.   We use a high quality organic soybean that\nare grown in the USA and is USDA approved non-GMO. Wo Chong Company, Inc.  has\ndeveloped, maintains and administers a HACCP-based Good Manufacturing Practices\n(GMPs) Food Safety Program.For firm tofu, we recommend marinating the tofu with your favorite sauces or leave it as it is, then grill, bake, or stir fry it to add to your salad, sandwich or rice. \nIngredients: Water, Organic Soybeans, Calcium Sulphate	14	oz	1.99	0.14	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/0GqGYVJURg6bnnl2g4q2_FK1A5646.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+686	Organic Hodo Braised Tofu	At\nHodo, we use time-honored, artisan methods to make a creamy, higher protein\nsoymilk that is the foundation of all our hand-crafted tofu. The result is more\ncomplexity and depth of flavor to our firm tofu. \n To make Hodo Braised Tofu, we braise our signature Hodo Firm Tofu in a light Chinese Five-Spice blend and caramel sauce that imparts a lovely fragrance and rich flavor. A fully cooked product, you can enjoy Hodo Braised Tofu straight, in a salad or as a filling for sandwiches and omelets. We love to add it to stir-frys, congee, and noodle soups. All organic and gluten-free, there’s a freshness you can actually taste. Ingredients: Organic Firm Tofu* (Water, Organic,  Soybeans, Calcium Sulfate), Water, Sea Salt,\nFive-Spice* (Star Anise*, Cinnamon*, Fennel*, Cloves*, Black Pepper*), Brown\nSugar**OrganicRecipes: http://goo.gl/SQN42W	8	oz	4.19	0.52	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/bwjAWf3SSHyQpJRoqTRG_853404002220.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+762	Fajita Meat (Frozen)	One of our go-to favorites, this stir fry meat is great and easy to sautée. It works well with a favorite marinade or simply garnished with a little salt and pepper. Certified Humane Raised and Handled and GMO-free.	0.7	lb	10.49	14.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/iEpnjysRHSoaK0r4UaGC_FK1A2681.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+687	Organic Hodo Tofu Veggie Burger	Hodo Tofu Veggie Burgers are flavorful, juicy and ‘meaty’ tofu patties studded with a mirepoix of carrots, onions and cabbage. Unlike most other veggie burgers, ours is free of soy protein isolates and fillers - we simply use our whole bean, organic, non-GMO tofu as a base. We grind our signature firm tofu, fold in fresh cut vegetables, and season it with umami-rich, ground shiitake mushroom. Wholesome, and awesome, these fully-cooked hearty vegan burgers will tempt even the most serious of carnivores. And here’s the beef on our vegan burger -- each serving of the Tofu Veggie Burger is a whopping 40% of your daily protein needs and rivals any traditional quarter pounders in the protein department. All vegan, organic and nopn-GMO, and gluten-free.Each pack contains two 4oz patties. Buns and trimmings are not included.Ingredients: Hodo Organic Firm Tofu*, Carrots*, Cabbage*, Onions*, Seasalt,\nShiitake Mushroom*, Garlic Powder*, White Pepper*, Soy Oil"* OrganicRecipes: http://goo.gl/u7Wwua	8	oz	5.49	0.69	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/ATCJgg41TVeR5nfzNtl9_853404002268.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+688	Mushroom Risotto Veggie Burger	This veggie burger contains a mix of mushrooms, arborio rice, peas, parsley & truffle oil. It's dense texture and earthy flavor will satisfy any craving. Ingredients: Cooked\narborio rice (arborio rice, water), cooked\nbrown rice (brown rice, water), roasted button\nmushrooms, button mushrooms,\nexpeller pressed canola oil, potato flakes,peas, carrots, onions, cooked\nwild rice (wild rice, water), kale,\nroasted portobello mushrooms, celery, roasted garlic, arrowroot powder, sea salt, parsley, brown rice\nflour, truffle oil (olive oil,\nnatural truffle extract, natural flavoring,\nwhite truffles), black pepper\n\n	10	oz	3.99	0.4	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/3NSQPhXRSnqmLctZmcIZ_20160708-DrPraeger_MushroomVeggie_MG_5012.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+689	Super Green Veggie Burger	If you need to up your daily green intake this veggie burger is perfect for you! It's full of 6 different greens and a hint of ginger and cayenne to add a little kick of spice. Ingredients: Collard\ngreens, cooked quinoa (quinoa, water), kale, swiss chard, turnip greens,\nmustard greens, spinach, expeller pressed canola oil, potato flakes, onions,\napples, arrowroot powder, cooked teff (teff, water), parsley, roasted garlic,\nginger, sea salt, hemp protein, black pepper, cayenne pepper, coriander\n	10	oz	3.99	0.4	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/z3oMjoXNTl2p6qQgLvji_20160708-DrPraeger_SuperGreens_MG_5018.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+690	Organic Hodo Sichuan Mapo Tofu	Hailed as one of the most popular Chinese\ndishes ever, the legendary Mapo tofu is a spicy stir fry of our signature tofu,\nwith the heady, floral fragrance and tongue-tingling bite of Sichuan peppercorn.  We added miso and mushrooms for a richer\nflavor.  Hodo Sichuan Mapo Tofu is a quick, easy\nand  delicious entrée. ll organic, non-GMO, and ready-to-serve.  The entrée is all vegan and made with\ngluten-free ingredients.  \nHodo\nSichuan Mapo Tofu is ready-to-eat!  Just\nsimply reheat the entrée and serve over rice or noodles.  For a traditional option, brown and cook\nground meat in a skillet, then add Hodo Sichuan Mapo Tofu and stir to combine.   Ingredients: Hodo Organic Firm Tofu (Water Organic Soybeans,\nCalcium Sulfate), Water, Soybean Oil*, Miso*, (Cultured White Rice*, Soybeans*,\nWater, Sea Salt), Garlic*, Ginger*, Rice Vinegar* (Water, Rice*), Dried\nMushrooms*, Paprika*, Sichuan Peppercorn*, Sea Salt, Chilies*, White Pepper*Contains soy* Organic	10	oz	5.49	0.55	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/wjDvE67XRfWYyS1CZkUr_20160504-HodoSoy_SichuanTofu_MG_8616.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+691	California Veggie Burger	The California Veggie burger is the OG veggie burger from Dr. Praeger's. It's packed full of carrots, peas, broccoli and spinach. Bake it, toast it, or pan-fry this patty. It doesn't matter how you choose to cook it, the full flavor will help you understand why this is Dr. Praeger's most popular veggie burger. Ingredients:\nCarrots, onions, string beans, oat bran, soybeans, zucchini,\nexpeller pressed canola oil, peas, broccoli, corn, soy flour, spinach, red\npeppers, arrowroot powder, corn starch, garlic, corn meal, sea salt, parsley,\nblack pepper.Contains soy	10	oz	3.99	0.4	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/JiauWVZFT2qBpWpi8cai_20160708-DrPraeger_CaliforniaBurger_MG_5020.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+692	Classic Tempeh	Fresh, unpasteurized, handcrafted organic tempeh!  Perfectly tender for sandwiches, stir fries, soups, salads and more. GMO-free, wheat-free and fermented with love. Try our tasty tempeh recipes at http://www.aliveandhealing.com/recipes.  Ingredients: Organic GMO Free Soybeans, Organic Rice Vinegar, Organic Tempeh Culture, Organic Tapioca StarchCONTAINS: SOY	8	oz	3.99	7.98	lb	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/528AhCL5Qq55OY5C5IzG_FK1A0266.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+693	Organic Hodo Sesame Yuba Noodles	Hodo Sesame Yuba Noodles are a delectable meal of hand-cut\nyuba strips.  Yuba is the\nthin veil that forms on the surface as the cream rises in heated soymilk. To\nmake our delicious Hodo Sesame Yuba Noodles, we first marinate our yuba, and then sear to bring out\nits amazing natural flavors. We then hand\ncut the yuba into ribbons and glaze them with a savory, creamy and luscious tahini dressing, which\nis delightfully rich with fruity and nutty undertones.  \nHodo Sesame Yuba Noodles are certified organic, gluten-free and are protein-rich with zero cholesterol. The noodles are great\neaten cold or hot. Enjoy the strips\nstraight, on a salad, or as the star in a wrap or\npasta. Simply serve as a side dish for a quick and delicious meal.This product was formerly called as Hodo Sesame Yuba Strips.Ingredients: Hodo Organic Yuba (Water, Organic Soybeans), Water,\nTahini* (Sesame Paste*), Gluten-Free Tamari* (Water, Soybeans*, Salt,\nAlcohol*), Rice Vinegar* (Water, Rice*), Evaporated Cane Juice*, Sesame Oil*, Brown\nSugar*, Cornstarch*, Soybean Oil*, Garlic*, Ginger** OrganicRecipes: http://goo.gl/vvl1fp	8	oz	6.99	0.87	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/XT60uOy4RLm0jrVPN8oN_853404002718.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+694	Organic Hodo Spicy Yuba Noodles	Hodo Spicy Yuba Noodles are a delectable meal of hand-cut\nyuba strips. Yuba is the\nthin veil that forms on the surface as the cream rises in heated soymilk. To\nmake our delicious Hodo Spicy Yuba Noodles, we first marinate our yuba, and then sear to bring out\nits amazing natural flavors. We then hand\ncut the yuba into ribbons and glaze them with a spicy teriyaki sauce, which packs\na kick and lots of umami.\nHodo Spicy Yuba Noodles are certified organic, gluten-free and are protein-rich with zero cholesterol. The strips are great\neaten cold or hot.  Enjoy the noodles straight, on a salad, as a sandwich filling or as a stir-fry or pasta\ningredient.  This product was formerly called Spicy Yuba Strips. Ingredients: Hodo Organic Yuba (Water, Organic Soybeans), Soybean\nOil*, Water, Rice Vinegar* (Water, Rice*), Gluten-Free Tamari* (Water,\nSoybeans*, Salt, Alcohol*), Evaporated Cane Juice*, Sesame Oil*, Chilies*,\nCornstarch*, Brown Sugar*, Cayenne*,  Garlic*,\nGinger*, Orange Peel*, Licorice*.Recipes: http://goo.gl/vvl1fp	8	oz	6.99	0.87	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/C2WLKZb8RRaaTHTi35Yl_853404002701.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+695	Chorizo Seitan	Seitan (pronounced “say-tan”) is a traditional Japanese food created by using water to wash the starch away from wheat flour and retaining the wheat protein. With an impressively meat-like texture and robust flavor, Upton’s Naturals Seitan is both high in protein and oil-free. This mildly spicy Seitan is an oil-free version of a traditional ground sausage. Enjoy it on tacos, nachos, over rice, or in a breakfast scramble.Keep refrigerated or frozen. Heat and serve. Enjoy within 5 days of opening. Can be baked into your favorite recipes or for best results pan fry with a small amount of oil.Ingredients: Water, vital wheat gluten, soy sauce (water, wheat, soybeans, salt), apple cider vinegar, garlic, guajillo, sea salt, onion, cumin, black pepper.Allergens: Wheat, soy	8	oz	4.49	0.56	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/H6lVvt6HRTetdUDC04yo_20160712-Uptons_ChorizoSeitan_MG_5121.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+696	Bacon Seitan	Seitan (pronounced “say-tan”) is a traditional Japanese food created by using water to wash the starch away from wheat flour and retaining the wheat protein. With an impressively meat-like texture and robust flavor, Upton’s Naturals Seitan is both high in protein and oil-free. Cook this seitan bacon a little or cook it a lot (for you extra crispy vegan Bacon lovers). This smoky seitan makes a great BLT, salad or pizza topping, or enjoy it as a side. A portion of all proceeds from Bacon Seitan retail packages go to keeping happy pigs, happy at Farm Sanctuary!Keep refrigerated or frozen. Heat and serve. Enjoy within 5 days of opening. Can be baked into your favorite recipes or for best results pan fry with a small amount of oil.Ingredients: Water, vital wheat gluten, soy sauce (water, wheat, soybeans, salt), whole wheat flour, natural hickory smoke concentrate, paprika, sea salt, onion. Allergens: Wheat, soy	5	oz	4.49	0.9	oz	Dairy	Ready to Eat	http://goodeggs1.imgix.net/product_photos/WGgj2nNzT4esvoy5dqPt_20160712-Uptons_BaconSeitan_MG_5140.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+697	Chili Lime Carnitas Jackfruit	Jackfruit is native to Asia. It is recognizable for its spiky exterior and notable for its many stages of maturity, each of which yields a different texture and flavor. Our young, green Jackfruit has a texure similar to that of shredded meat and is available pre-seasoned and ready-to-eat. This seasoned Jackfruit has a little bit of chili and a hefty dose of lime. Enjoy it in tacos, fajitas, salads, nachos or over rice.Pan Fry: Remove product from pouch, place in pan over medium heat with a small amount of oil (optional) and cook for 5-7 minutes or until thoroughly heated, stirring occasionally. For finer shreds, break up in pan.Ingredients: Jackfruit, onion, chili, vinegar, lime, evaporated cane juice, sea salt, garlic, black pepper, cumin, coriander.(Produced on dedicated allergen-free equipment in a facility that also processes peanuts and sesame). Refrigeration required after opening. Enjoy within 5 days of opening. For best results, mix product first.	10.6	oz	5.49	0.52	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/q0tqxr5Tg6GkSxP9K3bg_20160712-Uptons_ChiliLimeJackFruit_MG_5152.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+698	Bar-B-Que Jackfruit	Jackfruit is native to Asia. It is recognizable for its spiky exterior and notable for its many stages of maturity, each of which yields a different texture and flavor. Our young, green Jackfruit has a texure similar to that of shredded meat and is available pre-seasoned and ready-to-eat. We season with a tangy Bar-B-Que sauce, this Jackfruit makes a great sandwich topped with a cabbage slaw, in a salad or wrap, or over rice. For a sweeter sauce, add brown sugar, agave or maple syrup.Pan Fry: Remove product from pouch, place in pan over medium heat with a small amount of oil (optional) and cook for 5-7 minutes or until thoroughly heated, stirring occasionally. For finer shreds, break up in pan.Ingredients: Jackfruit, tomato paste, vinegar, molasses, filtered water, onion, evaporated cane juice, sea salt, (Produced on dedicated allergen-free equipment in a facility that also processes peanuts and sesame). Refrigeration required after opening. Enjoy within 5 days of opening. For best results, mix product first.	10.6	oz	5.49	0.52	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/HRxl5Y1QPa85GUuFAMen_20160712-Uptons_BBQJackfruit_MG_5143.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+699	Organic Hodo Five-Spice Tofu Nuggets	Hodo Five-Spice Tofu Nuggets are flavorful and fragrant\nmorsels of tofu cubes that we fry then braise in an organic apple cider with an\nAsian five-spice blend, which infuses the tofu with aromatic spices.  Hodo Five-Spice Nuggets\nare juicy and tasty, and have a chewy texture. The\nnuggets are savory with a hint of smoky sweetness.Hodo Five-Spice Nuggets are\ncertified organic and gluten-free.  They are great eaten cold or hot, and makes for a delicious treat\nEnjoy the Nuggets straight, on a salad, as a sandwich filling or as a\nstir-fry or noodle-dish ingredient. We\nparticularly love the Nuggets grilled.  Ingredients: Hodo Organic Tofu Puffs (Hodo Organic Tofu [Water, Organic\nSoybeans, Calcium Sulfate], Soybean Oil*), Water, Apple Juice*, Gluten-Free\nTamari* (Water, Soybeans*, Salt, Alcohol*), Brown Sugar*, Asian Five-Spice* (Star\nAnise*, Cinnamon*, Fennel*, Cloves*, Black Pepper*)*OrganicRecipes: http://goo.gl/ZkNYzv	8	oz	5.49	0.69	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/Y8bS6euQRIm9QAQWzzPK_853404002688.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+700	Organic Hodo Thai Curry Tofu Nuggets	Hodo Thai Curry Tofu Nuggets are flavorful and fragrant\nmorsels of tofu cubes that we fry then braise in an aromatic curry of lemongrass and warm, exotic spices that impart\na slightly spicy and wonderful flavor explosion in your mouth. Hodo Thai Curry Nuggets\nare juicy, slightly spicy and tasty, and have a chewy texture.  Hodo Thai Curry Nuggets are\ncertified organic and gluten-free. Try\nthem cold or hot, straight out of the package or as the star in a salad, pasta\nor a sauté. We particularly love the\nnuggets in a sandwich with sliced apples. Toss some into your lunch box as a\nhealthy snack!.This product was formerly named Hodo Curry NuggetsIngredients:Hodo Organic Tofu Puffs (Hodo Organic Tofu [Water, Organic\nSoybeans, Calcium Sulfate], Soybean Oil*), Water, Evaporated Cane Juice*, Sea\nSalt, Curry Powder* (Coriander*, Cumin*, Turmeric*, Mustard*, Black Pepper*,\nFenugreek*, Cayenne*), Garlic Powder*, Sesame Oil*, Chilies*, Cayenne*,\nLemongrass**OrganicRecipes: http://goo.gl/I0Azi5	8	oz	5.49	0.69	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/sZfqxLqwQY6IYErmRnLA_853404002695.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+714	Pasture Raised Boneless Chicken Breast (Frozen)	Boneless, Skin OnPrather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	0.8	lb	9.59	11.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/DRgUyipfSIeQUv37adt4_FK1A5303.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+701	Organic Hodo Firm Tofu	Taste the difference in Hodo\nFirm Tofu. At Hodo, we use time-honored, artisan methods to make\na creamy, higher protein soymilk that is the foundation of all our hand-crafted\ntofu. The result is our tofu has more complexity and depth of flavor. Hodo Firm Tofu has a subtle nutty aroma and\nbuttery smooth texture.  Compared to\naverage market brands, Hodo Firm Tofu has 50% higher protein per serving. Our hand-crafted tofu is made from organic, non-GMO, US-grown, whole\n\nsoybeans.\nHodo Firm Tofu is a favorite staple in\nstir-frys, stews and curries.  A fully cooked\nproduct, you can add Hodo Firm Tofu directly to your favorite\nsalad or crumble it into scrambles and chilis. \n\nTo\nfully savor Hodo Firm Tofu’s fresh flavor and superior texture, slice thinly\nand dip with a good olive oil and sea salt. We love to\nmarinate the tofu and grill or broil it.  Ingredients: Water, Organic, Non-GMO Soybeans, Calcium Sulfate.Recipes: http://goo.gl/u7Wwua	12	oz	4.19	0.35	oz	Dairy	Ready to Eat	http://goodeggs2.imgix.net/product_photos/FYuO75k2QDGriDQYTcqN_853404002213.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+702	Chicken Apple Sausage (Frozen)	Ingredients: Hormone free boneless skinless chicken thighs, applesauce, maple syrup, oats, cinnamon and spices (no nitrates or preservatives).  Lamb casing ,Kid favorite, mild. Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!	1	lb	10.99	10.99	lb	Meat	What We Love	http://goodeggs1.imgix.net/product_photos/30BhA8hzTW6QwVTgmq1l_4o4j-dkPSCOPMN1VXz8UmKV3oLXH6rDCC04ogtUzap0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+703	Pasture Raised Pork Sausage, Bulk (Frozen)	Pasture Raised Pork Sauasage, No Casing- from Simas Swine and Wine in the Capay ValleyGrab some winter squash and start stuffing!A mild sausage with an awesomely rich pork flavor, equally great for both breakfast patties and pasta sauce, probably the most versatile sausage in our lineup!Ingredients: Pork, Water, Salt, Black Pepper, Spices and Crushed Red Pepper.Pasture raised Berkshire cross hogs from the Capay Valley.	1	lb	11.99	11.99	lb	Meat	What We Love	http://goodeggs1.imgix.net/product_photos/mQ6pA8HSVi8cMnhGFiis_FK1A8581.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+704	Beef Stew Meat	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. "Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1	lb	9.99	9.99	lb	Meat	What We Love	http://goodeggs1.imgix.net/product_photos/43GRBRc4SUued8xhx1bp_FK1A4454.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+705	Ready to Eat Sous Vide Chicken	Fully Cooked Sous Vide Half Chicken- from Roli Roti in Oakland, Mary's Free-Range ChickenThis chicken comes to you fully cooked and ready to eat—you can add it to a salad or pasta dish as a no-prep protein option and have a complete meal in minutes! Or, for that Roli Roti rotisserie chicken experience in your own kitchen, we recommend you reheat in the oven and in under 20 minutes have a gorgeous, crispy skinned, golden brown roast chicken dinner ready to serve! Ingredients: Mary's Free Range Chicken (antibiotic free, non-GMO diet), SaltReheating Instructions:1. Preheat oven to 400°F.2. Remove chicken from the sous vide packaging and place in an oven safe dish.3. Pat skin dry with a paper towel. If desired, season with olive oil, cracked black pepper or herbs.4. Place in oven for approximately 15-20 minutes until skin is dark golden brown.Note: Because of the sous vide cooking technique, portions of the chicken may appear pink even though it is fully cooked and ready to eat. Best if used within 5 days of delivery.	1.5	lb	9.99	6.66	lb	Meat	What We Love	http://goodeggs2.imgix.net/product_photos/uqvI9dhPQYGgf44QA7Mx_20160726-RoliRoti_SousVideHalfChicken_MG_5808.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+706	Pasture Raised Pekin Duck (Frozen)	Pasture Raised Pekin DuckOur ducks have been raised in our orchard, in batches of 50 per “duck schooner” with lots of green grass and a wading pool. Their diet is a certified GMO free grain mix that includes organic corn, peas, wheat, barley, distillers grains and the minerals and vitamins they need to grow, along with wheat sprouts and the planted forages in the orchard including wheat, rye, and peas. They are harvested at 7 1/2 weeks, and frozen immediately for optimum freshness. Young duck is the most decadent poultry you will ever eat. The meat is moist, tender and will flake off the bone. The skin is crispy. The fat is melt in your mouth delicious. The broth made from the bones is better than chicken broth. Don’t forget to reserve the fat in your baking dish to fry up some potatoes. We fried up some delicious baby German potatoes from our garden to eat with our roast duck, along with a spring pasta salad we made with rocket arugula, easter egg radishes, marinated in our apricot vinegar and olive oil. Try a duck today, you’ll be glad you did! (Don’t be intimidated by all those fancy recipes on the internet. I roasted ours just like a chicken.) - says Rachel, Casa Rosa Farms	3.25	lb	25.99	8.0	lb	Meat	What We Love	http://goodeggs2.imgix.net/product_photos/lMYXnoLQQAWxrFbFVtEC_20160701-CasaRosa-Duck_MG_4234.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+707	Pasture Raised Pork Belly (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyYour\nfavorite ramen would not be the same without those succulent slices of pork\nbelly; fresh and ready for anything you can imagine, this cut is for the cook\nwho wants that extra edge. Flavor is first with this pork, so if you are\nlooking for a good base to your new bacon recipe, or if you are just dipping\nyour toes into the DIY bacon universe, this is the product for you!\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on \nwalnuts, giving the fat a rich, creamy texture. Never given antibiotics \nor growth hormones, and never confined.	1.75	lb	14.49	8.28	lb	Meat	What We Love	http://goodeggs2.imgix.net/product_photos/tiLV5bjXRdOzxeb3CRl0_FK1A7922.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+715	Pasture Raised Boneless Chicken Breast (Frozen)	Boneless, Skin OnPrather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	0.9	lb	10.79	11.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/DRgUyipfSIeQUv37adt4_FK1A5303.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+763	New York Steak (Frozen)	Tender and richly marbled, the New York steak is a classic\ncut. Simply season and grill to perfection.	0.75	lb	18.79	25.05	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/Xnyn88ukRWCDBfTkLS5G_Prather%20New%20York%20Steak.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+708	Organic Boneless Skinless Chicken Breasts	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.25	lb	11.89	9.51	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/lKAJdhWHTCwUgmM5sxAN_FK1A3473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+709	Organic Boneless Skinless Chicken Breasts (Frozen)	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	2	lb	17.99	8.99	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/DYyR3ZrwTpSvxJTvXsUv_FK1A6571.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+710	Organic Chicken Breast Tenders (Frozen)	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	2	lb	17.99	8.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/ecWdJsMjReyKo0trRQZs_Good%20Eggs_111515-16.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+711	Organic Ground Chicken (Frozen)	Free-Range Organic Ground Chicken, 95% Lean- from Mary'sGround chicken from Mary's! 95% lean ground chicken, no added fat or skin and as you would expect from Mary's: no antibiotics ever, no preservatives, gluten free, non-GMO Project Verified, and certified USDA Organic.	1	lb	9.49	9.49	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/pspKw6X9QqMMxxyH6TKJ_FK1A5379.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+712	Organic Boneless Skinless Chicken Breasts	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1	lb	9.49	9.49	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/m1PPbhmR2uDnY2pDDbY1_FK1A3473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+713	Organic Bone-In Skin-On Chicken Breasts	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.5	lb	11.99	7.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/pPLivv1ITjq68SdMeurq_FK1A3719.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+716	Organic Bone-In Skin-On Chicken Breasts	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.25	lb	9.99	7.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/pPLivv1ITjq68SdMeurq_FK1A3719.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+717	Organic Whole Chicken Thighs	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.5	lb	8.99	5.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/ow7lddMASXOPpD5IoX55_FK1A4030.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+718	Organic Whole Chicken Thighs	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.25	lb	7.49	5.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/d7Ru4o1IRLaursDlxqGp_FK1A4030.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+719	Organic Boneless Skinless Chicken Thighs	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.25	lb	9.99	7.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/lKAJdhWHTCwUgmM5sxAN_FK1A3473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+720	Organic Whole Chicken Legs	Organic Free Range Chicken LegsMary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.5	lb	7.49	4.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/TazKHmZETwmGUpEuOc2j_FK1A3464.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+733	Pasture Raised Whole Chicken (Frozen)	Prather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	3.75	lb	29.99	8.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/U6MFJ1HoRGGffsFYb854_unnamed-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+721	Organic Party Wings (Frozen)	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	2	lb	9.59	4.8	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/Uvwrtf84SkyVVho6Wlxw_Good%20Eggs_111515-17.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+722	Organic Whole Chicken Legs (Fresh)	"This Memorial Day I'm looking forward to grilling these chicken thighs and covering them in Prather Ranch's BBQ Sauce!" Darren, Good Eggs Sourcing ManagerOrganic Free Range Chicken LegsMary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	1.25	lb	6.29	5.03	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/TazKHmZETwmGUpEuOc2j_FK1A3464.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+723	Organic Boneless Skinless Chicken Thighs	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	0.75	lb	5.99	7.99	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/m1PPbhmR2uDnY2pDDbY1_FK1A3473.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+724	Pasture Raised Chicken Legs (Frozen)	Whole chicken legs (leg/thigh quarter), bone-in, skin-on.Prather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	1	lb	7.99	7.99	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/MNaDXTL0RzWV7MZQmymv_FK1A5282.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+725	Organic Chicken Drumsticks (Frozen)	Individually Quick Frozen DrumsticksMary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	2	lb	9.99	5.0	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/KU98MEoATmwGWenNlQus_20160701-Marys_IQFDrumsticks_MG_4269-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+734	Organic Duck Breast (Frozen)	Mary’s Free-Range Ducks are beautiful animals to raise. The Pekin Duck are raised naturally in the beautiful weather in California. They live year round with access to outdoors. We watch them everyday to make sure they are comfortable and happy. We make every effort to treat our ducks as humanely as possible throughout the production process. No Antibiotics EverRaised Without Added Hormones*No Preservatives or Additives*Federal Regulations Prohibit The Use Of Hormones In DuckFed a Vegetarian Diet (65% Corn, 25% Soybean Meal, 5% Vitamins and Nutrients, 5% Wheat)	1	lb	19.99	19.99	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/edH5YHnGQ3WJgm2bGRMj_FK1A6307.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+726	Organic Whole Chicken	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	3	lb	11.99	4.0	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/2JiMoxPHQkeBQsDsclbX_FK1A3564.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+727	Organic Whole Chicken (Fresh)	Mary's Free-Range Chickens are produced by Pitman Farms, a family owned business that has been raising poultry for three generations. Mary's Free Range Chickens grow naturally with plenty of open space on a ranch in sunny California. These chickens are raised in a humane manner by allowing them to roam in a stress-free environment that is four times the size of the average commercial ranch. Because of cleaner living quarters, a healthier and happier chicken is produced having a better taste.All chickens have access to outdoors. Outdoor areas include ample water and shade Natural behaviors are enriched with:bales of straw (used for pecking)eucalyptus tree branches (used for playing and hiding).Mary's Free-Range Organic Air Chilled Chickens are an additional step up the ladder in humane farming practices; with freedom to move about and a premium diet void of any chemical stimulators.Certified Organic feeds must be Certified by the USDA and everything that goes in them must be certified as well. Mary's Organic Chicken feed does not contain any of the following:NO Animal By ProductsNO Genetically Modified Organisms (GMOs)NO Antibiotics NO Pesticide Treated GrainsNO Grains Grown with Chemical Fertilizers NO Synthetic Amino Acids	4	lb	15.99	4.0	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/lLgEvIUTKWGnr319z7m6_FK1A3564.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+728	Pasture Raised Whole Chicken (Frozen)	Pasture Raised Whole Chicken- from A4 Farms in Santa Rosa, through Sonoma County Meat Co.Whole chickens, perfect for roasting in the oven, spatchcocking and throwing on the grill, or cutting up and using in a soup or stew (or maybe even buttermilk fried chicken? I know, sounds good, right?) These chickens are the conventional "Cornish Cross" breed, so they'll have the proportions most folks are used to these days with all the benefits of being raised on pasture! A4 Farms has deep roots in Santa Rosa; with a longtime family farming history that has included hops, prunes, hay, cattle, and now pasture-raised farm fresh chickens. Jessica and Brian are committed to raising chickens outside and free with no antibiotics, and no hormones. They forage on grasses, and bugs, with access to high quality feed containing essential vitamins and minerals to keep the chickens healthy and vigorous.	2.25	lb	22.49	10.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/O3MofGzCR4aGt2998CIw_chicken_spring.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+729	Pasture Raised Whole Chicken (Frozen)	Prather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	3.5	lb	27.99	8.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/U6MFJ1HoRGGffsFYb854_unnamed-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+730	Pasture Raised Whole Chicken (Frozen)	Pasture Raised Whole Chicken- from A4 Farms in Santa Rosa, through Sonoma County Meat Co.Whole chickens, perfect for roasting in the oven, spatchcocking and throwing on the grill, or cutting up and using in a soup or stew (or maybe even buttermilk fried chicken? I know, sounds good, right?) These chickens are the conventional "Cornish Cross" breed, so they'll have the proportions most folks are used to these days with all the benefits of being raised on pasture! A4 Farms has deep roots in Santa Rosa; with a longtime family farming history that has included hops, prunes, hay, cattle, and now pasture-raised farm fresh chickens. Jessica and Brian are committed to raising chickens outside and free with no antibiotics, and no hormones. They forage on grasses, and bugs, with access to high quality feed containing essential vitamins and minerals to keep the chickens healthy and vigorous.	2.75	lb	27.49	10.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/O3MofGzCR4aGt2998CIw_chicken_spring.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+731	Pasture Raised Whole Chicken (Frozen)	Pasture Raised Whole Chicken- from A4 Farms in Santa Rosa, through Sonoma County Meat Co.Whole chickens, perfect for roasting in the oven, spatchcocking and throwing on the grill, or cutting up and using in a soup or stew (or maybe even buttermilk fried chicken? I know, sounds good, right?) These chickens are the conventional "Cornish Cross" breed, so they'll have the proportions most folks are used to these days with all the benefits of being raised on pasture! A4 Farms has deep roots in Santa Rosa; with a longtime family farming history that has included hops, prunes, hay, cattle, and now pasture-raised farm fresh chickens. Jessica and Brian are committed to raising chickens outside and free with no antibiotics, and no hormones. They forage on grasses, and bugs, with access to high quality feed containing essential vitamins and minerals to keep the chickens healthy and vigorous.	2.5	lb	24.99	10.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/O3MofGzCR4aGt2998CIw_chicken_spring.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+732	Pasture Raised Whole Chicken (Frozen)	Prather Ranch Meat Company has built a relationship with Big Bluff Ranch in the Shasta Cascades to bring you pasture-raised chicken with tremendous flavor. A sustainable family farm that goes back two generations, Big Bluff Ranch has been raising poultry with a holistic approach to both animals and the environment for over a decade. Allowed to roam free and forage after 3-6 weeks of brooding, Big Bluff chickens are never treated with hormones or antibiotics.	3	lb	23.99	8.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/U6MFJ1HoRGGffsFYb854_unnamed-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+735	Organic Whole Duck Legs (Frozen)	Mary’s Free-Range Ducks are beautiful animals to raise. The Pekin Duck are raised naturally in the beautiful weather in California. They live year round with access to outdoors. We watch them everyday to make sure they are comfortable and happy. We make every effort to treat our ducks as humanely as possible throughout the production process. No Antibiotics EverRaised Without Added Hormones*No Preservatives or Additives*Federal Regulations Prohibit The Use Of Hormones In DuckFed a Vegetarian Diet (65% Corn, 25% Soybean Meal, 5% Vitamins and Nutrients, 5% Wheat)	0.8	lb	8.69	10.86	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/g9U4TxZgSVeLKWHlp8oA_FK1A6310.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+736	Organic Whole Duck (Frozen)	Mary’s Free-Range Ducks are beautiful animals to raise. The Pekin Duck are raised naturally in the beautiful weather in California. They live year round with access to outdoors. We watch them everyday to make sure they are comfortable and happy. We make every effort to treat our ducks as humanely as possible throughout the production process. No Antibiotics EverRaised Without Added Hormones*No Preservatives or Additives*Federal Regulations Prohibit The Use Of Hormones In DuckFed a Vegetarian Diet (65% Corn, 25% Soybean Meal, 5% Vitamins and Nutrients, 5% Wheat)	4	lb	35.69	8.92	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/0F5NUIOTSXGAVj1HDqek_FK1A6364.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+737	Pasture Raised Duck (Frozen)	Whole Pasture-Raised Duck, free of GMOs, corn, soy, and antibiotics.  Healthy, happy ducks raised on the beautiful coast just a short drive South of San Francisco.Each duck is cryo-vac'd and flash-frozen to preserve the highest quality and freshness.Early Bird ducks are a truly gourmet treat.  Their life on our fertile pastures gives their rich and tender meat deep flavors, making these ducks a perfect example of the exceptional food that the beautiful coastal pastures south of San Francisco can produce.  This is a seasonal product, once it's gone, it's gone!  Early Bird ducks live outside in mobile pasture shelters that are moved every day onto fresh grasses that haven't been grazed by poultry for at least a full year. They have constant access to water, and enjoy splashing and bathing several times a day.To help them grow, we supplement their diet with a high-quality feed free of GMOs, corn, soy, and antibiotics. Their healthy outdoor lifestyle and balanced and diverse diet produces a tender, juicy, and flavorful bird that will be the highlight of any meal!	3.5	lb	31.49	9.0	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/u15znALOShKHoo5ULngz_FK1A4104.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+738	Pasture Raised Pekin Duck (Frozen)	Pasture Raised Pekin DuckOur ducks have been raised in our orchard, in batches of 50 per “duck schooner” with lots of green grass and a wading pool. Their diet is a certified GMO free grain mix that includes organic corn, peas, wheat, barley, distillers grains and the minerals and vitamins they need to grow, along with wheat sprouts and the planted forages in the orchard including wheat, rye, and peas. They are harvested at 7 1/2 weeks, and frozen immediately for optimum freshness. Young duck is the most decadent poultry you will ever eat. The meat is moist, tender and will flake off the bone. The skin is crispy. The fat is melt in your mouth delicious. The broth made from the bones is better than chicken broth. Don’t forget to reserve the fat in your baking dish to fry up some potatoes. We fried up some delicious baby German potatoes from our garden to eat with our roast duck, along with a spring pasta salad we made with rocket arugula, easter egg radishes, marinated in our apricot vinegar and olive oil. Try a duck today, you’ll be glad you did! (Don’t be intimidated by all those fancy recipes on the internet. I roasted ours just like a chicken.) - says Rachel, Casa Rosa Farms	3	lb	23.99	8.0	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/lMYXnoLQQAWxrFbFVtEC_20160701-CasaRosa-Duck_MG_4234.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+739	Pasture Raised Duck (Frozen)	Whole Pasture-Raised Duck, free of GMOs, corn, soy, and antibiotics.  Healthy, happy ducks raised on the beautiful coast just a short drive South of San Francisco.Each duck is cryo-vac'd and flash-frozen to preserve the highest quality and freshness.Early Bird ducks are a truly gourmet treat.  Their life on our fertile pastures gives their rich and tender meat deep flavors, making these ducks a perfect example of the exceptional food that the beautiful coastal pastures south of San Francisco can produce.  This is a seasonal product, once it's gone, it's gone!  Early Bird ducks live outside in mobile pasture shelters that are moved every day onto fresh grasses that haven't been grazed by poultry for at least a full year. They have constant access to water, and enjoy splashing and bathing several times a day.To help them grow, we supplement their diet with a high-quality feed free of GMOs, corn, soy, and antibiotics. Their healthy outdoor lifestyle and balanced and diverse diet produces a tender, juicy, and flavorful bird that will be the highlight of any meal!	4	lb	35.69	8.92	lb	Meat	Poultry	http://goodeggs1.imgix.net/product_photos/u15znALOShKHoo5ULngz_FK1A4104.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+740	Ground Dark Meat Turkey (Frozen)	100% dark meat ground turkey for optimal flavor- sub for beef or pork in all your favorite recipes!BN Ranch White Broad Breasted Turkeys possess the classic mild flavor of turkey, but with all the benefits of BN Ranch's humane, environmental, and quality standards. Our broad breasted turkeys are fed a Non-GMO Project Verified diet of vegetarian feed formulated for a slower, more natural growth pattern. The turkeys are raised in a free-range environment with plenty of room to roam outdoors from the time they are six weeks old. Raised to the highest standards of humane care and environmental consideration, BN Ranch Broad Breasted turkeys redefine this Thanksgiving staple.	1	lb	9.49	9.49	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/HKDmWd7aQAmqjT9FJBto_FK1A3435.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+741	Smoked Turkey Breast (Frozen)	Smoking Goose Smoked Turkey Breast is all natural, free range birds. Brined in organic herbs and spices and smoked over fruit woods. This subtly smoked turkey has texture and body yet remains juicy. It tastes like you are thinly carving turkey right off the bone! Perfect for that "Thanksgiving-style" sandwich!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet.Ingredients: Whole breast of turkey, thyme, cloves, orange peel.	7.16	lb	158.99	22.21	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/XGeJDRltQFOvx9ofAOMv_20160914-SmokingGoose_WholeTurkey_MG_1004.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+742	Smoked Turkey Breast (Frozen)	Smoking Goose Smoked Turkey Breast is all natural, free range birds. Brined in organic herbs and spices and smoked over fruit woods. This subtly smoked turkey has texture and body yet remains juicy. It tastes like you are thinly carving turkey right off the bone! Perfect for that "Thanksgiving-style" sandwich!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet.Ingredients: Whole breast of turkey, thyme, cloves, orange peel.	5.14	lb	114.99	22.37	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/XGeJDRltQFOvx9ofAOMv_20160914-SmokingGoose_WholeTurkey_MG_1004.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+743	Smoked Turkey Breast (Frozen)	Smoking Goose Smoked Turkey Breast is all natural, free range birds. Brined in organic herbs and spices and smoked over fruit woods. This subtly smoked turkey has texture and body yet remains juicy. It tastes like you are thinly carving turkey right off the bone! Perfect for that "Thanksgiving-style" sandwich!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet.Ingredients: Whole breast of turkey, thyme, cloves, orange peel.	6.43	lb	142.99	22.24	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/XGeJDRltQFOvx9ofAOMv_20160914-SmokingGoose_WholeTurkey_MG_1004.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+744	Smoked Turkey Breast (Frozen)	Smoking Goose Smoked Turkey Breast is all natural, free range birds. Brined in organic herbs and spices and smoked over fruit woods. This subtly smoked turkey has texture and body yet remains juicy. It tastes like you are thinly carving turkey right off the bone! Perfect for that "Thanksgiving-style" sandwich!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet.Ingredients: Whole breast of turkey, thyme, cloves, orange peel.	6.56	lb	145.79	22.22	lb	Meat	Poultry	http://goodeggs2.imgix.net/product_photos/XGeJDRltQFOvx9ofAOMv_20160914-SmokingGoose_WholeTurkey_MG_1004.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+745	Uncured Rustic Bacon (Frozen)	This is the same famous, sugar-free, uncured Rustic\nBacon found at our farmers’ markets: brined with sea salt and hickory smoked\nwithout added nitrites. This is pure, savory bacon at its finest. Sliced and\nready for breakfast, a BLT or pasta. Ingredients: Pork, Water, Sea Salt, Cultured Celery Juice	0.75	lb	10.69	14.25	lb	Meat	Bacon	http://goodeggs2.imgix.net/product_photos/TqqFaON9QmOFSkNDULLx_FK1A5774.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+746	Hardwood Smoked Bacon (Frozen)	Handcrafted with maple sugar in small batches, this bacon is a personal favorite, not just because of the flavor but because it is sliced reasonably thick and retains some chew and texture after being crisped up in the skillet (cast iron, start it cold, flip once).Prepare yourself for the wonder of our locally hand-made bacon now using 100% Duroc pork, also known as "red pig." This heritage breed originated in the U.S. in the 1800s. It is a cornerstone for charcuterie in niche markets from California to Spain. Our bacon is made with pork that is farmed humanely with outdoor access and vegetarian diets; no gestation crates, no antibiotics, no hormones, no growth promotants, and no animal byproduct feeds.Ingredients: Pork, Water, Sugar, Sea Salt, Maple Sugar, Spices, Sodium Erythorbate, Sodium Nitrite.	0.75	lb	8.99	11.99	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/vx2WVpJRMKSNeiEVHAth_FK1A5363.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+747	Uncured Smoked Maple Bacon (Frozen)	This is the same popular, delicious, uncured sliced Maple\nBacon found at our farmers’ markets: brined with sea\nsalt and real, organic maple syrup, then hickory smoked with no added\nnitrites. This maple bacon has a classic flavor and aroma that is delicious\npaired with breakfast or savory dishes.  Ingredients: Pork, Water, Organic Evaporated Cane Syrup, Sea Salt, Organic Maple Syrup, Cultured Celery Juice	0.75	lb	11.29	15.05	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/ynxIEhpRQewbezCWg1gL_FK1A5745.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+748	Pasture Raised Honey Lavender Bacon (Frozen)	Handcrafted with lavender in small batches, Sonoma County Meat Co. brings you your new favorite bacon. Slightly sweet with just the tiniest hint of lavender, this bacon has got to be tasted!Prepare yourself for the wonder of our locally hand-made bacon now using 100% Duroc pork, also known as "red pig." This heritage breed originated in the U.S. in the 1800s. It is a cornerstone for charcuterie in niche markets from California to Spain. Our bacon is made with pork that is farmed humanely with outdoor access and vegetarian diets; no gestation crates, no antibiotics, no hormones, no growth promotants, and no animal byproduct feeds.Ingredients: Pasture Raised Pork, Sugar, Salt, Granulated Honey, Lavender Powder, Spices, Sodium Nitrite"Heritage breed pigs prance to create this bounty, free-ranging outdoors, raised by farmers who respect this land profoundly. Dry cured, hickory smoked, by the valiant team in Sonoma County. Fill your plate, clap your hands, for this bacon we share proudly."	0.75	lb	11.49	15.32	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/ePo7iwRoCusyDsu0Gxwh_FK1A5370.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+749	Uncured Sugar-Free Bacon (Frozen)	Truly uncured, Paleo-friendly bacon. Made from pasture raised Walnut Keep pork belly, no sugar, nitrites or nitrates added, no celery juice powder, no nothing. Just pure smoked porky goodness.Ingredients: Pork, Salt, Spices, "Sliced bacon, artisanally made in Sonoma County.""Here's the story of a lovely lady, and a very handsome butcher man.Established in 2014, with a valiant team, they make the best meats in the land.Wood smoked in the most amazing smokehouse, fill your plate, clap your hands."	0.75	lb	11.99	15.99	lb	Meat	Bacon	http://goodeggs2.imgix.net/product_photos/Je193VuQTyGHlSYo7sUn_Pork_Bacon1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+781	Chateaubriand (Frozen)	A great cut to share with a few friends, pan sear and finish in a hot oven to medium rare. Often served with a rich sauce, a great meal for a small dinner party.Certified Humane Raised and Handled, GMO-free, and Food Alliance Certified.	2	lb	31.89	15.95	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/LIVuTB82TV2svdpvzZmL_FK1A0207.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+750	Uncured Bacon Lardons (Frozen)	Bacon lardons are the perfect addition to a soup or weekend frittata. They also go great crumpled over a salad or baked potato. Ingredients: Llano Seco pork, sea salt, brown sugar, cherry powder, celery powder, turbinado sugar and natural flavorings.Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	1	lb	7.79	7.79	lb	Meat	Bacon	http://goodeggs2.imgix.net/product_photos/aLVVDOPvQf6h6wNcBtmB_20160513-CasaRosa_CottageBacon_MG_9511.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+751	No Sugar PALEO Bacon (Frozen)	That's right, you read it correctly, a true No Sugar Bacon, perfect for those trying to fill their bacon desires and maintain the Paleo life.  Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.Ingredients: Pork, Salt, Nutmeg, Paprika, Celery PowderNatural Bacon, No Sugar, No Nitrates	0.75	lb	11.99	15.99	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/54WiMb93TFZj91Q37WAX_wt2x6gajJUyGFBX8GMmau3H1ZPQAXN4jIxpjZUapiCg.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+752	Smoked Pepper Bacon (Frozen)	This is the bacon that changed everything.  With it's cult-like following at the Farmer's Markets, we are proud to offer you our Smoked Pepper Bacon.  Thick cut, lots of fat (which of course you keep to cook your veggies in) and quite possibly the best bacon ever.  Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.Ingredients: Pork, Salt, Cane & Maple Sugars, Pepper, Celery PowderNatural Bacon, No Nitrates	0.75	lb	11.49	15.32	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/TU7YLRzcRJiXfjbpqRPA_NHrp9OyCq2Fm75VdkEtleov4rmg3ojXg_p9JqKB0FeM.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+753	Smoked Maple Bacon (Frozen)	If you're looking for that classic bacon flavor, sweet and savory that just hits that bacon spot, congratulations, you've found your new best friend.  DG-Langley Farms is proud to offer our Maple Sugar bacon.  This is what real bacon tastes likes folks.Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.Ingredients: Pork, Salt, Cane & Maple Sugars, Celery PowderNatural Bacon, No Nitrates	0.75	lb	12.79	17.05	lb	Meat	Bacon	http://goodeggs2.imgix.net/product_photos/d4BYkvqYQlSREIJCH2jF_gSQBG6aK_Dq3hTMBCsiTGBm16p8SsZOE4N3zY9sZhAc.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+754	Guanciale (Frozen)	Jowl bacon- the king of all bacons, the classic ingredient to many an Italian dish (Carbonara anyone? all'Amatriciana?), guanciale adds that silky smooth feel and beautiful porky flavor to your pasta sauce. Or just fry some for breakfast, that's cool too.Ingredients: Pork, Sea Salt, Cane & Maple Sugars, Celery Powder.	0.3	lb	8.99	29.97	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/0gbApB3cQDK6CVZWhwHB_unspecified.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+755	Grass Fed Beef Bacon (Frozen)	Our grassfed beef brisket makes wonderful beef bacon. Smoked with alder \nwood from the North Coast, and cured with a traditional sea salt and \nmaple sugar rub, this bacon is full flavored and smoky. Try our beef \nbacon instead of pork bacon for a less fatty breakfast treat, and get \nall the benefits of grass-fed beef with the flavor of bacon.Ingredients: sea salt, maple and non-GMO cane sugars, sodium nitrite (naturally occurring in celery salt). Smoked, fully cooked.	0.4	lb	11.19	27.98	lb	Meat	Bacon	http://goodeggs1.imgix.net/product_photos/eUGszMpySqCw7XUkr0VS_FK1A9615.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+756	Ground Beef (Frozen)	Prather Ranch Meat Company is proud to offer our legendary Prather Ranch\nground beef at Good Eggs. Prather Ranch ground beef is known far and wide for\nits exceptional flavor (even our ground beef is dry-aged!), quality, and single\nanimal traceability. The grind is 85/15 lean to fat. Once you try it you’ll be hooked! Prather beef is grass fed and \nbarley/alfalfa hay finished, then dry-aged for 16-21 days. Certified Humane Raised and Handled, GMO free, and Food Alliance Certified.	1	lb	8.99	8.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/Y3EMJRBmQbOvlMt568aQ_FK1A4975.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+757	Grass Fed Beef Burger Patties (Frozen)	Our delicious 1/4 lb burger patties are now available just in time for sunny weather. Roll out that bbq, grab a beer and get grilling!(4) 1/4 lb burgers in a pack. We raise our Limousin steers on certified organic rotational pasture and native grasslands within 2 hours of the Bay Area in the beautiful Capay Valley. We take the time to alfalfa finish all our animals. We truly believe that in order for consistency in a grass fed, grass-finished product, each producer must choose the best method for their farm and its local ecology. We grow our own pesticide free, non-GM alfalfa on our family's fields to produce high quality beef. You will find our farm's beef to be a very lean red meat with light marbling, yet extra tender. Our beef is dry-aged for a minimum of 16 days, flash frozen, and vacuum sealed. We are a certified USDA Grass Fed Producer and our farm and pastures are certified organic by CCOF. Follow us on our new Instagram feed @casa_rosa_farm and see how our animals really live.	1	lb	12.99	12.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/zHhKdpqTU2ZW5aVw8KmA_Beam1U1OTXO8H3qLy8Dg_EiyGkbFGV9EDK6gV8Z4hfCqi-O30OOClDhYyBagPtA0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+758	Ground Beef	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. "Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.8	lb	6.39	7.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/akGxv23jQeKoLTmASkfY_Beef_Ground_05.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+764	Grass-fed Ribeye Steak (Frozen)	100% Grass-fed and Finished Ribeye SteakPRATHER RANCH MEAT CO is proud to introduce Lost Coast Grass-Fed Beef into its repertoire of high quality, sustainably and humanely raised meat offerings.Lost Coast Grassfed beeves are raised on the lush grass pastures of Humbolt County they are 100% grassfed and finished, and are never treated with hormones or antibiotics.	0.7	lb	18.99	27.13	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/qRKPUDTvQNmNKHrlm1W7_FK1A5338%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+765	Filet Mignon Steak	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. "Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.7	lb	19.59	27.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/5TwObZpMQ5u8dnoX8MQX_FK1A4517.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+766	Filet Mignon Steak (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. "Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.8	lb	22.39	27.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/5TwObZpMQ5u8dnoX8MQX_FK1A4517.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+767	Ribeye Steak (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. The perfect steak for the grill, or sear in hot pan and finish off in the oven to a perfect medium rare."Oak Ridge Angus raises premium grass-fed grain-finished beef in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi in 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pasture raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.75	lb	14.99	19.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/wZbqS4IkSnK91Knsi0pP_FK1A4653.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+768	Ribeye Steak (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. The perfect steak for the grill, or sear in hot pan and finish off in the oven to a perfect medium rare."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1	lb	22.99	22.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/wZbqS4IkSnK91Knsi0pP_FK1A4653.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+769	Carne Asada	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. \nSliced by\nhand for ease of cooking and to maximize the surface area for your favorite\nspice mix! Cut into strips, douse in spices and use in tacos, fajitas, and\nburritos. \n\n"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.9	lb	10.79	11.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/d1YOp4UbQaORRyVRmpkz_FK1A4381.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+770	Fajita Beef	Fajita/Stir Fry Beef- Oakridge Angus Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Thin cut strips of top round cook up quickly for an easy meal- fajitas, stir fry, or steak tacos, great with a quick marinade or sprinkling of your favorite rub or herb mixture, this a great candidate for a nice hot cast iron pan or wok."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1	lb	11.99	11.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/hZvIc29HS1OmAqQNpKay_iEpnjysRHSoaK0r4UaGC_FK1A2681.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+771	Carne Asada	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. \nSliced by\nhand for ease of cooking and to maximize the surface area for your favorite\nspice mix! Cut into strips, douse in spices and use in tacos, fajitas, and\nburritos. \n\n"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1.25	lb	14.99	11.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/d1YOp4UbQaORRyVRmpkz_FK1A4381.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+782	Chuck Roast (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Full of flavor, chuck roast responds best to slow and low cooking- braise or toss it in the crock pot and come home to an epic dinner all ready to eat!"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1.9	lb	18.99	9.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/4e0Em9fCSpayL629mSrl_FK1A4409.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+772	New York Steak	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. The NY Steak- deliciously flavorful, even cooking, impressive yet simple. Salt and pepper, a few minutes per side on a hot grill or pan, let it rest and you're all set!"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."Best if used or frozen within 11 days of the "packed on" date printed on the package.	0.8	lb	15.99	19.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/UbQ7pgEwStWlRS2Qc12e_FK1A4438.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+773	T-Bone Steak (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Second only to the Porterhouse-perfect for the grill, or sear in hot pan and finish off in the oven to a perfect medium rare. The perfect steak to share with a few friends with a bottle or two of good red wine."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	1	lb	19.99	19.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/r0EFzVM2QUm3a1wEKhRD_FK1A1419.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+774	Chuck Steak (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. \nBone-In Chuck Steak- A high flavor, low price steak, perfect for the grill or broiler, about 1/2" thick. \n\n"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."Best if used or frozen within 11 days of the "packed on" date printed on the package.	0.75	lb	7.49	9.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/KPOaarGGSJC08JmgKEIG_20160526-SonomaMeatCo_ChuckSteak_MG_0294.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+775	Grass-fed Hanger Steak (Frozen)	Hanger steaks are one of those cuts good butchers keep for themselves: full of flavor and easy to prepare. It is a thick strip steak from the underside of the beef cow, between the rib and the loin. We like to grill them for fajitas or season with a little dry rub and serve with an arugula salad: delicious!	1	lb	15.99	15.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/BxDB8NPCTa29fTUmG1s0_0oJVe1RRyopZagaFpAnHyfVen-q50SW4bHmMNm24WxY.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+776	Grass-fed Hanger Steak (Frozen)	100% Grass-fed and finished Hanger Steak- from Morris GrassfedHanger steaks are one of those cuts good butchers keep for themselves: full of flavor and easy to prepare. It is a thick strip steak from the underside of the beef cow, between the rib and the loin. We like to grill them for fajitas or season with a little dry rub and serve with an arugula salad: delicious!	1.75	lb	27.99	15.99	lb	Meat	Beef	http://goodeggs2.imgix.net/product_photos/BxDB8NPCTa29fTUmG1s0_0oJVe1RRyopZagaFpAnHyfVen-q50SW4bHmMNm24WxY.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+777	Marinated Maui Ribs (Frozen)	Prather Ranch Dry-Aged\ncross-cut short ribs are marinated in soy sauce, toasted sesame oil, ginger and\nred chili paste.  Grill them quickly over high heat to a\nperfect medium-rare. Great for parties, this item is a summer classic.\nIngredients: Prather Ranch\nDry-Aged Cross-Cut Short Ribs, Soy Sauce, Toasted Sesame Oil, Ginger, Sugar,\nChili Paste, Scallions.	2	lb	21.99	11.0	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/acEYOC3RIiQV79OG19dh_FK1A6953.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+778	Grass-fed Beef Shank (Frozen)	100% Grass-fed and Finished Cross Cut (Osso Buco) Beef Shank PRATHER RANCH MEAT CO is proud to introduce Lost Coast Grass-Fed Beef into its repertoire of high quality, sustainably and humanely raised meat offerings.Lost Coast Grassfed beeves are raised on the lush grass pastures of Humbolt County they are 100% grassfed and finished, and are never treated with hormones or antibiotics.	1.75	lb	17.49	9.99	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/hd4NvVEST4WoNTtmfdPx_FK1A4468.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+779	Korean Cut Short Ribs (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. The summer version of short ribs! Marinate (equal parts soy, sugar, rice wine + some ginger and garlic, or try this awesome recipe: http://cooking.nytimes.com/recipes/1014547-korean-style-short-ribs) and throw on a hot grill for a minute or two on each side and you've got dinner!"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2.1	lb	27.29	13.0	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/bBGbdgiQuOJNvelBHTVI_20160617-SonomaMeatCo_KoreanShortRibs_MG_3008.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+780	Short Ribs	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Simmer\nthese nuggets of flavor low and slow for a minimum three hours and you will\ndiscover a whole world of falling-off-the-bone wonder. For best results, simmer\nin a 50/50 mixture of stock and (cheap) red wine; throw in large chunks of\nonion, carrot, celery, salt and whole black peppercorns for extra oomph! Strain\nbroth before serving."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2	lb	21.99	11.0	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/Voz09WwsSHqmsWnfjuFI_FK1A6164.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+783	Beef Brisket (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. An awesome way to feed a crowd on the weekend, brisket is a classic BBQ cut and makes amazing sandwiches. Smoke it, roast it, brine it, braise it, or throw it in the slow cooker. For more ideas for brisket (homemade pastrami anyone?) and general bbq knowledge check out http://amazingribs.com/, my favorite online outdoor cooking resource."Oak Ridge Angus raises premium grass-fed grain-finished beef in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pasture raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2.5	lb	28.99	11.6	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/YqKB2R2iPnnZgei3xjQd_FK1A6141.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+784	Beef Brisket	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Smoke\nit, roast it, brine it; this classic cut is perfect for trying out that new\nsmoker, or impressing your in-laws on St. Patrick’s Day. "Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	3.25	lb	38.99	12.0	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/YqKB2R2iPnnZgei3xjQd_FK1A6141.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+785	Beef Shanks	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. \nThe\nquintessential braising dish! With a beautiful round of femur in the center\npacked full of succulent marrow, this cut packs two flavor punches in one\npackage!\n\n"Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	0.9	lb	9.49	10.54	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/lMuB7fDTGmQZoZfknpiF_FK1A4468.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+786	Oxtail (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Simmer\nthese nuggets of flavor low and slow for a minimum three hours and you will\ndiscover a whole world of falling-off-the-bone wonder. For best results, simmer\nin a 50/50 mixture of stock and (cheap) red wine; throw in large chunks of\nonion, carrot, celery, salt and whole black peppercorns for extra oomph! Strain\nbroth before serving."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2.75	lb	19.99	7.27	lb	Meat	Beef	http://goodeggs1.imgix.net/product_photos/rBvCw8VS9SMI3aPpeL2Q_20160611-SonomaMeatCo_Oxtail_MG_1976.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+787	Pasture Raised Ground Pork	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Ground pork- perfect for meatballs, meatloaf, potstickers, wontons, pasta sauce, and on and on...	1	lb	5.99	5.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/gVayrCaQfynKa8txTvqe_FK1A7934.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+788	Avocado Fed Ground Pork (Frozen)	Our goal at Stepladder Avocado Fed Pork is to create Hog Heaven. Our heritage Gloucester Old Spots roam 200 acres of forest with incredibly low density, and no fences. They are chaperoned by our livestock guardian dog, Gus, and free to forage, root, and just be happy pigs. They return to a small paddock in a gulch where they find water, a small amount of non-GMO, vegetarian grain ration, and all of the avocados we find on the ground of our orchards.  Heritage pigs have slightly smaller cuts than modern breeds, but the marbling and fat content makes up for it ten-fold.	1	lb	12.99	12.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/6fse32HRSQCQyBHl5hat_F1PS6rffS0y8PvkI2GB8_FK1A8581.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+789	Ground Pork (Frozen)	Ground pork is a staple in most households.  Our ground pork is a 80/20 meat to fat ratio.  Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.	1	lb	5.99	5.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/Ww7BZxTnCG5iIEGrs3lQ_-j7UmdqpVqoH0ddCHjnzNGQDrmwFf8Iwc2ZkWQhMHa4.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+790	Pork Stew Meat (Frozen)	Cubes of pork stew meat, all cut up and ready to go in your chili, carnitas, chile verde, pork goulash, etc. A great ingredient to have on hand when you get the hankering for a slow cooker meal!Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	1	lb	9.29	9.29	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/OuyBMwFqSrWZNK4JC61p_20160513-LlanoSeco_PorkStew_MG_9507.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+823	Pork Scallopini	Pork Scallopini- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	0.8	lb	7.49	9.36	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/pBAZHi47SNCV44VJNHxI_20161007-PratherRanch_ThinCutPorkChops_MG_3213.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+791	Ground Pork (Frozen)	Our Ground Pork is the perfect ration of fat to lean meat, blended from the most flavorful cuts of the animal. It can be transformed into many dishes: spiced breakfast patties, tacos, ragù, or your very own homemade sausages. Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	1	lb	8.99	8.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/rNhbGJibRhq8MX99SRVw_FK1A2932.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+792	Pasture Raised Ground Pork (Frozen)	Ground Pork from pasture raised pigs!Pasture raised Berkshire cross hogs from the Capay Valley.	1	lb	9.99	9.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/m3bqQ2QiSgmxiB419XL6_Pork_Ground_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+793	Pasture Raised Ground Pork	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Ground pork- perfect for meatballs, meatloaf, potstickers, wontons, pasta sauce, and on and on...	0.8	lb	4.79	5.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/gVayrCaQfynKa8txTvqe_FK1A7934.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+794	Ground Pork (Frozen)	Ground Pork- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	1	lb	7.49	7.49	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/NYMUAB7dQJGfavknJjqT_FK1A0952.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+795	Picnic Roast (Frozen)	The Picnic Roast can be used in place of Boston\nButt for great stew, carnitas or pulled pork. The Picnic is also a\nstaff favorite for an amazing grill or oven roast—very juicy and delicious! Sit\naround the smoker on a Saturday, or throw it in your slow cooker, rotisserie or\noven for easy week-day cooking. \n\nNon-GMO Project Verified and\nFood Alliance Certified.	2.25	lb	17.99	8.0	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/KGisUryrTE1bdVTHfbbg_FK1A7603.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+796	Spare Ribs (Frozen)	Anytime of the year these will be a hit.  Our spare ribs are tender and juicy with so many ways to prepare them: we like to dry rub with a mix of salt, cayenne, sugar and fennel, or leave overnight with oil, citrus and fresh herbs.  Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	3	lb	17.99	6.0	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/dIDSDbWHR4SLJfEExrp9_spare%20rib.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+797	Boneless Pork Shoulder Roast (Frozen)	These were for made low and slow.  Carnitas anyone?  Pulled Pork Sandwich?  You've found what you've been looking for.Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.	2.5	lb	19.99	8.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/WU2E3TK4TbiiZ7CWKvIg_oiIrpkwVEmQU8F85rrBKWt170Y_C2gxCqRD2dI-RARM.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+798	Boston Butt (Frozen)	From Non-GMO Project verified heritage pigs,\nthis super juicy Boston Butt shoulder roast is perfect for the slow-cooker or smoker.\nBoston Butt is a great choice for carnitas, stews, pulled pork or any other\nlow-and-slow pork shoulder recipe. \nNon-GMO Project Verified and\nFood Alliance Certified	2	lb	17.99	8.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/AkQ8pVaXRXwxyNE4oXIA_FK1A7651.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+799	Pork Tenderloin (Frozen)	Roast this baby in your oven slow and low and surround with your favorite vegetables to caramelize. Make a salsa verde of fresh parsley, mint, arugula and the like, with garlic, lemon juice and olive oil to garnish your lovely loin roast. Slice thin and wow your drooling dinner guests. Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	0.75	lb	14.99	19.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/QE3j1zoQTyGpcyvmERqX_uJ4TVbCJQuKZ5SDxAYSY_8gmO20za25aZWwqKLqxGYn-3RkvR3F7860NKJL8NABk.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+800	Pasture Raised Pork Shoulder	Walnut Keep Farms Pork- from Sonoma County Meat Company\nCarnitas,\npulled pork, chili verde, family-reunion worthy roast, oh my! This boneless\nroast is your one-stop-shop for all things juicy, tender, and porky. Slather in\nsauce, or let the pasture-raised meat speak for itself, this cut can produce\nsimple, weekday fare or be dressed to the most dizzying heights of culinary\nprowess. Savor the pork.\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	3	lb	19.49	6.5	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/SNbZbVvcSnCHe4Dspkx3_FK1A7827.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+938	Loukanika	Greek style salami with vivid flavors of cumin and hints of orange zest based on the family recipe of Salumist Elias Cairo. Natural, edible hog casings and authentic molds.Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, orange zest, garlic, sodium nitrite, sodium nitrate, spices, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/dUtE8DpS0aSHje3PLtPQ_FK1A1174.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+801	Pasture Raised Pork Belly	Walnut Keep Farms Pork- from Sonoma County Meat CompanyYour\nfavorite ramen would not be the same without those succulent slices of pork\nbelly; fresh and ready for anything you can imagine, this cut is for the cook\nwho wants that extra edge. Flavor is first with this pork, so if you are\nlooking for a good base to your new bacon recipe, or if you are just dipping\nyour toes into the DIY bacon universe, this is the product for you!\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on \nwalnuts, giving the fat a rich, creamy texture. Never given antibiotics \nor growth hormones, and never confined.	2	lb	15.99	8.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/tiLV5bjXRdOzxeb3CRl0_FK1A7922.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+802	Pasture Raised Pork Shoulder	Walnut Keep Farms Pork- from Sonoma County Meat Company\nCarnitas,\npulled pork, chili verde, family-reunion worthy roast, oh my! This boneless\nroast is your one-stop-shop for all things juicy, tender, and porky. Slather in\nsauce, or let the pasture-raised meat speak for itself, this cut can produce\nsimple, weekday fare or be dressed to the most dizzying heights of culinary\nprowess. Savor the pork.\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	2.75	lb	17.99	6.54	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/SNbZbVvcSnCHe4Dspkx3_FK1A7827.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+803	Bone-In Shoulder Roast (Frozen)	Bone-In Pork Shoulder (Butt) Roast- from Rancho Llano Seco, Chico CA Our pigs are a cross of Duroc and Yorkshire \nbreeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of\n which are grown on the Rancho. Pigs are raised in deep-bedded hoop \nbarns with continual access to large open air pastures with plenty of \nsunshine and a great view of the California Buttes. All animals are \nconfinement-free for 100% of their lives, humanely treated with best \npractices certified by Global Animal Partnership. Our pigs are never fed\n antibiotics or growth hormones. Llano Seco Pork is the culmination of \nour mission to provide a variety of products while caring for the \npeople, the animals and the land. We pride ourselves in our holistic \napproach to ranching.	2.75	lb	25.99	9.45	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/4drumGrITUOSOmQJbkIm_FK1A2923.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+804	Boneless Pork Shoulder Roast (Frozen)	These were for made low and slow.  Carnitas anyone?  Pulled Pork Sandwich?  You've found what you've been looking for.Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.	3.25	lb	28.99	8.92	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/WU2E3TK4TbiiZ7CWKvIg_oiIrpkwVEmQU8F85rrBKWt170Y_C2gxCqRD2dI-RARM.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+805	Pasture Raised Pork Tenderloin	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. The coveted tenderloin- only two per pig, so not always available, perfect brined and roasted in the oven. Don't overcook this one, an instant-read thermometer is key here!	1.4	lb	20.99	14.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/1p1xb5sMT82aL6jLrJpX_FK1A8625.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+806	Pork Spare Ribs (Frozen)	Pork Spare Ribs- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	1.5	lb	10.49	6.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/ITSBF3OWROGY0rDsMLFY_FK1A8536.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+807	Spare Ribs (Frozen)	From our Non-GMO Project verified heritage pork program, our spare ribs are uniquely meaty and juicy: Grill ‘em, bake ‘em,\nbraise ‘em or smoke ‘em—you know how to do it. \n\nNon-GMO Project Verified and\nFood Alliance Certified.	1.6	lb	11.19	6.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/rudWjkOHRfmsEUH7mSA5_FK1A8536.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+808	Pasture Raised St. Louis Ribs	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. The perfect cut for smoking on the grill, but great in the oven or slow cooker too!	2.5	lb	22.49	9.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/LjNojFIT7xWimZCASUxg_FK1A2380.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+809	Pasture Raised St. Louis Style Pork Ribs	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. The perfect cut for smoking on the grill, but great in the oven or slow cooker too!	2.75	lb	24.79	9.01	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/LjNojFIT7xWimZCASUxg_FK1A2380.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+810	Pasture Raised St. Louis Ribs	Walnut Keep Farms Pork- from Sonoma County Meat CompanyThe perfect cut for smoking on the grill, but great in the oven or slow cooker too!Heritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	3	lb	26.99	9.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/LjNojFIT7xWimZCASUxg_FK1A2380.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+811	Spare Ribs (Frozen)	Anytime of the year these will be a hit.  Our spare ribs are tender and juicy with so many ways to prepare them: we like to dry rub with a mix of salt, cayenne, sugar and fennel, or leave overnight with oil, citrus and fresh herbs.  Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	3.5	lb	20.99	6.0	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/dIDSDbWHR4SLJfEExrp9_spare%20rib.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+812	Pasture Raised Pork Loin Roast (Frozen)	Loin roast- brine, sear, finish in the oven for a simple showstopper of a meal.Pasture raised Berkshire-cross hogs from the Capay Valley.At Simas Swine and Wine we raise pork the old fashion way.  They enjoy an open air environment with 10 acres to roam around on; some pasture, some open lot.  They have shelter to get out of the rain and cold, or sun in the summer.  In the heat of summer we employ a mister system as well as mud wallows to keep them cool.  Piglets are allowed to stay with their mom for at least 5 weeks compared to 3 in a typical system.  They eat a commercially prepared ration with added luxuries in the summer and fall of culled peaches, melons and winter squash.	2.25	lb	33.69	14.97	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/2yI2RHCSaKt2HA1nkVfZ_FK1A3194.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+813	Pasture Raised Pork Shank (Frozen)	Walnut Keep Farms Pasture Raised PorkPork Shank Roast\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	2.5	lb	22.49	9.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/6mSOWZVQJaCqjIMBWiXy_20160505-SonomaMeatCo_PorkShank_MG_8952.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+814	Pasture Raised Pork Shank (Frozen)	Walnut Keep Farms Pasture Raised PorkPork Shank Roast\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	3	lb	26.99	9.0	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/6mSOWZVQJaCqjIMBWiXy_20160505-SonomaMeatCo_PorkShank_MG_8952.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+815	Thick-Cut Pork Chop (Frozen)	From Non-GMO verified heritage pigs, these\npork chops are bone-in, thick, juicy, flavorful and easy to cook. Cut 2”-thick,\nthey are great for the grill, skillet or oven. \n\nNon-GMO Project Verified and Food Alliance\nCertified	0.75	lb	9.59	12.79	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/xWmUo7IgSPK2jMP05Er9_FK1A5582.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+816	Pasture Raised Pork Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	0.8	lb	7.19	8.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/iFQsNyeSKiH5h4pscsQy_FK1A7776.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+817	Bone-In Pork Chops (Frozen)	This pork chop is tender and flavorful, the "other red meat" as we like to say. Whether its put on the grill, the skillet, or in the oven, you're in for a treat. Our pork's fat is supple and full of just as much, if not more, flavor than the meat...be sure not to cut it off before cooking! Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	1.5	lb	19.19	12.79	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/SGrrcmmQki7JIfXxDByX_chop.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+818	Pasture Raised Pork Loin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	0.6	lb	5.99	9.98	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/kCrhemySRPOh4T944ZaF_FK1A7951.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+819	Pasture Raised Pork Loin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.25	lb	12.49	9.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/kCrhemySRPOh4T944ZaF_FK1A7951.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+820	Thin Cut Pork Loin Chops (Frozen)	Bone In Thin Cut Pork Loin Chops- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	0.9	lb	10.49	11.66	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/o0MwQFQlS0usCNa8C1cR_20161007-PratherRanch_BonelessLionChop_MG_3228.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+821	Thin Cut Pork Loin Chops (Frozen)	Bone In Thin Cut Pork Loin Chops- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	0.6	lb	6.99	11.65	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/o0MwQFQlS0usCNa8C1cR_20161007-PratherRanch_BonelessLionChop_MG_3228.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+822	Thin Cut Pork Loin Chops (Frozen)	Bone In Thin Cut Pork Loin Chops- Pure Country Pork (Ephrata, WA), from Prather Ranch Meat CompanyThese Verified Non-GMO and Food Alliance Certified black hogs are fed a Non-GMO verified diet consisting of barley, wheat, triticale, field peas, and flax. They are never treated with antibiotics. The pork quality is distinctive with it’s European small grain finish giving it a great taste.	0.7	lb	8.29	11.84	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/o0MwQFQlS0usCNa8C1cR_20161007-PratherRanch_BonelessLionChop_MG_3228.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+824	Pasture Raised Pork Sirloin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1	lb	8.99	8.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/ZiHVVaPDTxmHuaFFptCp_FK1A7814.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+825	Bone-in Pork Chop (Frozen)	These beautiful pork chops are bone-in and cut 1 1/4" thick.Our sows are Yorkshires crossed on either a Duroc or Berkshire boar. The\n sows are pastured along with their piglets until the piglets are \nweaned. The weaned piglets are then finished with whole milk, whole \ngrain breads, brewers grain, and tortillas, producing what we believe to\n be a superior product.  Great for grilling anytime of the year.  We suggest medium high heat, 4-5 minutes per side and another 4-5 minutes tilted up on the bone.	1	lb	10.49	10.49	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/pRdcDnvSfecXnzLzEjef_Z1JZxpvES8QNR37h0Mmi9-E9Wcy2Xi70IASWLRnNfR4.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+826	Pasture Raised Pork Sirloin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.25	lb	11.29	9.03	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/ZiHVVaPDTxmHuaFFptCp_FK1A7814.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+827	Pasture Raised Pork Sirloin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.5	lb	13.49	8.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/ZiHVVaPDTxmHuaFFptCp_FK1A7814.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+828	Pasture Raised Pork Chop, Double Cut	Walnut Keep Farms Pork- from Sonoma County Meat Company\nAn extra thick rib chop (2+ inches!), for that Chop House experience in your own home. This is a great cut to brine for a few hours before cooking, 3 tbsp salt (4.5 tblsp if using Mortons kosher or other larger grain salt) to 1.5 quarts water. Also a great chop for the "reverse sear"- start it in a 275 degree oven on a rack over a rimmed baking until the center hits 120 degrees, then sear all sides in a screaming hot cast-iron skillet, about 2 minutes/side, until the center hits 140 degrees. Rest for 10 minutes and serve your perfectly cooked, amazingly juicy pork!Grill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual.\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.5	lb	13.49	8.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/iFQsNyeSKiH5h4pscsQy_FK1A7776.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+829	Pasture Raised Pork Sirloin Chop	Walnut Keep Farms Pork- from Sonoma County Meat Company\nGrill,\npan-sear or broil until that golden brown crust comes forth and blows away all\nmemories of pork chops so dry you could shingle a house. Paired with apple\nsauce, collard greens, or mashed potatoes, this chop is above and beyond the\nusual. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	2	lb	17.99	8.99	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/ZiHVVaPDTxmHuaFFptCp_FK1A7814.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+830	Boneless Half Ham (Frozen)	Made by PRMC’s own Mark Keller, these\ndelicious, ready to eat half hams are maple-salt brined and naturally long-smoked over hickory. All ingredients are organic or organic compliant - naturally cured with celery and salt only. Nitrite-free, Non-GMO.	3	lb	38.99	13.0	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/nnirnWd0SSWSj1YSqVa0_FK1A5161%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+831	Guanciale	Heavily spiced with bay leaves, garlic, juniper berries, sea salt, brown sugar and black peppercorns, these cured hog jowls bring a rich flavor and more dense texture than their belly-cut cousin, pancetta.All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. THe base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. Ingredients: pork jowl, bay leaves, juniper berries, garlic, black peppercorns	8	oz	14.29	28.58	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/bOkPeOOQOKMGYeLz3oip_20160415-SmokingGoose_Tasso_MG_6978.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+832	City Ham	This version of Smoking Goose's City Ham is made exclusively for Good Eggs! This city ham comes from        Gunthorp Farms, which is in the 407 tier of Smoking Goose's sourcing. The most popular variety of this versatile meat. Smoking Goose's City Hams are wet-cured with a brine made of salt, sugar, clover, juniper, bay, and garlic. This brine lends the meat a mild, juicy flavor. Then the ham is hickory smoked for more depth. All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. Ingredients: pork, clove, juniper, bay, garlic, hickory smoked	12	oz	16.99	22.65	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/9aQoXik0Ss5ktHnFAN8A_20160415-SmokingGoose_CityHam_MG_6971.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+833	Smoked Tasso Ham	By following the Cajun tradition this "ham" is cut from the pork shoulder rather than the hind legs. The rich dense meat is heavily spiced with white pepper, allspice, chilies, and marjoram before hanging in the smokehouse for a thick lick of smoke from the smoldering pecan wood. Traditionally used in cajun cooking adding depth to gumbo, jambalaya and dirty rice but can be used in other styles of cooking too. Add a bit of chopped tasso to creamy dips and fondues for a peppery bite and rich texture. Or add to eggs, greens, soups, or use it as the perfect accompaniment to briny shellfish.All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. This item is stored frozen. Please use within 30 days of defrosting.Ingredients: smoked pork flat iron, cayenne, marjoram	8	oz	10.19	20.38	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/vabu0EFrQ1SdWXzs1xqS_20160415-SmokingGooseGuanciale_MG_6987.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+834	Pasture Raised Ham Steaks	Ham Steak- pastured raised, GMO free pork from Casa Rosa in the Capay ValleyThe perfect breakfast side dish! About 1/4" thick, this full slice of ham cooks up quickly to accompany your morning eggs and coffee.Ingredients: Pork Legs, Salt, Cane and Maple Sugar, and Celery Powder	1.25	lb	17.49	13.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/y4ZnzzRQSnj2oH3dz8yw_20160804-CasaRosa_HamSteak_MG_7453.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+835	Smoked Tasso Ham	By following the Cajun tradition this "ham" is cut from the pork shoulder rather than the hind legs. The rich dense meat is heavily spiced with white pepper, allspice, chilies, and marjoram before hanging in the smokehouse for a thick lick of smoke from the smoldering pecan wood. Traditionally used in cajun cooking adding depth to gumbo, jambalaya and dirty rice but can be used in other styles of cooking too. Add a bit of chopped tasso to creamy dips and fondues for rich, peppery bite and pleasing texture. Or add to eggs, greens, soups, or use it as the perfect accompaniment to briny shellfish.All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. THe base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. This item is stored frozen. Please use within 30 days of defrosting.Ingredients: smoked pork flat iron, cayenne, marjoram	4	oz	5.29	21.16	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/vabu0EFrQ1SdWXzs1xqS_20160415-SmokingGooseGuanciale_MG_6987.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+836	Smoked Tasso Ham	By following the Cajun tradition this "ham" is cut from the pork shoulder rather than the hind legs. The rich dense meat is heavily spiced with white pepper, allspice, chilies, and marjoram before hanging in the smokehouse for a thick lick of smoke from the smoldering pecan wood. Traditionally used in cajun cooking adding depth to gumbo, jambalaya and dirty rice but can be used in other styles of cooking too. Add a bit of chopped tasso to creamy dips and fondues for rich, peppery bite and pleasing texture. Or add to eggs, greens, soups, or use it as the perfect accompaniment to briny shellfish.All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. THe base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. This item is stored frozen. Please use within 30 days of defrosting.Ingredients: smoked pork flat iron, cayenne, marjoram	12	oz	15.49	20.65	lb	Meat	Pork	http://goodeggs2.imgix.net/product_photos/vabu0EFrQ1SdWXzs1xqS_20160415-SmokingGooseGuanciale_MG_6987.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+837	Mini Ham (Frozen)	Llano Seco Meats transforms our pork and beef into artisanal salted and smoked products. Harkening back to a time when butchery was a craft and home food preservation was the norm, Llano Seco Products honor the traditions of the historic European and American kitchens of our ancestors. Our line of handcrafted value-added products compliment our primal and sub-primal pork and beef cuts, and alchemizes the deep flavor of our meat into ready-to-eat products. Smoked, salted, spiced, and uncured, meaning no nitrates or nitrates added, just pure meaty goodness.Ingredients: Llano Seco pork, sea salt, sugar, celery powder, cherry powder, sodium carbonate, and flavorings.	0.75	lb	7.49	9.99	lb	Meat	Pork	http://goodeggs1.imgix.net/product_photos/yDFhxOuRJW4JArExag8b_FK1A7587.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+838	Grassfed Ground Lamb (Frozen)	Anderson Ranches raises their grass fed lamb for longer periods of time, providing higher quality meat. The lamb is never given antibiotics or hormones. The ranch maintains a low carbon footprint by having the lamb processed at their own facility- which also provides minimal stress for the animals. Humane Certified Raised and Handled.	1	lb	12.99	12.99	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/kKRhIP3PRjBWrxX2Mtg4_9d3nU8dfQpiRydBRlMbA_cnSSrTQVq0OXkPWrKSkQ_J7KkwAKgSTqcDwlrtwjq_FK1A7449.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+839	Lamb Stew	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- stew meat ready for the slow cooker or tagine, or a ragu, or chili, or whatever else you fancy.	1	lb	13.99	13.99	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/SQyr1yw5RpScWpWAKzA9_FK1A3949.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+940	Chorizo Rioja	Our most traditional Spanish style chorizo, flavored with bright smoked and sweet Pimentón de la Vera, earthy garlic and oregano. Natural, edible hog casings and authentic molds. Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, garlic, sodium nitrite, sodium nitrate, spices, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs2.imgix.net/product_photos/xOg3DaLS4yaUE7N4CtRr_FK1A1224.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+840	Lamb Loin Chops	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- melt in your mouth loin chops cook up quick for an easy, elegant meal.	0.4	lb	8.79	21.98	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/PoYagfEsSQiRvdqKB0gn_FK1A3898.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+841	Lamb Loin Chops	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- melt in your mouth loin chops cook up quick for an easy, elegant meal.	0.3	lb	6.59	21.97	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/PoYagfEsSQiRvdqKB0gn_FK1A3898.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+842	Lamb Rib Chops	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- elegant little rib chops with long bones attached make an awesome presentation for a special meal.	0.6	lb	10.79	17.98	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/q7qTUWoITij51dWm1kih_FK1A4008.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+843	Rack of Lamb	Williams Ranches Lamb- from Sonoma County Meat CompanyRack of lamb, an elegant focal point for a spring meal- sear both sides in a hot pan and finish in a 400 degrRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	1.5	lb	37.49	24.99	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/Y40WBuMQ9K2G3qCJgq0A_9aqv0i3WS36mENKfz1LI_9VpqeVI8QKA69UhTMAyS_uAZN0fUjRJKs4ZbgJmY1_FK1A5376-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+844	Ground Lamb	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- lamb-burgers anyone?	0.9	lb	12.59	13.99	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/oUh6GNHjRG2rerj4EQ9H_FK1A4047.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+845	Lamb Rib Chops	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- elegant little rib chops with long bones attached make an awesome presentation for a special meal.	0.8	lb	14.39	17.99	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/q7qTUWoITij51dWm1kih_FK1A4008.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+846	Rack of Lamb	Williams Ranches Lamb- from Sonoma County Meat CompanyRack of lamb, an elegant focal point for a spring meal- sear both sides in a hot pan and finish in a 400 degrRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	1	lb	24.99	24.99	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/Y40WBuMQ9K2G3qCJgq0A_9aqv0i3WS36mENKfz1LI_9VpqeVI8QKA69UhTMAyS_uAZN0fUjRJKs4ZbgJmY1_FK1A5376-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+939	Chorizo Navarre	A Northern Spanish style chorizo punctuated with Pimentón de la Vera, fresh garlic, and just the right amount of cayenne to imbue a warm heat. Natural, edible hog casings and authentic molds.  Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, garlic, sodium nitrite, sodium nitrate, spices, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/rNO3oXhnToBpWWSwm7eA_FK1A1235.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+847	Rack of Lamb	Williams Ranches Lamb- from Sonoma County Meat CompanyRack of lamb, an elegant focal point for a spring meal- sear both sides in a hot pan and finish in a 400 degrRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	1.25	lb	30.99	24.79	lb	Meat	Lamb	http://goodeggs1.imgix.net/product_photos/Y40WBuMQ9K2G3qCJgq0A_9aqv0i3WS36mENKfz1LI_9VpqeVI8QKA69UhTMAyS_uAZN0fUjRJKs4ZbgJmY1_FK1A5376-1.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+848	Lamb Shanks (Frozen)	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- shanks are the ultimate braising cut, perfect for the slow cooker.	1.25	lb	12.99	10.39	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/1y7jIAQE6ocUbsgzMv4g_FK1A3883.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+849	Lamb Leg Steak	Williams Ranches Lamb- from Sonoma County Meat CompanyLamb leg steaks are super versatile: great grilled to medium rare, baked, braised, or in a curry!Raised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	0.8	lb	11.19	13.99	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/xHEMjCpJQvuZgKRGouFJ_FK1A6390.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+850	Lamb Neck Roast	Williams Ranches Lamb- from Sonoma County Meat CompanyWhole Lamb Neck Roast- maybe the greatest braising cut of meat, ever. Low and slow is the way go with this gem!Raised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	1.5	lb	19.99	13.33	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/gou0SKxS3SbouyFzzuxj_20160526-SonomaMeatCo_LambNeck_MG_0303.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+851	Lamb Neck Roast	Williams Ranches Lamb- from Sonoma County Meat CompanyWhole Lamb Neck Roast- maybe the greatest braising cut of meat, ever. Low and slow is the way go with this gem!Raised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	2	lb	25.99	13.0	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/gou0SKxS3SbouyFzzuxj_20160526-SonomaMeatCo_LambNeck_MG_0303.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+852	Boneless Lamb Leg Roast	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- this roast is all ready to go! Salt overnight, hit it with some garlic and herbs and roast to medium-rare. Maybe sprinkle some potatoes around the roasting pan, or some parsnips, or carrots...	4	lb	51.99	13.0	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/43dZXoITkahbjyrOU0Q5_FK1A3867.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+853	Boneless Lamb Leg Roast	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Tender, mild, California lamb- this roast is all ready to go! Salt overnight, hit it with some garlic and herbs and roast to medium-rare. Maybe sprinkle some potatoes around the roasting pan, or some parsnips, or carrots...	4.25	lb	56.99	13.41	lb	Meat	Lamb	http://goodeggs2.imgix.net/product_photos/43dZXoITkahbjyrOU0Q5_FK1A3867.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+854	Whole Rabbit (Frozen)	Whole frozen local rabbit from Devils Gulch Ranch.Our rabbits are fed a pelleted feed along with grass and hay to ensure complete nutrition. We work with a local feed mill to produce the pelleted feed to our specifications. It is free from corn, hormones, or antibiotics.Our rabbits are selectively bred to be of excellent quality, large-framed and meaty. They are a combination of three breeds: Rex, New Zealand and Californian. Californian and New Zealand breeds are related and currently are the most popular commercial meat breeds due to their fast growth. The Rex breed, while being an excellent meat breed, is particularly known for its fine fur. Our Rex rabbits have a very mellow temperament. This is useful in their mothering and nurturing their young and in handling in general. While they grow somewhat less quickly than the New Zealand and Californian breeds, we use the Rex to add hybrid vigor and positive temperament characteristics. Additionally, some feel that the meat from Rex rabbits is firmer and better flavored than that of the other meat breeds, which could be due to the Rex's slower growth.We produce all of our breeding Does ourselves. Bucks are occasionally purchased from high-quality breeders to increase genetic diversity, and we occasionally supply other producers with breeding stock. The rabbits are produced all year, but due to the high demand from restaurants, they are not always available for retail sale.Superior quality pelts and rabbits feet are available as well.	2.4	lb	32.39	13.5	lb	Meat	Other Meats	http://goodeggs2.imgix.net/product_photos/boTYXUnrTPej24Uig5DL_FK1A2358.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+855	Uncured Beef Hot Dogs (Frozen)	Naturally cured with celery and salt, we worked hard and long to make a\ngreat tasting hot dog using only the highest quality meat, organic spices and\nno nitrites. THESE DOGS ARE REAL FOOD! Found at our farmers market, retail shop\nand local restaurants, we have upped our dog production to offer this popular\nitem at Good Eggs. We hope you love them as much as we do. Ingredients: Beef, Sea Salt, Organic Evaporated Cane Juice, Organic Paprika, Organic Spices, Organic Garlic, Cultured Celery Juice	1	lb	8.49	8.49	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/YfmKJ3arRzyBy1gRdCoK_FK1A4753.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+856	Bacon Hot Dogs (Frozen)	Ingredients: Pork, Water, Bacon (Pork, water, sea salt, brown sugar, cherry powder, Turbinado sugar, natural flavoring) sea salt, spices, celery powder, turbindado sugar, sodium carbonate, natural flavoring, in a sheep casing.Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/tSMJY38JSo2vmNQhXXAb_FK1A8101.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+857	Spicy Fennel Chicken Sausage (Frozen)	Ingredients: hormone free boneless skinless chicken thighs, fennel seed, aniseed, cayenne peppers, chilis, parsley. (No nitrates or preservatives). Pork casing, spicy!Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!Excellent grilled as well !	1	lb	10.99	10.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/ryfhiV7lRNmtWus0OnYH_6R0NwO4KKqyTiWUtvNzjHDEeHWs5gy67e_eWQc7paIE.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+858	Organic Chicken Apple & Wildflower Honey Sausage	Slightly sweet with chunks of tender apple and whispers of wildflower honey, our organic chicken sausages are always the perfect pick.\n\nThese organic chickens are raised on family\nfarms, like Merlyn Bender’s in Humbolt, Nebraska.  He grew up on a farm,\nas had his parents, and appreciated the family values the livelihood provided.\nWhen it comes to animal welfare, Merlyn focuses on food, lighting, air, and\nwater. He provides his chickens with high-quality organic feed; allows the\nbirds to get at least eight hours of dark nighttime rest; provides proper\nventilation in barns to keep the air clean; and ensures a consistent clean\nwater supply. When weather permits, the chickens range outdoors, which he finds\nenhances health and well-being. Merlyn feels good about farming organically and\nthe opportunity it provides to produce good pure foods.\nIngredients: Organic Chicken, Water, Organic Dried Apples, Organic Honey, Organic Apple Juice Concentrate, 2% or Less of: Sea Salt, Organic Evaporated Cane Syrup, Organic Spices, Organic Onion Powder, Celery Powder, Sodium Lactate.	0.625	lb	4.39	7.02	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/H0OZBFbzTaKTjkAnPOnY_20160409-TrueStory_AppleWildflowerSausage_MG_6029.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+859	Tomato Basil Chicken Sausage (Frozen)	Ingredients: Hormone free boneless skinless chicken thighs, sun dried tomatoes, fresh basil, spice blend (no nitrates or preservatives). Pork casing. Mild.Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!Excellent grilled as well !	1	lb	10.99	10.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/570qCZpRfmEHVALyqw8Q_upN07XSwsZBOlQ-AsYDM21xDNO-zPFYoKm0eeK9Uam0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+860	Spinach Mozzarella Chicken Sausage	Ingredients: Hormone free boneless skinless chicken thighs, spinach, mozzarella cheese, spice blend (no nitrates, or preservatives) Pork casing. Mild and Kid approved!Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!Excellent grilled as well!	1	lb	10.99	10.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/Hgi4oBxqRJuvgClzXMTV_poht3A1EMQekYZpz0IQbMllHXkqZtevA7nhY_e_WDN0.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+871	Smoked Pork Kielbasa	Our smoked kielbasa contains 100% pork seasoned with mustard seed, garlic, and spices. We smoke these over applewood for hours, so they have a nice smokey flavor. Product is fully cooked. We like to slice it up and put it in a pan with our greens, so the fat and flavors season up the greens.  Serve that up with some mustardy potato salad, Oh Baby!INGREDIENTS: Pork, pork fat back, salt, dextrose, nitrite, milk powder, white and black pepper, mustard powder and seeds, garlic.	0.75	lb	6.79	9.05	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/gSHwGhyyThWQKPIfm4qd_FK1A6872.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+861	Organic Sweet Italian Chicken Sausage	Made with sustainably farmed organic chicken, our Italian sausage delivers a kick of Mediterranean herbs and spices with a gentle dash of sweetness.These organic chickens are\nraised on family farms, like Merlyn Bender’s in Humbolt, Nebraska.  He\ngrew up on a farm, as had his parents, and appreciated the family values the\nlivelihood provided. When it comes to animal welfare, Merlyn focuses on food,\nlighting, air, and water. He provides his chickens with high-quality organic\nfeed; allows the birds to get at least eight hours of dark nighttime rest;\nprovides proper ventilation in barns to keep the air clean; and ensures a\nconsistent clean water supply. When weather permits, the chickens range\noutdoors, which he finds enhances health and well-being. Merlyn feels good\nabout farming organically and the opportunity it provides to produce good pure\nfoods.\nIngredients: Organic Chicken, Water, 2% or Less of the Following: Organic Basil, Organic Spices, Organic Fresh Garlic, Organic Garlic Powder, Organic Paprika, Sodium Lactate, Sea Salt, Celery Powder.	0.625	lb	4.59	7.34	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/oQRbklWTQ7iUmTIbjCll_20160409-TrueStory_SweetItalianCHickenSausage_MG_6039.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+862	Artichoke & Mushroom Chicken Sausage (Frozen)	Ingredients: Hormone-free boneless skinless chicken thighs, porcini mushrooms, artichoke hearts, garlic, onion, spice blend. Pork casing (No preservatives or nitrates.)Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!Excellent for grilling as well !	1	lb	10.99	10.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/JPajTl2IRSmDNB1sh2aq_xQ88UrQ5vet0xMr7Ek695lXAt95DBR1xxgLrt-L-qsA.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+863	Southwestern Chicken Sausage (Frozen)	Ingredients: Hormone free boneless skinless chicken thighs, green chilies, cilantro, garlic, spice blend (no nitrates or preservatives). Pork casing, spicy! Suggested cooking instructions: Add  approx.1/4 inch of water to a skillet or shallow sauce pan, place sausages in covered pan and bring to a boil. Steam for approximately 5 minutes, pour off excess water. Add small amount of oil or butter, lower heat and cook until skins are brown. Enjoy!Excellent grilled as well!	1	lb	10.99	10.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/9rijQrChQkSNdV1uNtlz_wMaxkB4s40VWe2XXtRq0wPuXIUluix1RBNd7e91Es3E.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+864	Turkey Chorizo	Turkey Chorizo: Our Diestel Turkey Chorizo is delicious in a breakfast burrito, casserole, or even just grilled up with veggies! We’ve developed a special seasoning blend that gives our chorizo a nice kick without it being too spicy. It’s versatile, and we know you’ll love it for breakfast, lunch, or dinner!Ingredients: Turkey, water, spices, vinegar, sea salt, granulated garlic and onion powder.Real Turkey AttributesGluten FreeNo artificial ingredients or preservativesNo hormones, antibiotics, or growth stimulantsPure ground turkeyThoughtfully and humanely raised on GAP rated farmsGreat texture and flavor-the way turkey should taste!	16	oz	6.49	6.49	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/u8thBuORR3ebzXKJdGty_FK1A9373.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+865	Pasture Raised Apple Fennel Pork Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. A nicely balanced sausage, equally great for breakfast or for stuffing an acorn squash!Ingredients: pork, apple, salt, fennel, sugar, onion powder, sage, apple cider vinegar powder	0.7	lb	6.99	9.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/dbgQhkw2SpaYEv9mhoVS_FK1A0653.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+866	Pasture Raised Garlic Ginger Pork Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Garlic and Ginger sausage- delicious in all the ways that sausage normally is, with the added bonus of making a perfect pot sticker or egg roll filling, or an awesome little meatball for a Pho style soup!Ingredients: pork, salt, garlic powder, dry honey, ginger powder, spices.	0.7	lb	8.39	11.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/OmJWhPm0TamIYu7ABUsi_FK1A3966.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+867	Sweet Italian Sausage (Frozen)	Made using a very traditional European recipe including\nanise, fennel, minced garlic and touch of pepper, our Sweet Italian Sausage is\na true “do it all sausage”. Its great served in a roll, in your favorite pizza\nor pasta recipe, or all by itself. Fully cooked for simple prep. \nIngredients: Pork (Food Alliance Certified), Water, Organic\nSpices, Sea Salt, Organic Evaporated Cane Syrup, Organic Garlic, Organic\nPaprika, in Natural Pork Casing	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/Y7GVXjmuSLvGYhK8dLTM_FK1A0899.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+868	Pork Bratwurst	Our Gourmet Bratwurst contains 100% pork seasoned with white pepper, ginger, and nutmeg.  Super traditional and super amazing!! Authentically made by salumist Elias Cairo. INGREDIENTS: Pork shoulder, pork fatback, salt, milk powder, white and black pepper, ginger, mustard powder, nutmeg.CONTAINS DAIRY	0.75	lb	6.79	9.05	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/FpAWMsa6RRSyhmQjuptN_FK1A6845.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+869	Pasture Raised Thai Coconut Pork Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Thai style pork sausage with coconut- excellent flavor, not too much spice, great grilled with a side of crunchy vegetables, or try it in a curry or stir fry. Or just eat it on a bun, that's good too.Ingredients: Pork, Pork Fat, Shredded Coconut, Salt, Spices, Garlic Powder, Cilantro Powder, Ginger Powder, Lime Peel PowderContains: Coconut, Wheat	0.7	lb	8.39	11.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/dbgQhkw2SpaYEv9mhoVS_FK1A0653.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+870	Pork Linguica (Frozen)	A traditional Portuguese sausage, Linguica is traditionally made with pork, marinated in red table wine, seasoned with garlic, paprika, oregano, basil, and smoked with hickory wood. Mildly spicy, smoky and full of flavor.Ingredients: pork, water, red wine, salt, paprika, vinegar powder, spices, celery powder.1/2 lb package, 2 links per package. Smoked, fully cooked. No added nitrates except for those naturally occurring in celery powder.	0.5	lb	8.99	17.98	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/dENkUcHhRGqWoxMD6Zne_tR2plAkjST2P4PVt58gm_wr8LIVMSvUP-isvxANMDSjfJFAY4zdoFXJWGdLCzFCw.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+872	Pasture Raised Maple Pecan Pork Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Ingredients: pork, maple sugar, pecans, salt, onion powder, spices, garlic powder, vinegar powder, ginger powder.	0.8	lb	10.39	12.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/dbgQhkw2SpaYEv9mhoVS_FK1A0653.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+873	Bockwurst (Frozen)	PRMC’s Bockwurst is a traditional Munich-style Weisswurst\n(white sausage), made with milk, eggs and fresh spices including Italian\nparsley and cinnamon. The fine mousse is a perfect pair with your favorite\nhigh-quality mustard, a crusty roll, and of course, a stein of Bavarian\nbeer.  Kids love this one too – It is a\ntrue staff favorite. Arrives fully cooked for easy prep. \n \nIngredients: Pork\n(Food Alliance Certified), Milk, Water, Eggs, Sea Salt, Organic Evaporated Cane\n	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/A5icPzRORva7zZB400mg_FK1A0954.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+874	Pasture Raised Pork Chorizo Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. A super flavorful, not too spicy sausage that adds impressive pork flavor to whatever you pair it with- great with eggs, in soups and stews, on the grill or smoker, or in rice or potato dishes.Ingredients: pork, salt, paprika, garlic, spices.	0.7	lb	6.99	9.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/zVo5O6SBRU6oEuScb8Ht_FK1A8126.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+875	Smoked Pork Chorizo	Our Basque-inspired, smoked chorizo is made with the finest pork cuts, pimenton, and fresh garlic, then applewood smoked.  Perfect for your Paella, there are three, 4 oz sausages per package.INGREDIENTS: Lean pork shoulder, pork fatback, salt, paprika, milk powder, cayenne, pepper, pimenton, oregano, garlic. 	0.75	lb	6.79	9.05	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/0TpKitJ6RhCl8gQ99RFI_FK1A6849.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+876	Pork Ksekrainer	Käsekrainer are the delicacy of sausage stands dotting the towns and cities of Austria. A traditional street food, these plump pork sausages are studded with Emmenthaler cheese and smoked over apple wood. Once warmed through and lightly crisped each slice yields a gooey cheese interior. These are the most decadent cheese dogs you'll ever taste.Package includes three 4 ounce sausages (12 ounce).Ingredients: Pork, pork fat, water, swiss cheese (pasteurized cow's milk, cheese cultures, salt, enzymes), dry milk powder, less that 2% of: salt, dried vinegar, cultured dextrose, fresh garlic, black pepper, dextrose, swiss chard powder, natural flavors, lactic acid cultures. Stuffed in hog casing.Contains: Milk	0.75	lb	6.79	9.05	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/eOqJRsYAQS6AEU6TOZig_FK1A6831.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+877	Rustic Sausage (Frozen)	PRMC’s sugar –free sausage has finally arrived! A very\ntraditional flavored, juicy pork sausage made with PRMC heritage pork and\norganic spices this is a great every day sausage served in a bun, on its own or\nin your favorite sausage based recipe. And NO SUGAR!\nIngredients: Pork, Water, Sea Salt, Spices, Onion, Garlic,\nPaprika, Cayenne, Cultured Celery Extract, In Natural Pork Casing	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/KH6oEzcyQpm7GcLBpMc1_FK1A4997.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+878	Breakfast Sausage, Bulk (Frozen)	The morning has never been so enjoyable. A slight sweetness is paired with our unctuous porky flavor to make the perfect accompaniment to your eggs, pancakes, oatmeal...Ingredients: Llano Seco Pork, Sea Salt, Paprika, and Spices.Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	0.75	lb	5.79	7.72	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/yrUIKjHtRaWsx0b0XG85_llanoseco_breakfastsausage.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+879	Apple Bacon Sausage (Frozen)	This is PRMC’s famous breakfast sausage. Made with our own\nmaple bacon, apples and organic spices these links are the perfect combination\nof sweet and smoky for your family’s breakfast table. These links arrive fully\ncooked, so just defrost and heat! Be careful though—they’re truly addicting!Ingredients: Pork (Food Alliance Certified), Water, Uncured\nMaple Bacon (Pork, Water, Organic Evaporated Cane Syrup, Sea Salt, Organic\nMaple Syrup, Cultured Celery Juice) Unsulfured Evaporated Apples, Apple Juice\nConcentrate, Sea Salt, Organic Spices, in Natural Pork Casing	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/F2ltLZdJRwumdL7iKzzf_FK1A0924.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+880	Pork Breakfast Sausage	Our Breakfast Sausage contains 100% pork seasoned with fresh sage and real Grade B (which is best) maple syrup.There are six, 2oz sausages per package.Product is fully cooked. INGREDIENTS: Pork shoulder, pork fatback, salt, milk powder, white and black pepper, ginger, mustard powder, nutmeg, sage, maple syrup.	0.75	lb	5.99	7.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/Ecf2tqhaQVixiswfUazB_FK1A6843.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+881	Whiskey Maple Sage Sausage (Frozen)	These fully cooked sausages are made with real whiskey and a\ntouch of maple, but aren't too sweet. Combined with sage and other organic spices\nthese delicious links are versatile and great for breakfast, lunch or dinner. One\nof our most popular market picks. \nIngredients: Pork, Whiskey, Brown Sugar, Sea Salt, Maple\nSyrup, Black Pepper, Sage, Nutmeg, Cayenne Pepper, in Natural Pork Casing	0.75	lb	7.49	9.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/DQGpSGdTScP8dpSkklsU_FK1A0892.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+882	Pasture Raised Pork Breakfast Sausage (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Ingredients: Walnut Keep Pork, Salt, Sugar, Sage, Sweet Smoked Paprika, Black PepperA savory breakfast sausage with well balanced spices where the pork flavor shines through and the sage is the predominant spice- would be great in an omelette, breakfast scramble, burrito, or frittata.	0.7	lb	8.49	12.13	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/gZH0dvHQRfavKEy4F3AG_FK1A9440.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+883	Turkey Breakfast Sausage (Frozen)	Start your morning off right with Diestel Sausage. Our savory blend of herbs is delicious, and our sausage packs a lean protein punch to power you through the day. Diestel Breakfast Sausage is delicious with eggs or in a breakfast burrito. You can also make breakfast patties with it. For a brunch specialty, try our Diestel Turkey Breakfast Sausage Strata.Ingredients: Turkey, water, sea salt, spices, and turbinado (unrefined sugar)Real Turkey AttributesGluten FreeNo artificial ingredients or preservativesNo hormones, antibiotics, or growth stimulantsPure ground turkeyThoughtfully and humanely raised on GAP rated farmsGreat texture and flavor-the way turkey should taste!	16	oz	7.29	7.29	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/Xl6AmV4eQnO6dJUdrVXd_FK1A9378.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+884	Grass-fed Beef Summer Sausage, Sliced (Frozen)	Going on a picnic this weekend? We've got you covered. Take along a pack of our already sliced summer sausage, some cheese, a baguette and some fruit and you'll be set. We also love our sliced summer sausage on pizza as a healthier alternative to pepperoni.Ingredients: beef, sodium lactate, salt, sugar, brown sugar, granulated garlic, black pepper, mustard seed, sodium nitriteLike all our grass fed meat specialty items, our lean beef summer sausage is made only with meat from cows that we raise ourselves, there are no fillers or other meats.approximately 25 slices in a package, 3/4 lb package.Smoked (fully cooked)Keep refrigerated or frozen until ready to eat. Shelf stable at normal temps for 48 hours.Fun fact: summer sausage is made using a lactic acid fermentation process. In the days before refrigeration, preserving meat was an art form. This sausage was called summer sausage because it was one of the few sausages that would last during the hot months.	0.5	lb	12.99	25.98	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/k1uhMukbRj6KGQEelDLf_FK1A5007.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+885	Grassfed Lamb Merguez (Frozen)	Lamb Merguez-Williams Ranches Lamb,  from Sonoma County Meat CompanySuper-flavorful, well spiced but not too hot, this 100% lamb merguez cooks up quickly and is an awesome complement to vegetable or grain dishes- especially good with lentils for a one pot no fuss meal!Ingredients: Lamb, Spics, Salt, Garlic Powder, in a Lamb Casing.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Ingredients: Lamb, Spics, Salt, Garlic Powder, in a Lamb Casing.	0.75	lb	10.49	13.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/zt9hwO7R0W0EnKVIsRHz_20161007-SonomaMeatCo_LambMerguez_MG_3204%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+886	Beef and Pork Bratwurst (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co.Great beef flavor and juicy pork fat come together to make an exceptional sausage, perfect on a bun!Ingredients: Beef, Pork Fat, Cream, Eggs, Salt, Spices, Sugar.Contains Pork, Dairy, Eggs.	0.7	lb	10.49	14.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/EAXrjnDSJOUOEr6wa5w8_FK1A8120.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+887	Sweet Italian Beef Sausage (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co.A classic sausage flavor made with delicious Oakridge Angus beef!Ingredients: Beef, Wine, Salt, Spices, Sugar, Garlic. Pork casing.	0.7	lb	9.99	14.27	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/OmJWhPm0TamIYu7ABUsi_FK1A3966.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+888	Lamb Sausage (Frozen)	One of our customer favorites, the lamb sausage comes ready to cook and is delicious on a bed of rice. The lamb is sourced from Anderson Ranch in Southern Oregon and is 100% grassfed and Certified Humane.Ingredients: Lamb, Water, Sea Salt, Spices, Onion, Garlic, In Natural Pork Casing.	0.75	lb	11.29	15.05	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/8ieUXFz6RzO8epwxxkIp_FK1A8495.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+889	Jalapeno Mint Lamb Sausage	Classic flavor pairings all rolled up into one delicious sausage! Grill it, slice it, and put it on banh mi for a killer sandwich experience!Ingredients: Grass-fed Lamb, Jalapeno, Garlic, Salt, Mint, GingerNatural Pork Casing	0.8	lb	15.99	19.99	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/xcW4i7jFQ6GlJDmCgkJc_20160701-CasaRosa_MintJalepenoLambSausage_MG_4254.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+890	Grass-fed Beef Garlic Sausage (Frozen)	Delicious beef sausage seasoned with garlic and red wine. If you're looking for a change from pork sausage, give our beef sausage a try. It's also excellent for seasoning rice dishes or as an addition to a stew like jambalaya. Like all our grass fed meat specialty items, our beef sausage is made only with meat from cattle that we raise ourselves, there are no fillers or other meats.2 links in a package, approximately .5 (1/2) lb each package. Smoked (fully cooked), keep refrigerated or frozen until ready to eat. Heat and serve.Ingredients: beef, wine, water, garlic, salt, celery powder.	0.5	lb	8.99	17.98	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/tfgp1s8CSjWH4LQ14iZ7_tMEEXovKSGuxvn6TRvtS_GzbZjtZ9wXbFT5jthjfS1Zl9DjU8mgSm3WC2kXroMIc.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+891	Beef Chorizo (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co.Beef chorizo, perfect for all the things chorizo is perfect for- with eggs, in tacos and burritos, in bean and lentil dishes, or just grilled with or without a bun!Ingredients: Beef, Salt, Paprika, Spices, Garlic. Pork casing.	0.7	lb	9.99	14.27	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/zVo5O6SBRU6oEuScb8Ht_FK1A8126.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+892	Grassfed Lamb Merguez (Frozen)	Lamb Merguez-Williams Ranches Lamb,  from Sonoma County Meat CompanySuper-flavorful, well spiced but not too hot, this 100% lamb merguez cooks up quickly and is an awesome complement to vegetable or grain dishes- especially good with lentils for a one pot no fuss meal!Ingredients: Lamb, Spics, Salt, Garlic Powder, in a Lamb Casing.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.Ingredients: Lamb, Spics, Salt, Garlic Powder, in a Lamb Casing.	0.65	lb	9.29	14.29	lb	Meat	Sausage	http://goodeggs2.imgix.net/product_photos/zt9hwO7R0W0EnKVIsRHz_20161007-SonomaMeatCo_LambMerguez_MG_3204%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+893	Grass-fed Beef Summer Sausage (Frozen)	A beautiful little section of summer sausage you can custom slice to your preference, great for a hike or a picnic!Ingredients: beef, sodium lactate, salt, sugar, brown sugar, granulated garlic, black pepper, mustard seed, sodium nitriteLike all our grass fed meat specialty items, our lean beef summer sausage is made only with meat from cows that we raise ourselves, there are no fillers or other meats.Smoked (fully cooked)Keep refrigerated or frozen until ready to eat. Shelf stable at normal temps for 48 hours.Fun fact: summer sausage is made using a lactic acid fermentation process. In the days before refrigeration, preserving meat was an art form. This sausage was called summer sausage because it was one of the few sausages that would last during the hot months.	0.7	lb	17.49	24.99	lb	Meat	Sausage	http://goodeggs1.imgix.net/product_photos/lSN7EO0QhuwOJWzihhRg_FK1A6185.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+894	Black Forest Ham	Rubbed with brown sugar for a lick of sweetness and then slow-smoked over Applewood, our all natural uncured ham serves up heaps of deliciousness.These heirloom-breed\nhogs are raised by family farmers in the Midwest, like fifth-generation\nfarmer Russ Kremer. The hogs are raised without antibiotics, added hormones or\ngrowth enhancers in open spaces where they’re free to root, nest and\nexplore. When Russ graduated from the University of Missouri in the early\n1980s, he adopted modern hog production practices like everyone else he knew.\nAll that changed when one day a boar gored him and he nearly lost his\nleg. That near tragedy changed Russ’s way of farming forever. In 2001, he\nhelped found a cooperative made up of farmers who share his commitment to\nsustainable practices. Their antibiotic-free hogs are raised humanely and are\nprized by chefs for their tender, flavorful meat.Ingredients: Pork, Water, Contains 2% or Less of: Salt, Brown Sugar, Celery Juice, Natural Flavors.	0.437	lb	5.29	12.11	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/fyP40MhQTr6BIFUryziN_20160409-TrueStory_BlackForestHam_MG_6016.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+895	Wildflower Honey Ham	Our sustainably farmed natural ham is brushed with a scrumptious glaze of wildflower honey, maple syrup, and brown sugar, and then slow roasted to perfection.These heirloom-breed\nhogs are raised by family farmers in the Midwest, like fifth-generation\nfarmer Russ Kremer. The hogs are raised without antibiotics, added hormones or\ngrowth enhancers in open spaces where they’re free to root, nest and\nexplore. When Russ graduated from the University of Missouri in the early\n1980s, he adopted modern hog production practices like everyone else he knew.\nAll that changed when one day a boar gored him and he nearly lost his\nleg. That near tragedy changed Russ’s way of farming forever. In 2001, he\nhelped found a cooperative made up of farmers who share his commitment to\nsustainable practices. Their antibiotic-free hogs are raised humanely and are\nprized by chefs for their tender, flavorful meat.\nIngredients: Pork, Water, Honey. Contains 2% or Less of: Maple Syrup, Brown Sugar, Sea Salt, Celery Juice, Natural Flavors.	0.437	lb	5.29	12.11	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/TBCHqFpaRlZH0ldRbY5a_20160409-TrueStory_HoneyMapleHam_MG_6013.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+896	Speck Americano	Speck, a lesser-known variation of prosciutto, is a sweet meat, deep, rich and earthy in texture with a distinct but light applewood-smoked flavor and aroma. Slice it thin to eat alone or with your favorite cheese. Ingredients: Pork, Sea Salt. Smoked over real applewood.	3	oz	6.99	37.28	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/AVjP3aynSHKMR1dn8dfS_FK1A7221.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+897	Organic Oven Roasted Turkey	Slowly Roasted with a pinch of sea salt to bring out that old-fashioned flavor. Our pre-sliced turkey is fantastic in sandwiches, appetizers, or just as a grab-and-go snack!No added nitrates or nitritesNo antibiotics, growth stimulants, or hormonesTurkeys are fed a 100% Vegetarian DietOnly whole muscle meat used. No fillers!NON-GMO Project VerifiedAll animals are humanely raised on GAP-rated sustainable family farms and ranches.Ingredients: Organic turkey breast, sea salt, sodium carbonate, and natural flavoring.	6	oz	6.49	17.31	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/fvkG8E6CQwqM3X9dEwAP_FK1A2042.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+898	Organic Honey Roasted Turkey	Organic Pre-Sliced Honey Turkey: Our oven-roasted turkey with a drizzle of honey. (We use locally sourced honey whenever possible.) Our pre-sliced turkey is fantastic in sandwiches, appetizers, or just as a grab-and-go snack!How Our Deli Meats Stack UpLow SodiumNo gluten, casein, carrageenan, phosphates, MSG, artificial ingredients, or preservativesNo added nitrates or nitritesNo antibiotics, growth stimulants, or hormonesTurkeys are fed a 100% Vegetarian DietOnly whole muscle meat used. No fillers!NON-GMO Project VerifiedAll animals are humanely raised on GAP-rated sustainable family farms and ranches.Ingredients: Organic turkey breast, water,  organic honey, sea salt, sodium carbonate, and natural flavorings.	6	oz	6.49	17.31	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/XRvvBc4aR7ScFSItdKzw_FK1A9549.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+899	Smoked Turkey	Slowly smoked and seasoned with spices and a hint of brown sugar and sea salt. Our pre-sliced turkey is fantastic in sandwiches, appetizers, or just as a grab-and-go snack!How Our Deli Meats Stack UpNo gluten, casein, carrageenan, phosphates, MSG, artificial ingredients, or preservativesNo added nitrates or nitritesNo antibiotics, growth stimulants, or hormonesTurkeys are fed a 100% Vegetarian DietOnly whole muscle meat used. No fillers!NON-GMO Project VerifiedAll animals are humanely raised on GAP-rated sustainable family farms and ranches.Ingredients: Organic turkey breast, water, sea salt, organic brown sugar, sodium bicarbonate, organic spices, organic garlic powder, and natural flavorings.	6	oz	5.99	15.97	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/51zvWX9OSWCTcK63Oidu_FK1A7373.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+900	Organic Oven Roasted Turkey Breast	Our sustainably farmed organic turkey breast is rubbed with sea salt, fresh cracked pepper, and a touch of mild seasonings, then slow roasted to juicy scrumptiousness.These turkeys are raised by True Story partners like on Pitman Family Farms, a family-owned business that has been raising poultry for three generations in Sanger, California. Don Pitman began raising free-range turkey and chickens in 1954 and was soon joined by his son Rick. Today, Rick’s sons, David and Ben, carry on the family tradition. From the beginning, the Pitman family has been focused on animal husbandry and welfare. Their organic turkeys have access to the outdoors with ample water and shade. Additionally, they have environmental enrichments, such as straw bales for pecking and eucalyptus tree branches for playing. The organic turkeys are fed a certified organic vegetarian diet, free of genetically modified organisms and synthetic amino acids.Ingredients: Organic Turkey Breast, Water, 2% or Less of the Following: Sea Salt, Organic Evaporated Cane Syrup, Sodium Carbonate, Natural Flavors.	0.375	lb	6.49	17.31	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/sKeDFwzVS3SMGDytYtUi_20160409-TrueStory_OvenRaostedTurkey_MG_6018.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+901	Sliced Smoked Turkey Breast	Smoking Goose Smoked Turkey Breast is all natural, free range birds. Brined in organic herbs and spices and smoked over fruit woods. This subtly smoked turkey has texture and body yet remains juicy. It tastes like you are thinly carving turkey right off the bone! Perfect for that "Thanksgiving-style" sandwich!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet.Ingredients: Whole breast of turkey, thyme, cloves, orange peel.	12	oz	16.99	22.65	lb	Meat	Deli Meat	http://goodeggs2.imgix.net/product_photos/k87azxPYQv21HzBTfPTu_20160617-SmokingGoose_TurkeyBreast_MG_3020.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+902	Pastrami Seasoned Turkey	Ingredients: Turkey breast, water, sea salt, organic garlic, sodium carbonate, molasses, organic brown sugar, citric acid, lemon oil and natural flavorings.How Our Deli Meats Stack UpNo gluten, casein, carrageenan, phosphates, MSG, artificial ingredients, or preservativesNo added nitrates or nitritesNo antibiotics, growth stimulants, or hormonesTurkeys are fed a 100% Vegetarian DietOnly whole muscle meat used. No fillers!NON-GMO Project VerifiedAll animals are humanely raised on GAP-rated sustainable family farms and ranches.Ingredients: Turkey breast, water, sea salt, organic garlic, sodium carbonate, molasses, organic brown sugar, citric acid, lemon oil, and natural flavorings.	6	oz	5.99	15.97	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/EACaZW8dTvmueZdUrxfU_FK1A9558.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+903	Peppered Roast Turkey	Oven roasted breast sprinkled with freshly cracked coarse pepper. How Our Deli Meats Stack UpNo gluten, casein, carrageenan, phosphates, MSG, artificial ingredients, or preservativesNo added nitrates or nitritesNo antibiotics, growth stimulants, or hormonesTurkeys are fed a 100% Vegetarian DietOnly whole muscle meat used. No fillers!NON-GMO Project VerifiedAll animals are humanely raised on GAP-rated sustainable family farms and ranches.Ingredients: Turkey breast, water, sea salt, sodium carbonate, natural flavorings, spices.	6	oz	5.99	15.97	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/Cf8kMBvHRJWraR5o5F5m_Good%20Eggs_111515-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+904	Prosciutto Americano	Prosciutto Americana was our first creation and remains our most popular.\n Humanely raised,  antibiotic free\npork from Heritage Acres\nand Niman\nRanch is dry cured with\nsea salt\nand aged for 9-12\nmonths.  Ingredients: pork, sea salt. The meat has a sweet, clean flavor\nand a floral minerality.    We started La Quercia to create premium quality American prosciutto, then applied what we learned to other cuts of pork. Our appreciation for cured meats grew out of the three and a half years we lived in Parma, Italy, prosciutto's area of origin, where we saw how the careful treatment of fine materials resulted in an accessible, sublime and entirely regional cuisine. Our ambition to create our own prosciutto came from our desire to take the bounty that surrounds us in Iowa to its highest expression. We seek to contribute to the growth of premium artisan-made American foods by offering unique dry cured meats of the finest quality.It has been hard for us to navigate the highly eroded language of meat labelling. Third party standards can develop, evolve, improve, and worsen. To enforce these standards, we clearly communicate them to our suppliers and do occasional grower visits.We decided to establish our own standards and hold our meat suppliers to them:  no pork from confinement facilities or from animals fed non-therapeutic antibiotics. We require that growers provide the pigs space to socially congregate, a place to bed in deep bedding, and access to the out of doors. We use organic spices whenever possible. Our supplier, Oregon Spice Company, has rigorous safety controls to ensure the purity and integrity of their spices. We use pure sea salt from the United States. We have no known allergens in any of our ingredients, including no gluten. Everything we make is dry-cured and raw, and may be eaten cooked or uncooked.	3	oz	8.49	45.28	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/l0dH7Pa9SE2VwxdPM7jq_FK1A0404.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+905	Grass-fed Beef Summer Sausage (Frozen)	A beautiful little section of summer sausage you can custom slice to your preference, great for a hike or a picnic!Ingredients: beef, sodium lactate, salt, sugar, brown sugar, granulated garlic, black pepper, mustard seed, sodium nitriteLike all our grass fed meat specialty items, our lean beef summer sausage is made only with meat from cows that we raise ourselves, there are no fillers or other meats.Smoked (fully cooked)Keep refrigerated or frozen until ready to eat. Shelf stable at normal temps for 48 hours.Fun fact: summer sausage is made using a lactic acid fermentation process. In the days before refrigeration, preserving meat was an art form. This sausage was called summer sausage because it was one of the few sausages that would last during the hot months.	0.9	lb	22.49	24.99	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/lSN7EO0QhuwOJWzihhRg_FK1A6185.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+906	Grass-fed Beef Summer Sausage (Frozen)	A beautiful little section of summer sausage you can custom slice to your preference, great for a hike or a picnic!Ingredients: beef, sodium lactate, salt, sugar, brown sugar, granulated garlic, black pepper, mustard seed, sodium nitriteLike all our grass fed meat specialty items, our lean beef summer sausage is made only with meat from cows that we raise ourselves, there are no fillers or other meats.Smoked (fully cooked)Keep refrigerated or frozen until ready to eat. Shelf stable at normal temps for 48 hours.Fun fact: summer sausage is made using a lactic acid fermentation process. In the days before refrigeration, preserving meat was an art form. This sausage was called summer sausage because it was one of the few sausages that would last during the hot months.	0.8	lb	19.99	24.99	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/lSN7EO0QhuwOJWzihhRg_FK1A6185.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+907	Grassfed Beef Pastrami	Create the ultimate Reuben! Our grass fed beef top round is cured in a sea salt brine for 2 weeks, rubbed with cracked black pepper and hot smoked with almond and fruit wood to perfection. Sliced. Ingredients: Beef Round, Water, Salt, Sugar, Sodium Lactate, Sodium Nitrite, Black Pepper, Dehydrated Garlic, SpicesWe raise our Limousin steers on certified organic rotational pasture and native grasslands within 2 hours of the Bay Area in the beautiful Capay Valley. We take the time to alfalfa finish all our animals. We truly believe that in order for consistency in a grass fed, grass-finished product, each producer must choose the best method for their farm and its local ecology. We grow our own pesticide free, non-GM alfalfa on our family's fields to produce high quality beef. You will find our farm's beef to be a very lean red meat with light marbling, yet extra tender. Our beef is dry-aged for a minimum of 16 days, flash frozen, and vacuum sealed. We are a certified USDA Grass Fed Producer and our farm and pastures are certified organic by CCOF. Follow us on our new Instagram feed @casa_rosa_farm and see how our animals really live.	0.7	lb	18.99	27.13	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/g53A9aGbRPyqeRYZEhXf_FK1A9639.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+908	Grassfed Beef Pastrami	Create the ultimate Reuben! Our grass fed beef top round is cured in a sea salt brine for 2 weeks, rubbed with cracked black pepper and hot smoked with almond and fruit wood to perfection. Sliced. Ingredients: Beef Round, Water, Salt, Sugar, Sodium Lactate, Sodium Nitrite, Black Pepper, Dehydrated Garlic, SpicesWe raise our Limousin steers on certified organic rotational pasture and native grasslands within 2 hours of the Bay Area in the beautiful Capay Valley. We take the time to alfalfa finish all our animals. We truly believe that in order for consistency in a grass fed, grass-finished product, each producer must choose the best method for their farm and its local ecology. We grow our own pesticide free, non-GM alfalfa on our family's fields to produce high quality beef. You will find our farm's beef to be a very lean red meat with light marbling, yet extra tender. Our beef is dry-aged for a minimum of 16 days, flash frozen, and vacuum sealed. We are a certified USDA Grass Fed Producer and our farm and pastures are certified organic by CCOF. Follow us on our new Instagram feed @casa_rosa_farm and see how our animals really live.	0.6	lb	16.29	27.15	lb	Meat	Deli Meat	http://goodeggs1.imgix.net/product_photos/g53A9aGbRPyqeRYZEhXf_FK1A9639.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+909	Cracked Pepper Turkey Jerky	Our cracked pepper turkey jerky's got a marinade of black pepper, brown sugar and apple—a slightly spicy-sweet combo that's addictively tasty.No preservatives, no added MSG*, no nitrites, no corn syrup.*Except naturally occurring in soy sauce.Ingredients: turkey, gluten-free reduced sodium soy sauce, (water, soybeans, salt, alcohol), apple juice, brown sugar, apple juice, pineapple juice, water, rice wine, natural hickory liquid smoke, black pepper, granulated garlic, apple cider vinegar, ginger, white pepper.Allergens: contains soy.	2.2	oz	5.99	2.72	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/ns2ygtqmTMKbBfm2CFtQ_20140924_GoodEggs_021_Jerky-Pepper.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+910	Original Beef Candy	PRMC Beef Candy is a delicious jerky-style product made with\nour high-quality lean beef. It is brined in brown sugar, salt and other spices,\nand then slow-cooked to perfection. The brining process makes the meat tender,\nsweet and juicy—it really is Beef Candy! Makes a great mid-day-snack. \nProduct is shelf-stable just like traditional dried and\nsmoked jerky.\nIngredients: Beef, Brown Sugar, Sea Salt, Spices, Cultured Celery Juice, Garlic, Onion	3	oz	8.49	2.83	oz	Meat	Savory Snacks	http://goodeggs1.imgix.net/product_photos/bInFHyEBTIyPxUqOi4Mu_FK1A1043.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+911	Hot Beef Candy	PRMC Beef Candy is a delicious jerky-style product made with\nour high-quality lean beef. It is brined in brown sugar, salt and other spices,\nand then slow-cooked to perfection. The brining process makes the meat tender,\nsweet and juicy—it really is Beef Candy! Our “Hot” Beef Candy has red chili\nflakes for an additional kick in the pants. Not so hot you’ll run for water,\nbut you will notice it. \nProduct is shelf-stable just like traditional dried and\nsmoked jerky.\nIngredients: Beef, Brown Sugar, Sea Salt, Jalapeno Pepper, Cayenne Pepper, Spices, Cultured Celery Juice, Garlic, Onion	3	oz	8.49	2.83	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/dKrT3QyaSvmP6sQDeJdw_FK1A1095.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+912	Flaco Paco Pepperette	Pork Stick?  Yes Please. We've been smoking pork sticks (with really good pork, in natural casings, over hickory and apple woods) since the beginning.  If you've been to our restaurants, you've probably had one of the long, thin, delicious sticks elegantly gracing the top of the deli case.  This pepperette is a Spanish inspired pork stick flavored with paprika and garlic in a natural sheep's casing. Last fall, we started making these little shorties and wrapped them up all cute in a pocket-sized box.  Perfect for snacks, travel, pocket meat, and little gifts to say, "I love you... and you love meat." Olympia Provisions, Flaco Paco Pepperettes are shorty pepperoni sticks made with pork in natural casings, and smoked over hickory and apple woods. Flaco Paco variety is made with paprika, oregano and garlic.Ingredients: Pork, pork fat, paprika, salt. Contains 2% or less of spices, garlic, sodium nitrite, potassium sorbate, lamb casing. 	1.7	oz	3.99	37.55	lb	Meat	Charcuterie	http://goodeggs2.imgix.net/product_photos/lvDgxgFLQLCacb9W0qDt_FK1A6816.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+913	Roasted Sesame Beef Jerky	Toasted sesame seeds, brown sugar and soy make for a super savory, nutty and delicious beef jerky that leaves you wanting more. No preservatives, no added MSG*, no nitrites, no corn syrup.*Except naturally occurring in soy sauce.Ingredients: top round beef, pineapple juice, gluten-free reduced sodium soy sauce, (water, soybeans, salt, alcohol), organic blue agave nectar, brown sugar, water, rice wine, natural liquid smoke flavor, sesame seeds, garlic powder, ginger, sesame seed oil, granulated onion, black pepper.Allergens: contains soy.	2.2	oz	5.99	2.72	oz	Meat	Savory Snacks	http://goodeggs1.imgix.net/product_photos/lC1RkWReQWa2TjNRUbjw_20140924_GoodEggs_017_Jerky-Sesame.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+914	Teriyaki Beef Jerky	It's hard not to love this one. The flavor is a marriage of ginger soy sauce, Asian garlic and onion. Top round beef coupled with brown sugar, honey and a pineapple marinade make for an unforgettable taste that will leave you fighting off friends and family!No preservatives, no added MSG*, no nitrites, no corn syrup.*Except naturally occurring in soy sauce.Ingredients: top round beef, gluten-free reduced sodium soy sauce, (water, soybeans, salt, alcohol), apple juice, brown sugar, pineapple juice, water, natural hickory liquid smoke, rice wine, black pepper, granulated garlic, red wine vinegar, ginger, white pepper, granulated onion.Allergens: contains soy.	2.2	oz	5.99	2.72	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/Ja9aNK2vQeyupLRTZmS1_20140528_GoodEggs_175_TeriyakiBeefJerky.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+915	Petite Pierre Pepperettes	Pork Stick?  Yes Please. We've been smoking pork sticks (with really good pork, in natural casings, over hickory and apple woods) since the beginning.  If you've been to our restaurants, you've probably had one of the long, thin, delicious sticks elegantly gracing the top of the deli case.  This pepperette is a French inspired pork stick flavored with juniper and sea salt in a natural sheep's casing. Last fall, we started making these little shorties and wrapped them up all cute in a pocket-sized box.  Perfect for snacks, travel, pocket meat, and little gifts to say, "I love you... and you love meat."  Olympia Provisions' Petite Pierre Pepperettes are shorty pepperoni sticks made with pork in natural casings, and smoked over hickory and apple woods. Petite Pierre variety is flavored with juniper, white pepper and red wine.Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, red wine (contains sulfites), spices, garlic, sodium nitrite, potassium sorbate, lamb casing. 	1.7	oz	3.99	37.55	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/Chf8ImJMSSCReanlMWfV_FK1A6826.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+916	Kleine Schweine Pepperette	Pork Stick?  Yes Please. We've been smoking pork sticks (with really good pork, in natural casings, over hickory and apple woods) since the beginning.  If you've been to our restaurants, you've probably had one of the long, thin, delicious sticks elegantly gracing the top of the deli case.  This pepperette is a German inspired pork stick flavored with caraway and coriander in a natural sheep's casing. Last fall, we started making these little shorties and wrapped them up all cute in a pocket-sized box.  Perfect for snacks, travel, pocket meat, and little gifts to say, "I love you... and you love meat." Olympia Provisions' Kleine Schweine Pepperettes are shorty pepperoni sticks made with pork in natural casings, and smoked over hickory and apple woods. Kleine Schweine variety is made with caraway, coriander and chili flake. Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, spices, garlic, sodium nitrite, potassium sorbate, lamb casing. 	1.7	oz	3.99	37.55	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/KayWN3ODRgeMwmIFQWsj_FK1A6820.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+941	Saucisson Sec	Classic French style salami seasoned with fresh garlic and cracked black pepper. Natural, edible hog casings, authentic molds. Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, garlic, sodium nitrite, sodium nitrate, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs2.imgix.net/product_photos/eXmKjgDRJmjCWhyGeuEz_FK1A1153.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+917	Honey Spice Beef Jerky	This jerky will definitely get your tastebuds rocking! Its honey sweet start is in perfect harmony with the cayenne pepper finish. Our lean mean cuts marinate for hours in a smoky, yet spicy, cayenne pepper and garlic honey marinade.No preservatives, no added MSG*, no nitrites, no corn syrup.*Except naturally occurring in soy sauce.Ingredients: top round beef, brown sugar, gluten-free reduced sodium soy sauce, (water, soybeans, salt, alcohol), pineapple juice, honey, water, apple juice, rice wine, natural liquid smoke flavor, granulated garlic, ginger, Frank's RedHot (aged cayenne red peppers, vinegar, water, salt, garlic powder), cayenne pepper, granulated onion, black pepper, white pepper.Allergens: contains soy.	2.2	oz	5.99	2.72	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/ewmmThoJS7e3jlF1Qmem_20140528_GoodEggs_189_HoneySpice.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+918	Original Beef Jerky	A trusted standby that is perfect for any occasion. Our Original flavor is what we are all about—bringing together a culmination of hickory smoke with a black pepper and brown sugar marinade. We think it's a pretty perfect flavor combination.No preservatives, no added MSG*, no nitrites, no corn syrup.*Except naturally occurring in soy sauce.Ingredients: top round beef, gluten-free reduced sodium soy sauce, (water, soybeans, salt, alcohol), apple juice, brown sugar, pineapple juice, water, natural hickory liquid smoke, rice wine, black pepper, granulated garlic, red wine vinegar, ginger, white pepper, granulated onion.Allergens: contains soy.	2.2	oz	5.99	2.72	oz	Meat	Savory Snacks	http://goodeggs1.imgix.net/product_photos/69GWCynwQtyc7uDST3t8_20140528_GoodEggs_182_OriginalBeefJerky.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+919	Grass-Fed Sriracha Beef Jerky	A match made in heaven- grass fed beef and sriracha come together for some truly tasty, not too spicy jerky.Ingredients: Beef, Soy Sauce (Water, Wheat, Soy Beans, Salt, Sodium Benzoate: less than 1/10 of 1% as preservative), Sugar, Spices, Sriracha Powder (Citric Acid, Garlic, Salt, Vinegar, Cane Sugar, Red Bell Pepper, Chili Powder) Garlic, Ginger Powder, Garlic Powder, Onion PowderContains: Soy, WheatKeep refrigerated, refrigerate after opening.	4	oz	13.99	3.5	oz	Meat	Savory Snacks	http://goodeggs1.imgix.net/product_photos/BPu7Kb1QBSp6mrngF70E_20160526-SonomaMeatCo_SirachaBeefJerkey_MG_0314%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+920	Cowboy Style Beef Jerky	\nProduct is shelf-stable just like traditional dried and\nsmoked jerky.\nIngredients: Beef, Pineapple Juice, Sea Salt, Yeast, Paprika, Jalapeno Peppers, Black Pepper, Spices, Garlic, Onion, Celery Juice Powder, Lactic Acid Starter Culture	3	oz	10.99	3.66	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/NANuQHPSOGnreK617SSF_FK1A9605.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+921	Whiskey Maple Beef Jerky	\nProduct is shelf-stable just like traditional dried and\nsmoked jerky.\nIngredients: Beef, Sea Salt, Pineapple Juice, Whiskey, Wine Vinegar,   Paprika, Maple Syrup Powder, Black Pepper, Garlic, Onion, Yeast, Celery Juice Powder, Lactic Acid Starter Culture	3	oz	10.99	3.66	oz	Meat	Savory Snacks	http://goodeggs2.imgix.net/product_photos/eQqGb5x9TVGK64k2XMlt_FK1A9586.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+922	Finocchiona	Traditional Italian salami with fresh garlic, cracked black pepper and fennel seed. Natural, edible hog casings and authentic molds. Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, garlic, sodium nitrite, sodium nitrate, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/R5skjPCTYihqZAgQGfhQ_FK1A1202.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+923	Chicken Liver Pate	* ingredients: chicken liver, house smoked birch apple sauce, beef fat, thyme, shiso, epazote, saltMission: Heirloom is a food company based in Berkeley. All of our food is sourced as locally as possible and 100% organic or biodynamic. We never cook with refined oils, and our food is always gluten-free, grain-free, soy-free, peanut-free, legume-free, and added sugar-free.	8.1	oz	8.99	1.11	oz	Meat	Charcuterie	http://goodeggs2.imgix.net/product_photos/rAdrmBdFT3WnbRbDcY5z_chix%20liver%20pate.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+924	Soppressatta	Said to be the "salami of the people", every Latin speaking country claims to have invented Soppressata. Ours is crafted with a little heat, fresh garlic, and the slightest note of clove. Natural, edible hog casings and authentic molds. Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, garlic, sodium nitrite, sodium nitrate, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/Pz7xLDtsQIiwwWw3Cw6F_FK1A1220.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+925	Pancetta	Round bellies are the best, especially when they’re made of bacon. Actually, it’s the bacon that’s made from the pig’s round belly, and then rolled into a log and cured to make pancetta. A traditional Italian staple, pancetta is often used in pasta dishes and on pizzas—fried up like bacon, it looks like a crispy little pinwheel. La Quercia uses vegetarian-fed, antibiotic-free pork from Heritage Acres Foods and cures it with sea salt, juniper berries, and bay leaves, giving the sweet meat an herbal kick. Ingredients: Pork, Sea Salt, Black and White Pepper, Rosemary, Bay Leaf	3	oz	8.99	47.95	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/NCys5WZtT5W4Ox8KQ7zM_FK1A7260.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+926	Pancetta	Fra’ Mani Pancetta is a salted and dried skinless pork belly, made according to the traditional Italian production method of “pancetta arrotolata” (rolled pancetta). Hand trimmed, hand salted and slowly aged, our Pancetta is characterized by a balanced proportion of lean and fat and the aromas of garlic, clove, bay leaf, and black pepper.Marcella Hazan calls this Pancetta the "best in the country."Ingredients: Pork, Sea Salt, and contains 2% or less of Celery Juice, Garlic, Spices, Dextrose, Starter Culture.	16	oz	14.99	14.99	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/yc5Li6DSQmu3usdyLM0B_FK1A0839.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+927	Pork Pistachio Pâtè	This country style pork pate is made with fresh herbs and pistachios, then capped with rendered pig fat. SUGGESTIONS TO ENJOY: Enjoy with your favorite baguette and a stone ground mustard.INGREDIENTS: Pork, liver, salt, nitrite, pepper, sugar, garlic, onion, parsley, thyme, shallot, port wine, cloves, nutmeg, ginger, bread, milk, spices. 	8	oz	9.99	1.25	oz	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/ZhKZsHU1THq8JzBtPL99_FK1A5516-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+928	Pork Liver Mousse	Rich and creamy mousse of pork liver, slightly sweetened with Port Wine and capped with rendered pig fat.  SUGGESTIONS TO ENJOY: Enjoy with your favorite baguette, olive oil and fleur de sel.INGREDIENTS: Liver, lard, cream, egg, Port Wine, salt, nitrite, pepper, coriander, chili flake.	8	oz	9.99	1.25	oz	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/e8vkjQw3QQCTkHS0OpnQ_FK1A5531-2.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+929	Grass Fed Beef Sausage Sticks	For a high energy yet healthy snack, try our smoked beef sticks. The spices are black pepper, basil, oregano and garlic.No preservatives, by-products, soy, fillers or conditioners, just 100% grass fed ground beef from our Limousin cross cattle. Carefully smoked with hickory wood in a small facility on the North Coast, the beef sticks are prepared with no added nitrates. Ingredients: beef, salt, sugar, spices, celery powder.Shelf life: If kept refrigerated and unopened, sticks will last a month. If not refrigerated, then 2 weeks. (Not like you're going to be able to keep from eating them right away anyway)	2	oz	3.99	2.0	oz	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/ETLhCi9QROOUlVMA5DCg_ow77QAwDTbu98ATRIU0h_FK1A3187.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+930	Capicola	This dry-cured, premium Italian-style salami is sourced from heritage-breed pigs humanely raised on pasture at local family farms. Savor these luxuriously thin slices on an Italian sub, mixed in with some arugula and stone fruit, or paired perfectly with a hard cheese. The delicately seasoned, slightly spicy flavor will have you asking for more!All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. The base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. Ingredients: Uncured pork collar salame, paprika, white wine	12	oz	14.49	19.32	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/FbL0Yj5IR6CKYnNVlzOU_20160617-SmokingGoose_Capocollo_MG_3012.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+931	'Nduja	'Njuda is a specialty of Calabria. Traditionally considered a peasant food, the Italian version is made from "poor cuts" of pork preserved with Calabrian pepper. La Quercia's 'Njuda Americana is made with prosciutto and speck-- quite the opposite of poor cuts! A delicious spreadable blend of La Quercia cured meat spiced with American red pepper, it marries rich umami to abundant heat.Extremely versatile! Spice up a pasta sauce, grilled cheese, burger, pizza, crostini, or taco. Wonderful just slathered on warm bread or a cracker.Ingredients: Fully cured prosciutto and speck, sea salt, red chili pepper.	5	oz	7.99	25.57	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/ADxTG5Y5QPSyrAPRj3WZ_FK1A6824.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+932	'Nduja	With the original 'Nduja as our inspiration, we're making our own all-local Indiana version. Like the traditional Italian salame, we started by grinding and blending pork shoulder, belly and jowl. We spiked the rich, soft mixture with dried Calabrianpeppers then stuffed natural casings that are about 3 or 4 inches wide, like the Italians use. Here's where we made it our own: our 'Nduja saw the inside of our gravity-fed cold smoker for 10 days before dry curing for 8 weeks. That layer of sweet smoke rounds out the delicious bite of hot, floral, and earthy Calabrian peppers for a slice that's a little more firm than the original 'Nduja but layered with even more intense and complex flavors. The soft center of the salame is spreadable on warm bread for a simple first course, but since our 'Nduja is firm enough to slice paper thin, we'll take it to top a pizza, dress a salad or soup, or stir into sauce for cut pasta or lasagna.All Smoking Goose recipes begin on the farm. They carefully curate farm sources based on research, site visits, flavor, and personal relationships with farmers. THe base requirements for all Smoking Goose farm sources: Small Family Owned Farm, No factory Farms, No Gestation Pens,  Antibiotic Free, 100% Vegetarian Feed, No Growth Promotants, Humanely Slaughtered. Source codes printed in the bottom right corner of each smoking goose package. To find out more about the farm please visit their Raw Resource Sheet. This item is stored frozen. Please use within 30 days of defrosting.Ingredients: pork, calabrian peppers, paprika, cold-smoked	8	oz	13.99	27.98	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/ONF4WVVDQgSbIf98WTwi_20160914-SmokingGoose_Njuda_MG_1012.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+933	Smoked Delaware Fireball Crepinette	One of the OG salumis created at Goose the Market, Smoking Goose’s butcher shop on Delaware Street in Indianapolis, this crepinette salame is spicy! Coarse ground pork is blended with crushed red pepper, black pepper, espellette, and cayenne, then hand wrapped in caul fat before getting cold smoked over hickory and aged. Easy to slice and ideal for snacking, try paired with blue cheese to temper the heat on your next charcuterie board!Ingredients: uncured pork salame, red chilies, espelette, caul fat, cold-smoked.	5	oz	13.99	44.77	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/DTxvFPVtQbmkONbtvLuS_20160820-SmokingGoose_DelawareFireball_MG_8512.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+934	Football Summer Sausage	This iconic treat is a "go-anywhere", "pair with everything", "everybody’s favorite" kinda sausage. A classic American favorite Ours has fresh garlic, whole mustard seeds and a bright kick from chili flake. Shelf stable, cased in a custom football casingIngredients: Pork, pork fat, water, salt, spices, dextrose, garlic, vinegar, marjoram, chard powder, natural flavors, lactic acid starter culture	1	lb	14.49	14.49	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/zHpUqhVrS8iHz9Yifmws_20160913-OlympicProvisions_FootballSummerSausage__MG_0887.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+935	Pork Summer Sausage	This iconic treat is a "go-anywhere", "pair with everything", "everybody’s favorite" kinda sausage. Our take on the classic American summer sausage is tangy and mildly spiced with mustard and garlic, wax dipped, and completely delicious.Ingredients: Pork, pork fat, water, salt, spices, dextrose, garlic, vinegar, marjoram, swiss chard powder, natural flavors, lactic acid starter culture, potassium sorbate. 	0.75	lb	10.99	14.65	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/0QhDxbcGTXeI9ol3pHmS_FK1A7723.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+936	Sauccison D'Arles	Our most elemental and simple salami: just pork and sea salt. Natural, edible hog casings and authentic molds.Ingredients: Pork, pork fat, salt. Contains 2% or less of dextrose, sodium nitrite, sodium nitrate, lactic acid starter culture, water.	4.5	oz	9.99	35.52	lb	Meat	Charcuterie	http://goodeggs2.imgix.net/product_photos/QIATqtU5RCOPHCfJdLgF_FK1A1188.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+937	Saucisson aux Noisette	French for salami with hazelnuts and here in Oregon we grow 99% of North America's crop. Enjoy this simple saucisson seasoned only with sea salt and studded with whole roasted Oregon hazelnuts. Natural, edible hog casings, authentic molds. Ingredients: Pork, pork fat, salt, hazelnuts. Contains 2% or less of dextrose, sodium nitrite, sodium nitrate, lactic acid starter culture, water.	4.2	oz	9.99	38.06	lb	Meat	Charcuterie	http://goodeggs1.imgix.net/product_photos/XEAwqIcQZmJpdQCxkAqR_FK1A1166.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+942	BBQ Sauce	We've been making this highly addictive sauce/dip for ourselves and tinkering with the recipe since 1999. Not just for bbqs, this can be used instead of ketchup and as a general sauce/dip for any kind of meat or vegetables. We use it in sandwiches, as a dip for fries and roasted potatoes, on burgers and hot dogs. You can even make meat loaf with it. One dish we love to make is pulled bbq chicken or turkey sandwichs with coleslaw as they do in North Carolina - search online lots of recipes! If you are vegetarian, it is perfect seasoning for a wide variety of dishes. Just be creative! It is delicious all year round.Not too spicy, but not too mild. It is a perfect combination of spices, heat, sweetness and tang. The complex, addictive flavor is due to our use of more than seven types of chilies and peppers, and many, many spices. Just measuring out all the ingredients takes an hour! Read the rave review by Food & Wine magazine about it.Our bbq sauce is gluten free and contains organic California grown GMO-free tomatoes, processed by Neil Jones in Hollister, California.Ingredients: organic tomatoes, brown cane sugar, organic vinegar, mustard, organic wheat-free soy sauce, spices, garlic, salt.	16	fl oz	6.99	0.44	fl oz	Meat	Rubs & Marinades	http://goodeggs1.imgix.net/product_photos/YlD5s4PcT8q5ojK7E2rQ_FK1A6460.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+943	Akka's Curry Paste - South Indian Style	Craving for a fresh tasting curry with authentic flavors without the hassle of shopping for ingredients and making them? Akka's Curry Paste is the simple solution! Made with 16 ingredients including fresh tomato, onion, coconut, ginger, garlic, curry leaf, turmeric, coriander, and spices is easy to use. This is inspired by my mother who used to make a curry paste before we went on our annual pilgrimage to a distant village when I as growing up in India. We bring this product to not so distant Silicon Village San Francisco, for everyone's enjoyment.All you do is brown 2 lbs of chicken breast or thigh meat. Transfer the full jar of curry paste to the pot. Add two cups of liquid - chicken broth, coconut milk, or water, and 1 lb of chopped vegetable like potato, carrots. Bring to boil and simmer for 15 minutes until chicken is cooked. Serve with rice, nan, paratha, or bread with a spoon full of Akka's Mango Chutney in the side.To make vegetarian curry: chop and boil three cups of vegetables like potatoes, carrots, green beans, cauliflower in water. Add three to four tablespoons of curry paste to the vegetable and simmer for few minutes. Serve with rice, chapathi, paratha, or bread with a spoon full of Akka's Meyer Lemon Relish in the side.Ingredients: tomato, onion, coconut, ginger, garlic, coriander powder, chili powder, safflower oil, curry leaf, spices, salt	6.7	oz	10.49	1.57	oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/Hkgn1St3SjS22fZfSAM1_FK1A2641.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+944	Original Korean BBQ Marinade	"This is an all NEW product from Genuine Grub! As someone who loves Korean BBQ (or K-BBQ as we say in my house) it's awesome to know that I no longer have to wait in line at the K-BBQ spots around the Bay and that I can enjoy the flavors right from my own house" -Erin, Grocery Buyersure, we could tell you that our marinade has tons of great reviews. but most of them are from people we had to pay. like family and friends. but if you’re looking for something new and exciting in life (sorry, we’re referring to food only), we think you’ll love this. besides, it’s made with organic ingredients and stuff. so, c’mon, what've you got to lose? a few dollars, sure, but that's a risk we're willing to take! MADE IN MARIN.ingredients: soy sauce (water,soybean, wheat, salt),* sugar,* sesame oil,* water, apple cider vinegar,* apple cider,* arrowroot,* granulated garlic,* sesame seed,* minced garlic,* green onion,* black pepper.*     * organic 	16	oz	7.99	0.5	oz	Meat	Rubs & Marinades	http://goodeggs1.imgix.net/product_photos/PxwlOyk7SfmyRkCvfN0g_20160824-GenuineGrub_KoreanBBQ_MG_8620.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+945	Chimichurri Sauce	Ingredients: Extra Virgin Olive Oil, White Distilled Vinegar, Water, Sea Salt, Oregano, Sage, Red Chili Pepper, Thyme, PeppercornThe perfect accompaniment to a grilled Prather steak, chimichurri is a classic Argentinian sauce to go with grilled meats- but it's also awesome on potatoes, scrambled eggs, steamed veggies, chicken, or over Provoleta (grilled provolone cheese, look it up, you'll thank us...)	9	oz	9.99	1.11	oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/ObztJtUoTOaMYYtVsLXA_FK1A5450.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+946	Spiced Molasses BBQ Sauce	A complement to our popular bbq sauce, this new sauce (introduced in July, 2014) is based around molasses, dark cane sugar, a good amount of vinegar for tang and the addition of bourbon, espresso and a variety of spices and peppers that makes it so delicious you can eat it straight out of the jar all by itself. The San Francisco Chronicle wrote: "This latest offering from the San Francisco preserves company offers deep notes of molasses and bourbon in what tastes like the culinary love child of a traditional bbq sauce and a spiced gingerbread cookie (in a good way, of course)."  http://www.sfgate.com/food/article/Barbecue-sauces-for-ribs-wings-chops-or-skewers-5631764.phpIngredients: Vinegar, organic tomatoes, molasses, cane sugar, organic apple cider, bourbon, spices, salt, espresso.	16	fl oz	6.79	0.42	fl oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/EPMjcWkqQ9KZBo9O5eRP_FK1A6477.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+947	Prather Ranch BBQ Sauce	Ingredients: Organic tomatoes, organic ketchup, molasses, brown sugar, apple cider vinegar, onions, garlic, jalapenos, salt, distilled white vinegar, smoked paprika, natural liquid smoke, black pepper.Prather Ranch Meat Company's signature BBQ sauce is a perfect compliment for ribs, brisket, wings and pulled pork. Made in house with natural ingredients, it has a perfect smoky, tangy, spicy, sweet balance.	16	fl oz	9.99	0.62	fl oz	Meat	Rubs & Marinades	http://goodeggs1.imgix.net/product_photos/LfRFhs7LStiRmcUNACdF_FK1A9966.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+948	Shio Koji, All-Purpose Japanese Marinade	Shio koji is a live food that adds rich savory flavor to your cooking. Use in place of salt in any dish or sauce, giving you a umami-rich way to lower the sodium content.For more ideas on how to use Shio koji, check out this article from SF Gate!Ingredients   Organic rice koji, spring water, sea salt	8	oz	9.99	1.25	oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/E5c796noReydv5rs8ALM_FK1A6778.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+962	Lamb Bones (Frozen)	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	2	lb	15.99	8.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/n0Lj0A7BSuA0NpE9kVwS_FK1A6672.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+949	Spicy Korean BBQ Marinade	"This is an all NEW product from Genuine Grub! As someone who loves Korean BBQ (or K-BBQ as we say in my house) I am stoked that I can now enjoy flavors from my own couch. This is the spicier version for anyone who wants to walk on the wild side. " -Erin, Grocery Buyerlooking for a spicy marinade that will set your taste buds on fire? well, this ain’t it – but it will add a nice kick to whatever you add it to. and, like our original korean bbq marinade, it’s made with only organic ingredients and stuff. so, c’mon, think of how jealous your family and friends will be of you since it’s a FACT that people who eat spicy foods live spicier lives*…..………(* umm, not a fact whatsoever.) MADE IN MARIN.ingredients: soy sauce (water,soybean, wheat, salt),* sugar, *sesame oil,* water, apple cider vinegar,* apple cider,* cayenne powder,* arrowroot,* granulated garlic,* sesame seed,* minced garlic,* green onion,* black pepper*.     * organic	16	oz	7.99	0.5	oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/712fcqThQAaY9BmMiPqt_20160824-GenuineGrub_KoreanSpiceyBBQ_MG_8617.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+950	Akka's Tandoori Marinade	Make an authentic tandoori chicken with no artificial coloring using Akka's Tandoori Marinade! Just add plain yogurt to the marinade and marinate chicken for two hours or longer. Bake, barbeque, or grill to make a flavorful tandoori chicken. Marinade contains fresh lemon juice, ginger, garlic, oil, salt, turmeric, spices.  No artificial coloring or preservatives.Make vegetarian fare like tandoori sweet potato, potato, or cauliflower. Dice or break the vegetable into a small pieces. Coat with Akka's Tandoori Marinade and bake at 400F for about 15 to 20 minutes. Makes an excellent snack or a side dish.Ingredients: lemon juice, ginger, garlic, safflower oil, spices, salt	6.7	oz	10.49	1.57	oz	Meat	Rubs & Marinades	http://goodeggs2.imgix.net/product_photos/qM3nTx3SRZ6RusTVErzw_FK1A2649.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+951	Chile Negro & Hibiscus Sauce	Inspired by the flavors of Zacatecas, Mexico, this rich sauce is uniquely crafted by blending the aromatic and hearty flavors of the chile Negro with the earthy blend of roasted nuts, warm cinnamon and the rich sweetness of cacao which are then elevated by the sophisticated tart notes of hibiscus flower. Its texture and sweet and savory flavors are reminiscent of a traditional mole but the ingredients make it versatile enough to use as a braising sauce, marinade or simmer and pour over your favorite ingredient.  \nSimple Preparation: Salt and pepper your favorite protein (we recommend chicken or flank steak), and roast or grill to desired doneness. Meanwhile bring sauce and 3/4 cup of water or broth to a simmer, and cook till slightly thickened, 5-10 minutes. Pour over your prepared protein and garnish with queso fresco, cilantro, and lime before serving. \nBefore starting Salsaology, creator Lori honed her cooking skills as a professional chef in Southern California. For more recipe suggestions and to see how both her Mexican heritage and the rich culinary traditions of Los Angeles have influence her evolution as a chef, check out the recipe section of her website. From smokey spiced cranberry sauce to vegan stuffed mushroom caps, there’s no end to the versatility of Salsaology simmer sauces!  Ingredients: Water, Onion, Hibiscus Flowers, Peanut Butter, Raisin, Dehydrated Chile Peppers, Pumpkin Seeds, Walnuts, Sea Salt, Tahini, Banana Puree, Olive Oil, Garlic, Spices, Cocoa Powder.	12	fl oz	9.99	0.83	fl oz	Meat	Rubs & Marinades	http://goodeggs1.imgix.net/product_photos/TddpdAbESwGFEn5ZgItx_GE_Salsology_002.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+952	Akka's Indian Spice Rub	A South India style fresh tasting curry spice rub with authentic flavor is tailored from my family recipe. It pairs well with roasting both meat and vegetable.  Rub meat with generous amount of spice rub, olive oil, and lemon juice. Marinate in refrigerator for 30mins. Roast, grill, or barbeque until the meat is cooked. Serve with rice, bread, or paratha and Akka's mango chutney on the side. Coat chopped vegetables like potato, sweet potato, carrots, shallots, celery stick with the spice rub and olive oil mixture. Roast until cooked. Separately, make or heat tomato sauce on a skillet along with some spice rub. Transfer vegetable to the skillet and mix well. Serve with rice, chapathi, or paratha and Akka's Meyer lemon relish on the side. Mixing with tomato sauce is optional.Ingredients: coriander, ginger, garlic, safflower oil, coconut, turmeric, red chili, spices, salt, curry leaf	3.2	oz	9.99	3.12	oz	Meat	Rubs & Marinades	http://goodeggs1.imgix.net/product_photos/qwG0wPQaRqG1nw1rHyuq_20160809-Akkas_IndianSpiceRubMG_7517.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+953	Beef Bones (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. Perfect for bone broth, Pho, really lucky dogs..."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2.8	lb	15.39	5.5	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/Z4uOUaFRwijQVAsbdMOE_FK1A6546.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+954	Pasture Raised Pork Bones (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Mixed pork bones, great for broth, stew, or dog treats!	2.8	lb	16.19	5.78	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/1LMynNe2QkqaE5PKP1Fj_FK1A0276.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+955	Pasture Raised Pork Trotters (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Step up your pork broth game- Tonkotsu Ramen, anyone?	1	lb	5.79	5.79	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/PJcAMxaQT0qjQIr8aDAq_FK1A0643.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+963	Lamb Bones (Frozen)	Williams Ranches Lamb- from Sonoma County Meat CompanyRaised by the Williams family in the coastal hills of Sonoma County, sheep graze among the abundant wildlife protected by five Great Pyrenees livestock guardian dogs. The Pyrenees guard the sheep from natural predators allowing both to live in harmony with the land.Williams Ranches grows the highest quality lamb, fed on grass, clover and alfalfa with no hormones or antibiotic supplements. The Williams hand select each lamb, determining processing time by the amount of fat cover. This ensures a quality, consistent product that is available year round and lambs that are processed between 5 and 8 months old. This process means you will get a leaner, milder lamb that simply melts in your mouth.	2.25	lb	17.99	8.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/n0Lj0A7BSuA0NpE9kVwS_FK1A6672.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+956	Grass-fed Oxtail (Frozen)	100% Grass-fed and Finished Oxtail- from Morris Grassfed, San Juan BautistaBraise away!  Take your time, fill your home with beautiful aromas and enjoy mouth-watering 100% locally-grown Morris Grass-fed beef and gravy during the fall and winter.  The perfect comfort food, oxtail is possibly the ultimate braising cut.Morris Grassfed provides 100% grass-fed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	1.5	lb	19.49	12.99	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/HhKS70yhSOcXi5xgSTBk_20160611-SonomaMeatCo_Oxtail_MG_1976%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+957	Grass-fed Oxtail (Frozen)	100% Grass-fed and Finished Oxtail- from Morris Grassfed, San Juan BautistaBraise away!  Take your time, fill your home with beautiful aromas and enjoy mouth-watering 100% locally-grown Morris Grass-fed beef and gravy during the fall and winter.  The perfect comfort food, oxtail is possibly the ultimate braising cut.Morris Grassfed provides 100% grass-fed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	2	lb	25.99	13.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/HhKS70yhSOcXi5xgSTBk_20160611-SonomaMeatCo_Oxtail_MG_1976%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+958	Natural Smoked Ham Hocks (Frozen)	This smoked ham hock will be a great addition to your pot of beans or soups. They are meaty and have a wonderful, but not too overpowering, smoke on them. Did we mention we sell beans as well? And we've got a killer recipe for Cuban Black Beans and Ham Hocks if you ask us...Ingredients: Llano Seco pork, sea salt, sugar, celery powder, cherry powder, sodium carbonate, and flavorings.Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	1.75	lb	12.19	6.97	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/tjRnOEYzRF2NKRNRUGP4_FK1A7550.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+959	Grass-fed Oxtail (Frozen)	100% Grass-fed and Finished Oxtail- from Morris Grassfed, San Juan BautistaBraise away!  Take your time, fill your home with beautiful aromas and enjoy mouth-watering 100% locally-grown Morris Grass-fed beef and gravy during the fall and winter.  The perfect comfort food, oxtail is possibly the ultimate braising cut.Morris Grassfed provides 100% grass-fed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	1.75	lb	22.99	13.14	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/HhKS70yhSOcXi5xgSTBk_20160611-SonomaMeatCo_Oxtail_MG_1976%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+960	Grass-fed Oxtail (Frozen)	100% Grass-fed and Finished Oxtail- from Morris Grassfed, San Juan BautistaBraise away!  Take your time, fill your home with beautiful aromas and enjoy mouth-watering 100% locally-grown Morris Grass-fed beef and gravy during the fall and winter.  The perfect comfort food, oxtail is possibly the ultimate braising cut.Morris Grassfed provides 100% grass-fed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	2.25	lb	29.99	13.33	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/HhKS70yhSOcXi5xgSTBk_20160611-SonomaMeatCo_Oxtail_MG_1976%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+961	Smoked Ham Hocks (Frozen)	This smoked ham hock will be a great addition to your pot of beans or soups. They are meaty and have a wonderful, but not too overpowering, smoke on them. Did we mention we sell beans as well? And we've got a killer recipe for Cuban Black Beans and Ham Hocks if you ask us...Ingredients: Llano Seco pork, sea salt, sugar, celery powder, cherry powder, sodium carbonate, and flavorings.Our pigs are a cross of Duroc and Yorkshire breeds. Our hogs are fed GMO-free, vegetarian grains and legumes, 80% of which are grown on the Rancho. Pigs are raised in deep-bedded hoop barns with continual access to large open air pastures with plenty of sunshine and a great view of the California Buttes. All animals are confinement-free for 100% of their lives, humanely treated with best practices certified by Global Animal Partnership. Our pigs are never fed antibiotics or growth hormones. Llano Seco Pork is the culmination of our mission to provide a variety of products while caring for the people, the animals and the land. We pride ourselves in our holistic approach to ranching.	2.75	lb	16.49	6.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/tjRnOEYzRF2NKRNRUGP4_FK1A7550.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+964	Pasture Raised Pork Trotters (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat CompanyHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined. Step up your pork broth game- Tonkotsu Ramen, anyone?	1.5	lb	8.69	5.79	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/PJcAMxaQT0qjQIr8aDAq_FK1A0643.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+965	Duck Fat	Rendered Duck FatFried potatoes anyone? How about making your own duck confit? Everything's delicious with duck fat!Arrives frozen, keep frozen or refrigerated.Mary’s Free-Range Ducks are beautiful animals to raise. The Pekin Duck are raised naturally in the beautiful weather in California. They live year round with access to outdoors. We watch them everyday to make sure they are comfortable and happy. We make every effort to treat our ducks as humanely as possible throughout the production process. No Antibiotics EverRaised Without Added Hormones*No Preservatives or Additives*Federal Regulations Prohibit The Use Of Hormones In DuckFed a Vegetarian Diet (65% Corn, 25% Soybean Meal, 5% Vitamins and Nutrients, 5% Wheat)	12	oz	11.89	0.99	oz	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/nynEyNm3RuG8AP4PfyDB_20160429-Marys_DuckFat_MG_8482.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+966	Pasture Raised Pork Head	Walnut Keep Farms Pork- from Sonoma County Meat Company\nIf you're looking at this product we imagine you have some ideas of what you might want to do with it, but here's a few anyway- cabeza tacos, headcheese, guanciale, scrapple...\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	18	lb	49.99	2.78	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/KEBlju0dRHyAKjmujQFj_20160527-PigHead_MG_0480%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+967	Beef Heart (Frozen)	Oakridge Angus- Grass-fed, Grain Finished Beef - from Sonoma County Meat Co. A great beginner organ meat, heart is just lean muscle- great pronounced beef flavor, without any of the mineral flavors associated with other organs. Marinate, slice thin and cook to medium rare in a hot pan or on the grill for tacos, or braise low and slow."Oak Ridge Angus raises premium grass-fed grain-finished beef raised in Knights Valley, just outside Calistoga. Started as a dairy by Massimino LaFranchi 1912, the family sold their award winning Aryshires in 1974 and bought the first generation of the Angus herd they raise now. Pature raised on the rolling hills of northern California, and finished with only spent beer grain, 100% barley from the Bear Republic in Cloverdale; no corn, no antibiotics, no hormones of any kind.This is truly a local, sustainable protein."	2	lb	15.99	8.0	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/M3BSgWGREWQaFWRnUZxA_9yS6a6bGQQWsl4Ff0UNS_ZXZUei9qR5iP9qOlpnsH_beef-heart-good-eggs0752.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+968	Pasture Raised Pork Heart (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat Company\n\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.25	lb	9.99	7.99	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/lQtBOp8PQXO4IG10G3W8_X7CgAVQGTTS7uOdXe30n_UZmwRPmMuD5c-7qLCo3QaufvyozruojkVaGSYhu38mo.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+969	Pasture Raised Pork Skin (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat Company\nChicharrones!\nSay hello to golden fried pork skin that will satisfy that urge for crunch.\nLeave in sheets for chip-like chunks, OR slice thin and serve on top of pasta,\nsalad, fried eggs, and rice. The sky is the limit with this delectable, local\nproduct. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	1.8	lb	8.99	4.99	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/OPgkxsVRk2P5kfhB8KSA_FK1A9373.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+970	Pasture Raised Pork Kidneys (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat Company\n\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	0.75	lb	3.99	5.32	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/LIYN66HSaisyScrAvieJ_77g3ZUfnRq2BsUhPAd7J_Ai5rUhKEMf7VztViNd3TSj53fYCLyfmP12EW8hZ51qc.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+971	Pasture Raised Pork Fat (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat Company\nThis fat is\nfor the home cook who wants to add flavor, not just grease. Perfect for\nsausage-making, rendering, or greasing pans and grills. \n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	2.8	lb	11.19	4.0	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/ut3ev4mRSCBfjgIuQHiJ_FK1A9356.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+972	Grass-fed Beef Heart (Frozen)	100% Grass-fed and Finished Beef Heart- from Morris Grassfed, San Juan BautistaMorris Grassfed provides 100% grassfed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	2.75	lb	21.99	8.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/iQG9ToVRDqfmqL4HZAlC_ZXZUei9qR5iP9qOlpnsH_beef-heart-good-eggs0752.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+973	Grass-fed Beef Heart (Frozen)	100% Grass-fed and Finished Beef Heart- from Morris Grassfed, San Juan BautistaMorris Grassfed provides 100% grassfed & finished (no antibiotics or added hormones) beef to customers throughout California. Our beef is dry-aged for 21 days, processed in USDA inspected facilities, cut & wrapped by small-scale, artisan butchers and delivered directly to you via Good Eggs.We are an independent, family-owned company. We practice holistic management on the rangelands we manage, taking into account the land, animals, and people affected by our decisions. We invite you to take a tour of our operations here and to learn about the social, ecological and health benefits of 100% grass finished beef.	3	lb	23.99	8.0	lb	Meat	Bones & Offal	http://goodeggs1.imgix.net/product_photos/iQG9ToVRDqfmqL4HZAlC_ZXZUei9qR5iP9qOlpnsH_beef-heart-good-eggs0752.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+974	Pasture Raised Pork Heart (Frozen)	Walnut Keep Farms Pork- from Sonoma County Meat Company\n\n\nHeritage breed pigs are pasture-raised in Suisun Valley and finished on walnuts, giving the fat a rich, creamy texture. Never given antibiotics or growth hormones, and never confined.	0.75	lb	5.99	7.99	lb	Meat	Bones & Offal	http://goodeggs2.imgix.net/product_photos/lQtBOp8PQXO4IG10G3W8_X7CgAVQGTTS7uOdXe30n_UZmwRPmMuD5c-7qLCo3QaufvyozruojkVaGSYhu38mo.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+975	Wild Pacific Sardines in Extra Virgin Olive Oil	Caught in the Pacific Ocean and rated as the Best Choice for Sustainability by the Monterey Bay Aquarium Seafood Watch® Program, these meaty, firm and flavorful whole sardines are loaded with essential nutrients: Omega 3, protein, calcium, phosphorus, potassium and iron. Each tasty little fish is cleaned, scale free and delectable on a sandwich, as a salad topper, or as an ingredient in our Mediterranean Seafood Antipasto Platter or Sardine Power Lunch. Ingredients: Sardines (Sardinops sagax or Sardinops melanostictus), extra virgin olive oil, water, sea salt, aqueous natural smoke	4.375	oz	2.99	0.68	oz	Fish	What We Love	http://goodeggs1.imgix.net/product_photos/Gp41DsrPRMqCZHNWQMBd_20160621-WildPlanet_SardinesinEVOO_MG_3180.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+976	Fresh Wild Rock Cod	Fresh Wild Rock Cod (Rockfish/Snapper) is a versatile delicious fish.  Local Rock Cod is caught near the Farallon Islands off the San Francisco Coast & North along the Pacific Coast into British Columbia.  Rock Cod is best on the grill, sauteed, baked, or broiled.  It has a mildly sweet flavor with large flakes that are great for ceviche, fish tacos, fish n' chips. Just add lemon.	1	lb	15.99	15.99	lb	Fish	What We Love	http://goodeggs1.imgix.net/product_photos/zMeZiVzSn2rnwjaOWlhE_FK1A6842.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+977	Pacific Albacore Tuna (Frozen)	Sushi Grade Pacific Albacore Tuna (Thunnus Alalunga)  - from Sea to Table, troll caught and landed in Bellingham, WA.Albacore is best known as America's highest grade, "white meat" canned tuna. In fact, it's the only tuna meat allowed to be labeled as "white meat." However, it has also developed a reputation out of the can in fresh and frozen markets- Albacore has a mild, rich taste and a firm, steaky texture, with large, moist flakes.	0.5	lb	9.49	18.98	lb	Fish	What We Love	http://goodeggs2.imgix.net/product_photos/07CXwyGbQwiOj6F5J337_20160816-SeatoTable_Albacore_MG_8137.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+978	Wild Alaska Pink Salmon	Wild Alaska Pink Salmon is sustainably caught in the cold, clear Alaskan waters by local fishing families. Our skinless and boneless fillets are hand packed and cooked just once to retain their nutritional potency and natural juices, containing an average of 340mg EPA and DHA Omega 3 per 2oz serving. Our salmon are canned fresh upon catch, not from previously frozen fish. This provides superior rich flavor and soft texture. Wild Planet Pink Salmon is a perfect choice for sandwiches, a flavorful salmon spread and more.Ingredients: Wild pink salmon (Oncorhynchus gorbuscha) and salt.	6	oz	4.69	0.78	oz	Fish	What We Love	http://goodeggs2.imgix.net/product_photos/NcJLNHGfRQuOOD5IhMME_20160701-WildPlan%20et_CannedSalmon_MG_4214.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+979	Wild Alaskan Smoked Sockeye Salmon Bellies	\nSmoked Wild Alaskan Sockeye Salmon Bellies- Kenai Red Fish CompanyIngredients: Wild Alaskan Salmon, Brown Sugar, Salt, Natural Alder SmokePremium sockeye salmon caught sustainably in the\nwaters of Cook Inlet, AK. Mostly the famous “Kenai Reds”, our salmon gets to dock\nin Homer, AK within hours of being caught. 	6.4	oz	11.29	1.76	oz	Fish	What We Love	http://goodeggs1.imgix.net/product_photos/N3rn0lG4SXicDQjFtAeM_20160802-Kenai_SmokedSalmonBellies_MG_7040.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+980	McFarland Springs Trout, Two Fillets	Missing CA Salmon season? Two X Sea offers an incredible alternative to Atlantic farmed salmon- 100% vegetarian fed, CA raised, McFarland Springs trout! A product that truly has to be tasted to be believed, this is a Good Eggs staff favorite.McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is filleted with the skin on for easy cooking on the grill or on the stove. Arrives fresh, not frozen. For recipe ideas check out our website.About our trout:TwoXSea began testing our fishmeal alternative in 2009 to produce a farmed trout using a nearly pure vegetarian diet of algae, and plant-based products. Originally the feed contained approximately 3% fish oil, which has since been completely eliminated to create a farmed trout that is raised on a 100% vegetarian diet. The results we achieved are stunning and a true culinary delight. The beautifully balanced sweet flavor, superior texture and lighter firm flesh almost perfectly mirror that of a wild trout. The Omega 3 levels are higher than that of wild salmon as well.McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	0.75	lb	13.99	18.65	lb	Fish	What We Love	http://goodeggs1.imgix.net/product_photos/LXZeml1QTIOPS1FvtBZY_mcfarland%20springs%20trout%20fillet%2010-10-12.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+981	Frozen Wild Petrale Sole Fillets	Sometimes the freshest seafood comes from the freezer.As soon as fish leaves the water it begins losing freshness. Your average fillet is several days old by the time it reaches your plate, and the taste and texture have already suffered. We use freezing to stop time and preserve the freshness of our fish. We seal our fish in vacuum bags that protect the fillets from freezer burn. We freeze our individually vacuum packaged fillets quickly and at a low temperature, which preserves the texture of the fish. Most importantly, we freeze our fish immediately after it’s caught. Our fish doesn’t travel the world, it’s landed twenty miles from where it’s filleted and frozen. Thaw exactly the amount you need right before you need it, and our fish will always taste like it was reeled in yesterday.Our Petrale sole are caught off the coast of Northern California. We rush to make sure that the fish are filleted and frozen immediately, so that our sole tastes like it was caught yesterday. This fish makes great fish and chips, fish stew, fish tacos, and sole meuniere. You can hold these fillets in your freezer for up to one year.Thawing Instructions: It is best to thaw our Frozen Wild Petrale Sole Fillets slowly under refrigeration. Thawing slowly keeps the fillets firm. Nobody likes mushy fish. Thaw just what you plan on eating. Remove fillets from bags and place in a bowl inside your refrigerator. Allow the fillets to thaw for 8 to 12 hours. Cook fillets within 24 hours of thawing.	0.5	lb	10.99	21.98	lb	Fish	What We Love	http://goodeggs2.imgix.net/product_photos/pk7137xARR6v1Q4q9bTR_FK1A9278.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1005	Spicy Hot Smoked Wild King Salmon	Wild local King salmon brined for 24 hours and smoked for two days. Angelo's Meats and Sausage in Petaluma makes this SPICY smoked salmon for us using salt, smoke, and red pepper flakes. Angelo is a smokehouse master and has agreed to make small weekly batches for us so that our salmon is always fresh from the smokehouse. This is a hot smoked fillet, so it will not be sliceable but will flake beautifully. As you can tell by looking at that coating of red pepper flakes on top of the fillet, this stuff is spicy. Gobble it up as-is or enjoy on top of a bagel with cream cheese or sprinkled over scrambled eggs.	8	oz	21.99	2.75	oz	Fish	Smoked	http://goodeggs2.imgix.net/product_photos/GeU7AEqcRECzrZhNZNmi_FK1A5384.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+982	McFarland Springs Trout, Two Fillets	Missing CA Salmon season? Two X Sea offers an incredible alternative to Atlantic farmed salmon- 100% vegetarian fed, CA raised, McFarland Springs trout! A product that truly has to be tasted to be believed, this is a Good Eggs staff favorite.McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is filleted with the skin on for easy cooking on the grill or on the stove. Arrives fresh, not frozen. For recipe ideas check out our website.About our trout:TwoXSea began testing our fishmeal alternative in 2009 to produce a farmed trout using a nearly pure vegetarian diet of algae, and plant-based products. Originally the feed contained approximately 3% fish oil, which has since been completely eliminated to create a farmed trout that is raised on a 100% vegetarian diet. The results we achieved are stunning and a true culinary delight. The beautifully balanced sweet flavor, superior texture and lighter firm flesh almost perfectly mirror that of a wild trout. The Omega 3 levels are higher than that of wild salmon as well.McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	1	lb	18.99	18.99	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/LXZeml1QTIOPS1FvtBZY_mcfarland%20springs%20trout%20fillet%2010-10-12.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+983	Half Pound Fresh Steelhead Trout	Harvested in Washington's Columbia River, Steelhead Trout is the salmon lovers' alternative fish. Steelhead is so much like salmon in color, taste, and texture that it's sometimes very difficult to tell the difference.Information on Source:PORTLAND, Ore. – April 29, 2013 – The Pacific Seafood Group, a family owned seafood company based in Portland, Ore., is pleased to announce that their Pacific Aquaculture Steelhead Farm on the Columbia River in Washington State has received Best Aquaculture Practices (BAP) certification. This is the first and only Salmon/Steelhead farm to be BAP certified in the U.S.The Best Aquaculture Practices (BAP) standards address environmental and social responsibility, animal welfare, food safety and traceability in a voluntary certification program for aquaculture facilities. BAP certification defines the most important elements of responsible aquaculture and provides quantitative guidelines by which to evaluate adherence to those practices.	0.5	lb	10.99	21.98	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/5v92S2UmRjWTLRjxD8wC_FK1A2389.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+984	Fresh Steelhead Trout	Harvested in Washington's Columbia River, Steelhead Trout is the salmon lovers' alternative fish. Steelhead is so much like salmon in color, taste, and texture that it's sometimes very difficult to tell the difference.Information on Source:PORTLAND, Ore. – April 29, 2013 – The Pacific Seafood Group, a family owned seafood company based in Portland, Ore., is pleased to announce that their Pacific Aquaculture Steelhead Farm on the Columbia River in Washington State has received Best Aquaculture Practices (BAP) certification. This is the first and only Salmon/Steelhead farm to be BAP certified in the U.S.The Best Aquaculture Practices (BAP) standards address environmental and social responsibility, animal welfare, food safety and traceability in a voluntary certification program for aquaculture facilities. BAP certification defines the most important elements of responsible aquaculture and provides quantitative guidelines by which to evaluate adherence to those practices.	1	lb	21.99	21.99	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/E03KRaalQKuRHyuvSzvV_FK1A9391.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+985	Frozen Wild Salmon Burger Blend	Wild Salmon Burger Blend- Wild Alaskan Coho and Sockeye salmon from Siren Fish Co., ground and blended.A delicious 50/50 blend of wild Coho and Sockeye salmon, lightly ground and perfect for burgers, meatballs, and stir-fry. This quick thawing blend is the perfect foundation for simple, wholesome meals. Add an egg, a few breadcrumbs and handful of fresh herbs for quick and tasty salmon burgers!Thawing Instructions: It is best to thaw our Wild Salmon Burger Blend slowly under refrigeration. Thaw just what you plan on eating. Cut the corner of the bag and place in a bowl inside your refrigerator. Allow the salmon to thaw for 2 to 6 hours. Cook within 24 hours of thawing.	1	lb	10.99	10.99	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/iiFWEggTRMeun3YlpJxX_20160630-SirenFish_SalmonBurger_MG_4027.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+986	Wild Alaskan Sockeye Salmon Fillet (Frozen)	Plucked from the pristine waters of Bristol Bay, AK, these wild sockeye salmon fillets are portioned into perfect meal-size pieces.  Notable for their mineral sweetness, Paul Greenberg, noted author, called Bristol Bay sockeye the most guilt-free salmon purchase in a NYT Op-ed piece: http://query.nytimes.com/gst/fullpage.html?res=9401E6D61E31F931A35753C1A9679D8B63 Check out this link for a Sunset Magazine write up of Gypsy Fish owner and private chef Chris Wang: http://www.sunset.com/food-wine/kitchen-assistant/famous-chefs/chef-christopher-wang	0.3	lb	5.99	19.97	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/uLaK4uuZSUqotZ3FcgQH_salmon.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+987	McFarland Springs Trout, Two Fillets	Missing CA Salmon season? Two X Sea offers an incredible alternative to Atlantic farmed salmon- 100% vegetarian fed, CA raised, McFarland Springs trout! A product that truly has to be tasted to be believed, this is a Good Eggs staff favorite.McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is filleted with the skin on for easy cooking on the grill or on the stove. Arrives fresh, not frozen. For recipe ideas check out our website.About our trout:TwoXSea began testing our fishmeal alternative in 2009 to produce a farmed trout using a nearly pure vegetarian diet of algae, and plant-based products. Originally the feed contained approximately 3% fish oil, which has since been completely eliminated to create a farmed trout that is raised on a 100% vegetarian diet. The results we achieved are stunning and a true culinary delight. The beautifully balanced sweet flavor, superior texture and lighter firm flesh almost perfectly mirror that of a wild trout. The Omega 3 levels are higher than that of wild salmon as well.McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	1.25	lb	23.79	19.03	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/LXZeml1QTIOPS1FvtBZY_mcfarland%20springs%20trout%20fillet%2010-10-12.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+988	Frozen Wild Bodega Bay King Salmon	Sometimes the freshest seafood comes from\nthe freezer. \n As soon as fish leaves the water it\nbegins losing freshness. Your average fillet is several days old by the time it\nreaches your plate, and the taste and texture have already suffered. We use\nfreezing to stop time and preserve the freshness of our fish. We seal our fish\nin vacuum bags that protect the fillets from freezer burn. We freeze our\nindividually vacuum packaged fillets quickly and at a low temperature, which\npreserves the texture of the fish. Most importantly, we freeze our fish immediately\nafter it’s caught. Our fish doesn’t travel the world, it’s landed twenty miles\nfrom where it’s filleted and frozen. Thaw exactly the amount you need right\nbefore you need it, and our fish will always taste like it was reeled in\nyesterday.\nOur Wild King Salmon are caught off the coast of\nNorthern California by small-scale fishing boats. We rush to make sure that the\nfish are filleted and frozen immediately, so that our Wild King Salmon tastes\nlike it was caught yesterday. Siren Fish Co. lets you enjoy the tastiest part\nof summer year-round without wondering where those delicious fillets came from. You can hold these fillets in your freezer for up to one year.\nThawing Instructions: It is\nbest to thaw our Wild King Salmon Fillets slowly under refrigeration. Thawing\nslowly keeps the fillets firm. Nobody likes mushy salmon. Thaw just what you\nplan on eating. Remove fillets from bags and place in a bowl inside your\nrefrigerator. Allow the fillets to thaw for 8 to 12 hours. Cook fillets within\n24 hours of thawing.	0.5	lb	14.99	29.98	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/E9BJXT3CQ7W5K6DSSWwp_FK1A0434.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+989	Half Pound Fresh Wild Alaskan Halibut	Alaskan Halibut is a very mild, sweet-tasting, tender, whitefish. Uncooked, the meat should be almost translucent.  When cooked, it turns snow-white.Halibut is an extremely versatile fish, and the thick, meaty flesh holds up well to a number of cooking methods and sauces. It’s also ideal for skewering as kebabs.  Simply add a lemon, garlic &/or butter sauce.  Salt to taste.Halibut is low in saturated fat and sodium and is a very good source of protein, niacin, phosphorus, and selenium.Commercial fishermen predominantly use longlines to harvest halibut.  Only hook-and-line gear is allowed to target halibut.  The impact on the environment is negligible.  The fisheries are managed by The International Pacific Halibut Commission, who sets the catch limits at a level that will ensure the long-term welfare of the halibut stock.	0.5	lb	14.99	29.98	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/UlBd1xt4To2FeaCxlcv7_FK1A6959.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+990	Fresh Wild Petrale Sole	Fresh Wild Petrale Sole is a kid-friendly, easy to prepare, delicious fish. Local Petrale Sole is caught near the Farallon Islands in San Francisco, in Fort Bragg, and North along the Pacific Coast into Southern Oregon. Petrale Sole is a thin, flaky, delicate, very mild tasting fish. Best sauteed, just add lemon or breadcrumbs.	1	lb	23.99	23.99	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/JihXPT3ySouwX2NIodrc_FK1A3977.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+991	Fresh Fish Sampler for Two	New & Improved Fresh Fish Sampler includes 2 servings (0.66+ lbs) of 1 or 2 varieties of fish.  Possible varieties include:King Salmon (May-October)Steelhead TroutArctic Char California HalibutCalifornia White SeabassPetrale SoleBlack CodLing CodRock CodTrue CodSand DabsAlbacore TunaSea Scallops The concept of the Fresh Fish Sampler is based on another system that connects farms to the people called a CSA (Community Supported Agriculture).  But, In this case, fish.  You (the community) support the local fishermen, & me (the fishmonger).  Select either one-time, weekly (best choice!) or monthly.  You benefit by getting more than your moneys worth & a chance to try new fish.	0.66	lb	12.99	19.68	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/vrEjQdldSYCsJuBvvUxz_FK1A9573.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+992	Half Pound Fresh Wild Alaskan True Cod	Fresh Alaskan True Cod Our True Cod comes from a MSC certified fishery from Kodiak Alaska. It is a sustainable fishery.  The catch method is a combination of Longline and Trap caught.The U.S. Pacific cod fishery is now often hailed as one of the best managed fisheries in the world. A wealth of true cod are caught during the winter and spring months in the gulf of AK. Pacific True Cod are abundant and the fishery is considered by all means sustainable. These True cod are a Monterey Bay Aquarium Seafood Watch “Best Choice” as they are hook-and-line caught.True cod is the original ‘fish ‘n chip’ fish. True cod have a mild and clean flavor with a perfect flake & large white-meat which allows for a variety of preparations. Though often found in fish and chips, cod is at its healthiest baked or broiled. Other cooking methods that work well with this fish include a nice sauté, fry, stew, or chowder. 	0.5	lb	9.99	19.98	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/VquLTdUdSlaCGP4T54E0_FK1A6774.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+993	Rockfish Fillet (Frozen)	Pacific Rockfish (Sebastes Spp.)- from Sea to Table, landed in Astoria, ORMarketed widely as Pacific snapper, these fish have fillets that are mild and slightly sweet tasting. The medium texture means means it fits nicely between firm fish (like swordfish) and delicate fish (like sole).Rockfish is not fishy tasting or oily, like sardines or mackerel. Instead, it's clean taste takes on the flavor of the spices you cook with. Rockfish is an easy substitute for almost any other white fish, including tilapia and bass.	0.5	lb	4.99	9.98	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/uC1LLUT66FgkFISLMVgD_20160817-SeatoTable_Rockfish_MG_8147.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+994	Half Pound Fresh Wild Black Cod Fillet	Fresh Wild Black Cod is a very oily, buttery, delicious fish.  Its real name is Sablefish, though some may call it butterfish.  Prepared in Japanese restaurants with miso, mirin, & sake marinade, it is also great marinated in teriyaki or soy sauce.  Best sautéed, baked, or broiled.Black Cod comes from a small number of fishermen in Half Moon Bay, Fort Bragg & occasionally Pier 45 in San Francisco.	0.5	lb	13.99	27.98	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/WefAINjQW6NwPoda6khZ_FK1A9296.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+995	Half Pound Fresh Wild California White Seabass	Fresh Wild California White Seabass is a thick, delicious fish. California White Seabass is caught off the Santa Barbara Coast, periodically coming north to San Francisco.  White Seabass is mild flavored, with large flakes.  Best on grill or broiled.  Just add lemon.	0.5	lb	12.49	24.98	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/dB8hXxpTzWSEx5QaovwR_FK1A9277.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+996	Frozen Wild Sablefish Fillet	Sometimes the freshest seafood comes from\nthe freezer. \nAs soon as fish leaves the water it\nbegins losing freshness. Your average fillet is several days old by the time it\nreaches your plate, and the taste and texture have already suffered. We use\nfreezing to stop time and preserve the freshness of our fish. We seal our fish\nin vacuum bags that protect the fillets from freezer burn. We freeze our\nindividually vacuum packaged fillets quickly and at a low temperature, which\npreserves the texture of the fish. Most importantly, we freeze our fish immediately\nafter it’s caught. Our fish doesn’t travel the world, it’s landed twenty miles\nfrom where it’s filleted and frozen. Thaw exactly the amount you need right\nbefore you need it, and our fish will always taste like it was reeled in\nyesterday. \n\n\n\n\n\n\n\n\n\n\n\n\n\n\nOur\nsablefish are caught off the coast of Northern California by small-scale fishing\nboats using traps. We rush to make sure that the fish are filleted and frozen immediately,\nso that our sablefish tastes like it was caught yesterday. These rich, buttery\nfish are commonly called Black cod, though they are not technically a part of the\ncod family. You can hold these fillets in your freezer for up to one year.\nThawing Instructions: It is\nbest to thaw our Frozen Wild Sablefish Fillets slowly under refrigeration. Thawing\nslowly keeps the fillets firm. Nobody likes mushy fish. Thaw just what you\nplan on eating. Remove fillets from bags and place in a bowl inside your\nrefrigerator. Allow the fillets to thaw for 8 to 12 hours. Cook fillets within\n24 hours of thawing.\n   	0.5	lb	14.99	29.98	lb	Fish	Fish	http://goodeggs2.imgix.net/product_photos/kMzA60HwTXW9RryV9C8b_FK1A0461.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+997	Cured Salmon Roe (Ikura)	Ikura (Cured) Wild Salmon Roe- Loki Fish Co. from Two X SeaSalmon eggs from wild, troll caught fish are a true gift from Mother Nature. Jam packed with Omega 3's & DHA, they are the perfect snack for expecting mothers or anyone looking to boost their health. Enjoy by the spoonful, or serve with sushi, rice or quinoa.Ingredients: Wild Salmon Roe, Salt.From Seattle, WA.Defrost slowly under refrigeration, best if used within 7 days of defrosting.	4	oz	16.99	4.25	oz	Fish	Fish	http://goodeggs1.imgix.net/product_photos/qQ3OnOlnQGeUm6Y8RhyR_twoxsea_salmonroe.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+998	New England Squid	Catch Method: Purse SeineLocation: Point Judith, RIIndividually quick frozen tubes and tentacles.Squid meat has a firm, chewy texture and mild, somewhat sweet flavor. Chefs love it because it's a near-blank canvas for flavor. Squid easily takes on flavors of any marinade or spices added. It can be grilled for healthy preparations or fried for indulgence.Squid will toughen rapidly if it is overcooked, so take caution when preparing. A high cooking temperature and a short cooking time are recommended to keep the calamari tender.	2.5	lb	27.49	11.0	lb	Fish	Fish	http://goodeggs1.imgix.net/product_photos/98mg7GHXTHOXjtUCZ1Yn_twoxsea_squid3%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+999	Half Pound Fresh Wild Sea Scallops	Fresh Wild Sea Scallops that I declare "Best in the World"...delicious, easy to quickly prepare & sear.Half-order (1/2 lb) includes 6-9 Sea Scallops.  Fresh out of the shell, dry-packed (no preservative liquid).Preparation & Cooking:4 minutes in a pan medium high with some kind of combination of garlic, butter, oil, salt & pepper.These Scallops are sourced from M&B Sea Products a leader in SUSTAINABLE FISHING PRACTICES.Here is information from their website www.freshseascallops.com:M&B Sea Products has deep ties to the seas of the North Atlantic. Each coming from generations of fishermen, John F Murray and Herman Bruce, came together in 1993 to found the company.With years of knowledge and experience in the scallop industry, we established our business in historic New Bedford, Massachusetts, home to the largest scallop fleet in the world, and set out to provide the freshest scallops available. We operate our own fleet, allowing us to bring you some of the best sea scallops and seafood available!It is our mission to ensure that you receive the finest scallops available, M&B Sea Products make quality and freshness our priority—because we operate our own fishing vessels, we can control our quality and set the same standards for our partner vessels. While observing sustainable fishing practices, we strive to deliver you the most high-quality sea scallops at competitive prices.We go above and beyond to adhere to our strict standards. This attention to detail and expertise, coupled with our supreme customer service, ensures we provide the highest quality, environmentally sustainable scallops on the market.M&B Sea Products is dedicated to ensuring sustainable fishing practices. In addition to strictly adhering to all rules and regulations of the fishing industry, we also have specially designed our gear to catch only scallops and minimal amounts of bycatch (the accidental capture of untargeted species). Both our owners are members of the board for Fisheries Survival Fund and we offer our fleet to be used in scientific discovery trips. We have great interest in protecting the New England fishery, which is not only our most valuable fishery, but also the most valued wild scallop fishery in the world.The Atlantic sea scallop program is one of the most successful of its kind. Sustainably harvested scallops can self-replenish on a yearly basis. The Atlantic sea scallop population is near record highs as the fishery continues to operate at sustainable levels. The collaborative efforts of scallop fishermen, scientists, fishery managers, and environmentalists are responsible for keeping this fishery sustainable for today and the future.To learn more about sustainable fishing practices, visit SMAST Fisheries and NOAA Fish Watch	0.5	lb	14.99	29.98	lb	Fish	Shellfish	http://goodeggs2.imgix.net/product_photos/BNQ8nPMhRk2BVWlUwE2u_FK1A9438.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1000	Half Pound Fresh Dungeness Crabmeat	Fresh Dungeness Crabmeat is packed with a combination of claw, leg, & body meat. All fully cooked & ready to eat.West Coast Dungeness Crabs are rated as a Good Alternative from Monterey Bay Aquariums Seafood Watch program. Dungeness Crabs have healthy populations & traps used have low by-catch.Sourcing info:HALLMARK FISHERIES, located in Charleston, Oregon, is one of the largest seafood production facilities on the Southern Oregon Coast.The Hallmark label, known for quality throughout its market area, can be found on such Pacific favorites as Dungeness crab, Fancy cocktail shrimp, Wild Troll salmon and various frozen products.	0.5	lb	26.99	53.98	lb	Fish	Shellfish	http://goodeggs2.imgix.net/product_photos/nPauFsbShWmgaDsUOMfK_FK1A0287.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1001	Wild Gulf Coast Shell-On Shrimp	Wild Gulf Coast Shrimp are one of few wild shrimp still available.  These Texas Shrimp are harvested under a sustainable management plan & follow environmentally safe guidelines. The shrimp are firm, with a mild, sweet flavor.Wild shrimp and farmed shrimp will have their own distinctive flavor profile simply because their diet is different.  Wild shrimp have a more varied diet — they feed on marine organisms, different types of plankton, organic matter.  The fish meal pellets that farmed shrimp are fed contain a lot of grains.  The wild diet naturally gives wild shrimp a more robust flavor profile than a farmed shrimp raised on a bland, unvaried diet.The shrimp have shell intact, Individually Quick Frozen (IQF), 16-20 per pound, in 1lb packages that can be kept in the freezer for months.For more information on the processor in Galveston, Texas visit www.galvestonshrimpcompany.com	1	lb	24.99	24.99	lb	Fish	Shellfish	http://goodeggs1.imgix.net/product_photos/30CuZPheTTypI3KXUm64_FK1A9516.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1002	Wild Giant Gulf Shrimp, Head-On	Wild Gulf Coast Shrimp are one of few wild shrimp still available.  These Texas Shrimp are harvested under a sustainable management plan & follow environmentally safe guidelines. The shrimp are firm, with a mild, sweet flavor.Wild shrimp and farmed shrimp will have their own distinctive flavor profile simply because their diet is different.  Wild shrimp have a more varied diet — they feed on marine organisms, different types of plankton, organic matter.  The fish meal pellets that farmed shrimp are fed contain a lot of grains.  The wild diet naturally gives wild shrimp a more robust flavor profile than a farmed shrimp raised on a bland, unvaried diet.The shrimp have shell and head intact, Individually Quick Frozen (IQF), 8-10 per pound, in 1lb packages that can be kept in the freezer for months.For more information on the processor in Galveston, Texas visit www.galvestonshrimpcompany.com	1	lb	23.99	23.99	lb	Fish	Shellfish	http://goodeggs2.imgix.net/product_photos/LRlfRShHROOQPwhdMUlE_20160526-OneOcean_HeadonShrimp_MG_0286%20%281%29.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1003	King Salmon Lox	Delicious cold smoked King salmon. Brined for 12 hours and smoked in an old-fashioned smokehouse for a full day, you haven't had lox like this. After smoking it's immediately flash frozen to maintain that freshness and is defrosted the night before delivery to you!	8	oz	21.99	2.75	oz	Fish	Smoked	http://goodeggs1.imgix.net/product_photos/nF6UEIBZSi2t9zDtp9Mc_FK1A0352.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1004	Smoked Wild Alaskan Sockeye Salmon	This is salmon from what President Obama deemed a "national treasure" - Bristol Bay.  Brined overnight and then lightly smoked with mesquite. This smoked salmon is the perfect balance of sweet, savory and smoky. So addictive that customers dubbed it "salmon crack". Good thing it's so good for you!	4	oz	8.49	2.12	oz	Fish	Smoked	http://goodeggs1.imgix.net/product_photos/6jmKXiF4RGKzh2w0hinD_FK1A8567.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1006	Sweet Hot Smoked Wild King Salmon	Wild local King salmon brined for 24 hours and smoked for two days. Angelo's Meats and Sausage in Petaluma makes this slightly sweet smoked salmon for us using salt, smoke, and brown sugar. Angelo is a smokehouse master and has agreed to make small weekly batches for us so that our salmon is always fresh from the smokehouse. It's immediately flash frozen to maintain that freshness and is defrosted the night before delivery to you!This is a hot smoked fillet, so it will not be sliceable but will flake beautifully. The sweetness of the brown sugar compliments the salmon and makes this a delicious addition to any cheese plate. Gobble it up as-is or enjoy on top of a bagel with cream cheese or sprinkled on top of a salad.	8	oz	21.99	2.75	oz	Fish	Smoked	http://goodeggs2.imgix.net/product_photos/94M4hPTRtKebjBixei0F_FK1A5406.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1007	Hot Smoked Sablefish	Wild local sablefish (black cod) brined for 24 hours and smoked for two days. Angelo's Meats and Sausage in Petaluma makes this rich smoked sablefish for us using salt and smoke. Angelo is a smokehouse master and has agreed to make small weekly batches for us so that our salmon is always fresh from the smokehouse. It's immediately flash frozen to maintain that freshness and is defrosted the night before delivery to you!This is a hot smoked fillet, so it will not be sliceable but will flake beautifully. This smoked fish is delicious and very rich. 8 oz. is enough smoked fish to make a main course salad for two to three people. You won't find a better addition to your bagel or salad.	8	oz	21.99	2.75	oz	Fish	Smoked	http://goodeggs1.imgix.net/product_photos/rOxAIaQsS82VCygvoqvr_FK1A5512.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1008	Hot Smoked Wild King Salmon	Wild local King salmon brined for 24 hours and smoked for two days. Angelo's Meats and Sausage in Petaluma makes this smoked salmon for us using salt and smoke. Angelo is a smokehouse master and has agreed to make small weekly batches for us so that our salmon is always fresh from the smokehouse. It's immediately flash frozen to maintain that freshness and is defrosted the night before delivery to you!This is a hot smoked fillet, so it will not be sliceable but will flake beautifully. Gobble it up as-is or enjoy on top of a bagel with cream cheese or sprinkled on top of a salad.	8	oz	21.99	2.75	oz	Fish	Smoked	http://goodeggs1.imgix.net/product_photos/HTtg4EDqQMm69vH1HD49_FK1A5438.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1009	Smoked McFarland Springs Trout Fillet	McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is smoked fillets prepackaged with the skin on. Great for use as lox for bagels and cream cheese, on a salad, or just by itself. About our trout:McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. With higher levels of healthy Omega-3s than wild salmon, and zero trace of mercury or contaminants, McFarland Springs trout provides exceptional nutrition benefits. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	1.5	lb	54.99	2.29	oz	Fish	Smoked	http://goodeggs2.imgix.net/product_photos/vOfMSmTTSuiqBP1VjOYP_FK1A8418.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1010	Smoked McFarland Springs Trout Fillet	McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is smoked fillets prepackaged with the skin on. Great for use as lox for bagels and cream cheese, on a salad, or just by itself. About our trout:McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. With higher levels of healthy Omega-3s than wild salmon, and zero trace of mercury or contaminants, McFarland Springs trout provides exceptional nutrition benefits. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	0.9	lb	33.99	2.36	oz	Fish	Smoked	http://goodeggs2.imgix.net/product_photos/vOfMSmTTSuiqBP1VjOYP_FK1A8418.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1011	Smoked McFarland Springs Trout Fillet	McFarland Springs Trout is delicious and nutritious. And it's more than unique – it is the world’s first deliberate collaboration to responsibly farm sustainable fish. This product is smoked fillets prepackaged with the skin on. Great for use as lox for bagels and cream cheese, on a salad, or just by itself. About our trout:McFarland Springs is an environmental dream. The water supply comes from the headwaters of a natural spring, extremely cold and free of the pesticides and contaminates found in other water sources. The spring not only provides for the trout, but also generates all of the electricity for the farm though hydroelectric. It is raised locally, lowering carbon footprint and further promoting regional cuisine. The fish is hand harvested and processed, instead of machine processed as is customary.Typically, farmed fish are fed fishmeal which is made up of small fish that are being taken from the ocean at alarming rates. These fish are then ground, dried, and fed to many types of farmed fish in order to increase their growth rates. This practice is an environmental catastrophe and not sustainable. With higher levels of healthy Omega-3s than wild salmon, and zero trace of mercury or contaminants, McFarland Springs trout provides exceptional nutrition benefits. Lastly, the flavor and texture is that of wild trout with a sweet flavor and lighter, firm flesh. The extreme cold created by the natural spring creates slow growth rates, but far better texture.Thanks for your support!-Team TwoXSea 	1	lb	37.99	2.37	oz	Fish	Smoked	http://goodeggs2.imgix.net/product_photos/vOfMSmTTSuiqBP1VjOYP_FK1A8418.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1012	Wild Caught Premium Albacore	Our albacore are individually caught using a sustainable hook and line method. Each fish is handled with special care to ensure the finest quality product for you. The fish are carefully loined, hand packed, and pressure cooked, ensuring the nutritional quality is maintained. This premium Albacore Tuna is rich in Omega-3s.All of our fish on our boat, Capriccio, are caught by hook and line and then a portion are canned in a small custom cannery in Charleston, Oregon for sale.  At the cannery, the fish are cleaned, put into the can raw, and the can is sealed. Then, the cans are placed in a pressure cooker where the fish is cooked. This single cooking of the fish retains all the natural juices of the albacore in the can!There is nothing else but albacore in our cans of regular albacore….. SO DO NOT DRAIN the liquid, that’s the healthy rich Omega-3 oil! Mix it back into the fish and use for sandwiches, salads, or whatever else your heart desires!Ingredients: Albacore	7.75	oz	7.29	0.94	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/UgWlUWcxToOZlijlpR1j_FK1A1072.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1013	Solid Albacore Tuna	Delicious premium albacore tuna, sustainably caught using pole & troll fishing methods. It is hand cut and hand packed tuna is firm, meaty and full of flavor. Perfect for tuna salad, tuna pasta sauce or your family's favorite tuna casserole.Ingredients: Albacore tuna, water and sea salt.	4.1	oz	3.79	0.92	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/5M0LGXDOQtucTgn8OEpw_20160520-SustainableSeas_Albacore_MG_0231.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1014	Anchovy Fillets	Sourced from Italy in partnership with Market Hall FoodsAn Italian pantry would be incomplete without anchovies. One can see immediately the higher quality of this product: small plump, pink Sicilian anchovy fillets which have been cured for over 12 days in salt and marinated in high quality extra virgin olive oil.Use to top a perfectly made pizza, in panini, on crostini and when making any pasta sauce. Ideal to use on salads or any other preparation where the anchovy fillet will be a "star".Ingredients: anchovies, extra virgin olive oil, salt	3	oz	7.99	2.66	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/zDHRJjs9RuaHoO3Qz7Vo_FK1A2503.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1015	Bonito Del Norte Tuna	One of their most famous product their Bonito Del Norte Tuna, or Albacore Tuna as it is more commonly know as in the states, is line-caught, hand cleaned, and then packaged in fine olive oil. This olive oil perfectly balances out the tuna adding to the flavor and texture. This tuna can be eaten over salads like a Salade Niçoise, atop a crostini garnished with oil, salt, and pepper, on a sandwich, or simply out of the can. Ingredients: White tuna, olive oil, salt.	2.89	oz	6.99	2.42	oz	Fish	Canned & Jarred	http://goodeggs1.imgix.net/product_photos/Kx5Du1nGS1yDr2STW1a7_FK1A7841.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1016	Wild Pacific Sardines in Water	Caught in the Pacific Ocean and rated as the Best Choice for Sustainability by the Monterey Bay Aquarium Seafood Watch® Program, these meaty, firm and flavorful whole sardines are loaded with essential nutrients: Omega 3, protein, calcium, phosphorus, potassium and iron. Each tasty little fish is cleaned, scale free and delectable on a sandwich, as a salad topper, or as an ingredient in our Mediterranean Seafood Antipasto Platter or Sardine Power Lunch. Ingredients: Sardines (Sardinops sagax or Sardinops melanostictus), water, sea salt.	4.375	oz	2.99	0.68	oz	Fish	Canned & Jarred	http://goodeggs1.imgix.net/product_photos/f6du0IfRFCW9VCAP5sYg_20160621-WildPlanet_SardinesinWater_MG_3193.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1017	No-Salt Added Wild Pink Salmon	The latest addition to our salmon line, new Wild Alaska Pink Salmon with No Salt Added is sustainably caught in the cold, clear Alaskan waters by local fishing families. Our skinless and boneless fillets are hand packed and cooked just once to retain their nutritional potency and natural juices, containing an average of 340mg EPA and DHA Omega 3 per 2oz serving. Our salmon are canned fresh upon catch, not from previously frozen fish. This provides superior rich flavor and soft texture. Wild Planet Pink Salmon is a perfect choice for sandwiches, a flavorful salmon spread and more.Ingredients: Wild pink salmon (Oncorhynchus gorbuscha).	6	oz	4.69	0.78	oz	Fish	Canned & Jarred	http://goodeggs1.imgix.net/product_photos/yiB7yd9xS3qTLxfDxFU2_20160701-WildPlan%20et_CannedSalmonNoSalt_MG_4207.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1018	No-Salt Added Solid Albacore Tuna	Delicious premium albacore tuna, sustainably caught using pole & troll fishing methods. It is hand cut and hand packed tuna is firm, meaty and full of flavor. Perfect for tuna salad, tuna pasta sauce or your family's favorite tuna casserole.Ingredients: Albacore tuna and water.	4.1	oz	3.79	0.92	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/RMEGXjnSk6tIPbpYyCey_20160520-SustainableSeas_AlbacoreNoSalt_MG_0238.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1019	Pole Caught Albacore Tuna with Sea Salt	Briny sea salt brings out this sashimi-grade albacore tuna's meatiness while also adding balance. You won't get any sad, mushy tuna salad with this stuff! Combine with chopped celery and shallots, a scoop of sweet relish, mayo and lots of fresh lemon juice.American Tuna has 100% traceability for every single albacore harvested, meaning we can trace our final product back to the vessel that caught it! All tuna are caught using the MSC Certified Sustainable Pole & Line Harvest Method in the U.S. Pacific Northwest. Our premium albacore loin steaks are then hand filleted and hand packed, sealed and pressure-cooked, a packing method that retains 100% of the omega-3 fatty acids in the fish. We don't add any oil, water, soy, or other fish—just premium albacore in its own natural fish oil! Our cans are BPA-free and manufactured in America. Pole and line caught albacore tuna are on average 12-20 lbs, making them naturally low in mercury, and we test yearly for mercury concentrations with Columbia Food Labs. Ingredients: albacore tuna, sea salt.	6	oz	5.99	1.0	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/OCZb90T7Ska4Vhyt110M_salt.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1020	Pole Caught Albacore Tuna No Salt Added	We don't add any extra salt to these sushi-grade albacore tuna loins so that you can customize them to your heart's content. Try a white bean and tuna salad with sliced fennel, a drizzle of good olive oil, fresh lemon juice and chunky sea salt. American Tuna has 100% traceability for every single albacore harvested, meaning we can trace our final product back to the vessel that caught it! All tuna are caught using the MSC Certified Sustainable Pole & Line Harvest Method in the U.S. Pacific Northwest. Our premium albacore loin steaks are then hand filleted and hand packed, sealed and pressure-cooked, a packing method that retains 100% of the omega-3 fatty acids in the fish. We don't add any oil, water, soy, or other fish—just premium albacore in its own natural fish oil! Our cans are BPA-free and manufactured in America. Pole and line caught albacore tuna are on average 12-20 lbs, making them naturally low in mercury, and we test yearly for mercury concentrations with Columbia Food Labs. Ingredients: albacore tuna.	6	oz	5.99	1.0	oz	Fish	Canned & Jarred	http://goodeggs2.imgix.net/product_photos/XzRFo5YeRU6iNeG1ACsd_nosalt.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1021	Smoked Albacore Tuna with Olive Oil	Smoky and silky, this smoked tuna in olive oil will make all of your Mediterranean salad dreams come true! Just throw a fillet or two on a bed of your favorite greens with some crumbled feta, marinated artichoke hearts, chopped cucumbers, cherry tomatoes and olives.American Tuna has 100% traceability for every single albacore harvested, meaning we can trace our final product back to the vessel that caught it! All tuna are caught using the MSC Certified Sustainable Pole & Line Harvest Method in the U.S. Pacific Northwest. Our premium albacore loin steaks are then hand filleted and hand packed, sealed and pressure-cooked, a packing method that retains 100% of the omega-3 fatty acids in the fish. We don't add any oil, water, soy, or other fish—just premium albacore in its own natural fish oil! Our cans are BPA-free and manufactured in America. Pole and line caught albacore tuna are on average 12-20 lbs, making them naturally low in mercury, and we test yearly for mercury concentrations with Columbia Food Labs. Ingredients: albacore tuna, olive oil.	6	oz	6.79	1.13	oz	Fish	Canned & Jarred	http://goodeggs1.imgix.net/product_photos/wmQ331BmR9mJFoWNNgcT_smoked.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+1022	Wild Caught Smoked Albacore	Our albacore are individually caught using a sustainable hook and line method. Each fish is handled with special care to ensure the finest quality product for you. The fish are carefully loined, hand packed, and pressure cooked, ensuring the nutritional quality is maintained. This premium Albacore Tuna is rich in Omega-3s.In our smoked albacore, spices are added before smoking and then we have a small amount of olive oil added in each can to replace the small amount of oil lost in the smoking process. This healthy olive oil can then be mixed back into the fish. Ingredients: Albacore, salt, sugar, olive oil, spices	6.5	oz	7.99	1.23	oz	Fish	Canned & Jarred	http://goodeggs1.imgix.net/product_photos/TmkGy6muRVSc2a5jDA7Q_FK1A1065.jpg?w=380&h=238&fm=jpg&q=41&fit=crop	\N	\N
+\.
+
+
+--
+-- Name: products_product_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('products_product_id_seq', 1022, true);
+
+
+--
+-- Data for Name: recipes; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY recipes (recipe_id, url, name, ingredients, img) FROM stdin;
+\.
+
+
+--
+-- Name: recipes_recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('recipes_recipe_id_seq', 1, false);
+
+
+--
+-- Data for Name: tags; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+COPY tags (tag_id, name) FROM stdin;
+1	Certified Organic
+2	Locally Grown
+3	Synthetic Pesticide & Fertilizer Free
+4	Aquaponic
+5	Heirloom
+6	Organic Ingredients
+7	Locally Sourced Ingredients
+8	Office Box
+9	Non-GMO
+10	Eco-Certified
+11	Arrives Frozen
+12	Dairy Free
+13	Raw
+14	Vegan
+15	Wheat Free
+16	Gluten-Free
+17	Paleo
+18	Vegetarian
+19	Kosher Certified
+20	Raised with Non-GMO Feed
+21	Pastured
+22	Animals Raised without rBGH
+23	Pasture Raised
+24	Soy Free
+25	Grass Fed
+26	Arrives Fresh
+27	Unpasteurized
+28	Tree Nut Free
+29	Made with Vegetarian Rennet
+30	Grain Finished
+31	Heritage Breed
+32	Nitrate/Nitrite Free
+33	Wild
+34	Line Caught
+\.
+
+
+--
+-- Name: tags_tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('tags_tag_id_seq', 34, true);
+
+
+--
+-- Name: customer_recipes_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_recipes
+    ADD CONSTRAINT customer_recipes_pkey PRIMARY KEY (cust_rec_id);
+
+
+--
+-- Name: customer_restrictions_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_restrictions
+    ADD CONSTRAINT customer_restrictions_pkey PRIMARY KEY (cust_restr_id);
+
+
+--
+-- Name: customers_email_key; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customers
+    ADD CONSTRAINT customers_email_key UNIQUE (email);
+
+
+--
+-- Name: customers_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: deliveries_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY deliveries
+    ADD CONSTRAINT deliveries_pkey PRIMARY KEY (delivery_id);
+
+
+--
+-- Name: delivery_quantities_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY delivery_quantities
+    ADD CONSTRAINT delivery_quantities_pkey PRIMARY KEY (deliv_qty_id);
+
+
+--
+-- Name: dietary_restrictions_name_key; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY dietary_restrictions
+    ADD CONSTRAINT dietary_restrictions_name_key UNIQUE (name);
+
+
+--
+-- Name: dietary_restrictions_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY dietary_restrictions
+    ADD CONSTRAINT dietary_restrictions_pkey PRIMARY KEY (diet_id);
+
+
+--
+-- Name: icons_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY icons
+    ADD CONSTRAINT icons_pkey PRIMARY KEY (icon_id);
+
+
+--
+-- Name: order_quantities_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY order_quantities
+    ADD CONSTRAINT order_quantities_pkey PRIMARY KEY (order_qty_id);
+
+
+--
+-- Name: orders_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY orders
+    ADD CONSTRAINT orders_pkey PRIMARY KEY (order_id);
+
+
+--
+-- Name: pickups_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY pickups
+    ADD CONSTRAINT pickups_pkey PRIMARY KEY (pickup_id);
+
+
+--
+-- Name: product_tags_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY product_tags
+    ADD CONSTRAINT product_tags_pkey PRIMARY KEY (prod_tag_id);
+
+
+--
+-- Name: products_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY products
+    ADD CONSTRAINT products_pkey PRIMARY KEY (product_id);
+
+
+--
+-- Name: recipes_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY recipes
+    ADD CONSTRAINT recipes_pkey PRIMARY KEY (recipe_id);
+
+
+--
+-- Name: tags_name_key; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_name_key UNIQUE (name);
+
+
+--
+-- Name: tags_pkey; Type: CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY tags
+    ADD CONSTRAINT tags_pkey PRIMARY KEY (tag_id);
+
+
+--
+-- Name: customer_recipes_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_recipes
+    ADD CONSTRAINT customer_recipes_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(user_id);
+
+
+--
+-- Name: customer_recipes_recipe_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_recipes
+    ADD CONSTRAINT customer_recipes_recipe_id_fkey FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id);
+
+
+--
+-- Name: customer_restrictions_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_restrictions
+    ADD CONSTRAINT customer_restrictions_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(user_id);
+
+
+--
+-- Name: customer_restrictions_diet_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY customer_restrictions
+    ADD CONSTRAINT customer_restrictions_diet_id_fkey FOREIGN KEY (diet_id) REFERENCES dietary_restrictions(diet_id);
+
+
+--
+-- Name: delivery_quantities_delivery_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY delivery_quantities
+    ADD CONSTRAINT delivery_quantities_delivery_id_fkey FOREIGN KEY (delivery_id) REFERENCES deliveries(delivery_id);
+
+
+--
+-- Name: delivery_quantities_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY delivery_quantities
+    ADD CONSTRAINT delivery_quantities_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+
+--
+-- Name: order_quantities_order_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY order_quantities
+    ADD CONSTRAINT order_quantities_order_id_fkey FOREIGN KEY (order_id) REFERENCES orders(order_id);
+
+
+--
+-- Name: order_quantities_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY order_quantities
+    ADD CONSTRAINT order_quantities_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+
+--
+-- Name: orders_customer_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY orders
+    ADD CONSTRAINT orders_customer_id_fkey FOREIGN KEY (customer_id) REFERENCES customers(user_id);
+
+
+--
+-- Name: orders_pickup_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY orders
+    ADD CONSTRAINT orders_pickup_id_fkey FOREIGN KEY (pickup_id) REFERENCES pickups(pickup_id);
+
+
+--
+-- Name: product_tags_product_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY product_tags
+    ADD CONSTRAINT product_tags_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(product_id);
+
+
+--
+-- Name: product_tags_tag_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY product_tags
+    ADD CONSTRAINT product_tags_tag_id_fkey FOREIGN KEY (tag_id) REFERENCES tags(tag_id);
+
+
+--
+-- Name: products_icon_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: vagrant
+--
+
+ALTER TABLE ONLY products
+    ADD CONSTRAINT products_icon_id_fkey FOREIGN KEY (icon_id) REFERENCES icons(icon_id);
+
+
 --
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --

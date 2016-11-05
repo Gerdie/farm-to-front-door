@@ -40,6 +40,11 @@ def add_products(link):
         weight_and_unit = product.find("div", class_="product-tile__purchase-unit").get_text().encode('utf-8').split()
         weight = weight_and_unit[0]
         unit = (" ").join(weight_and_unit[1:])
+        price_per = product.find("span", class_="price-per")
+        per_unit = product.find("span", class_="per-unit")
+        if price_per and per_unit:
+            price_per = float(price_per.get_text()[1:])
+            per_unit = per_unit.get_text()
         a = site_url + product.find("a", class_="js-product-link")["href"]
 
         # navigating to product detail page for more data
@@ -52,12 +57,13 @@ def add_products(link):
         for crumb in crumbs:
             categories.append(crumb.get_text())
 
-        print name, price, weight, unit
+        print name, price_per, price, per_unit
 
         #Create Product instance
         new_prod = Product(name=name, price=price, description=description,
                            aisle=categories[-2], category=categories[-1],
-                           weight=weight, unit=unit, img=image)
+                           weight=weight, unit=unit, img=image, price_per=price_per,
+                           per_unit=per_unit)
 
         db.session.add(new_prod)
         db.session.commit()

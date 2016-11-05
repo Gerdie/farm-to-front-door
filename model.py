@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
 import arrow
+import edamam
 
 db = SQLAlchemy()
 
@@ -114,6 +115,8 @@ class Product(db.Model):
     weight = db.Column(db.Numeric, nullable=True)
     unit = db.Column(db.String(50), nullable=True)
     price = db.Column(db.Numeric, nullable=False)
+    price_per = db.Column(db.Numeric, nullable=True)
+    per_unit = db.Column(db.String(50), nullable=True)
     aisle = db.Column(db.String(50), nullable=True)
     category = db.Column(db.String(50), nullable=True)
     img = db.Column(db.String(500), nullable=True)
