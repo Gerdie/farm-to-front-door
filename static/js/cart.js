@@ -1,3 +1,5 @@
+
+//event handler for "Add to Cart" buttons
 function addItem(evt) {
 
     var productId = $(this).attr('id');
@@ -19,5 +21,15 @@ function addItem(evt) {
     });
 }
 
-
+//event binding for "Add to Cart" buttons
 $('.add_to_cart').on('click', addItem);
+
+//populating dropdown fields in Shopping Cart table
+$('#cart-table select').html('<option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option><option value=6>6</option><option value=7>7</option><option value=8>8</option><option value=9>9</option><option value=10>10</option>');
+
+//setting default value for each dropdown
+$('#cart-table select').each( function() {
+    var prodQty = $(this).data('qty');
+    var children = $(this).children('[value=' + prodQty + ']').attr('selected', 'selected');
+});
+

@@ -111,7 +111,7 @@ def show_products():
 def add_products_to_cart():
     """Add product to cart from button click"""
 
-    product_id = int(request.form.get("productId"))
+    product_id = int(request.form.get("productId"))  # this can be wrapped in a func to DRY up code
     product = Product.query.get(product_id)
     session["cart"] = session.get("cart", {})
     session["cart_total"] = session.get("cart_total", 0) + product.price
