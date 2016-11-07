@@ -11,6 +11,7 @@
         <tr>
             <th>Quantity</th>
             <th>Product</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -23,6 +24,7 @@
                 </select>
             </td>
             <td>{{ item.name }} @ {{ item.price }} each</td>
+            <td><a href="/delete?id={{ item.product_id }}">Delete</a></td>
         </tr>
 
 {% endfor %}
@@ -34,7 +36,7 @@
 
 <p><strong>Total: {{ session['cart_total'] }}</strong></p>
 
-<p>You cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
+<p>Your cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
 
 {% if recipes %}
 

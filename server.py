@@ -201,11 +201,24 @@ def update_cart():
 
     #REMINDER: calculate price on page.
     session['cart'][product_id] = qty
+    session.modified = True
     print session['cart']
-    cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
-
+    # cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
     # return redirect("/cart")
-    return render_template("checkout.html", cart=cart)
+    return "Success"
+
+
+@app.route('/delete')
+def delete_item():
+    """Delete item from shopping cart"""
+
+    product_id = int(request.args.get('id'))
+    print product_id
+
+    del session['cart'][product_id]
+    session.modified = True
+
+    return redirect('/cart')
 
 
 @app.errorhandler(404)

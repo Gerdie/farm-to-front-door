@@ -10,7 +10,6 @@ function addItem(evt) {
     if ( $(this).hasClass('prod_page') ) {
         route = '/products/' + productId;
     }
-
     var data = {
         productId: productId
     };
@@ -35,7 +34,7 @@ $('#cart-table select').each( function() {
 });
 
 //event handler for shopping cart dropdowns
-function updateTotal(env) {
+function updateTotal(evt) {
     var selectId = $(this).attr('id');
     var selectQty = $('#' + selectId).val();
     var updateData = {'product_id': selectId,
