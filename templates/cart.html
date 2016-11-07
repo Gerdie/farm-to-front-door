@@ -34,6 +34,8 @@
 
 <p><strong>Total: {{ session['cart_total'] }}</strong></p>
 
+<p>You cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
+
 {% endif %}
 
 {% if 'email' not in session %}

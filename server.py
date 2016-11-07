@@ -7,6 +7,7 @@ from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Custome
                    Customer_Restriction, Order, Icon, Delivery_Quantity,
                    Order_Quantity)
 from passlib.hash import pbkdf2_sha256
+from math import floor
 
 app = Flask(__name__)
 
@@ -152,14 +153,34 @@ def add_product_to_cart(product_id):
 def show_cart():
     """Query session for cart contents and display results"""
 
+    cart_weight = {'lb': 0,
+                   'oz': 0}
+
     if 'cart' in session:
         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
         # print cart
         print session['cart']
+
+        for item in cart:
+            if item.unit in cart_weight:
+                cart_weight[item.unit] += float(item.weight) * float(session["cart"][item.product_id])
+            elif item.per_unit and item.price_per:
+                cart_weight[item.per_unit] += float(item.price) / float(item.price_per) * float(session["cart"][item.product_id])
+            else:
+                cart_weight["fudged"] = True
+
+        if cart_weight['lb'] != floor(cart_weight['lb']):
+            ozes = (cart_weight['lb'] - floor(cart_weight['lb'])) * 16.0
+            cart_weight['lb'] = floor(cart_weight['lb'])
+            cart_weight['oz'] += ozes
+        if cart_weight['oz'] > 16:
+            cart_weight['lb'] += floor(cart_weight['oz'] / 16)
+            cart_weight['oz'] = cart_weight['oz'] % 16
+
     else:
         cart = []
 
-    return render_template("cart.html", cart=cart)
+    return render_template("cart.html", cart=cart, cart_weight=cart_weight)
 
 
 @app.route('/cart', methods=['POST'])
