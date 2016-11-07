@@ -42,7 +42,7 @@
             {% if 'email' in session %}
             <li><a href="/logout">Log Out</a></li>
             {% else %}
-            <li><a href="/login" data-toggle="modal" data-target="#LoginModal">Login</a></li>
+            <li><a href="" data-toggle="modal" data-target="#LoginModal" id="loginNav">Login</a></li>
             {% endif %}
             <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"><span class="sr-only">Shopping Cart</span></span></a></li>
           </ul>
@@ -65,6 +65,7 @@
                 <input type="email" name="email" id="email" required>
                 <label for="password">Password</label>
                 <input type="text" name="password" id="password" required>
+                <p id="login-fail"></p>
                 <p>Not a member? <a href="/register">Register now!</a></p>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button submit" form="login" class="btn btn-primary">Enter</button>
@@ -82,7 +83,10 @@
             <div class="alert alert-warning">{{ message }}</div>
         {% endfor %}
     {% endwith %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="http://0.0.0.0:5000/static/js/login.js"></script>
+
     {% block body %} 
         Body content goes here! 
     {% endblock %}

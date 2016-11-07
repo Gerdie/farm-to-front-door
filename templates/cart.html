@@ -20,9 +20,6 @@
         <tr>
             <td>
                 <select name="qty" id="{{ item.product_id }}" data-qty="{{ session['cart'][item.product_id] }}">
-                    <!-- <option selected="selected">
-                        {{ session['cart'][item.product_id] }}
-                    </option> -->
                 </select>
             </td>
             <td>{{ item.name }} @ {{ item.price }} each</td>
@@ -41,6 +38,12 @@
 
 {% if 'email' not in session %}
 <p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>
+
+<a>Checkout</a>
+
+{% else %}
+<a href="/checkout">Checkout</a>
+
 {% endif %}
 
 {% endblock %}

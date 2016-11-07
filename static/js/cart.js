@@ -1,3 +1,4 @@
+"use strict";
 
 //event handler for "Add to Cart" buttons
 function addItem(evt) {
@@ -32,4 +33,19 @@ $('#cart-table select').each( function() {
     var prodQty = $(this).data('qty');
     var children = $(this).children('[value=' + prodQty + ']').attr('selected', 'selected');
 });
+
+//event handler for shopping cart dropdowns
+function updateTotal(env) {
+    var selectId = $(this).attr('id');
+    var selectQty = $('#' + selectId).val();
+    var updateData = {'product_id': selectId,
+                      'qty': selectQty};
+    console.log(updateData);
+    $.post('/cart', updateData, function() {
+        alert('Cart updated!');
+    });
+}
+
+//event binding for shopping cart dropdowns
+$('#cart-table select').on('change', updateTotal);
 

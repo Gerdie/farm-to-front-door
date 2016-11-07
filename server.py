@@ -47,11 +47,11 @@ def process_login():
 
         flash("Login successful!")
 
-        return redirect("/products")
+        return "Success"
 
     else:
 
-        flash("Incorrect email or password.")
+        return "Fail"
 
 
 @app.route('/logout')
@@ -154,7 +154,7 @@ def show_cart():
 
     if 'cart' in session:
         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
-        print cart
+        # print cart
         print session['cart']
     else:
         cart = []
@@ -163,10 +163,22 @@ def show_cart():
 
 
 @app.route('/cart', methods=['POST'])
-def process_order():
-    """Process order and update database"""
+def update_cart():
+    """Update cart quantites"""
 
-    pass
+    print "pass 1 **************************************"
+    product_id = int(request.form.get("product_id"))
+    print "product id is ", product_id
+    qty = int(request.form.get("qty"))
+    print "qty is ", qty
+
+    #REMINDER: calculate price on page.
+    session['cart'][product_id] = qty
+    print session['cart']
+    cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+
+    # return redirect("/cart")
+    return render_template("checkout.html", cart=cart)
 
 
 @app.errorhandler(404)
