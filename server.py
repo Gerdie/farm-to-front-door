@@ -8,6 +8,7 @@ from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Custome
                    Order_Quantity)
 from passlib.hash import pbkdf2_sha256
 from math import floor
+import edamam
 
 app = Flask(__name__)
 
@@ -158,9 +159,9 @@ def show_cart():
 
     if 'cart' in session:
         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
-        # print cart
         print session['cart']
 
+        #calculate weight of cart
         for item in cart:
             if item.unit in cart_weight:
                 cart_weight[item.unit] += float(item.weight) * float(session["cart"][item.product_id])
@@ -169,6 +170,7 @@ def show_cart():
             else:
                 cart_weight["fudged"] = True
 
+        #smooth over decimal lbs and round up ounces if necessary
         if cart_weight['lb'] != floor(cart_weight['lb']):
             ozes = (cart_weight['lb'] - floor(cart_weight['lb'])) * 16.0
             cart_weight['lb'] = floor(cart_weight['lb'])
@@ -177,10 +179,14 @@ def show_cart():
             cart_weight['lb'] += floor(cart_weight['oz'] / 16)
             cart_weight['oz'] = cart_weight['oz'] % 16
 
+        #suggest recipes
+        product_names = edamam.split_params([item.name for item in cart])
+        recipes = edamam.get_recipes(product_names)
+
     else:
         cart = []
 
-    return render_template("cart.html", cart=cart, cart_weight=cart_weight)
+    return render_template("cart.html", cart=cart, cart_weight=cart_weight, recipes=recipes)
 
 
 @app.route('/cart', methods=['POST'])

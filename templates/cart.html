@@ -36,6 +36,22 @@
 
 <p>You cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
 
+{% if recipes %}
+
+<h2>Recipe Suggestions</h2>
+
+<ul>
+
+{% for recipe in recipes %}
+
+<li><a href="{{ recipe[1] }}">{{ recipe[0] }}</a></li>
+
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
 {% endif %}
 
 {% if 'email' not in session %}
