@@ -8,7 +8,8 @@ from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Custome
                    Order_Quantity)
 from passlib.hash import pbkdf2_sha256
 from math import floor
-import edamam
+import api
+import functions
 
 app = Flask(__name__)
 
@@ -116,7 +117,7 @@ def add_products_to_cart():
     product_id = int(request.form.get("productId"))  # this can be wrapped in a func to DRY up code
     product = Product.query.get(product_id)
     session["cart"] = session.get("cart", {})
-    session["cart_total"] = session.get("cart_total", 0) + product.price
+    # session["cart_total"] = session.get("cart_total", 0) + product.price
     session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
 
     cart = session["cart"]
@@ -141,7 +142,7 @@ def add_product_to_cart(product_id):
     product_id = int(request.form.get("productId"))
     product = Product.query.get(product_id)
     session["cart"] = session.get("cart", {})
-    session["cart_total"] = session.get("cart_total", 0) + product.price
+    # session["cart_total"] = session.get("cart_total", 0) + product.price
     session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
 
     cart = session["cart"]
@@ -154,34 +155,44 @@ def add_product_to_cart(product_id):
 def show_cart():
     """Query session for cart contents and display results"""
 
-    cart_weight = {'lb': 0,
-                   'oz': 0}
+    # cart_weight = {'lb': 0,
+    #                'oz': 0}
+
+    # session["cart_total"] = 0
+    recipes = []
 
     if 'cart' in session:
         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
         print session['cart']
 
-        #calculate weight of cart
-        for item in cart:
-            if item.unit in cart_weight:
-                cart_weight[item.unit] += float(item.weight) * float(session["cart"][item.product_id])
-            elif item.per_unit and item.price_per:
-                cart_weight[item.per_unit] += float(item.price) / float(item.price_per) * float(session["cart"][item.product_id])
-            else:
-                cart_weight["fudged"] = True
+        cart_weight = functions.get_cart_weight(cart)
+        functions.get_cart_total(cart)
 
-        #smooth over decimal lbs and round up ounces if necessary
-        if cart_weight['lb'] != floor(cart_weight['lb']):
-            ozes = (cart_weight['lb'] - floor(cart_weight['lb'])) * 16.0
-            cart_weight['lb'] = floor(cart_weight['lb'])
-            cart_weight['oz'] += ozes
-        if cart_weight['oz'] > 16:
-            cart_weight['lb'] += floor(cart_weight['oz'] / 16)
-            cart_weight['oz'] = cart_weight['oz'] % 16
+        # #calculate weight of cart
+        # for item in cart:
+        #     if item.unit in cart_weight:
+        #         cart_weight[item.unit] += float(item.weight) * float(session["cart"][item.product_id])
+        #     elif item.per_unit and item.price_per:
+        #         cart_weight[item.per_unit] += float(item.price) / float(item.price_per) * float(session["cart"][item.product_id])
+        #     else:
+        #         cart_weight["fudged"] = True
+
+        # #calculate total price of cart
+        # for item in cart:
+        #     session["cart_total"] += item.price * session['cart'][item.product_id]
+
+        # #smooth over decimal lbs and round up ounces if necessary
+        # if cart_weight['lb'] != floor(cart_weight['lb']):
+        #     ozes = (cart_weight['lb'] - floor(cart_weight['lb'])) * 16.0
+        #     cart_weight['lb'] = floor(cart_weight['lb'])
+        #     cart_weight['oz'] += ozes
+        # if cart_weight['oz'] > 16:
+        #     cart_weight['lb'] += floor(cart_weight['oz'] / 16)
+        #     cart_weight['oz'] = cart_weight['oz'] % 16
 
         #suggest recipes
-        product_names = edamam.split_params([item.name for item in cart])
-        recipes = edamam.get_recipes(product_names)
+        product_names = api.split_params([item.name for item in cart])
+        recipes = api.get_recipes(product_names)
 
     else:
         cart = []
@@ -201,10 +212,10 @@ def update_cart():
 
     #REMINDER: calculate price on page.
     session['cart'][product_id] = qty
+
     session.modified = True
     print session['cart']
-    # cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
-    # return redirect("/cart")
+
     return "Success"
 
 
@@ -219,6 +230,16 @@ def delete_item():
     session.modified = True
 
     return redirect('/cart')
+
+
+@app.route('/checkout')
+def check_out():
+    """Check out"""
+
+    cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+    functions.get_cart_total(cart)
+
+    return render_template("checkout.html", cart=cart)
 
 
 @app.errorhandler(404)

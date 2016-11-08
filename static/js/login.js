@@ -1,12 +1,12 @@
 "use strict";
 
-//login form event handler
+//login form event handler -- secure if SSL
 function validateUser(evt) {
     evt.preventDefault();
     
-    var loginInfo = $("#login").serialize();
+    // var loginInfo = $("#login").serialize();
 
-    $.post('/login', loginInfo, function(result) {
+    $.post('/login', $("#login").serialize(), function(result) {
 
         if (result === "Fail") {
             $('#login-fail').html("Incorrect username or password");

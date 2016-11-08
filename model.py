@@ -1,7 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
 import arrow
-import edamam
 
 db = SQLAlchemy()
 
