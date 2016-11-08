@@ -1,5 +1,5 @@
 from flask import (Flask, render_template, redirect, request, flash,
-                   session)
+                   session, jsonify)
 from jinja2 import StrictUndefined
 from flask_debugtoolbar import DebugToolbarExtension
 from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Customer,
@@ -151,54 +151,37 @@ def add_product_to_cart(product_id):
     return redirect('/products/' + str(product_id))
 
 
+# @app.route('/cart')
+# def show_cart():
+#     """Query session for cart contents and display results"""
+
+#     cart_weight = {'lb': 0,
+#                    'oz': 0}
+
+#     recipes = []
+
+#     if 'cart' in session:
+#         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+#         print session['cart']
+
+#         cart_weight = functions.get_cart_weight(cart)
+#         functions.get_cart_total(cart)
+
+#         #suggest recipes
+#         product_names = api.split_params([item.name for item in cart])
+#         recipes = api.get_recipes(product_names)
+
+#     else:
+#         cart = []
+
+#     return render_template("cart.html", cart=cart, cart_weight=cart_weight, recipes=recipes)
+
+
 @app.route('/cart')
 def show_cart():
     """Query session for cart contents and display results"""
 
-    # cart_weight = {'lb': 0,
-    #                'oz': 0}
-
-    # session["cart_total"] = 0
-    recipes = []
-    cart_weight = 0
-
-    if 'cart' in session:
-        cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
-        print session['cart']
-
-        cart_weight = functions.get_cart_weight(cart)
-        functions.get_cart_total(cart)
-
-        # #calculate weight of cart
-        # for item in cart:
-        #     if item.unit in cart_weight:
-        #         cart_weight[item.unit] += float(item.weight) * float(session["cart"][item.product_id])
-        #     elif item.per_unit and item.price_per:
-        #         cart_weight[item.per_unit] += float(item.price) / float(item.price_per) * float(session["cart"][item.product_id])
-        #     else:
-        #         cart_weight["fudged"] = True
-
-        # #calculate total price of cart
-        # for item in cart:
-        #     session["cart_total"] += item.price * session['cart'][item.product_id]
-
-        # #smooth over decimal lbs and round up ounces if necessary
-        # if cart_weight['lb'] != floor(cart_weight['lb']):
-        #     ozes = (cart_weight['lb'] - floor(cart_weight['lb'])) * 16.0
-        #     cart_weight['lb'] = floor(cart_weight['lb'])
-        #     cart_weight['oz'] += ozes
-        # if cart_weight['oz'] > 16:
-        #     cart_weight['lb'] += floor(cart_weight['oz'] / 16)
-        #     cart_weight['oz'] = cart_weight['oz'] % 16
-
-        #suggest recipes
-        product_names = api.split_params([item.name for item in cart])
-        recipes = api.get_recipes(product_names)
-
-    else:
-        cart = []
-
-    return render_template("cart.html", cart=cart, cart_weight=cart_weight, recipes=recipes)
+    return render_template("cart.html")
 
 
 @app.route('/cart', methods=['POST'])
@@ -253,6 +236,18 @@ def process_payment():
     api.pay_for_cart()
 
     return render_template("success.html")
+
+
+@app.route('/customer.json')
+def get_customer_json():
+    """Get customer info from database and return in json"""
+
+    #throws an error if customer not logged in!
+    customer = db.session.query(Customer).filter(Customer.email == session['email']).one()
+
+    return jsonify(customer_id=customer.user_id, email=customer.email,
+                   street_address=customer.street_address, zipcode=customer.zipcode,
+                   state=customer.state)
 
 
 @app.errorhandler(404)

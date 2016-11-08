@@ -26,29 +26,39 @@ $(document).ready(function() {
     //event binding for "Add to Cart" buttons
     $('.add_to_cart').on('click', addItem);
 
-    //populating dropdown fields in Shopping Cart table
-    $('#cart-table select').html('<option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option><option value=6>6</option><option value=7>7</option><option value=8>8</option><option value=9>9</option><option value=10>10</option>');
+    // //populating dropdown fields in Shopping Cart table
+    // $('#cart-table select').html('<option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option><option value=6>6</option><option value=7>7</option><option value=8>8</option><option value=9>9</option><option value=10>10</option>');
 
-    //setting default value for each dropdown
-    $('#cart-table select').each( function() {
-        var prodQty = $(this).data('qty');
-        var children = $(this).children('[value=' + prodQty + ']').attr('selected', 'selected');
+    // //setting default value for each dropdown
+    // $('#cart-table select').each( function() {
+    //     var prodQty = $(this).data('qty');
+    //     var children = $(this).children('[value=' + prodQty + ']').attr('selected', 'selected');
+    // });
+
+    // //event handler for shopping cart dropdowns
+    // function updateTotal(evt) {
+    //     var selectId = $(this).attr('id');
+    //     var selectQty = $('#' + selectId).val();
+    //     var updateData = {'product_id': selectId,
+    //                       'qty': selectQty};
+    //     console.log(updateData);
+    //     $.post('/cart', updateData, function() {
+    //         alert('Cart updated!');
+    //     });
+    // }
+
+    // //event binding for shopping cart dropdowns
+    // $('#cart-table select').on('change', updateTotal);
+
     });
 
-    //event handler for shopping cart dropdowns
-    function updateTotal(evt) {
-        var selectId = $(this).attr('id');
-        var selectQty = $('#' + selectId).val();
-        var updateData = {'product_id': selectId,
-                          'qty': selectQty};
-        console.log(updateData);
-        $.post('/cart', updateData, function() {
-            alert('Cart updated!');
-        });
-    }
+//angular code below!
 
-    //event binding for shopping cart dropdowns
-    $('#cart-table select').on('change', updateTotal);
+angular.module('cart', []).controller('CartController', function($scope, $http) {
 
+    $http.get("/customer.json").then(function(response) {
+        $scope.customer = response.data;
     });
+
+});
 

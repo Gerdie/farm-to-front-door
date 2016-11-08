@@ -4,9 +4,13 @@
 
 {% block body %}
 
-<h1>Shopping Cart</h1>
+<div ng-app="cart" ng-controller="CartController">
 
-{% if 'cart' in session %}
+<div class="row">
+
+<div class="col-md-8">
+
+<h1>Shopping Cart</h1>
 
 <table class="table table-hover" id="cart-table">
     <thead>
@@ -18,65 +22,106 @@
     </thead>
     <tbody>
 
-{% for item in cart %}
+        <span>
+            <tr>
+                <td>
+                    {% raw %}
+                    <select name="qty" id="" data-qty="">
+                        <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" value={{ i }}>{{ i }}</option>
+                    </select>
+                    {% endraw %}
+                </td>
+                <td> item.name @ item.price each</td>
+                <td><a href="/delete?id=item.product_id">Delete</a></td>
+            </tr>
+        </span>
 
-        <tr>
-            <td>
-                <select name="qty" id="{{ item.product_id }}" data-qty="{{ session['cart'][item.product_id] }}">
-                </select>
-            </td>
-            <td>{{ item.name }} @ {{ item.price }} each</td>
-            <td><a href="/delete?id={{ item.product_id }}">Delete</a></td>
-        </tr>
-
-{% endfor %}
     </tbody>
 
 </table>
 
-<script type="text/javascript" src="/static/js/cart.js"></script>
+<!-- <script type="text/javascript" src="/static/js/cart.js"></script> -->
 
 <p><strong>Total: {{ session['cart_total'] }}</strong></p>
 
-<p>Your cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
+<p>Your cart is *** if 'fudged' in cart_weight *** over cart_weight['lb'] lb cart_weight['oz'] oz.</p>
 
+</div>
 
-<form>
-    <label for="pickup">Select your pickup location:
-        <select id="pickup" name="pickup">
-            <!-- <option value="Ala">Alameda</option> -->
-            <option value="Nob">Nob Hill</option>
-            <!-- <option value="Oak">Oakland</option> -->
-        </select>
-    </label>
-</form>
+<div class="col-md-4">
 
-{% if recipes %}
+    <h2>Delivery Options</h2>
+
+    <form>
+        <label>How would you like to receive your order?</label><br>
+        <input type="radio" name="delivery" value="delivery" ng-model="delivery">Please deliver my order.<br>
+        <input type="radio" name="delivery" value="pickup" ng-model="delivery">I will pick up my order.<br>
+        <p>Delivery is a flat $5 fee plus $1 for every lb over 10lbs</p>
+        <div ng-switch="delivery">
+            <div ng-switch-when="pickup">
+                <label for="pickup">Select your pickup location:<br>
+                    <select id="pickup" name="pickup" ng-model="pickup" ng-options="place for place in ['Alameda', 'Nob Hill', 'Oakland']">
+                        <option value="">Choose One</option>
+                        <!-- <option value="Ala">Alameda</option> -->
+                        <!-- <option value="Nob">Nob Hill</option> -->
+                        <!-- <option value="Oak">Oakland</option> -->
+                    </select>
+                </label>
+            </div>
+            <div ng-switch-when="delivery">
+                <div ng-if="customer.street_address">
+                    <input type="radio" name="which_address" value="my_address" ng-model="which_address">Use the address I have on file:<br>
+                    {% raw %}
+                    <p>{{ customer.street_address }}<br>
+                    {{ customer.zipcode }} {{customer.state }}</p>
+                    {% endraw %}
+                    <input type="radio" name="which_address" value="new_address" ng-model="which_address">Enter new address<br>
+                    <div ng-switch="which_address">
+                        <div ng-switch-when="new_address">
+                            <input type="text" name="address" placeholder="80 Market St"><br>
+                            <input type="text" name="zipcode" placeholder="94105">
+                            <input type="text" name="state" placeholder="CA" maxlength="2" size="2"><br>
+                        </div>
+                    </div>
+                </div>
+                <div ng-if="!customer.street_address">
+                <label>Add Delivery Address</label><br>
+                <input type="text" name="address" placeholder="80 Market St"><br>
+                <input type="text" name="zipcode" placeholder="94105">
+                <input type="text" name="state" placeholder="CA" maxlength="2" size="2"><br>
+                </div>
+            </div>
+        </div>
+        <label>Total: </label><br>
+        <button type="submit" class="btn btn-default">Check Out</button>
+    </form>
+
+</div>
+
+</div>
+
+<div class="row">
 
 <h2>Recipe Suggestions</h2>
 
+</div>
+
+<div class="row">
+
 <ul>
 
-{% for recipe in recipes %}
-
-<li><a href="{{ recipe[1] }}">{{ recipe[0] }}</a></li>
-
-{% endfor %}
+<li><a href="">recipe[0]</a></li>
 
 </ul>
 
-{% endif %}
+</div>
 
-{% endif %}
-
-{% if 'email' not in session %}
 <p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>
 
-<a>Checkout</a>
-
-{% else %}
 <a href="/checkout">Checkout</a>
 
-{% endif %}
+<script type="text/javascript" src="static/js/cart.js"></script>
+
+</div>
 
 {% endblock %}
