@@ -248,7 +248,7 @@ class Order(db.Model):
     placed_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
     total = db.Column(db.Numeric, nullable=False)
     pickup_id = db.Column(db.Integer, db.ForeignKey("pickups.pickup_id"), nullable=False)
-    received_at = db.Column(ArrowType, nullable=False)  # or db.DateTime v. db.TimeStamp?
+    received_at = db.Column(ArrowType, nullable=True)  # or db.DateTime v. db.TimeStamp?
 
     pickup = db.relationship("Pickup", backref="orders")
 

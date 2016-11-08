@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block head %}<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>{% endblock %}
+
 {% block body %}
 
 <h1>Shopping Cart</h1>
@@ -37,6 +39,17 @@
 <p><strong>Total: {{ session['cart_total'] }}</strong></p>
 
 <p>Your cart is {% if 'fudged' in cart_weight %}over {% endif %}{{ cart_weight['lb'] }} lb {{ cart_weight['oz'] }} oz.</p>
+
+
+<form>
+    <label for="pickup">Select your pickup location:
+        <select id="pickup" name="pickup">
+            <!-- <option value="Ala">Alameda</option> -->
+            <option value="Nob">Nob Hill</option>
+            <!-- <option value="Oak">Oakland</option> -->
+        </select>
+    </label>
+</form>
 
 {% if recipes %}
 

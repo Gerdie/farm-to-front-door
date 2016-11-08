@@ -1,6 +1,6 @@
 import requests
 from os import environ
-from flask import session
+from flask import session, request
 import stripe
 from model import (connect_to_db, db, Product, Recipe, Tag, Product_Tag, Customer,
                    Customer_Recipe, Pickup, Delivery, Dietary_Restriction,
@@ -45,7 +45,7 @@ def get_recipes(param_list):
     except Exception as exc:
         print "There was a problem: {}".format(exc)
 
-    print r.status_code
+    # print r.status_code
 
     edamam = r.json()
     recipes = edamam["hits"]
@@ -55,7 +55,6 @@ def get_recipes(param_list):
         image = recipe["recipe"]["image"]
         url = recipe["recipe"]["url"]
         ingredients = recipe["recipe"]["ingredientLines"]
-        print name, "\n", ingredients, "\n", image
         recipe_list.add((name, url, image))
 
     if len(recipe_list) < 5 and len(params) > 1:
@@ -68,31 +67,39 @@ def pay_for_cart():
     """Utilize stripe API"""
 
     placed_at = arrow.utcnow()
-    customer = Customer.query.filter(Customer.email == session['email']).one()
-    order = Order(customer_id=customer.customer_id, placed_at=placed_at,
+    print "placed at ", placed_at
+    customer = db.session.query(Customer).filter(Customer.email == session['email']).one()
+    print "customer ", customer
+    order = Order(customer_id=customer.user_id, placed_at=placed_at,
                   total=session["cart_total"], pickup_id=1)  # change pickup!!!
 
+    print "order = ", order
     db.session.add(order)
+    print "added order"
     db.session.commit()
+    print "committed order"
 
-    order_id = Order.query(order_id).filter(customer_id == customer.customer_id,
-                                            placed_at == placed_at).one()
+    order_id = db.session.query(Order.order_id).filter(Order.customer_id == customer.user_id,
+                                                       Order.placed_at == placed_at).one()
+    print order_id, " is the order_id!!!!!!!!!!!!"
+
+    token = request.form.get('stripeToken')
+
+    print "token is ", token
 
     stripe.api_key = environ["STRIPE_TEST_SECRET"]
-    stripe.Charge.create(amount=session["cart_total"] * 100,
-                         currency="usd",
-                         source="tok_189fZO2eZvKYlo2CQmX01NO3",  # obtained with Stripe.js
-                         metadata={'order_id': order_id,
-                                   'customer_id': customer.customer_id},
-                         statement_descriptor="Farm to Front Door CSA",
-                         description="Farm to Front Door CSA"
-                         )
 
     try:
-        ch = stripe.Charge.retrieve("ch_19ByqE2eZvKYlo2C8PjxIMGR",
-                                    api_key="sk_test_BQokikJOvBiI2HlWgH4olfQ2"
-                                    )
-        ch.capture()
+        stripe.Charge.create(amount=int(session["cart_total"] * 100),
+                             currency="usd",
+                             source=token,  # obtained with Stripe.js
+                             metadata={'order_id': order_id[0],
+                                       'customer_id': customer.user_id},
+                             statement_descriptor="Farm to Front Door CSA",
+                             description="Farm to Front Door CSA"
+                             )
+        del session['cart']
+        del session['cart_total']
     except stripe.error.CardError as e:
         # Since it's a decline, stripe.error.CardError will be caught
         body = e.json_body

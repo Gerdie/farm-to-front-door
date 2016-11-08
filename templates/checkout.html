@@ -4,18 +4,8 @@
 
 <h1>Checkout</h1>
 
-<form action="/your-charge-code" method="POST" id="payment-form">
-  <span class="payment-errors"></span>
-
-  <div class="form-row">
-  <label for="pickup">Select your pickup location:
-    <select id="pickup" name="pickup">
-        <option value="Ala">Alameda</option>
-        <option value="Nob">Nob Hill</option>
-        <option value="Oak">Oakland</option>
-    </select>
-  </label>
-  </div>    
+<form action="/checkout" method="POST" id="payment-form">
+  <span class="payment-errors"></span>   
 
   <div class="form-row">
     <label>
@@ -89,5 +79,28 @@
             return false;
         });
     });
+
+    function stripeResponseHandler(status, response) {
+        // Grab the form:
+        var $form = $('#payment-form');
+
+        if (response.error) { // Problem!
+
+            // Show the errors on the form:
+            $form.find('.payment-errors').text(response.error.message);
+            $form.find('.submit').prop('disabled', false); // Re-enable submission
+
+        } else { // Token was created!
+
+            // Get the token ID:
+            var token = response.id;
+
+            // Insert the token ID into the form so it gets submitted to the server:
+            $form.append($('<input type="hidden" name="stripeToken">').val(token));
+
+            // Submit the form:
+            $form.get(0).submit();
+      }
+};
 </script>
 {% endblock %}

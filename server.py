@@ -160,6 +160,7 @@ def show_cart():
 
     # session["cart_total"] = 0
     recipes = []
+    cart_weight = 0
 
     if 'cart' in session:
         cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
@@ -240,6 +241,18 @@ def check_out():
     functions.get_cart_total(cart)
 
     return render_template("checkout.html", cart=cart)
+
+
+@app.route('/checkout', methods=['POST'])
+def process_payment():
+    """Process payment"""
+
+    cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+    functions.get_cart_total(cart)
+
+    api.pay_for_cart()
+
+    return render_template("success.html")
 
 
 @app.errorhandler(404)
