@@ -272,6 +272,18 @@ def get_cart_json():
     return jsonify(**result)
 
 
+@app.route('/recipes.json')
+def get_recipes_json():
+    """Suggest recipes based on cart contents"""
+
+    cart = Product.query.filter(Product.product_id.in_(session['cart'].keys())).all()
+
+    product_names = api.split_params([item.name for item in cart])
+    recipes = api.get_recipes(product_names)
+
+    return jsonify(**{"results": recipes})
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     """Custom 404 page"""

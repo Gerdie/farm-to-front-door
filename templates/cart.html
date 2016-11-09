@@ -107,9 +107,9 @@
 <div class="row">
 
 <ul>
-
-<li><a href="">recipe[0]</a></li>
-
+{% raw %}
+<li ng-repeat="recipe in recipes track by $index"><a ng-href="{{ recipe.url }}">{{ recipe.name }}</a></li>
+{% endraw %}
 </ul>
 
 </div>

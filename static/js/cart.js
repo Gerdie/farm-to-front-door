@@ -67,6 +67,11 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
     });
 
+    $http.get("/recipes.json").then(function(response) {
+        $scope.recipes = response.data.results;
+        console.log($scope.recipes);
+    });
+
     $scope.getPrice = function(contents, cart) {
         var price = 0;
         for (var i = 0; i < contents.length; i++) {

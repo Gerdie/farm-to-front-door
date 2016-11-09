@@ -22,7 +22,7 @@ def split_params(param_list):
 
 
 def get_recipes(param_list):
-    recipe_list = set()
+    recipe_list = []
     app_id = environ["EDAMAM"]
     app_key = environ["EDAMAM_KEY"]
 
@@ -55,7 +55,7 @@ def get_recipes(param_list):
         image = recipe["recipe"]["image"]
         url = recipe["recipe"]["url"]
         ingredients = recipe["recipe"]["ingredientLines"]
-        recipe_list.add((name, url, image))
+        recipe_list.append({"name": name, "ingredients": ingredients, "image": image, "url": url})
 
     if len(recipe_list) < 5 and len(params) > 1:
             get_recipes(params[1:])
