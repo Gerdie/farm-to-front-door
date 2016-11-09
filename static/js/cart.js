@@ -64,7 +64,16 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         $scope.cart = response.data.cart;
         $scope.contents = response.data.contents;
         $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
+        $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
     });
+
+    $scope.getPrice = function(contents, cart) {
+        var price = 0;
+        for (var i = 0; i < contents.length; i++) {
+            price = price + cart[contents[i]].price * cart[contents[i]].qty;
+        }
+        return price;
+    }
 
     $scope.getWeight = function(contents, cart) {
         var weight = 0;

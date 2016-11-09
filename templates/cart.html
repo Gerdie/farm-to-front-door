@@ -40,7 +40,7 @@
 
 <script type="text/javascript" src="/static/js/cart.js"></script>
 {% raw %}
-<p><strong>Total: {{ session['cart_total'] }}</strong></p>
+<p><strong>Total: {{ cartPrice }}</strong></p>
 
 <p>Weight: <span ng-if="cartWeight.fudged">Over </span>{{ cartWeight.weight.lb }} lb {{ cartWeight.weight.oz }} oz.</p>
 {% endraw %}
