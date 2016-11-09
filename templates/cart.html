@@ -21,21 +21,17 @@
         </tr>
     </thead>
     <tbody>
-
-        <span>
-            <tr>
-                <td>
-                    {% raw %}
-                    <select name="qty" id="" data-qty="">
-                        <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" value={{ i }}>{{ i }}</option>
-                    </select>
-                    {% endraw %}
-                </td>
-                <td> item.name @ item.price each</td>
-                <td><a href="/delete?id=item.product_id">Delete</a></td>
-            </tr>
-        </span>
-
+{% raw %}
+        <tr ng-repeat="product in cart">
+            <td>
+                <select name="qty" id="" data-qty="">
+                    <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" value={{ i }}>{{ i }}</option>
+                </select>
+            </td>
+            <td> {{ product.name }} @ {{ product.price }} each</td>
+            <td><a ng-href="/delete?id={{ product.product_id }}">Delete</a></td>
+        </tr>
+{% endraw %}
     </tbody>
 
 </table>

@@ -60,5 +60,9 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         $scope.customer = response.data;
     });
 
+    $http.get("/cart.json").then(function(response) {
+        $scope.cart = response.data;
+    });
+
 });
 
