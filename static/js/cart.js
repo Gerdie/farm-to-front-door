@@ -61,8 +61,37 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
     });
 
     $http.get("/cart.json").then(function(response) {
-        $scope.cart = response.data;
+        $scope.cart = response.data.cart;
+        $scope.contents = response.data.contents;
+        $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
     });
+
+    $scope.getWeight = function(contents, cart) {
+        var weight = 0;
+        var fudged = false;
+        var prodWeight = 0;
+        for (var i = 0; i < contents.length; i++) {
+            if (cart[contents[i]].per_unit === "lb" || cart[contents[i]].per_unit === "oz") {
+                prodWeight = cart[contents[i]].price / cart[contents[i]].price_per * cart[contents[i]].qty;
+                console.log(prodWeight);
+                if (cart[contents[i]].per_unit === "oz") {
+                    prodWeight = prodWeight / 16;
+                }
+            } else {
+                fudged = true;
+            }
+            weight = weight + prodWeight;
+        }
+
+        return {'weight': $scope.convertUnits(weight), 'fudged': fudged};
+    };
+
+    $scope.convertUnits = function(totalWeight) {
+        var lbs = Math.floor(totalWeight);
+        var oz = (totalWeight - lbs) * 16;
+
+        return {'lb': lbs, 'oz': oz.toFixed(2)};
+    };
 
 });
 

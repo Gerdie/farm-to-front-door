@@ -8,15 +8,16 @@
 
 <div class="row">
 
-<div class="col-md-8">
+<div class="col-md-7">
 
 <h1>Shopping Cart</h1>
 
-<table class="table table-hover" id="cart-table">
+<table class="table table-hover"> <!-- id="cart-table" -->
     <thead>
         <tr>
             <th>Quantity</th>
             <th>Product</th>
+            <th>Subtotal</th>
             <th></th>
         </tr>
     </thead>
@@ -24,11 +25,12 @@
 {% raw %}
         <tr ng-repeat="product in cart">
             <td>
-                <select name="qty" id="" data-qty="">
-                    <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" value={{ i }}>{{ i }}</option>
+                <select name="qty">  <!-- ng-model="qtyDropDown" -->
+                    <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" ng-value="{{ i }}" ng-selected="{{product.qty}}==={{i}}">{{ i }}</option>
                 </select>
             </td>
             <td> {{ product.name }} @ {{ product.price }} each</td>
+            <td>{{ product.qty * product.price }}</td>
             <td><a ng-href="/delete?id={{ product.product_id }}">Delete</a></td>
         </tr>
 {% endraw %}
@@ -36,15 +38,15 @@
 
 </table>
 
-<!-- <script type="text/javascript" src="/static/js/cart.js"></script> -->
-
+<script type="text/javascript" src="/static/js/cart.js"></script>
+{% raw %}
 <p><strong>Total: {{ session['cart_total'] }}</strong></p>
 
-<p>Your cart is *** if 'fudged' in cart_weight *** over cart_weight['lb'] lb cart_weight['oz'] oz.</p>
-
+<p>Weight: <span ng-if="cartWeight.fudged">Over </span>{{ cartWeight.weight.lb }} lb {{ cartWeight.weight.oz }} oz.</p>
+{% endraw %}
 </div>
 
-<div class="col-md-4">
+<div class="col-md-5">
 
     <h2>Delivery Options</h2>
 

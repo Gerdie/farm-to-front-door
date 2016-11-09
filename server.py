@@ -255,18 +255,19 @@ def get_cart_json():
     """Gets product info from database and returns in json"""
 
     result_objects = db.session.query(Product).filter(Product.product_id.in_(session["cart"].keys())).all()
-    result = {}
+    result = {"contents": [], "cart": {}}
 
     for product_obj in result_objects:
-        result[str(product_obj.product_id)] = {"name": product_obj.name,
-                                               "qty": session["cart"][product_obj.product_id],
-                                               "description": product_obj.description,
-                                               "weight": float(product_obj.weight),
-                                               "unit": product_obj.unit,
-                                               "price": float(product_obj.price),
-                                               "price_per": float(product_obj.price_per),
-                                               "per_unit": product_obj.per_unit,
-                                               "product_id": product_obj.product_id}
+        result["cart"][product_obj.product_id] = {"name": product_obj.name,
+                                                       "qty": session["cart"][product_obj.product_id],
+                                                       "description": product_obj.description,
+                                                       "weight": float(product_obj.weight),
+                                                       "unit": product_obj.unit,
+                                                       "price": float(product_obj.price),
+                                                       "price_per": float(product_obj.price_per),
+                                                       "per_unit": product_obj.per_unit,
+                                                       "product_id": product_obj.product_id}
+        result["contents"].append(str(product_obj.product_id))
 
     return jsonify(**result)
 
