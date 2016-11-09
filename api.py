@@ -34,7 +34,7 @@ def get_recipes(param_list):
     payload = {'app_id': app_id,
                'app_key': app_key,
                'q': param_string,
-               'to': 5}
+               'to': 4}
 
     r = requests.get(
         "https://api.edamam.com/search",
@@ -57,10 +57,10 @@ def get_recipes(param_list):
         ingredients = recipe["recipe"]["ingredientLines"]
         recipe_list.append({"name": name, "ingredients": ingredients, "image": image, "url": url})
 
-    if len(recipe_list) < 5 and len(params) > 1:
+    if len(recipe_list) < 4 and len(params) > 1:
             get_recipes(params[1:])
 
-    return recipe_list
+    return recipe_list[:4]
 
 
 def pay_for_cart():

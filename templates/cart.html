@@ -106,11 +106,12 @@
 
 <div class="row">
 
-<ul>
 {% raw %}
-<li ng-repeat="recipe in recipes track by $index"><a ng-href="{{ recipe.url }}">{{ recipe.name }}</a></li>
+<div class="col-md-3" ng-repeat="recipe in recipes track by $index">
+    <a ng-href="{{ recipe.url }}"><img ng-src="{{ recipe.image }}">
+    {{ recipe.name }}</a>
+</div>
 {% endraw %}
-</ul>
 
 </div>
 
