@@ -6,7 +6,25 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
 
     $scope.dropdownOptions = [1,2,3,4,5,6,7,8,9,10];
 
-    // $scope.getCart() {}
+    // $scope.getCustomer = function() {
+    //     $http.get("/customer.json").then(function(response) {
+    //     $scope.customer = response.data;
+    //     });
+    // };
+
+    // $scope.getCustomer();
+
+    // $scope.getCart = function() {
+    //     $http.get("/cart.json").then(function(response) {
+    //     $scope.cart = response.data.cart;
+    //     $scope.contents = response.data.contents;
+    //     $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
+    //     $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
+    //     $http.get("/recipes.json").then(function(response) {
+    //     $scope.recipes = response.data.results;
+    //     });
+    //     });
+    // };
 
     $http.get("/customer.json").then(function(response) {
         $scope.customer = response.data;
@@ -28,7 +46,7 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         for (var i = 0; i < contents.length; i++) {
             price = price + cart[contents[i]].price * cart[contents[i]].qty;
         }
-        return price;
+        return price.toFixed(2);
     };
 
     $scope.getWeight = function(contents, cart) {
@@ -59,13 +77,16 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
 
     $scope.updateCart = function(product) {
         
+        
         var product_id = product.product_id;
-        var qty = product.qty;
+        console.log(product);
+        var qty = parseInt(product.qty);
         console.log("Quantity is " + qty);
         console.log("Product id is " + product_id);
         var payload = {"product_id": product_id, "qty": qty};
         $http.post("/update-cart", payload).then(function(response) {
-            console.log(response);
+            $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
+            $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
         });
     };
 
@@ -75,8 +96,15 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         var payload = {"product_id": product_id};
         $http.post("/delete-product", payload).then(function(response) {
             console.log(response);
-        })
-
-    }
+            console.log(product_id);
+            console.log($scope.contents);
+            var index = $scope.contents.indexOf(product_id.toString());
+            delete $scope.cart[product_id];
+            $scope.contents.splice(index, 1);
+            console.log($scope.contents);
+            $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
+            $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
+        });
+    };
 
 });

@@ -278,11 +278,18 @@ def get_customer_json():
     """Get customer info from database and return in json"""
 
     #throws an error if customer not logged in!
-    customer = db.session.query(Customer).filter(Customer.email == session['email']).one()
+    customer = db.session.query(Customer).filter(Customer.email == session['email']).first()
 
-    return jsonify(customer_id=customer.user_id, email=customer.email,
-                   street_address=customer.street_address, zipcode=customer.zipcode,
-                   state=customer.state)
+    if customer:
+
+        return jsonify(customer_id=customer.user_id, email=customer.email,
+                       street_address=customer.street_address, zipcode=customer.zipcode,
+                       state=customer.state)
+    else:
+
+        return jsonify(customer_id=None, email=None,
+                       street_address=None, zipcode=None,
+                       state=None)
 
 
 @app.route('/cart.json')

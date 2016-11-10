@@ -31,7 +31,7 @@
             </td>
 
             <td> {{ product.name }} @ {{ product.price }} each PRODUCT ID IS {{product.product_id}} qty is {{product.qty}}</td>
-            <td>{{ product.qty * product.price }}</td>
+            <td>{{ product.qty * product.price | number:2 }}</td>
             <td><a href="" ng-click="deleteProd(product)">Delete</a></td> <!-- ng-href="/delete?id={{ product.product_id }}" -->
         </tr>
 {% endraw %}
