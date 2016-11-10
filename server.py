@@ -242,16 +242,35 @@ def process_payment():
 def update_cart_from_ng():
     """Update cart from dropdowns on cart page"""
 
+    print session['cart']
     product_id = request.json.get('product_id')
     qty = request.json.get('qty')
     print product_id
     print qty
 
     if product_id and qty:
-        session[int(product_id)] = session[int(qty)]
+        session['cart'][int(product_id)] = int(qty)
+        session.modified = True
+        print session['cart']
         return "Success"
     else:
         return "Missing parameters"
+
+
+@app.route('/delete-product', methods=['POST'])
+def delete_from_cart():
+    """Delete item from cart"""
+
+    product_id = request.json.get('product_id')
+    print session['cart']
+
+    if product_id:
+        del session['cart'][int(product_id)]
+        session.modified = True
+        print session['cart']
+        return "Success"
+    else:
+        return "Missing product_id"
 
 
 @app.route('/customer.json')

@@ -25,13 +25,14 @@
 {% raw %}
         <tr ng-repeat="product in cart">
             <td>
-                <select name="qty" ng-init="product.product_id = dropdownOptions[product.qty - 1]" ng-model="product.product_id" ng-options="option for option in dropdownOptions" ng-change="updateCart()">
-<!--                     <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" ng-value="{{ i }}" ng-selected="{{product.qty}}==={{i}}" ng-change="updateCart()">{{ i }}</option>
- -->                </select>
+                <select ng-model="product.qty" ng-options="option for option in dropdownOptions" ng-change="updateCart(product)">
+<!--                     <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" ng-value="{{ i }}" ng-selected="{{product.qty}}==={{i}}" ng-change="updateCart()">{{ i }}</option> ng-init="product.product_id = dropdownOptions[product.qty - 1]"
+ -->            </select>
             </td>
-            <td> {{ product.name }} @ {{ product.price }} each</td>
+
+            <td> {{ product.name }} @ {{ product.price }} each PRODUCT ID IS {{product.product_id}} qty is {{product.qty}}</td>
             <td>{{ product.qty * product.price }}</td>
-            <td><a ng-href="/delete?id={{ product.product_id }}">Delete</a></td>
+            <td><a href="" ng-click="deleteProd(product)">Delete</a></td> <!-- ng-href="/delete?id={{ product.product_id }}" -->
         </tr>
 {% endraw %}
     </tbody>

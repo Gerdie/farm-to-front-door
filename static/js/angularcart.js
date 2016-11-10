@@ -6,6 +6,8 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
 
     $scope.dropdownOptions = [1,2,3,4,5,6,7,8,9,10];
 
+    // $scope.getCart() {}
+
     $http.get("/customer.json").then(function(response) {
         $scope.customer = response.data;
     });
@@ -55,15 +57,26 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
         return {'lb': lbs, 'oz': oz.toFixed(2)};
     };
 
-    $scope.updateCart = function() {
-        var product_id = 5;
-        var qty = 7; //$scope.qtyDropDown
-        console.log(qty);
-        console.log(product_id);
+    $scope.updateCart = function(product) {
+        
+        var product_id = product.product_id;
+        var qty = product.qty;
+        console.log("Quantity is " + qty);
+        console.log("Product id is " + product_id);
         var payload = {"product_id": product_id, "qty": qty};
         $http.post("/update-cart", payload).then(function(response) {
             console.log(response);
         });
     };
+
+    $scope.deleteProd = function(product) {
+
+        var product_id = product.product_id;
+        var payload = {"product_id": product_id};
+        $http.post("/delete-product", payload).then(function(response) {
+            console.log(response);
+        })
+
+    }
 
 });
