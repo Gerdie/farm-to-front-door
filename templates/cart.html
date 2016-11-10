@@ -25,9 +25,9 @@
 {% raw %}
         <tr ng-repeat="product in cart">
             <td>
-                <select name="qty">  <!-- ng-model="qtyDropDown" -->
-                    <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" ng-value="{{ i }}" ng-selected="{{product.qty}}==={{i}}">{{ i }}</option>
-                </select>
+                <select name="qty" ng-init="product.product_id = dropdownOptions[product.qty - 1]" ng-model="product.product_id" ng-options="option for option in dropdownOptions" ng-change="updateCart()">
+<!--                     <option ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]" ng-value="{{ i }}" ng-selected="{{product.qty}}==={{i}}" ng-change="updateCart()">{{ i }}</option>
+ -->                </select>
             </td>
             <td> {{ product.name }} @ {{ product.price }} each</td>
             <td>{{ product.qty * product.price }}</td>
@@ -60,9 +60,6 @@
                 <label for="pickup">Select your pickup location:<br>
                     <select id="pickup" name="pickup" ng-model="pickup" ng-options="place for place in ['Alameda', 'Nob Hill', 'Oakland']">
                         <option value="">Choose One</option>
-                        <!-- <option value="Ala">Alameda</option> -->
-                        <!-- <option value="Nob">Nob Hill</option> -->
-                        <!-- <option value="Oak">Oakland</option> -->
                     </select>
                 </label>
             </div>
@@ -119,7 +116,7 @@
 
 <a href="/checkout">Checkout</a>
 
-<script type="text/javascript" src="static/js/cart.js"></script>
+<script type="text/javascript" src="static/js/angularcart.js"></script>
 
 </div>
 

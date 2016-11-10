@@ -238,6 +238,22 @@ def process_payment():
     return render_template("success.html")
 
 
+@app.route('/update-cart', methods=['POST'])
+def update_cart_from_ng():
+    """Update cart from dropdowns on cart page"""
+
+    product_id = request.json.get('product_id')
+    qty = request.json.get('qty')
+    print product_id
+    print qty
+
+    if product_id and qty:
+        session[int(product_id)] = session[int(qty)]
+        return "Success"
+    else:
+        return "Missing parameters"
+
+
 @app.route('/customer.json')
 def get_customer_json():
     """Get customer info from database and return in json"""
