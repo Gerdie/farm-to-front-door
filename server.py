@@ -186,21 +186,32 @@ def show_cart():
 
 @app.route('/cart', methods=['POST'])
 def update_cart():
-    """Update cart quantites"""
+    """Process delivery options"""
 
-    print "pass 1 **************************************"
-    product_id = int(request.form.get("product_id"))
-    print "product id is ", product_id
-    qty = int(request.form.get("qty"))
-    print "qty is ", qty
+    # print "pass 1 **************************************"
+    # product_id = int(request.form.get("product_id"))
+    # print "product id is ", product_id
+    # qty = int(request.form.get("qty"))
+    # print "qty is ", qty
 
-    #REMINDER: calculate price on page.
-    session['cart'][product_id] = qty
+    # #REMINDER: calculate price on page.
+    # session['cart'][product_id] = qty
 
-    session.modified = True
-    print session['cart']
+    # session.modified = True
+    # print session['cart']
 
-    return "Success"
+    delivery_type = request.json.get("delivery")
+    big_address = request.json.get("address")
+    street_address = big_address["street"]
+    zipcode = big_address["zipcode"]
+    print delivery_type, " is the delivery_type"
+    print street_address, " is the street_address"
+    print zipcode, " is the zipcode"
+
+    if delivery_type and street_address and zipcode:
+        return "Success"
+    else:
+        return "Fail"
 
 
 @app.route('/delete')
@@ -278,9 +289,10 @@ def get_customer_json():
     """Get customer info from database and return in json"""
 
     #throws an error if customer not logged in!
-    customer = db.session.query(Customer).filter(Customer.email == session['email']).first()
 
-    if customer:
+    if 'email' in session:
+
+        customer = db.session.query(Customer).filter(Customer.email == session['email']).first()
 
         return jsonify(customer_id=customer.user_id, email=customer.email,
                        street_address=customer.street_address, zipcode=customer.zipcode,
@@ -301,15 +313,16 @@ def get_cart_json():
 
     for product_obj in result_objects:
         result["cart"][product_obj.product_id] = {"name": product_obj.name,
-                                                       "qty": session["cart"][product_obj.product_id],
-                                                       "description": product_obj.description,
-                                                       "weight": float(product_obj.weight),
-                                                       "unit": product_obj.unit,
-                                                       "price": float(product_obj.price),
-                                                       "price_per": float(product_obj.price_per),
-                                                       "per_unit": product_obj.per_unit,
-                                                       "product_id": product_obj.product_id}
+                                                  "qty": session["cart"][product_obj.product_id],
+                                                  "description": product_obj.description,
+                                                  "weight": product_obj.weight,
+                                                  "unit": product_obj.unit,
+                                                  "price": product_obj.price,
+                                                  "price_per": product_obj.price_per,
+                                                  "per_unit": product_obj.per_unit,
+                                                  "product_id": product_obj.product_id}
         result["contents"].append(str(product_obj.product_id))
+        print result["cart"]
 
     return jsonify(**result)
 

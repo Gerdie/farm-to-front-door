@@ -50,48 +50,45 @@
 <div class="col-md-5">
 
     <h2>Delivery Options</h2>
-
-    <form>
+{% raw %}
+    <form id="delivery-options">
         <label>How would you like to receive your order?</label><br>
-        <input type="radio" name="delivery" value="delivery" ng-model="delivery">Please deliver my order.<br>
-        <input type="radio" name="delivery" value="pickup" ng-model="delivery">I will pick up my order.<br>
-        <p>Delivery is a flat $5 fee plus $1 for every lb over 10lbs</p>
+        <input type="radio" name="delivery" value="delivery" ng-model="delivery" required>Please deliver my order.<br> <!-- ng-click="getCustomer()" -->
+        <input type="radio" name="delivery" value="pickup" ng-model="delivery" required>I will pick up my order.<br>
+        <p>Delivery is a flat $5 fee</p>
         <div ng-switch="delivery">
             <div ng-switch-when="pickup">
                 <label for="pickup">Select your pickup location:<br>
-                    <select id="pickup" name="pickup" ng-model="pickup" ng-options="place for place in ['Alameda', 'Nob Hill', 'Oakland']">
-                        <option value="">Choose One</option>
+                    <select ng-model="pickmeup" ng-options="place.name for place in pickups"> <!-- id="pickup" name="pickup"  -->
                     </select>
                 </label>
             </div>
             <div ng-switch-when="delivery">
                 <div ng-if="customer.street_address">
                     <input type="radio" name="which_address" value="my_address" ng-model="which_address">Use the address I have on file:<br>
-                    {% raw %}
                     <p>{{ customer.street_address }}<br>
                     {{ customer.zipcode }} {{customer.state }}</p>
-                    {% endraw %}
                     <input type="radio" name="which_address" value="new_address" ng-model="which_address">Enter new address<br>
                     <div ng-switch="which_address">
                         <div ng-switch-when="new_address">
-                            <input type="text" name="address" placeholder="80 Market St"><br>
-                            <input type="text" name="zipcode" placeholder="94105">
-                            <input type="text" name="state" placeholder="CA" maxlength="2" size="2"><br>
+                            <input type="text" name="address" ng-model="address" placeholder="80 Market St"><br>
+                            <input type="text" name="zipcode" ng-model="zipcode" placeholder="94105">
+                            <input type="text" name="state" ng-model="state" placeholder="CA" maxlength="2" size="2"><br>
                         </div>
                     </div>
                 </div>
                 <div ng-if="!customer.street_address">
                 <label>Add Delivery Address</label><br>
-                <input type="text" name="address" placeholder="80 Market St"><br>
-                <input type="text" name="zipcode" placeholder="94105">
-                <input type="text" name="state" placeholder="CA" maxlength="2" size="2"><br>
+                <input type="text" name="address" ng-model="address" placeholder="80 Market St"><br>
+                <input type="text" name="zipcode" ng-model="zipcode" placeholder="94105">
+                <input type="text" name="state" ng-model="state" placeholder="CA" maxlength="2" size="2"><br>
                 </div>
             </div>
         </div>
-        <label>Total: </label><br>
-        <button type="submit" class="btn btn-default">Check Out</button>
+        <label>Total: {{ cartPrice }}</label><br>
+        <input type="submit" value="Check Out" class="btn btn-default" ng-click="validateDelivery()">
     </form>
-
+{% endraw %}
 </div>
 
 </div>

@@ -1,7 +1,9 @@
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, UnicodeDammit
 import urllib
 from model import (Product, Tag, Product_Tag, connect_to_db, db)
 from server import app
+
+# createdb shop --encoding='utf-8' --locale=en_US.utf8 --template=template0
 
 
 goodeggs = ['https://www.goodeggs.com/sfbay/produce',
@@ -50,7 +52,7 @@ def add_products(link):
         # navigating to product detail page for more data
         prod_page = urllib.urlopen(a).read()
         html2 = BeautifulSoup(prod_page, "html.parser")
-        description = html2.find("div", class_="description-body").get_text().encode('utf-8')
+        description = UnicodeDammit(html2.find("div", class_="description-body").get_text()).unicode_markup  # .encode('utf-8')
         categories = []
         crumbs = html2.select('div.breadcrumbs.gutter a')
 
@@ -91,6 +93,11 @@ def add_products(link):
 
 if __name__ == "__main__":
     connect_to_db(app)
+    # from sqlalchemy import create_engine
+    # engine = create_engine('postgresql:///shop',
+    #                        encoding='utf-8')  # bad idea contd...
+    # connection = engine.connect()  # more bad idea!
 
     db.create_all()
     add_all(goodeggs)
+    # connection.close()  # and more bad idea!

@@ -6,13 +6,19 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
 
     $scope.dropdownOptions = [1,2,3,4,5,6,7,8,9,10];
 
+    $scope.pickups = {'Alameda': {name: 'Alameda', address: '600 Alameda St', zipcode: 94458}, 'Nob Hill': {name: 'Nob Hill', address: '1 Nob Hill Lane', zipcode: 94549}, 'Oakland': {name: 'Oakland', address: '75 Oakland Street', zipcode: 98864}};
+
     // $scope.getCustomer = function() {
     //     $http.get("/customer.json").then(function(response) {
     //     $scope.customer = response.data;
     //     });
     // };
 
-    // $scope.getCustomer();
+    $scope.getCustomer = function() {
+        $http.get("/customer.json").then(function(response) {
+            $scope.customer = response.data;
+        });
+    };
 
     // $scope.getCart = function() {
     //     $http.get("/cart.json").then(function(response) {
@@ -104,6 +110,42 @@ angular.module('cart', []).controller('CartController', function($scope, $http) 
             console.log($scope.contents);
             $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
             $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
+        });
+    };
+
+    $scope.validateDelivery = function() {
+
+        var response = {};
+        var deliveryType = $scope.delivery;
+        if (deliveryType === 'delivery') {
+            response.delivery = true;
+            console.log(response.delivery);
+            var whichAddress = $scope.which_address;
+            if (whichAddress === 'my_address') {
+                response.address = {'street': $scope.customer.street_address, 'zipcode': $scope.customer.zipcode};
+            } else if (whichAddress === 'new_address' && $scope.address && $scope.zipcode) {
+                response.address = {'street': $scope.address, 'zipcode': $scope.zipcode};
+            } else {
+                return "Please enter an address for delivery";
+            }
+
+        } else if (deliveryType === 'pickup') {
+            response.delivery = false;
+            console.log(response.delivery);
+            var pickup = $scope.pickmeup;
+            console.log($scope);
+            if (pickup) {
+                response.address = {'street': pickup.address, 'zipcode': pickup.zipcode};
+                console.log(response.address);
+            } else {
+                return "Please choose a pickup location";
+            }
+        }
+
+        console.log(response);
+
+        $http.post('/cart', response).then( function(response) {
+            console.log(response);
         });
     };
 

@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine  # probably a bad idea...
 from sqlalchemy_utils import ArrowType
 import arrow
+
 
 db = SQLAlchemy()
 
@@ -110,17 +112,19 @@ class Product(db.Model):
 
     product_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(200), nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    weight = db.Column(db.Numeric, nullable=True)
+    description = db.Column(db.Unicode, nullable=True)  # db.Text(collation='utf8', convert_unicode=True)
+    weight = db.Column(db.Numeric(asdecimal=False), nullable=True)  # db.Numeric(asdecimal=False)
     unit = db.Column(db.String(50), nullable=True)
-    price = db.Column(db.Numeric, nullable=False)
-    price_per = db.Column(db.Numeric, nullable=True)
+    price = db.Column(db.Numeric(asdecimal=False), nullable=False)  # db.Numeric(asdecimal=False)
+    price_per = db.Column(db.Numeric(asdecimal=False), nullable=True)  # db.Numeric(asdecimal=False)
     per_unit = db.Column(db.String(50), nullable=True)
     aisle = db.Column(db.String(50), nullable=True)
     category = db.Column(db.String(50), nullable=True)
     img = db.Column(db.String(500), nullable=True)
     icon_id = db.Column(db.Integer, db.ForeignKey('icons.icon_id'), nullable=True)
     color = db.Column(db.String(10), nullable=True)
+    search_term = db.Column(db.String(50), nullable=True)
+    search_strength = db.Column(db.Integer, nullable=True)
 
     icon = db.relationship("Icon", backref="products")
 
