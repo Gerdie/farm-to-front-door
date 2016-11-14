@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>User Profile</h1>
+
+<p>{{ customer.first_name }} {{ customer.last_name }}</p>
+<p>{{ customer.email }}</p>
+
+<p>{{ customer.street_address }}<br>
+    {{ customer.zipcode }} {{ customer.state }}</p>
+
+<h2>Orders</h2>
+
+<table class="table table-hover">
+    <tr>
+        <th>Date</th>
+        <th>Total</th>
+    </tr>
+
+{% for order in customer.orders %}
+
+    <tr>
+        <td>{{ order.placed_at }}</td>
+        <td>{{ order.total }}</td>
+    <tr>
+
+{% endfor %}
+
+</table>
+
+<p>Questions? Contact customer service at 867-5309.</p>
+
+{% endblock %}

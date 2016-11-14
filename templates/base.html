@@ -40,6 +40,7 @@
           -->
           <ul class="nav navbar-nav navbar-right">
             {% if 'email' in session %}
+            <li><a href="/account">Account</a></li>
             <li><a href="/logout">Log Out</a></li>
             {% else %}
             <li><a href="" data-toggle="modal" data-target="#LoginModal" id="loginNav">Login</a></li>

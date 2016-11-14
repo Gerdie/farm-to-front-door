@@ -151,6 +151,15 @@ def add_product_to_cart(product_id):
     return redirect('/products/' + str(product_id))
 
 
+@app.route('/account')
+def show_account():
+    """Show user's info, past orders"""
+
+    customer = db.session.query(Customer).filter(Customer.email == session['email']).one()
+
+    return render_template("account.html", customer=customer)
+
+
 # @app.route('/cart')
 # def show_cart():
 #     """Query session for cart contents and display results"""
