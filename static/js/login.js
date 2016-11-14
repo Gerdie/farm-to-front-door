@@ -10,6 +10,8 @@ function validateUser(evt) {
 
         if (result === "Fail") {
             $('#login-fail').html("Incorrect username or password");
+        } else if (result === "CookieFail") {
+            $('#login-fail').html("Please enable cookies to log in");
         } else {
             $('#LoginModal').modal('hide');
             $('#loginNav').attr('src', '/logout').html('Log Out');

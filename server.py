@@ -47,10 +47,11 @@ def process_login():
     if user and pbkdf2_sha256.verify(password, user.password_hash):
 
         session['email'] = email
-
-        flash("Login successful!")
-
-        return "Success"
+        if session.get('email'):
+            flash("Login successful!")
+            return "Success"
+        else:
+            return "CookieFail"
 
     else:
 
@@ -95,8 +96,12 @@ def process_registration():
 
     db.session.add(user)
     db.session.commit()
-    flash("Registration successful! Welcome to Farm to Front Door.")
+
     session['email'] = email
+    if session.get('email'):
+        flash("Registration successful! Welcome to Farm to Front Door.")
+    else:
+        flash("Please enable cookies to log in")
 
     return redirect("/products")
 
@@ -234,6 +239,27 @@ def delete_item():
     session.modified = True
 
     return redirect('/cart')
+
+
+@app.route('/save-recipe', methods=['POST'])
+def save_recipe():
+    """Save recipe for customer"""
+
+    recipe = request.json.get('recipe')
+    customer_id = db.session.query(Customer.user_id).filter(Customer.email == session['email'])
+    recipe_id = db.session.query(Recipe.recipe_id).filter(Recipe.url == recipe.url).first()
+    if not recipe_id:
+        new_recipe = Recipe(url=recipe.url, name=recipe.name, ingredients=recipe.ingredients, img=recipe.image)
+        db.session.add(new_recipe)
+        db.session.commit()
+        recipe_id = db.session.query(Recipe.recipe_id).filter(Recipe.url == recipe.url).first()
+
+    customer_recipe = Customer_Recipe(customer_id=customer_id, recipe_id=recipe_id)
+
+    db.session.add(customer_recipe)
+    db.session.commit()
+
+    return "Success"
 
 
 @app.route('/checkout')
