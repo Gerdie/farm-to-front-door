@@ -49,8 +49,7 @@
 
     <h2>Delivery Options</h2>
 {% raw %}
-    <form name="deliveryOptions" ng-controller="FormController as formCtrl" ng-submit="validateDelivery()" novalidate>
-        {{ deliveryOptions.$valid }}
+    <form name="deliveryOptions" ng-controller="FormController as formCtrl" ng-submit="deliveryOptions.$valid && validateDelivery()" novalidate>
         <label>How would you like to receive your order?</label><br>
 
         <input ng-model="deliveryForm.delivery" type="radio" name="delivery" value="delivery" required>Please deliver my order.<br>
@@ -103,13 +102,13 @@
 <div class="row">
 
 {% raw %}
-<!-- <div ng-controller="RecipeController as recipeCtrl"> -->
-<div class="col-md-3" ng-repeat="recipe in recipes track by $index">  <!-- recipe in recipeCtrl.recipes track by $index -->
-    <a ng-href="{{ recipe.url }}"><img ng-src="{{ recipe.image }}">
-    {{ recipe.name }}</a>
-    <!-- <a href ng-click="recipeCtrl.saveRecipe(recipe)">Save</a> -->
+<div ng-controller="RecipeController">
+<div class="col-md-3" ng-repeat="recipe in recipes">  <!-- recipe in recipeCtrl.recipes track by $index -->
+    <a ng-href="{{ recipe.url }}"><img ng-src="{{ recipe.image }}"></a>
+    <a ng-href="{{ recipe.url }}">{{ recipe.name }}</a>
+    <a href ng-click="saveRecipe(recipe)">Save</a>
 </div>
-<!-- </div> -->
+</div>
 {% endraw %}
 
 </div>

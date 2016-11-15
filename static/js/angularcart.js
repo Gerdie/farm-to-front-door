@@ -1,8 +1,7 @@
 "use strict";
 
-//angular code below!
+//angular
 
-//this is new
 (function() {
     var app = angular.module("cart", []);
 
@@ -12,21 +11,9 @@
 
         $scope.pickups = {'Alameda': {name: 'Alameda', address: '600 Alameda St', zipcode: 94458}, 'Nob Hill': {name: 'Nob Hill', address: '1 Nob Hill Lane', zipcode: 94549}, 'Oakland': {name: 'Oakland', address: '75 Oakland Street', zipcode: 98864}};
 
-        $scope.getCustomer = function() {
-            $http.get("/customer.json").then(function(response) {
-                $scope.customer = response.data;
-            });
-        };
-
-        // $scope.getCart = function() {
-        //     $http.get("/cart.json").then(function(response) {
-        //     $scope.cart = response.data.cart;
-        //     $scope.contents = response.data.contents;
-        //     $scope.cartWeight = $scope.getWeight($scope.contents, $scope.cart);
-        //     $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
-        //     $http.get("/recipes.json").then(function(response) {
-        //     $scope.recipes = response.data.results;
-        //     });
+        // $scope.getCustomer = function() {
+        //     $http.get("/customer.json").then(function(response) {
+        //         $scope.customer = response.data;
         //     });
         // };
 
@@ -41,9 +28,9 @@
             $scope.cartPrice = $scope.getPrice($scope.contents, $scope.cart);
         });
 
-        $http.get("/recipes.json").then(function(response) {
-            $scope.recipes = response.data.results;
-        });
+        // $http.get("/recipes.json").then(function(response) {
+        //     $scope.recipes = response.data.results;
+        // });
 
         $scope.getPrice = function(contents, cart) {
             var price = 0;
@@ -113,20 +100,19 @@
     });
 
 
-    //RecipeController
-
-    // app.controller("RecipeController", function($http, $scope) {
+    // RecipeController
+    app.controller("RecipeController", function($http, $scope) {
         
-    //     $http.get("/recipes.json").then(function(response) {
-    //         $scope.recipes = response.data.results;
-    //     });
+        $http.get("/recipes.json").then(function(response) {
+            $scope.recipes = response.data.results;
+        });
 
-    //     this.saveRecipe = function(recipe) {
-    //         $http.post("/save-recipe", {"recipe": recipe}).then(function(response) {
-    //             console.log(response);
-    //         });
-    //     };
-    // });
+        $scope.saveRecipe = function(recipe) {
+            $http.post("/save-recipe", {"recipe": recipe}).then(function(response) {
+                console.log(response);
+            });
+        };
+    });
 
     //FormController
     app.controller("FormController", function($scope, $http, $window) {

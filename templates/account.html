@@ -23,11 +23,26 @@
     <tr>
         <td>{{ order.placed_at }}</td>
         <td>{{ order.total }}</td>
-    <tr>
+    </tr>
 
 {% endfor %}
 
 </table>
+
+{% if customer.recipes %}
+
+<h2>Saved Recipes</h2>
+
+{% for recipe in customer.recipes %}
+
+    <div>
+        <img src="{{ recipe.img }}"><br>
+        <a href="{{ recipe.url }}">{{ recipe.name }}</a>
+    </div>
+
+{% endfor %}
+
+{% endif %}
 
 <p>Questions? Contact customer service at 867-5309.</p>
 
