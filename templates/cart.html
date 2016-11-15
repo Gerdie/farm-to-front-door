@@ -29,8 +29,8 @@
             </select>
             </td>
 
-            <td> {{ product.name }} @ {{ product.price }} each PRODUCT ID IS {{product.product_id}} qty is {{product.qty}}</td>
-            <td>{{ product.qty * product.price | number:2 }}</td>
+            <td> {{ product.name }} @ {{ product.price }} each </td>
+            <td>{{ product.qty * product.price | currency }}</td>
             <td><a href="" ng-click="deleteProd(product)">Delete</a></td> <!-- ng-href="/delete?id={{ product.product_id }}" -->
         </tr>
 {% endraw %}
@@ -40,7 +40,6 @@
 
 <script type="text/javascript" src="/static/js/cart.js"></script>
 {% raw %}
-<p><strong>Total: {{ cartPrice | currency }}</strong></p>
 
 <p>Weight: <span ng-if="cartWeight.fudged">Over </span>{{ cartWeight.weight.lb }} lb {{ cartWeight.weight.oz }} oz.</p>
 {% endraw %}
@@ -87,7 +86,7 @@
                 </div>
             </div>
         </div>
-        <label>Total: {{ cartPrice | currency }}</label><br>
+        <label>Order Total: {{ deliveryForm.delivery==="delivery" ? cartPrice + 5 : cartPrice | currency }}</label><br>
         <input type="submit" value="Check Out">   <!-- class="btn btn-default"
  -->    </form>
 {% endraw %}

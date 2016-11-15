@@ -50,7 +50,7 @@
             for (var i = 0; i < contents.length; i++) {
                 price = price + cart[contents[i]].price * cart[contents[i]].qty;
             }
-            return price.toFixed(2);
+            return price;
         };
 
         $scope.getWeight = function(contents, cart) {
