@@ -47,8 +47,7 @@
 
         <tr>
             <td>
-                <select name="qty" id="{{ item.product_id }}" data-qty="{{ session['cart'][item.product_id] }}">
-                </select>
+                {{ session['cart'][item.product_id] }}
             </td>
             <td>{{ item.name }} @ {{ item.price }} each</td>
         </tr>

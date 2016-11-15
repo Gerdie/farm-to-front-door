@@ -202,18 +202,6 @@ def show_cart():
 def update_cart():
     """Process delivery options"""
 
-    # print "pass 1 **************************************"
-    # product_id = int(request.form.get("product_id"))
-    # print "product id is ", product_id
-    # qty = int(request.form.get("qty"))
-    # print "qty is ", qty
-
-    # #REMINDER: calculate price on page.
-    # session['cart'][product_id] = qty
-
-    # session.modified = True
-    # print session['cart']
-
     delivery_type = request.json.get("delivery")
     big_address = request.json.get("address")
     street_address = big_address["street"]
@@ -223,22 +211,25 @@ def update_cart():
     print zipcode, " is the zipcode"
 
     if delivery_type and street_address and zipcode:
+        session['delivery'] = {'delivery': delivery_type, 'address': street_address, 'zipcode': zipcode}
+        print session['delivery']
+        print session['cart']
         return "Success"
     else:
         return "Fail"
 
 
-@app.route('/delete')
-def delete_item():
-    """Delete item from shopping cart"""
+# @app.route('/delete')
+# def delete_item():
+#     """Delete item from shopping cart"""
 
-    product_id = int(request.args.get('id'))
-    print product_id
+#     product_id = int(request.args.get('id'))
+#     print product_id
 
-    del session['cart'][product_id]
-    session.modified = True
+#     del session['cart'][product_id]
+#     session.modified = True
 
-    return redirect('/cart')
+#     return redirect('/cart')
 
 
 @app.route('/save-recipe', methods=['POST'])

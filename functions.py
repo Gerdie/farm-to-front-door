@@ -31,7 +31,11 @@ def get_cart_weight(cart):
 def get_cart_total(cart):
     """Calculate total price of cart"""
 
-    session["cart_total"] = 0
+    session["cart_total"] = 0.00
 
     for item in cart:
-            session["cart_total"] += item.price * session['cart'][item.product_id]
+        session["cart_total"] += item.price * session['cart'][item.product_id]
+    if session.get('delivery') and session['delivery']['delivery'] == unicode('delivery'):
+        session["cart_total"] += 5.00
+
+    session.modified = True
