@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup, UnicodeDammit
 import urllib
-from model import (Product, Tag, Product_Tag, connect_to_db, db)
+from model import (Product, Tag, Product_Tag, Pickup, connect_to_db, db)
 from server import app
 
 # createdb shop --encoding='utf-8' --locale=en_US.utf8 --template=template0
@@ -91,13 +91,22 @@ def add_products(link):
         db.session.commit()
 
 
+def add_pickups():
+    """Add a couple farmers markets for pickup locations"""
+
+    p = Pickup(name="Parnassus Farmers' Market (UCSF)", street_address="505 Parnassus Avenue", zipcode="94122", state="CA")
+    p2 = Pickup(name="Mission Bay Farmers' Market (UCSF in Mission Bay)", street_address="550 Gene Friend Way", zipcode="94158", state="CA")
+    p3 = Pickup(name="Noe Valley Farmers' Market", street_address="3861 24th St.", zipcode="94114", state="CA")
+    p4 = Pickup(name="Inner Sunset Farmers' Market", street_address="1315 8th Ave", zipcode="94122", state="CA")
+    p5 = Pickup(name="Inner Richmond: Clement Street Farmer's Market", street_address="200 Clement St.", zipcode="94118", state="CA")
+    p6 = Pickup(name="Heart of the City Farmers' Market", street_address="1182 Market St.", zipcode="94102", state="CA")
+
+    db.session.add_all([p, p2, p3, p4, p5, p6])
+    db.session.commit()
+
 if __name__ == "__main__":
     connect_to_db(app)
-    # from sqlalchemy import create_engine
-    # engine = create_engine('postgresql:///shop',
-    #                        encoding='utf-8')  # bad idea contd...
-    # connection = engine.connect()  # more bad idea!
 
     db.create_all()
     add_all(goodeggs)
-    # connection.close()  # and more bad idea!
+    add_pickups()

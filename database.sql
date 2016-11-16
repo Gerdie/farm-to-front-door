@@ -637,6 +637,7 @@ ALTER TABLE ONLY tags ALTER COLUMN tag_id SET DEFAULT nextval('tags_tag_id_seq':
 --
 
 COPY customer_recipes (cust_rec_id, customer_id, recipe_id) FROM stdin;
+1	1	1
 \.
 
 
@@ -644,7 +645,7 @@ COPY customer_recipes (cust_rec_id, customer_id, recipe_id) FROM stdin;
 -- Name: customer_recipes_cust_rec_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('customer_recipes_cust_rec_id_seq', 1, false);
+SELECT pg_catalog.setval('customer_recipes_cust_rec_id_seq', 1, true);
 
 
 --
@@ -760,6 +761,7 @@ SELECT pg_catalog.setval('order_quantities_order_qty_id_seq', 1, false);
 COPY orders (order_id, customer_id, placed_at, total, pickup_id, received_at) FROM stdin;
 2	1	2016-11-14 23:25:00.81001	55.91	1	\N
 3	1	2016-11-14 23:26:54.695579	4.48	1	\N
+4	1	2016-11-15 22:28:52.368666	26.97	1	\N
 \.
 
 
@@ -767,7 +769,7 @@ COPY orders (order_id, customer_id, placed_at, total, pickup_id, received_at) FR
 -- Name: orders_order_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('orders_order_id_seq', 3, true);
+SELECT pg_catalog.setval('orders_order_id_seq', 4, true);
 
 
 --
@@ -776,6 +778,12 @@ SELECT pg_catalog.setval('orders_order_id_seq', 3, true);
 
 COPY pickups (pickup_id, name, street_address, zipcode, state) FROM stdin;
 1	Home Delivery	Home Delivery	Home Delivery	00
+4	Parnassus Farmers' Market (UCSF)	505 Parnassus Avenue	94122	CA
+5	Mission Bay Farmers' Market (UCSF in Mission Bay)	550 Gene Friend Way	94158	CA
+6	Noe Valley Farmers' Market	3861 24th St.	94114	CA
+7	Inner Sunset Farmers' Market	1315 8th Ave	94122	CA
+8	Inner Richmond: Clement Street Farmer's Market	200 Clement St.	94118	CA
+9	Heart of the City Farmers' Market	1182 Market St.	94102	CA
 \.
 
 
@@ -783,7 +791,7 @@ COPY pickups (pickup_id, name, street_address, zipcode, state) FROM stdin;
 -- Name: pickups_pickup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('pickups_pickup_id_seq', 1, true);
+SELECT pg_catalog.setval('pickups_pickup_id_seq', 9, true);
 
 
 --
@@ -4621,6 +4629,7 @@ SELECT pg_catalog.setval('products_product_id_seq', 1080, true);
 --
 
 COPY recipes (recipe_id, url, name, ingredients, img) FROM stdin;
+1	http://www.bonappetit.com/recipes/2004/06/chicken_walnut_and_grape_salad_with_curry_dressing	Chicken, Walnut, and Red Grape Salad with Curry Dressing	["2 teaspoons curry powder (preferably madras-style)", "1/4 cup light mayonnaise", "1/4 cup plain nonfat yogurt", "2 teaspoons mango chutney", "1 teaspoon minced peeled fresh ginger", "1/2 teaspoon grated orange peel", "3 cups 1/2 inch pieces cooked skinless boneless chicken breast", "1 cup halved seedless red grapes", "1/2 cup thinly sliced green onions", "1/3 cup walnuts, toasted, coarsely chopped", "4 large curly lettuce leaves", "4 small clusters seedless red grapes"]	https://www.edamam.com/web-img/74f/74fba5177d2fbb5f04073038c5191b4e.jpg
 \.
 
 
@@ -4628,7 +4637,7 @@ COPY recipes (recipe_id, url, name, ingredients, img) FROM stdin;
 -- Name: recipes_recipe_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('recipes_recipe_id_seq', 1, false);
+SELECT pg_catalog.setval('recipes_recipe_id_seq', 1, true);
 
 
 --

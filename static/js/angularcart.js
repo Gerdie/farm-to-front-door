@@ -9,7 +9,7 @@
 
         $scope.dropdownOptions = [1,2,3,4,5,6,7,8,9,10];
 
-        $scope.pickups = {'Alameda': {name: 'Alameda', address: '600 Alameda St', zipcode: 94458}, 'Nob Hill': {name: 'Nob Hill', address: '1 Nob Hill Lane', zipcode: 94549}, 'Oakland': {name: 'Oakland', address: '75 Oakland Street', zipcode: 98864}};
+        // $scope.pickups = {'Alameda': {name: 'Alameda', address: '600 Alameda St', zipcode: 94458}, 'Nob Hill': {name: 'Nob Hill', address: '1 Nob Hill Lane', zipcode: 94549}, 'Oakland': {name: 'Oakland', address: '75 Oakland Street', zipcode: 98864}};
 
         // $scope.getCustomer = function() {
         //     $http.get("/customer.json").then(function(response) {
@@ -118,6 +118,10 @@
     app.controller("FormController", function($scope, $http, $window) {
 
         $scope.deliveryForm = {delivery: "", pickup: "", which_address: "", address: "", zipcode: "", state: ""};
+
+        $http.get("/pickups.json").then(function(results) {
+            $scope.pickups = results.data.locations;
+        });
 
         $scope.validateDelivery = function() {
 

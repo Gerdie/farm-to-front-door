@@ -369,6 +369,23 @@ def get_recipes_json():
     return jsonify(**{"results": recipes})
 
 
+@app.route('/pickups.json')
+def get_pickups_json():
+    """Provide JSON for pickup locations"""
+
+    pickup_json = {"locations": {}, "ids": []}
+    pickups = Pickup.query.filter(Pickup.pickup_id > 1).all()
+
+    for pickup in pickups:
+        pickup_json["locations"][pickup.pickup_id] = {"id": pickup.pickup_id,
+                                                      "name": pickup.name,
+                                                      "address": pickup.street_address,
+                                                      "zipcode": pickup.zipcode}
+        pickup_json["ids"].append(pickup.pickup_id)
+
+    return jsonify(**pickup_json)
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     """Custom 404 page"""
