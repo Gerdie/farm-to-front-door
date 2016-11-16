@@ -20,3 +20,11 @@ button.add_to_cart {
 }
 
 /* Cart Page */
+
+/* Locations Page */
+
+#map {
+        width: 100%;
+        height: 400px;
+        background-color: grey;
+      }

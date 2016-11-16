@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Locations</h1>
+
+<div id="map"></div>
+<script type="text/javascript" src="static/js/secrets.js"></script>
+<script>
+    function initMap() {
+        var sanFran = {lat: 37.78, lng: -122.41};
+        var pickupsMap = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: sanFran
+        });
+        var geocoder = new google.maps.Geocoder();
+        $.getJSON('/pickups.json', function(response) {
+                var pickups = response;
+                for (var i=0; i < pickups.ids.length; i++) {
+                    var pickup_id = pickups.ids[i];
+                    console.log(pickup_id);
+                    console.log(pickups.ids.length + " is the # of pickups");
+                    var pickup = pickups.locations[pickup_id];
+                    createMarker(geocoder, pickupsMap, pickup);
+                }
+        });
+    }
+
+    function createMarker(geocoder, pickupsMap, pickup) {
+        geocoder.geocode({'address': pickup.address}, function(results, status) {
+            if (status === 'OK') {
+                var marker = new google.maps.Marker({
+                    map: pickupsMap,
+                    position: results[0].geometry.location,
+                    animation: google.maps.Animation.DROP,
+                    title: pickup.name
+                });
+                console.log(marker.title + " is the marker title");
+                var contentString = "<strong>" + pickup.name + "</strong><p>" + pickup.address + "</p>"
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString,
+                    maxWidth: 200
+                });
+                marker.addListener('mouseover', function() {
+                    infowindow.open(pickupsMap, marker);
+                });
+                marker.addListener('mouseout', function() {
+                    infowindow.close(pickupsMap, marker);
+                });
+            } else {
+                console.log('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+    }
+
+    function addScript(src) {
+        var s = document.createElement('script');
+        s.setAttribute('src', src);
+        s.defer=true;
+        s.async=true;
+        document.body.appendChild(s);
+    }
+    addScript("https://maps.googleapis.com/maps/api/js?key=" + myGoogleApi.key + "&callback=initMap");
+</script>
+
+{% endblock %}

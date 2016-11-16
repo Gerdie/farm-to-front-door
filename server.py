@@ -145,7 +145,7 @@ def add_product_to_cart(product_id):
     """Add product to cart from button click on prod page"""
 
     product_id = int(request.form.get("productId"))
-    product = Product.query.get(product_id)
+
     session["cart"] = session.get("cart", {})
     # session["cart_total"] = session.get("cart_total", 0) + product.price
     session["cart"][product_id] = session["cart"].get(product_id, 0) + 1
@@ -163,6 +163,13 @@ def show_account():
     customer = db.session.query(Customer).filter(Customer.email == session['email']).one()
 
     return render_template("account.html", customer=customer)
+
+
+@app.route('/locations')
+def show_locations():
+    """Show local pickup locations"""
+
+    return render_template("locations.html")
 
 
 # @app.route('/cart')
@@ -217,19 +224,6 @@ def update_cart():
         return "Success"
     else:
         return "Fail"
-
-
-# @app.route('/delete')
-# def delete_item():
-#     """Delete item from shopping cart"""
-
-#     product_id = int(request.args.get('id'))
-#     print product_id
-
-#     del session['cart'][product_id]
-#     session.modified = True
-
-#     return redirect('/cart')
 
 
 @app.route('/save-recipe', methods=['POST'])
@@ -377,11 +371,11 @@ def get_pickups_json():
     pickups = Pickup.query.filter(Pickup.pickup_id > 1).all()
 
     for pickup in pickups:
-        pickup_json["locations"][pickup.pickup_id] = {"id": pickup.pickup_id,
-                                                      "name": pickup.name,
-                                                      "address": pickup.street_address,
-                                                      "zipcode": pickup.zipcode}
-        pickup_json["ids"].append(pickup.pickup_id)
+        pickup_json["locations"][pickup.name] = {"id": pickup.pickup_id,
+                                                 "name": pickup.name,
+                                                 "address": pickup.street_address,
+                                                 "zipcode": pickup.zipcode}
+        pickup_json["ids"].append(pickup.name)
 
     return jsonify(**pickup_json)
 
