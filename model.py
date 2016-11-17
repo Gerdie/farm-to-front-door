@@ -78,6 +78,7 @@ class Pickup(db.Model):
     pickup_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(100), nullable=True)
     street_address = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(100), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
     state = db.Column(db.String(2), nullable=False, default="CA")
 

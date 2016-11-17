@@ -57,7 +57,7 @@
                     title: pickup.name
                 });
                 console.log(marker.title + " is the marker title");
-                var contentString = "<strong>" + pickup.name + "</strong><p>" + pickup.address + "</p>";
+                var contentString = "<strong>" + pickup.name + "</strong><p>" + pickup.address + "</p><p>" + pickup.description + "</p>";
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString,
                     maxWidth: 200

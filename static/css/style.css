@@ -1,4 +1,10 @@
-/* Individual Project Page */
+/* All Product Page */
+.filters {
+    width: 100%;
+    /*height: 20em;*/
+}
+
+/* Individual Product Page */
 
 button.add_to_cart {
 

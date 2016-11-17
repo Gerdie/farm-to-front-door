@@ -2,7 +2,17 @@
 
 {% block body %}
 
-<h1>List of All products!</h1>
+<div class="row">
+    <div class="filters">
+        <div class="form-group">
+            <select name="active_category">
+                {% for category in categories %}
+                    <option>{{category[0]}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+</div>
 
 <div class="row">
 

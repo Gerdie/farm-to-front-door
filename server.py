@@ -111,8 +111,9 @@ def show_products():
     """Query database for product list & display results"""
 
     products = db.session.query(Product).all()
+    categories = db.session.query(Product.category).group_by(Product.category).all()
 
-    return render_template("products.html", products=products)
+    return render_template("products.html", products=products, categories=categories)
 
 
 @app.route('/products', methods=["POST"])
@@ -375,6 +376,7 @@ def get_pickups_json():
     for pickup in pickups:
         pickup_json["locations"][pickup.name] = {"id": pickup.pickup_id,
                                                  "name": pickup.name,
+                                                 "description": pickup.description,
                                                  "address": pickup.street_address,
                                                  "zipcode": pickup.zipcode}
         pickup_json["ids"].append(pickup.name)
