@@ -117,7 +117,7 @@ def add_icons():
             name, credit, url = line
             icons[name] = url
             #does url exist already?
-            if not db.session.query(Icon).filter(Icon.url == url):
+            if not db.session.query(Icon).filter(Icon.url == url).first():
                 new_icon = Icon(url=url, credit=credit)
                 db.session.add(new_icon)
 
@@ -133,8 +133,8 @@ def add_product_icons(icons):
         for line in prod_icon_file:
             line = line.rstrip().split("|")
             name, product_id = line
-            product = Product.query.get(product_id)
-            product.icon_id = db.session.query(Icon.icon_id).filter(Icon.url == icons[name])
+            product = Product.query.get(int(product_id))
+            product.icon_id = db.session.query(Icon.icon_id).filter(Icon.url == icons[name]).first()
         db.session.commit()
 
 
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-    # add_all(goodeggs)
-    # add_pickups()
-    add_icons()
-    add_product_icons()
+    add_all(goodeggs)
+    add_pickups()
+    icons = add_icons()
+    add_product_icons(icons)
