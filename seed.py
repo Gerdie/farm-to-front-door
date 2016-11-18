@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup, UnicodeDammit
 import urllib
-from model import (Product, Tag, Product_Tag, Pickup, connect_to_db, db)
+from model import (Product, Tag, Product_Tag, Pickup, Icon, connect_to_db, db)
 from server import app
 
 # createdb shop --encoding='utf-8' --locale=en_US.utf8 --template=template0
@@ -105,9 +105,44 @@ def add_pickups():
     db.session.add_all([h, p, p2, p3, p4, p5, p6])
     db.session.commit()
 
+
+def add_icons():
+    """Add icons scraped w Selenium from Noun Project"""
+
+    icons = {}
+
+    with open('icons.txt') as icon_file:
+        for line in icon_file:
+            line = line.rstrip().split("|")
+            name, credit, url = line
+            icons[name] = url
+            #does url exist already?
+            if not db.session.query(Icon).filter(Icon.url == url):
+                new_icon = Icon(url=url, credit=credit)
+                db.session.add(new_icon)
+
+        db.session.commit()
+
+    return icons
+
+
+def add_product_icons(icons):
+    """Relate icons to product ids"""
+
+    with open('product_icons.txt') as prod_icon_file:
+        for line in prod_icon_file:
+            line = line.rstrip().split("|")
+            name, product_id = line
+            product = Product.query.get(product_id)
+            product.icon_id = db.session.query(Icon.icon_id).filter(Icon.url == icons[name])
+        db.session.commit()
+
+
 if __name__ == "__main__":
     connect_to_db(app)
 
     db.create_all()
-    add_all(goodeggs)
-    add_pickups()
+    # add_all(goodeggs)
+    # add_pickups()
+    add_icons()
+    add_product_icons()

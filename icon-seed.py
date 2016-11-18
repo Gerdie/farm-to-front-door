@@ -66,7 +66,10 @@ def write_to_file(icons):
         for icon in icons:
             file1.write(icon)
             file1.write("|")
-            file1.write(icons[icon]["credit"].decode('utf8'))
+            try:
+                file1.write(icons[icon]["credit"].decode('utf8'))
+            except Exception:
+                file1.write("Uncredited")
             file1.write("|")
             file1.write(icons[icon]["link"])
             file1.write("\n")
