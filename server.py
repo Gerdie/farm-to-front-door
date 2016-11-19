@@ -347,7 +347,10 @@ def get_cart_json():
                                                   "price": product_obj.price,
                                                   "price_per": product_obj.price_per,
                                                   "per_unit": product_obj.per_unit,
-                                                  "product_id": product_obj.product_id}
+                                                  "product_id": product_obj.product_id,
+                                                  "icon": None}
+        if product_obj.icon_id:
+            result["cart"][product_obj.product_id]["icon"] = product_obj.icon.url
         result["contents"].append(str(product_obj.product_id))
         print result["cart"]
 
