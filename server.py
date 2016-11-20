@@ -110,7 +110,16 @@ def process_registration():
 def show_products():
     """Query database for product list & display results"""
 
-    products = db.session.query(Product).all()
+    filters = request.args.get("filter")
+    session['filters'] = session.get('filters', [])
+    if filters in session['filters']:
+        session['filters'].remove(filters)
+    else:
+        session['filters'].append(filters)
+    if not session['filters']:
+        products = db.session.query(Product).all()
+    else:
+        products = db.session.query(Product).filter(Product.category.in_(session['filters'])).all()
     categories = db.session.query(Product.category).group_by(Product.category).all()
 
     return render_template("products.html", products=products, categories=categories)

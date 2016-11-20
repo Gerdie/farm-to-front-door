@@ -6,7 +6,7 @@
     <div class="nofilters"><a class="showfilters">Filter by Category</a><!-- <input type="text" placeholder="Search"><a href=""><span id="prod-search" class='glyphicon glyphicon-search' aria-hidden='true'></span></a> --></div>
     <div class="filters hidden">
         {% for category in categories %}
-            <div><a href="" data-cat="{{ category[0] }}" class="category">{{ category[0] }}</a></div>
+            <div><a href="/products?filter={{category[0]}}" data-cat="{{ category[0] }}" class="category">{{ category[0] }}</a></div>
         {% endfor %}
         <a class="hidefilters">Hide Filters</a>
     </div>

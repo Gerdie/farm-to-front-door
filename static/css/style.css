@@ -16,6 +16,10 @@
     margin-bottom: 5px;
 }
 
+.bright-category {
+    background-color: blue;
+}
+
 /* Individual Product Page */
 
 button.add_to_cart {
