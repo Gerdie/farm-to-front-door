@@ -16,7 +16,11 @@
     margin-bottom: 5px;
 }
 
-.bright-category {
+.filters .pill {
+    cursor: pointer;
+}
+
+.filters .on {
     background-color: blue;
 }
 

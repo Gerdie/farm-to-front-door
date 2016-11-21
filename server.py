@@ -124,7 +124,8 @@ def show_products():
 
     return render_template("products.html", products=products, categories=categories)
 
-@app.route('/test')
+
+@app.route('/filters')
 def filter_products():
     """Allow customers to filter products"""
 
@@ -142,11 +143,12 @@ def show_search_results():
 
     return render_template("products.html", products=products, categories=categories)
 
-@app.route('/filters')
-def show_filtered_products():
+
+@app.route('/filters.json')
+def serve_filtered_products_json():
     """Query database for product list & display results"""
 
-    filters = False  # request.json.get("filters")
+    filters = request.args.getlist("filters")
     if filters:
         prods = db.session.query(Product).filter(Product.category.in_(filters)).order_by(Product.category).all()
     else:
@@ -159,9 +161,6 @@ def show_filtered_products():
         if prod.icon_id:
             products[prod.product_id]["icon"] = prod.icon.url
 
-    print products
-    print "****************"
-    print categories
     return jsonify(**{"products": products, "categories": categories})
 
 
