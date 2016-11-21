@@ -14,6 +14,8 @@
 
 <div class="row">
 
+{% if products %}
+
 {% for product in products %}
 
 {# {% if loop.first or loop.index0 is divisibleby(3) %} #}
@@ -48,6 +50,12 @@
 {# {% endif %} #}
 
 {% endfor %}
+
+{% else %}
+
+<h2>Sorry, we couldn't find what you were looking for.</h2>
+
+{% endif %}
 
 <script type="text/javascript" src="static/js/cart.js"></script>
 
