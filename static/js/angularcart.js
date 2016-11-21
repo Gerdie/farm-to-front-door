@@ -1,6 +1,6 @@
 "use strict";
 
-//angular
+//cart.html angular
 
 (function() {
     var app = angular.module("cart", []);

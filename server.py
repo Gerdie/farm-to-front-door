@@ -124,6 +124,46 @@ def show_products():
 
     return render_template("products.html", products=products, categories=categories)
 
+@app.route('/test')
+def filter_products():
+    """Allow customers to filter products"""
+
+    return render_template("filter.html")
+
+
+@app.route('/search')
+def show_search_results():
+    """Query database for search results"""
+
+    terms = request.args.get("terms").title()
+
+    categories = db.session.query(Product.category).group_by(Product.category).all()
+    products = db.session.query(Product).filter(Product.name.like('%' + terms + '%')).all()
+
+    return render_template("products.html", products=products, categories=categories)
+
+@app.route('/filters')
+def show_filtered_products():
+    """Query database for product list & display results"""
+
+    filters = False  # request.json.get("filters")
+    if filters:
+        prods = db.session.query(Product).filter(Product.category.in_(filters)).order_by(Product.category).all()
+    else:
+        prods = db.session.query(Product).all()
+
+    categories = db.session.query(Product.category).group_by(Product.category).all()
+    products = {}
+    for prod in prods:
+        products[prod.product_id] = {"name": prod.name, "id": prod.product_id, "price": prod.price, "img": prod.img, "icon": None}
+        if prod.icon_id:
+            products[prod.product_id]["icon"] = prod.icon.url
+
+    print products
+    print "****************"
+    print categories
+    return jsonify(**{"products": products, "categories": categories})
+
 
 @app.route('/products', methods=["POST"])
 def add_products_to_cart():
