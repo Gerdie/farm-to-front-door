@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block head %}<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>{% endblock %}
+
+{% block body %}
+
+{% raw %}
+<div ng-app="prods" ng-controller="ProductsController">
+<div class="row">
+    <div class="nofilters"><a class="showfilters">Filter by Category</a></div>
+    <div class="filters">
+            <div ng-repeat="category in prods.categories" ng-click="toggleFilter(category[0])" class="pill" ng-class="(prods.filters.indexOf(category[0]) != -1) ? 'on' : 'off'">{{ category[0]}}</div>
+        <a class="hidefilters">Hide Filters</a>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4" ng-repeat="product in prods.filtered_prods">
+        <a href="/products/{{ product.id }}"><img ng-src="{{product.img}}"></a>
+        <p>{{ product.name }}</p>
+        <p>Price: {{ product.price }}</p>
+        <button class="add_to_cart prod_page" ng-click="addToCart(product.id)">Add to Cart</button>
+    </div>
+
+
+<script type="text/javascript" src="static/js/cart.js"></script>
+
+</div>
+
+<script type="text/javascript" src="static/js/products.js"></script>
+
+</div>
+
+{% endraw %}
+{% endblock %}

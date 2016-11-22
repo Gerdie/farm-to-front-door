@@ -21,7 +21,8 @@
 }
 
 .filters .on {
-    background-color: blue;
+    background-color: #57BF7B;
+    border: none;
 }
 
 /* Individual Product Page */

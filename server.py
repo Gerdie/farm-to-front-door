@@ -324,6 +324,23 @@ def process_payment():
     return render_template("success.html")
 
 
+@app.route('/add-item', methods=['POST'])
+def add_to_cart_from_ng():
+    """Update cart from Angular AJAX Post"""
+
+    session['cart'] = session.get('cart', {})
+    print session['cart']
+    product_id = request.json.get('product_id')
+    session['cart'][int(product_id)] = session['cart'].get(int(product_id), 0) + 1
+    session.modified = True
+    print session['cart']
+
+    if int(product_id):
+        return "Success!"
+    else:
+        return "Missing product id"
+
+
 @app.route('/update-cart', methods=['POST'])
 def update_cart_from_ng():
     """Update cart from dropdowns on cart page"""
