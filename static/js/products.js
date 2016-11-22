@@ -5,6 +5,7 @@
     prods.controller('ProductsController', function($scope, $http) {
 
         $scope.prods = {"filtered_prods": {}, "categories": [], "filters": []};
+        $scope.showfilters = false;
 
         $http.get("/filters.json", {"filters": $scope.prods.filters}).then( function(response) {
             $scope.prods.filtered_prods = response.data.products;

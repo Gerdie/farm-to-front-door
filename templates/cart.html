@@ -106,7 +106,7 @@
 <div class="col-md-3" ng-repeat="recipe in recipes">  <!-- recipe in recipeCtrl.recipes track by $index -->
     <a ng-href="{{ recipe.url }}"><img ng-src="{{ recipe.image }}"></a>
     <a ng-href="{{ recipe.url }}">{{ recipe.name }}</a>
-    <a href ng-click="saveRecipe(recipe)">Save</a>
+    <a href ng-click="saveRecipe(recipe)" aria-label="Like this recipe"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
 </div>
 </div>
 {% endraw %}
@@ -114,8 +114,6 @@
 </div>
 
 <p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>
-
-<a href="/checkout">Checkout</a>
 
 <script type="text/javascript" src="static/js/angularcart.js"></script>
 

@@ -106,26 +106,26 @@ def process_registration():
     return redirect("/products")
 
 
+# @app.route('/products')
+# def show_products():
+#     """Query database for product list & display results"""
+
+#     filters = request.args.get("filter")
+#     session['filters'] = session.get('filters', [])
+#     if filters in session['filters']:
+#         session['filters'].remove(filters)
+#     else:
+#         session['filters'].append(filters)
+#     if not session['filters']:
+#         products = db.session.query(Product).all()
+#     else:
+#         products = db.session.query(Product).filter(Product.category.in_(session['filters'])).all()
+#     categories = db.session.query(Product.category).group_by(Product.category).all()
+
+#     return render_template("products.html", products=products, categories=categories)
+
+
 @app.route('/products')
-def show_products():
-    """Query database for product list & display results"""
-
-    filters = request.args.get("filter")
-    session['filters'] = session.get('filters', [])
-    if filters in session['filters']:
-        session['filters'].remove(filters)
-    else:
-        session['filters'].append(filters)
-    if not session['filters']:
-        products = db.session.query(Product).all()
-    else:
-        products = db.session.query(Product).filter(Product.category.in_(session['filters'])).all()
-    categories = db.session.query(Product.category).group_by(Product.category).all()
-
-    return render_template("products.html", products=products, categories=categories)
-
-
-@app.route('/filters')
 def filter_products():
     """Allow customers to filter products"""
 

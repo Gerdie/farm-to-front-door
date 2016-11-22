@@ -25,6 +25,17 @@
     border: none;
 }
 
+.showfilters, .hidefilters {
+    cursor: pointer;
+}
+
+/* Search Page */
+
+.backtoall {
+    margin: auto;
+    width: 20px;
+}
+
 /* Individual Product Page */
 
 button.add_to_cart {

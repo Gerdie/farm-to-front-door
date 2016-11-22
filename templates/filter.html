@@ -7,10 +7,10 @@
 {% raw %}
 <div ng-app="prods" ng-controller="ProductsController">
 <div class="row">
-    <div class="nofilters"><a class="showfilters">Filter by Category</a></div>
-    <div class="filters">
+    <div class="nofilters"><a class="showfilters" ng-click="showfilters=true">Filter by Category</a></div>
+    <div class="filters ng-cloak" ng-show="showfilters">
             <div ng-repeat="category in prods.categories" ng-click="toggleFilter(category[0])" class="pill" ng-class="(prods.filters.indexOf(category[0]) != -1) ? 'on' : 'off'">{{ category[0]}}</div>
-        <a class="hidefilters">Hide Filters</a>
+        <a class="hidefilters" ng-click="showfilters=false">Hide Filters</a>
     </div>
 </div>
 
