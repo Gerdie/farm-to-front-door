@@ -18,9 +18,9 @@
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 proddiv" ng-repeat="product in prods.filtered_prods">
         <a href="/products/{{ product.id }}"><img ng-src="{{product.img}}"></a>
-        <p>{{ product.name }}</p>
-        <p>Price: {{ product.price }}</p>
-        <button class="add_to_cart prod_page" ng-click="addToCart(product.id)">Add to Cart</button>
+        <h4>{{ product.name }}</h4>
+        <div class="col-xs-6"><p>Price: {{ product.price | currency }}</p></div>
+        <div class="col-xs-6"><button class="add_to_cart prod_page" ng-click="addToCart(product.id)">Add to Cart</button></div>
     </div>
 
 
