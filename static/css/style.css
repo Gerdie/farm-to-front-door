@@ -4,13 +4,25 @@
     /*margin-bottom: 15px;*/
 }
 
+.logotext {
+    font-family: 'Lato', sans-serif;
+
+    font-size: 1.5em;
+}
+
+body {
+    font-family: 'Droid Serif', serif;
+}
+
 /* All Product Page */
-.hidden {
-    visibility:hidden;
+
+.proddiv {
+    font-family: 'Droid Serif', serif;
 }
 
 .filters {
     width: 100%;
+    text-align: center;
     /*height: 20em;*/
 }
 
