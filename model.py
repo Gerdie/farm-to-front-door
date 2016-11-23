@@ -286,14 +286,20 @@ class Order_Quantity(db.Model):
                                                                                                   self.order_id)
 
 
-def connect_to_db(app):
+def connect_to_db(app, database='postgresql:///shop'):
     """Connect the database to Flask app."""
 
     # Configure to use PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///shop'
+    app.config['SQLALCHEMY_DATABASE_URI'] = database
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
+
+
+def example_data():
+    """Populate test database"""
+
+    pass
 
 
 if __name__ == "__main__":
