@@ -57,14 +57,6 @@ class FlaskTests(TestCase):
         self.assertNotIn("Account", logout.data)
         self.assertIn("Login", logout.data)
 
-    # def test_logout(self):
-    #     """Test logout functionality"""
-
-    #     result = self.client.get("/logout", follow_redirects=True)
-
-    #     self.assertNotIn("Account", result.data)
-    #     self.assertIn("Login", result.data)
-
     def test_frontpage(self):
         """Test static frontpage"""
 
@@ -78,6 +70,20 @@ class FlaskTests(TestCase):
         result = self.client.get("/products")
 
         self.assertIn("Add to Cart</button>", result.data)
+
+    def test_product_page(self):
+        """Test individual product page"""
+
+        result = self.client.get("/products/1")
+
+        self.assertIn("Blackberries", result.data)
+
+    def test_cart_page(self):
+        """Test cart page"""
+
+        result = self.client.get("/cart")
+
+        self.assertIn("Shopping Cart", result.data)
 
 if __name__ == "__main__":
     import unittest
