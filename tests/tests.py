@@ -45,27 +45,25 @@ class FlaskTests(TestCase):
     def test_login(self):
         """Test login functionality"""
 
-        register = self.client.post("/register",
-                                    data={"first_name": "Jane",
-                                          "last_name": "Doe",
-                                          "email": "jane@gmail.com",
-                                          "password": "123"},
-                                    follow_redirects=True)
-        result = self.client.post("/login",
-                                  data={"email": "jane@gmail.com", "password": "123"},
-                                  follow_redirects=True)
-        self.assertIn("Success", result.data)
+        login = self.client.post("/login",
+                                 data={"email": "Jane@jane.com", "password": "password"},
+                                 follow_redirects=True)
+        self.assertIn("Success", login.data)
         logged_in = self.client.get("/products")
         self.assertIn("Account", logged_in.data)
         self.assertIn("Log Out", logged_in.data)
 
-    def test_logout(self):
-        """Test logout functionality"""
+        logout = self.client.get("/logout", follow_redirects=True)
+        self.assertNotIn("Account", logout.data)
+        self.assertIn("Login", logout.data)
 
-        result = self.client.get("/logout", follow_redirects=True)
+    # def test_logout(self):
+    #     """Test logout functionality"""
 
-        self.assertNotIn("Account", result.data)
-        self.assertIn("Login", result.data)
+    #     result = self.client.get("/logout", follow_redirects=True)
+
+    #     self.assertNotIn("Account", result.data)
+    #     self.assertIn("Login", result.data)
 
     def test_frontpage(self):
         """Test static frontpage"""

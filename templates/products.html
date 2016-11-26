@@ -12,9 +12,9 @@
     </div>
 </div> -->
 
-<div class="row">
-
 {% if products %}
+
+<div class="row">
 
 {% for product in products %}
 
@@ -51,6 +51,8 @@
 
 {% endfor %}
 
+</div>
+
 {% else %}
 
 <h2>Sorry, we couldn't find what you were looking for.</h2>
@@ -58,8 +60,6 @@
 {% endif %}
 
 <script type="text/javascript" src="static/js/cart.js"></script>
-
-</div>
 
 <div class="row">
     <a href="/products" class="backtoall">Back to All Products</a>

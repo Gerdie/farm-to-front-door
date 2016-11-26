@@ -299,7 +299,32 @@ def connect_to_db(app, database='postgresql:///shop'):
 def example_data():
     """Populate test database"""
 
-    pass
+    user1 = Customer(first_name="Jane", last_name="Doe", email="Jane@jane.com",
+                     password_hash="$pbkdf2-sha256$20000$GuPc.z/HmPN.LwUA4FwLQQ$B8HsLHPOCBO2YFBoeF9IVS2UbB78QxoWVrnWG8Nb6h0")
+    user2 = Customer(first_name="Susie", last_name="Q", email="Susie@jane.com",
+                     password_hash="$pbkdf2-sha256$20000$GuPc.z/HmPN.LwUA4FwLQQ$B8HsLHPOCBO2YFBoeF9IVS2UbB78QxoWVrnWG8Nb6h0",
+                     street_address="100 Main St", zipcode="90210", state="CA")
+    pickup = Pickup(name="Parnassus Farmers' Market (UCSF)", description="Wednesdays: 10 a.m-3 p.m.",
+                    street_address="505 Parnassus Avenue", zipcode="94122", state="CA")
+    icon = Icon(url="https://d30y9cdsu7xlg0.cloudfront.net/png/404999-200.png", credit="Blackberry Jam By Nikita Kozin, RU")
+    order = Order(customer_id=1, placed_at=arrow.utcnow(), total=35.00, pickup_id=1)
+    product = Product(name="Organic Blackberries", description="Sweet and tart, these delicious blackberries are the perfect fall fruit.",
+                      weight=6, unit="oz", price_per=3.99, price=3.99, per_unit="oz", aisle="Produce",
+                      category="New & Peak Season", img="http://goodeggs2.imgix.net/product_photos/NmgHoSgSqmShNF10cLni_blackberries_01.jpg?w=380&h=238&fm=jpg&q=41&fit=crop",
+                      icon_id=1)
+    recipe = Recipe(name="Persimmon Cosmopolitan", url="http://foodandstyle.com/2012/12/20/persimmon-cosmopolitan/",
+                    ingredients="1 lb (454gr) very ripe fuyu or hachiya persimmons (3 medium) \u2013 peeled and cut in 1\u201d pieces, 1 tablespoon fresh lime juice, 4 oz (118ml) vodka, 3 oz (89ml) persimmon pur\u00e9e, 1 oz (30ml) fresh lime juice, 1 oz (30ml) st. germain elderflower liqueur, 2 dashes lemon bitters, 2 lime wheels as garnish",
+                    img="https://www.edamam.com/web-img/536/536f7846c9def37bad1b763922c31c29.jpg")
+    customer_recipe = Customer_Recipe(recipe_id=1, customer_id=1)
+    tag = Tag(name="Organic")
+    product_tag = Product_Tag(product_id=1, tag_id=1)
+
+    db.session.add_all([user1, user2, pickup, icon, recipe, tag])
+    db.session.commit()
+    db.session.add_all([order, product, customer_recipe])
+    db.session.commit()
+    db.session.add(product_tag)
+    db.session.commit()
 
 
 if __name__ == "__main__":
