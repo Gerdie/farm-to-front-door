@@ -85,6 +85,20 @@ class FlaskTests(TestCase):
 
         self.assertIn("Shopping Cart", result.data)
 
+    def test_locations(self):
+        """Test locations page"""
+
+        result = self.client.get("/locations")
+
+        self.assertIn('<div id="map">', result.data)
+
+    def test_search(self):
+        """Test search functionality"""
+
+        result = self.client.get("/search?terms=black")
+
+        self.assertIn("Organic Blackberries", result.data)
+
 if __name__ == "__main__":
     import unittest
 
