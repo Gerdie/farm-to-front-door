@@ -49,8 +49,8 @@ pip install -r requirements.txt
 
 To recreate the database:
 ```
-createdb shop
-pg_load database.sql
+createdb shop --encoding='utf-8' --locale=en_US.utf8 --template=template0
+pg_restore shop database.sql
 ```
 
 Create a secrets.sh file:
@@ -72,5 +72,5 @@ source secrets.sh
 ##About Me
 
 Farm to Front Door was developed by Maria Moy. Find her on [LinkedIn]
-(www.linkedin.com/in/maria-k-moy) or [GitHub]
-(www.github.com/gerdie). Maria is a software engineering fellow and freelance WordPress developer living in San Francisco.
+(http://www.linkedin.com/in/maria-k-moy) or [GitHub]
+(http://www.github.com/gerdie). Maria is a software engineering fellow and freelance WordPress developer living in San Francisco.
