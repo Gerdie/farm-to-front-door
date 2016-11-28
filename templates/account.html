@@ -21,8 +21,8 @@
 {% for order in customer.orders %}
 
     <tr>
-        <td>{{ order.placed_at }}</td>
-        <td>{{ order.total }}</td>
+        <td>{{ order.placed_at.strftime('%Y-%m-%d') }}</td>
+        <td>{{ "$%.2f"|format(order.total) }}</td>
     </tr>
 
 {% endfor %}
@@ -33,14 +33,22 @@
 
 <h2>Saved Recipes</h2>
 
+<div class="row">
+
 {% for recipe in customer.recipes %}
+
+<div class="col-sm-6 col-md-3">
 
     <div>
         <img src="{{ recipe.img }}"><br>
         <a href="{{ recipe.url }}">{{ recipe.name }}</a>
     </div>
 
+</div>
+
 {% endfor %}
+
+</div>
 
 {% endif %}
 
