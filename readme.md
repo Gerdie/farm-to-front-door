@@ -36,6 +36,8 @@ Screenshots coming soon.
 
 ##Installation
 
+Install PostgreSQL
+
 To create and activate a virtual environment:
 ```
 virtualenv env

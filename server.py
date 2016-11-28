@@ -396,6 +396,19 @@ def get_customer_json():
                        state=None)
 
 
+# @app.route('/icons.json')
+# def get_icons_json():
+#     """Return icon urls via json"""
+
+#     icons = request.args.get('icons')
+#     response = db.session.query(Icon.url).filter(Icon.icon_id.in_(icons)).all()
+
+#     if icons and response:
+#         return jsonify(**{"icons": response})
+#     else:
+#         return "Fail"
+
+
 @app.route('/cart.json')
 def get_cart_json():
     """Gets product info from database and returns in json"""

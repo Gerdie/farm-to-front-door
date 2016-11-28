@@ -49,12 +49,20 @@ def get_recipes(param_list):
 
     edamam = r.json()
     recipes = edamam["hits"]
+    # query = db.session.query(Product.name, Product.icon_id).filter(Product.product_id.in_(session['cart'])).all()
 
     for recipe in recipes:
         name = recipe["recipe"]["label"]
         image = recipe["recipe"]["image"]
         url = recipe["recipe"]["url"]
         ingredients = recipe["recipe"]["ingredientLines"]
+        # icons = []
+        # for prod_name, prod_icon in query:
+        #     for param in param_list:
+        #         if ' '.join(param) in prod_name and prod_icon:
+        #             icons.append(prod_icon)
+        #             continue
+
         recipe_list.append({"name": name, "ingredients": ingredients, "image": image, "url": url})
 
     if len(recipe_list) < 4 and len(params) > 1:
