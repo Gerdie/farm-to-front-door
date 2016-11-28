@@ -1,3 +1,11 @@
+/* Typography styles */
+
+h1 {
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    /*color: #007a08;*/
+}
+
 /* Nav styles */
 
 .farmlogo {
@@ -19,13 +27,13 @@
 }
 
 .navbar-default, .navbar-default .navbar-nav>li>a, .navbar-default .navbar-brand, #prod-search {
-    color: #114711;
+    color: #007a08;
 }
 
 .logotext {
     font-family: 'Lato', sans-serif;
     font-size: 1.5em;
-    color: #114711;
+    color: #007a08; /*114711*/ /*008c1a*/
 }
 
 body {
@@ -61,7 +69,7 @@ body {
     margin-bottom: 5px;
 }
 
-button.add_to_cart {
+button.add_to_cart, input.checkout {
     /*background-color: #57BF7B;*/
     color: #069c29;
     border-color: #069c29;  /*57BF7B*/
@@ -135,6 +143,52 @@ button.add_to_cart {
 }
 
 /* Cart Page */
+
+input[type=checkbox], input[type=radio] {
+    padding-right: 2px;
+    margin-right: 5px;
+}
+
+.recipetitle {
+    font-family: 'Lato', sans-serif;
+    text-transform: uppercase;
+    color: #777;
+    text-align: center;
+    font-size: 18px;
+}
+
+.likerecipe {
+    border: solid 1px #e7e7e7;
+    width: 36px;
+    text-align: center;
+    padding: 8px;
+    border-radius: 35px;
+    display: block;
+    margin: auto;
+    color: #069c29;
+}
+
+.likerecipe:hover {
+    background-color: #cbd9a3;
+}
+
+a.recipea:hover {
+    text-decoration: none;
+}
+
+.centerme {
+    text-align: center;
+}
+
+.checkout {
+    float:left;
+}
+
+/* Account Page */
+
+.spacer {
+    margin-top: 20px;
+}
 
 /* Locations Page */
 

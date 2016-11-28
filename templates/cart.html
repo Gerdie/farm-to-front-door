@@ -10,7 +10,7 @@
 
 <div class="col-md-7">
 
-<h1>Shopping Cart</h1>
+<h1 class="centerme">Shopping Cart</h1>
 
 <table class="table table-hover"> <!-- id="cart-table" -->
     <thead>
@@ -85,17 +85,23 @@
                 </div>
             </div>
         </div>
-        <label>Order Total: {{ deliveryForm.delivery==="delivery" ? cartPrice + 5 : cartPrice | currency }}</label><br>
-        <input type="submit" value="Check Out">   <!-- class="btn btn-default"
- -->    </form>
+        <br><label>Order Total: {{ deliveryForm.delivery==="delivery" ? cartPrice + 5 : cartPrice | currency }}</label><br>
+        <input type="submit" class="btn btn-default checkout" value="Check Out"><br><br>
+        <small>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></small> 
+        </form>
 {% endraw %}
 </div>
 
 </div>
 
+<div class="spacer"></div>
+<div class="spacer"></div>
+
 <div class="row">
 
-<h2>Recipe Suggestions</h2>
+<!-- <h2>Recipe Suggestions</h2> -->
+
+<!-- <p>Don't know what you're making for dinner tonight? We've got suggestions!</p> -->
 
 </div>
 
@@ -105,15 +111,15 @@
 <div ng-controller="RecipeController">
 <div class="col-md-3" ng-repeat="recipe in recipes">  <!-- recipe in recipeCtrl.recipes track by $index -->
     <a ng-href="{{ recipe.url }}"><img ng-src="{{ recipe.image }}"></a>
-    <a ng-href="{{ recipe.url }}">{{ recipe.name }}</a>
-    <a href ng-click="saveRecipe(recipe)" aria-label="Like this recipe"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span></a>
+    <a ng-href="{{ recipe.url }}" class="recipetitle"><h4>{{ recipe.name }}</h4></a>
+    <p><a href ng-click="saveRecipe(recipe)" aria-label="Like this recipe" class="recipea"><span class="glyphicon glyphicon-heart likerecipe" aria-hidden="true"></span></a></p>
 </div>
 </div>
 {% endraw %}
 
 </div>
 
-<p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p>
+<!-- <p>Please log in before placing your order. Not a member? <a href="/register">Register now!</a></p> -->
 
 <script type="text/javascript" src="static/js/angularcart.js"></script>
 

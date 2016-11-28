@@ -2,18 +2,26 @@
 
 {% block body %}
 
-<h1>User Profile</h1>
+<!-- <h1 class="centerme">User Profile</h1> -->
+<div class="spacer"></div>
+<div class="row">
+<div class="col-md-4 col-md-offset-1">
 
-<p>{{ customer.first_name }} {{ customer.last_name }}</p>
-<p>{{ customer.email }}</p>
+<div class="spacer"></div>
+<h3>My Account</h3>
 
-<p>{{ customer.street_address }}<br>
+<p>{{ customer.first_name }} {{ customer.last_name }}<br>
+{{ customer.email }}<br>
+
+{{ customer.street_address }}<br>
     {{ customer.zipcode }} {{ customer.state }}</p>
 
-<h2>Orders</h2>
+</div>
+<div class="col-md-6">
 
 <table class="table table-hover">
     <tr>
+        <th>Order #</th>
         <th>Date</th>
         <th>Total</th>
     </tr>
@@ -21,6 +29,7 @@
 {% for order in customer.orders %}
 
     <tr>
+        <td>{{ order.order_id }}</td>
         <td>{{ order.placed_at.strftime('%Y-%m-%d') }}</td>
         <td>{{ "$%.2f"|format(order.total) }}</td>
     </tr>
@@ -29,9 +38,15 @@
 
 </table>
 
+<small>Questions about your order? Contact customer service at 867-5309 and reference your order number.</small>
+
+</div>
+</div>
+
 {% if customer.recipes %}
 
-<h2>Saved Recipes</h2>
+<!-- <h4>Saved Recipes</h4> -->
+<div class="spacer"></div>
 
 <div class="row">
 
@@ -41,7 +56,7 @@
 
     <div>
         <img src="{{ recipe.img }}"><br>
-        <a href="{{ recipe.url }}">{{ recipe.name }}</a>
+        <a href="{{ recipe.url }}" class="recipetitle"><h4>{{ recipe.name }}</h4></a>
     </div>
 
 </div>
@@ -51,7 +66,5 @@
 </div>
 
 {% endif %}
-
-<p>Questions? Contact customer service at 867-5309.</p>
 
 {% endblock %}
