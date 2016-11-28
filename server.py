@@ -157,9 +157,9 @@ def serve_filtered_products_json():
     categories = db.session.query(Product.category).group_by(Product.category).all()
     products = {}
     for prod in prods:
-        products[prod.product_id] = {"name": prod.name, "id": prod.product_id, "price": prod.price, "img": prod.img, "icon": None}
-        if prod.icon_id:
-            products[prod.product_id]["icon"] = prod.icon.url
+        products[prod.product_id] = {"name": prod.name, "id": prod.product_id, "price": prod.price, "img": prod.img, "weight": prod.weight, "unit": prod.unit}
+        # if prod.icon_id:
+        #     products[prod.product_id]["icon"] = prod.icon.url
 
     return jsonify(**{"products": products, "categories": categories})
 

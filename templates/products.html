@@ -26,7 +26,7 @@
         <a href="/products/{{ product.product_id }}"><img src="{{ product.img }}"></a>
         <h4>{{ product.name }}</h4>
         <div class="proddetails"><p>${{ product.price }} <span class="spacerbull">&bull;</span> {{ product.weight }} {{ product.unit }}</div>
-        <button class="add_to_cart prod_page" id="{{ product.product_id }}">Add to Cart</button>
+        <button type="button" class="add_to_cart prod_page btn btn-default" id="{{ product.product_id }}">Add to Cart</button>
     </div>
 
 {# {% elif loop.index0 % 3 == 1 %} #}

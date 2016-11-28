@@ -1,4 +1,5 @@
 /* Nav styles */
+
 .farmlogo {
     /*max-height:20px;*/
     /*margin-bottom: 15px;*/
@@ -8,9 +9,23 @@
     margin-bottom: 10px;
 }
 
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border-color:#e7e7e7;
+}
+
+.navbar-default {
+    background-color: #cbd9a3; /*#f8f8f8;*/
+    /*color: #0f400f; 1d730e*/
+}
+
+.navbar-default, .navbar-default .navbar-nav>li>a, .navbar-default .navbar-brand, #prod-search {
+    color: #114711;
+}
+
 .logotext {
     font-family: 'Lato', sans-serif;
     font-size: 1.5em;
+    color: #114711;
 }
 
 body {
@@ -47,12 +62,14 @@ body {
 }
 
 button.add_to_cart {
-    background-color: #57BF7B;
-    border:none;
-    width: 80px;
+    /*background-color: #57BF7B;*/
+    color: #069c29;
+    border-color: #069c29;  /*57BF7B*/
+    /*width: 80px;*/
     display:block;
     margin: auto auto 5px auto;
-    padding:2px;
+    /*padding:2px;*/
+    text-transform: uppercase;
 }
 
 .spacerbull {
