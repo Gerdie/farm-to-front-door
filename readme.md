@@ -11,18 +11,26 @@ Farm to Front Door is a food delivery web app built in Python with Flask, SQLAlc
 ##Tech Stack
 
 Backend: Python, Flask, PostgreSQL, SQLAlchemy
+
 Frontend: Javascript, AngularJS, jQuery, AJAX, HTML5, CSS3, Bootstrap
+
 APIs: Edamam, Stripe, Google Maps Javascript & Geocoder
 
 ##Features
 
-Users can view the list of all products, filter products by category and search products by name.
-Users can add products to their shopping cart, edit their cart, and choose their delivery or pickup options.
-The app will suggest recipes to the user based on the contents of their shopping cart.
-Users can mark recipes as "favorites."
-Users can checkout and pay for their cart online by credit card.
-Users can view past orders, favorite recipes and account information on their account page.
-Users can view a map of available pickup locations.
+- Users can view the list of all products, filter products by category and search products by name.
+
+- Users can add products to their shopping cart, edit their cart, and choose their delivery or pickup options.
+
+- The app will suggest recipes to the user based on the contents of their shopping cart.
+
+- Users can mark recipes as "favorites."
+
+- Users can checkout and pay for their cart online by credit card.
+
+- Users can view past orders, favorite recipes and account information on their account page.
+
+- Users can view a map of available pickup locations.
 
 Screenshots coming soon.
 
