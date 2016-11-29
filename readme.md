@@ -20,17 +20,29 @@ APIs: Edamam, Stripe, Google Maps Javascript & Geocoder
 
 - Users can view the list of all products, filter products by category and search products by name.
 
+![products page](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/products_page.jpg)
+
 - Users can add products to their shopping cart, edit their cart, and choose their delivery or pickup options.
+
+![product filtering](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/category_filters.jpg)
 
 - The app will suggest recipes to the user based on the contents of their shopping cart.
 
+![product filtering](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/cart.jpg)
+
 - Users can mark recipes as "favorites."
 
+![product filtering](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/recipe.jpg)
+
 - Users can checkout and pay for their cart online by credit card.
+
+![product filtering](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/checkout.jpg)
 
 - Users can view past orders, favorite recipes and account information on their account page.
 
 - Users can view a map of available pickup locations.
+
+![product filtering](https://github.com/Gerdie/farm-to-front-door/blob/master/static/img/google_map.jpg)
 
 Screenshots coming soon.
 
