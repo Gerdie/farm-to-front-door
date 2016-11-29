@@ -57,6 +57,27 @@ body {
     width: 380px;
     margin: auto;
     display: block;
+    position: relative;
+}
+
+@keyframes showqty {
+    0% {color: white;}
+    100% {color: #007a08;}
+}
+
+.imageqty {
+    position: absolute;
+    top: 50px; 
+    left: 180px; 
+    width: 100%;
+    font-family: 'Droid Serif', serif;
+    font-size: 100px;
+    animation-name: showqty;
+    animation-duration: 3s;
+}
+
+.hidden {
+    visibility:hidden;
 }
 
 .filters {
@@ -166,13 +187,14 @@ input[type=checkbox], input[type=radio] {
     display: block;
     margin: auto;
     color: #069c29;
+    text-decoration: none;
 }
 
 .likerecipe:hover {
     background-color: #cbd9a3;
 }
 
-a.recipea:hover {
+a.recipea:hover, a.recipea:visited, a.recipea:active   {
     text-decoration: none;
 }
 

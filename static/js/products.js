@@ -33,8 +33,8 @@
         $scope.addToCart = function(productId) {
             $http.post("/add-item", {"product_id": productId}).then(function(response) {
                 console.log(response);
-                alert("Added item to cart!");
-            })
+                // alert("Added item to cart!");
+            });
         };
 
     });

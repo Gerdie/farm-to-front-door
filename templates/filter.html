@@ -17,7 +17,10 @@
 <div class="row">
 
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4 proddiv" ng-repeat="product in prods.filtered_prods">
+        <div class="prodimage">
         <a href="/products/{{ product.id }}"><img ng-src="{{product.img}}"></a>
+        <h2 class="imageqty hidden">+</h2>
+        </div>
         <h4>{{ product.name }}</h4>
         <div class="proddetails"><p>{{ product.price | currency }} <span class="spacerbull">&bull;</span> {{ product.weight }} {{ product.unit }}</div>
         <!-- <div class="col-xs-6"><p>Price: {{ product.price | currency }}</p></div> -->
