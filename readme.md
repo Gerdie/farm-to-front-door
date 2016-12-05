@@ -87,4 +87,4 @@ source secrets.sh
 
 Farm to Front Door was developed by Maria Moy. Find her on [LinkedIn]
 (http://www.linkedin.com/in/maria-k-moy) or [GitHub]
-(http://www.github.com/gerdie). Maria is a software engineering fellow and freelance WordPress developer living in San Francisco.
+(http://www.github.com/gerdie). Maria is a software engineer and freelance WordPress developer living in San Francisco.
